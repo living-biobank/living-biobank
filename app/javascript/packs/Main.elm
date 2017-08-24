@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import Html exposing (Html, h1, text)
-import Html.Attributes exposing (style)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 
 -- MODEL
 
