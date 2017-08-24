@@ -19,10 +19,40 @@ init =
 
 view : Model -> Html Message
 view model =
-  -- The inline style is being used for example purposes in order to keep this example simple and
-  -- avoid loading additional resources. Use a proper stylesheet when building your own app.
-  h1 [style [("display", "flex"), ("justify-content", "center")]]
-     [text "Hello Elm!"]
+  div []
+    [ h1 [ class "text-center" ] [ text "SPARC Bio Bank" ]
+    , div [ class "row" ]
+      [ div [ class "col-sm-12" ]
+      [ table [ class "table table-bordered table-hover" ]
+        [ thead []
+          [ tr []
+            [ th []
+              [ text "MRN" ]
+            , th []
+              [ text "Protocols Requests" ]
+            , th []
+              [ text "Number of Samples available" ]
+            , th []
+              [ text "Action" ]
+            ]
+          ]
+        , tbody []
+          [ tr []
+            [ th [ scope "row" ]
+              [ text "1" ]
+            , td []
+              [ text "Mark" ]
+            , td []
+              [ text "Otto" ]
+            , td []
+              [ div [] [ button [ class "btn btn-primary" ] [ text
+              "Release" ] ]]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
 
 -- MESSAGE
 
