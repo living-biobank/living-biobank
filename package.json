@@ -1,5 +1,13 @@
 {
   "name": "sparc-biobank",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/HSSC/sparc-biobank.git",
+  "author": "William Holt <holtw@musc.edu>",
+  "license": "MIT"
 }
