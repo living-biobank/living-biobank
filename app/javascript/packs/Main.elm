@@ -29,7 +29,7 @@ view model =
             [ th []
               [ text "MRN" ]
             , th []
-              [ text "Protocol Requests" ]
+              [ text "Protocols Requesting" ]
             , th []
               [ text "Number of Samples Available" ]
             , th []
@@ -45,7 +45,7 @@ view model =
             , td []
               [ text "6" ]
             , td []
-              [ div [] [ button [ class "btn btn-primary" ] [ text
+              [ div [] [ button [ class "btn btn-primary", attribute "data-toggle" "modal", attribute "data-target" "#release" ] [ text
               "Release" ] ]]
             ]
           ]
