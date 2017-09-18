@@ -20,7 +20,7 @@ init =
 view : Model -> Html Message
 view model =
   div []
-    [ h1 [ class "text-center" ] [ text "SPARC Bio-Bank" ]
+    [ h1 [ class "text-center" ] [ text "Living Biobank" ]
     , div [ class "row" ]
       [ div [ class "col-sm-12" ]
       [ table [ class "table table-bordered table-hover" ]
