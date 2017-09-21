@@ -1,7 +1,7 @@
 task fetch_biobank_records: :environment do
 
   biobank_records = HTTParty.get(
-    "https://api-sparc.musc.edu/line_items.json?service_id=#{ENV.fetch('SERVICE_ID')}",
+    "https://api-sparc.musc.edu/line_items.json?service_id=#{ENV.fetch('SERVICE_ID')}&&item_id=#{ENV.fetch('ITEM_ID')}",
     timeout: 500, headers: {'Content-Type' => 'application/json'})
 
   biobank_records.each do |br|
