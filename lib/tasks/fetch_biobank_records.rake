@@ -1,15 +1,13 @@
 task fetch_biobank_records: :environment do
 
-  biobank_records = HTTParty.get(
-    "https://api-sparc.musc.edu/line_items.json?service_id=#{ENV.fetch('SERVICE_ID')}&&item_id=#{ENV.fetch('ITEM_ID')}",
-    timeout: 500, headers: {'Content-Type' => 'application/json'})
+  submitted_line_items = LineItem.submitted_line_items(ENV.fetch('SERVICE_ID'))
 
-  biobank_records.each do |br|
-    BiobankRecord.create(line_item_id: br['biobank_record']['line_item_id'],
-                         protocol_id: br['biobank_record']['protocol_id'],
-                         i2b2_query: br['biobank_record']['i2b2_query'],
-                         service_id: br['biobank_record']['service_id']
+  submitted_line_items.each do |line_item|
+    BiobankRecord.create(line_item_id: line_item.id,
+                         protocol_id: line_item.protocol_id,
+                         i2b2_query: line_item.i2b2_query,
+                         service_id: line_item.service_id
                         )
   end
-
 end
+

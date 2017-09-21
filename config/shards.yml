@@ -1,0 +1,9 @@
+octopus:
+  environments:
+    - development
+  development:
+    sparc:
+      host: localhost
+      username: root
+      adapter: mysql2
+      database: sparc_rails_development
