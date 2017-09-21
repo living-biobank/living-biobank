@@ -10,26 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170824174618) do
+ActiveRecord::Schema.define(version: 20170921144420) do
 
-  create_table "i2b2_query_lists", force: :cascade do |t|
-    t.text "query"
-    t.string "query_name"
+  create_table "biobank_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "line_item_id"
     t.integer "protocol_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["protocol_id"], name: "index_i2b2_query_lists_on_protocol_id"
-  end
-
-  create_table "patient_hotlists", force: :cascade do |t|
-    t.string "mrn"
-    t.string "available_lab"
-    t.datetime "date_matched"
+    t.text "i2b2_query"
+    t.integer "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
