@@ -1,6 +1,8 @@
 task fetch_biobank_records: :environment do
 
-  biobank_records = HTTParty.get("https://api-sparc.musc.edu/line_items.json", timeout: 500, headers: {'Content-Type' => 'application/json'})
+  biobank_records = HTTParty.get(
+    "https://api-sparc.musc.edu/line_items.json?service_id=#{ENV.fetch('SERVICE_ID')}",
+    timeout: 500, headers: {'Content-Type' => 'application/json'})
 
   biobank_records.each do |br|
     BiobankRecord.create(line_item_id: br['biobank_record']['line_item_id'],
