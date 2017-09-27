@@ -12,15 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20170927132639) do
 
-  create_table "biobank_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "line_item_id"
-    t.integer "protocol_id"
-    t.text "i2b2_query"
-    t.integer "service_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
     t.datetime "specimen_date"
@@ -62,6 +53,7 @@ ActiveRecord::Schema.define(version: 20170927132639) do
   create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "i2b2_query_name"
     t.bigint "sparc_protocol_id"
+    t.bigint "sparc_line_item_id"
     t.integer "query_cnt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

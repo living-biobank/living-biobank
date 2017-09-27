@@ -1,2 +1,0 @@
-class PatientHotlist < ApplicationRecord
-end
