@@ -1,2 +1,0 @@
-class BiobankRecord < ApplicationRecord
-end
