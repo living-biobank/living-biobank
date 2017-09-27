@@ -10,13 +10,59 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170921144420) do
+ActiveRecord::Schema.define(version: 20170927132639) do
 
   create_table "biobank_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "line_item_id"
     t.integer "protocol_id"
     t.text "i2b2_query"
     t.integer "service_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "patient_id"
+    t.datetime "specimen_date"
+    t.integer "order_id"
+    t.string "specimen_source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_labs_on_patient_id"
+  end
+
+  create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "mrn"
+    t.datetime "preference_date"
+    t.string "contact_pref"
+    t.string "bio_bank_pref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "specimen_request_id"
+    t.bigint "patient_id"
+    t.datetime "identified_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id"], name: "index_populations_on_patient_id"
+    t.index ["specimen_request_id"], name: "index_populations_on_specimen_request_id"
+  end
+
+  create_table "specimen", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "specimen_request_id"
+    t.bigint "lab_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lab_id"], name: "index_specimen_on_lab_id"
+    t.index ["specimen_request_id"], name: "index_specimen_on_specimen_request_id"
+  end
+
+  create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "i2b2_query_name"
+    t.bigint "sparc_protocol_id"
+    t.integer "query_cnt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -38,4 +84,9 @@ ActiveRecord::Schema.define(version: 20170921144420) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "labs", "patients"
+  add_foreign_key "populations", "patients"
+  add_foreign_key "populations", "specimen_requests"
+  add_foreign_key "specimen", "labs"
+  add_foreign_key "specimen", "specimen_requests"
 end
