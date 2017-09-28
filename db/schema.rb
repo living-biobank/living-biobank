@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170927132639) do
+ActiveRecord::Schema.define(version: 20170928182619) do
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 20170927132639) do
     t.datetime "updated_at", null: false
     t.index ["lab_id"], name: "index_specimen_on_lab_id"
     t.index ["specimen_request_id"], name: "index_specimen_on_specimen_request_id"
+  end
+
+  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "protocol_id"
+    t.datetime "release_date"
+    t.string "release_to"
+    t.bigint "lab_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lab_id"], name: "index_specimen_records_on_lab_id"
   end
 
   create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
