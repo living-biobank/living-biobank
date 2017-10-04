@@ -1,0 +1,34 @@
+<h1>Labs</h1>
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Protocols</th>
+    <th>Specimen Date</th>
+    <th>Specimen Requests</th>
+    <th>Specimen Source</th>
+    <th>Order ID</th>
+    <th>MRN</th>
+    <th>Actions</th>
+  </tr>
+  <% labs.find_each do |lab| %>
+    <tr>
+      <td><%= lab.protocols %></td>
+      <td><%= lab.specimen_date %></td>
+      <td><%= lab.specimen_requests %></td>
+      <td><%= lab.specimen_source %></td>
+      <td><%= lab.order_id %></td>
+      <td><%= lab.mrn %></td>
+      <td>
+        <div class='btn-group'>
+          <%= link_to 'Release',
+            new_specimen_record_path(lab_id: lab.id),
+            class: 'btn btn-primary', remote: true
+          %>
+          <%= link_to 'Expired/Unavailable',
+            new_specimen_record_path(lab_id: lab.id),
+            class: 'btn btn-warning', remote: true
+          %>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</table>
