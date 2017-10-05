@@ -1,6 +1,7 @@
 class LineItem < ApplicationRecord
   include SparcShard
   belongs_to :sub_service_request
+  belongs_to :service
 
   def self.submitted_line_items(service_id)
     joins(:sub_service_request)
