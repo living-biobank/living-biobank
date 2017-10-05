@@ -9,8 +9,12 @@ class LineItem < ApplicationRecord
       .where(service_id: service_id)
   end
 
-  def submission
+  def questionnaire
+    Questionnaire.where(questionable: service, active: true).first
+  end
 
+  def submission
+    questionnare.where(protocol_id: sub_service_request.protocol_id).first
   end
 
   def i2b2_query
