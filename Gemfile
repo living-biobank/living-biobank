@@ -16,7 +16,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 gem 'foreman', '~> 0.84.0'
-gem 'webpacker', '~> 2.0'
+gem 'webpacker', '~> 3.0', '>= 3.0.2'
 gem 'faker'
 gem 'bootstrap-datepicker-rails'
 
