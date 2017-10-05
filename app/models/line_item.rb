@@ -14,7 +14,7 @@ class LineItem < ApplicationRecord
   end
 
   def submission
-    questionnare.where(protocol_id: sub_service_request.protocol_id).first
+    Submission.where(questionnaire_id: questionnaire.id, protocol_id: sub_service_request.protocol_id).first
   end
 
   def i2b2_query
