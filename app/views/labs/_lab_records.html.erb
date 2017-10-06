@@ -3,7 +3,6 @@
   <tr>
     <th>Protocols</th>
     <th>Specimen Date</th>
-    <th>Specimen Requests</th>
     <th>Specimen Source</th>
     <th>Order ID</th>
     <th>MRN</th>
@@ -11,9 +10,12 @@
   </tr>
   <% labs.find_each do |lab| %>
     <tr>
-      <td><%= lab.protocols %></td>
-      <td><%= lab.specimen_date %></td>
-      <td><%= lab.specimen_requests %></td>
+      <td>
+        <%- lab.protocols.each do |protocol| %>
+          <%= protocol %>
+        <% end %>
+      </td>
+      <td><%= lab.specimen_date.strftime("%m/%d/%Y %I:%M%p") %></td>
       <td><%= lab.specimen_source %></td>
       <td><%= lab.order_id %></td>
       <td><%= lab.mrn %></td>
@@ -24,8 +26,10 @@
             class: 'btn btn-primary', remote: true
           %>
           <%= link_to 'Expired/Unavailable',
-            new_specimen_record_path(lab_id: lab.id),
-            class: 'btn btn-warning', remote: true
+            lab_path(lab),
+            method: :patch,
+            class: 'btn btn-warning', remote: true,
+            data: { confirm: 'Are you sure you would like remove this lab?' }
           %>
         </div>
       </td>
