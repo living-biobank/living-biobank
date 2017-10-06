@@ -7,7 +7,7 @@ class Lab < ApplicationRecord
   end
 
   def protocols
-    patient.specimen_requests.map(&:sparc_protocol_id)
+    patient.specimen_requests.map(&:protocol_id)
   end
 
   def specimen_requests
