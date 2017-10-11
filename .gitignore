@@ -25,3 +25,6 @@
 /public/packs
 /elm-stuff
 /node_modules
+
+config/shards.yml
+config/database.yml
