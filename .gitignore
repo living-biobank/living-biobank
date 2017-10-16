@@ -29,3 +29,5 @@
 config/shards.yml
 config/database.yml
 config/ldap.yml
+
+*.swp

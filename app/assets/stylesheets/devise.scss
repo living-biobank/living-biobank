@@ -1,4 +1,4 @@
-.devise-wrapper {  
+.devise-wrapper {
   margin-top: 80px;
   margin-bottom: 80px;
 }
@@ -8,7 +8,7 @@
   padding: 15px 35px 45px;
   margin: 0 auto;
   background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.1);  
+  border: 1px solid rgba(0,0,0,0.1);
 
   .devise-form-heading,
   .checkbox {
@@ -34,11 +34,15 @@
     margin-bottom: -1px;
   }
 
-  input[type="email"] {
+  input#user_login {
     margin-bottom: 10px;
   }
 
   input[type="password"] {
     margin-bottom: 20px;
+  }
+
+  label.remember_me {
+    margin-left: 22px;
   }
 }
