@@ -1,0 +1,2 @@
+class SparcRequest < ApplicationRecord
+end

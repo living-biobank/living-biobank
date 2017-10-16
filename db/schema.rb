@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006133117) do
+ActiveRecord::Schema.define(version: 20171012130321) do
 
-  create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
     t.datetime "specimen_date"
     t.integer "order_id"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20171006133117) do
     t.index ["patient_id"], name: "index_labs_on_patient_id"
   end
 
-  create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "mrn"
     t.datetime "preference_date"
     t.string "contact_pref"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20171006133117) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "specimen_request_id"
     t.bigint "patient_id"
     t.datetime "identified_date"
@@ -42,7 +42,21 @@ ActiveRecord::Schema.define(version: 20171006133117) do
     t.index ["specimen_request_id"], name: "index_populations_on_specimen_request_id"
   end
 
-  create_table "specimen", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "short_title"
+    t.text "title"
+    t.string "funding_status"
+    t.string "funding_source"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "primary_pi_netid"
+    t.string "primary_pi_name"
+    t.string "primary_pi_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "specimen", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "specimen_request_id"
     t.bigint "lab_id"
     t.datetime "created_at", null: false
@@ -51,7 +65,7 @@ ActiveRecord::Schema.define(version: 20171006133117) do
     t.index ["specimen_request_id"], name: "index_specimen_on_specimen_request_id"
   end
 
-  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "protocol_id"
     t.datetime "release_date"
     t.string "release_to"
@@ -61,7 +75,7 @@ ActiveRecord::Schema.define(version: 20171006133117) do
     t.index ["lab_id"], name: "index_specimen_records_on_lab_id"
   end
 
-  create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "i2b2_query_name"
     t.bigint "protocol_id"
     t.bigint "line_item_id"
@@ -70,7 +84,7 @@ ActiveRecord::Schema.define(version: 20171006133117) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

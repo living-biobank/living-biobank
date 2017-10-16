@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  short_title: MyString
+  title: MyText
+  funding_status: MyString
+  funding_source: MyString
+  start_date: 2017-10-12
+  end_date: 2017-10-12
+  primary_pi_netid: MyString
+  primary_pi_name: MyString
+  primary_pi_email: MyString
+
+two:
+  short_title: MyString
+  title: MyText
+  funding_status: MyString
+  funding_source: MyString
+  start_date: 2017-10-12
+  end_date: 2017-10-12
+  primary_pi_netid: MyString
+  primary_pi_name: MyString
+  primary_pi_email: MyString
