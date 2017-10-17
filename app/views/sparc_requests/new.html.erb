@@ -1,0 +1,12 @@
+<%= form_for @sparc_request do |f| %>
+  <%= f.text_field :short_title %>
+  <%= f.text_field :title %>
+  <%= f.select :funding_status, [['Pending Funding', 'pending'], ['Funded', 'funded']] %>
+  <%= f.select :funding_source, [['College Department', 'college'], ['Federal', 'federal'], ['Foundation/Organization', 'foundation/org'], ['Industry-Initiated/Industry-Sponsored', 'ind_initiated/ind_sponsored'], ['Investigator-Initiated/Industry-Sponsored', 'inv_initiated/ind_sponsored'], ['Internal Funded Pilot Project', 'internal_funded_pilot'], ['Student Funded Research', 'student_funded_research']] %>
+  <%= f.date_field :start_date%>
+  <%= f.date_field :end_date %>
+  <%= f.search_field :primary_pi_name%>
+  <%= f.email_field :primary_pi_email%>
+  <%= f.hidden_field(:primary_pi_netid) %>
+  <%= f.submit "Create" %>
+<% end %>
