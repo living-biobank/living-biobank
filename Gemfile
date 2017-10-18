@@ -48,3 +48,5 @@ gem 'therubyracer'
 
 gem 'net-ldap', '~> 0.16.0'
 gem 'haml'
+
+gem 'letter_opener'

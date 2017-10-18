@@ -1,5 +1,5 @@
 class LabsController < ApplicationController
-  before_action :find_labs
+  before_action :find_labs, :honest_broker_check
 
   def index
   end

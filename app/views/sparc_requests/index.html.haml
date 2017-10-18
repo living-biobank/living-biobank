@@ -1,0 +1,14 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      = link_to 'SPARC Living Biobank', root_path, class: 'navbar-brand'
+    #navbar
+      %ul.nav.navbar-nav.navbar-right
+        %li= link_to 'View Requests', sparc_requests_path
+        %li= link_to 'Create New Request', new_sparc_request_path
+        - if user_signed_in?
+          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+
+.row
+  .col-xs-12.sparc-request-records
+    = render 'sparc_requests/requests', requests: @sparc_requests

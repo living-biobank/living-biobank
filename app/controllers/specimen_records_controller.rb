@@ -1,4 +1,5 @@
 class SpecimenRecordsController < ApplicationController
+  before_action :honest_broker_check
 
   def new
     @specimen_record = SpecimenRecord.new

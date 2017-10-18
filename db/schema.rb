@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018135408) do
+ActiveRecord::Schema.define(version: 20171018190808) do
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20171018135408) do
   end
 
   create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
     t.string "short_title"
     t.text "title"
     t.string "funding_status"
@@ -90,6 +91,7 @@ ActiveRecord::Schema.define(version: 20171018135408) do
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "email", default: "", null: false
     t.string "net_id"
+    t.boolean "honest_broker", default: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"

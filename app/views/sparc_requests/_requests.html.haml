@@ -1,0 +1,39 @@
+%br
+
+- if @sparc_requests.empty?
+  .panel.panel-default
+    .panel-heading
+      .panel-title
+        Message
+    .panel-body
+      .form-group
+        No requests found!
+        %br
+        %br
+        = link_to 'Create New Request', new_sparc_request_path, class: 'btn btn-primary'
+- else
+  %table.table.table-striped.table-bordered
+    %tr
+      %th Short Title
+      %th Title
+      %th Funding Status
+      %th Funding Source
+      %th Estimated Start Date
+      %th Estimated End Date
+      %th Primary PI Name
+      %th Specimen Service
+      %th Specimen Service Source
+      %th i2b2 Query Name
+
+    - @sparc_requests.each do |request|
+      %tr
+        %td= request.short_title
+        %td= request.title
+        %td= request.funding_status
+        %td= request.funding_source
+        %td= request.start_date
+        %td= request.end_date
+        %td= request.primary_pi_name
+        %td= request.service.name
+        %td= request.service_source
+        %td= request.query_name

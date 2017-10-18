@@ -8,3 +8,14 @@ $ ->
     $("#service_source_typeahead .typeahead").typeahead
       source: data
   ,'json'
+
+  # pi name search
+  $("#pi_search_typeahead .typeahead").typeahead
+    source: (query, process) ->
+      $.get "/directory/search.json?query=#{query}", (data) ->
+        process(data.results)
+    display: 'name'
+
+  # date pickers
+  $('.date-select').datepicker(autoclose: true)
+
