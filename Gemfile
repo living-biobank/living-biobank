@@ -41,9 +41,10 @@ gem 'devise'
 gem 'mysql2'
 
 # adding oracle for i2b2 access
-#gem 'activerecord-oracle_enhanced-adapter', '~> 1.8.0'
-#gem 'ruby-oci8'
+gem 'activerecord-oracle_enhanced-adapter', '~> 1.8.0'
+gem 'ruby-oci8'
 
-#gem 'therubyracer'
+gem 'therubyracer'
 
 gem 'net-ldap', '~> 0.16.0'
+gem 'haml'

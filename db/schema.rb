@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016135051) do
+ActiveRecord::Schema.define(version: 20171018135408) do
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
@@ -52,6 +52,9 @@ ActiveRecord::Schema.define(version: 20171016135051) do
     t.string "primary_pi_netid"
     t.string "primary_pi_name"
     t.string "primary_pi_email"
+    t.string "query_name"
+    t.string "service_source"
+    t.integer "service_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

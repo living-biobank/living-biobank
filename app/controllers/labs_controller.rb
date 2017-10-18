@@ -1,5 +1,5 @@
 class LabsController < ApplicationController
-  before_action :authenticate_user!, :find_labs
+  before_action :find_labs
 
   def index
   end

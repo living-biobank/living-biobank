@@ -16,4 +16,5 @@
 //= require bootstrap/dist/js/bootstrap
 //= require bootstrap-datepicker
 //= require sweetalert/dist/sweetalert.min
+//= require bootstrap-3-typeahead/bootstrap3-typeahead.min
 //= require_tree .
