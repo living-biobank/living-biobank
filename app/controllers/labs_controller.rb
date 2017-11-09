@@ -16,7 +16,7 @@ class LabsController < ApplicationController
 
   def find_labs
     @labs = Lab.where(removed: false)
-      .unreleased_labs
       .includes(patient: :specimen_requests)
+      .group_by { |l| l.patient_id.to_s + l.specimen_source.to_s }
   end
 end

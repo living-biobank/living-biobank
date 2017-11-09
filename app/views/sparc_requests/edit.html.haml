@@ -1,0 +1,51 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top
+  .container
+    .navbar-header
+      = link_to 'SPARC Living Biobank', root_path, class: 'navbar-brand'
+    #navbar
+      %ul.nav.navbar-nav.navbar-right
+        %li= link_to 'View Requests', sparc_requests_path
+        %li= link_to 'Create New Request', new_sparc_request_path
+        - if user_signed_in?
+          %li= link_to 'Logout', destroy_user_session_path, method: :delete
+
+%br
+
+= form_for @sparc_request do |f|
+  .panel.panel-default
+    .panel-heading
+      .panel-title
+        Message
+    .panel-body
+      .form-group
+        **** All fields are required in order to proceed. ****
+  .panel.panel-default
+    .panel-heading
+      .panel-title
+        Project Information
+    .panel-body
+      .form-group
+        = f.label :title
+        = f.text_field :title, class: 'form-control'
+      .form-group
+        = f.label :description
+        = f.text_area :description, class: 'form-control'
+      .form-group
+        = f.label :funding_status
+        = f.select :funding_status, ['Pending Funding', 'Funded'], { include_blank: 'Please select' }, class: 'form-control'
+      .form-group
+        = f.label :funding_source
+        = f.select :funding_source, ['College Department', 'Federal', 'Foundation/Organization', 'Industry-Initiated/Industry-Sponsored', 'Investigator-Initiated/Industry-Sponsored', 'Internal Funded Pilot Project', 'Student Funded Research'], { include_blank: 'Please select' }, class: 'form-control'
+      .form-group
+        = f.label :start_date, "Estimate Start Date"
+        = f.text_field :start_date, class: 'form-control date-select'
+      .form-group
+        = f.label :end_date, "Estimate End Date"
+        = f.text_field :end_date, class: 'form-control date-select'
+      .form-group#pi_search_typeahead
+        = f.label :primary_pi_name, "Primary PI Name"
+        = f.text_field :primary_pi_name, placeholder: "Last Name (eg. Smith)", class: 'form-control typeahead'
+  = f.submit "Update", class: 'btn btn-success'
+  = link_to "Cancel", sparc_requests_path, class: 'btn btn-danger', data: { confirm: "Are you sure you would like to cancel? Any changes will be lost." }
+%br
+%br

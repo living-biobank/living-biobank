@@ -7,15 +7,16 @@
         Message
     .panel-body
       .form-group
-        No requests found!
+        No active requests found! (
+        = pluralize @all_sparc_requests.count, 'request'
         %br
         %br
         = link_to 'Create New Request', new_sparc_request_path, class: 'btn btn-primary'
 - else
   %table.table.table-striped.table-bordered
     %tr
-      %th Short Title
       %th Title
+      %th Description
       %th Funding Status
       %th Funding Source
       %th Estimated Start Date
@@ -23,12 +24,17 @@
       %th Primary PI Name
       %th Specimen Service
       %th Specimen Service Source
+      %th Number Of Specimens Requested
+      %th Minimum Sample Size
       %th i2b2 Query Name
+      %th Time Estimate
+      %th Status
+      %th Actions
 
     - @sparc_requests.each do |request|
       %tr
-        %td= request.short_title
         %td= request.title
+        %td= request.description
         %td= request.funding_status
         %td= request.funding_source
         %td= request.start_date
@@ -36,4 +42,16 @@
         %td= request.primary_pi_name
         %td= request.service.name
         %td= request.service_source
+        %td= request.number_of_specimens_requested
+        %td= request.minimum_sample_size
         %td= request.query_name
+        %td= request.time_estimate
+        %td= request.status
+        %td
+          = link_to "Accept Estimate", sparc_request_update_status_path(request, new_status: 'In Process'), class: 'btn btn-success', data: { confirm: "Are you sure you would like to cancel this '#{request.status}' request?" }
+          %br
+          %br
+          = link_to "Edit", edit_sparc_request_path(request), class: 'btn btn-warning'
+          %br
+          %br
+          = link_to "Cancel", sparc_request_update_status_path(request, new_status: 'Cancelled'), class: 'btn btn-danger', data: { confirm: "Are you sure you would like to cancel this '#{request.status}' request?" }

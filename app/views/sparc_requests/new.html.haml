@@ -11,60 +11,91 @@
 
 %br
 
-= form_for @sparc_request do |f|
-  .panel.panel-default
+- unless @has_i2b2 # don't show if we've answered that we already have an i2b2 query
+  .i2b2-present.panel.panel-default
     .panel-heading
       .panel-title
-        Message
+        i2b2 Query
     .panel-body
       .form-group
-        **** All fields are required in order to proceed. ****
-  .panel.panel-default
+        Have you already created an i2b2 query for your request?
+        = link_to "Yes", "javascript:void(0);", class: 'btn btn-success show-request-form'
+        = link_to "No", "javascript:void(0);", class: 'btn btn-danger show-i2b2-query-information'
+
+  .i2b2-information.panel.panel-default
     .panel-heading
       .panel-title
-        Project Information
+        i2b2 Query Information
     .panel-body
       .form-group
-        = f.label :short_title
-        = f.text_field :short_title, class: 'form-control'
-      .form-group
-        = f.label :title
-        = f.text_field :title, class: 'form-control'
-      .form-group
-        = f.label :funding_status
-        = f.select :funding_status, ['Pending Funding', 'Funded'], { include_blank: 'Please select' }, class: 'form-control'
-      .form-group
-        = f.label :funding_source
-        = f.select :funding_source, ['College Department', 'Federal', 'Foundation/Organization', 'Industry-Initiated/Industry-Sponsored', 'Investigator-Initiated/Industry-Sponsored', 'Internal Funded Pilot Project', 'Student Funded Research'], { include_blank: 'Please select' }, class: 'form-control'
-      .form-group
-        = f.label :start_date, "Estimate Start Date"
-        = f.text_field :start_date, class: 'form-control date-select'
-      .form-group
-        = f.label :end_date, "Estimate End Date"
-        = f.text_field :end_date, class: 'form-control date-select'
-      .form-group#pi_search_typeahead
-        = f.label :primary_pi_name, "Primary PI Name"
-        = f.text_field :primary_pi_name, placeholder: "Last Name (eg. Smith)", class: 'form-control typeahead'
-  .panel.panel-default
-    .panel-heading
-      .panel-title
-        Specimen Information
-    .panel-body
-      .form-group
-        = f.label :service_id
-        = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', @sparc_request.service_id), { include_blank: 'Please select' }, class: 'form-control'
-      .form-group#service_source_typeahead
-        = f.label :service_source
-        = f.text_field :service_source, placeholder: "Source (eg. Whole Blood)", class: 'form-control typeahead'
-  .panel.panel-default
-    .panel-heading
-      .panel-title
-        i2b2 Information
-    .panel-body
-      .form-group
-        = f.label :query_name
-        = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: 'Please select' }, class: 'form-control'
-  = f.submit "Submit for inquiry", class: 'btn btn-primary'
-  = link_to "Cancel", sparc_requests_path, class: 'btn btn-primary'
+        Information on creating a i2b2 query can be found at
+        = link_to 'http://academicdepartments.musc.edu/bmic/DataRequest.html', 'http://academicdepartments.musc.edu/bmic/DataRequest.html', target: :blank
+
+
+%div{class: [@has_i2b2 ? 'new-missing-fields-request-form' : 'new-request-form']}
+  = form_for @sparc_request do |f|
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Message
+      .panel-body
+        .form-group
+          **** All fields are required in order to proceed. ****
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Project Information
+      .panel-body
+        .form-group.hidden
+          = f.label :short_title
+          = f.text_field :short_title, class: 'form-control'
+        .form-group
+          = f.label :title
+          = f.text_field :title, class: 'form-control'
+        .form-group
+          = f.label :description
+          = f.text_area :description, class: 'form-control'
+        .form-group
+          = f.label :funding_status
+          = f.select :funding_status, ['Pending Funding', 'Funded'], { include_blank: 'Please select' }, class: 'form-control'
+        .form-group
+          = f.label :funding_source
+          = f.select :funding_source, ['College Department', 'Federal', 'Foundation/Organization', 'Industry-Initiated/Industry-Sponsored', 'Investigator-Initiated/Industry-Sponsored', 'Internal Funded Pilot Project', 'Student Funded Research'], { include_blank: 'Please select' }, class: 'form-control'
+        .form-group
+          = f.label :start_date, "Estimate Start Date"
+          = f.text_field :start_date, class: 'form-control date-select'
+        .form-group
+          = f.label :end_date, "Estimate End Date"
+          = f.text_field :end_date, class: 'form-control date-select'
+        .form-group#pi_search_typeahead
+          = f.label :primary_pi_name, "Primary PI Name"
+          = f.text_field :primary_pi_name, placeholder: "Last Name (eg. Smith)", class: 'form-control typeahead'
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          Specimen Information
+      .panel-body
+        .form-group
+          = f.label :service_id
+          = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID').split(',')), 'id', 'name', @sparc_request.service_id), { include_blank: 'Please select' }, class: 'form-control'
+        .form-group#service_source_typeahead
+          = f.label :service_source
+          = f.text_field :service_source, placeholder: "Source (eg. Whole Blood)", class: 'form-control typeahead'
+        .form-group
+          = f.label :number_of_specimens_requested
+          = f.text_field :number_of_specimens_requested, class: 'form-control'
+        .form-group
+          = f.label :minimum_sample_size
+          = f.text_field :minimum_sample_size, placeholder: "2ml", class: 'form-control'
+    .panel.panel-default
+      .panel-heading
+        .panel-title
+          i2b2 Information
+      .panel-body
+        .form-group
+          = f.label :query_name
+          = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: 'Please select' }, class: 'form-control'
+    = f.submit "Submit for inquiry", class: 'btn btn-success'
+    = link_to "Cancel", sparc_requests_path, class: 'btn btn-danger', data: { confirm: "Are you sure you would like to cancel this '#{@sparc_request.status}' request?" }
   %br
   %br

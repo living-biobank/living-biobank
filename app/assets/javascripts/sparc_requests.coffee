@@ -17,5 +17,14 @@ $ ->
     display: 'name'
 
   # date pickers
-  $('.date-select').datepicker(autoclose: true)
+  $('.date-select').datepicker(autoclose: true, format: 'yyyy-mm-dd')
 
+
+  # toggle view on request form
+  $('.show-request-form').on 'click', ->
+    $('.new-request-form').show()
+    $('.i2b2-present').hide()
+
+  $('.show-i2b2-query-information').on 'click', ->
+    $('.i2b2-information').show()
+    $('.i2b2-present').hide()

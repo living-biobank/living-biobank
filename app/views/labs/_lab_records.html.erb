@@ -1,36 +1,26 @@
 <h1>Labs</h1>
 <table class="table table-striped table-bordered">
   <tr>
-    <th>Order ID</th>
-    <th>Eligible Protocols</th>
-    <th>Specimen Date</th>
-    <th>Specimen Source</th>
     <th>MRN</th>
+    <th>Potential Samples Available</th>
+    <th>Specimen Source</th>
+    <th>Eligible Protocols</th>
     <th>Actions</th>
   </tr>
-  <% labs.find_each do |lab| %>
+  <% labs.each do |grouping, labs| %>
     <tr>
-      <td><%= lab.order_id %></td>
+      <td><%= labs.first.mrn %></td>
+      <td><%= labs.count %></td>
+      <td><%= labs.first.specimen_source %></td>
       <td>
-        <%- lab.protocols.each do |protocol| %>
-          <%= protocol %>
-        <% end %>
+        <%- protocols = labs.map(&:protocols).flatten.uniq %>
+        <%- protocols.each do |p| %>
+          <%= protocol_preview(p) %>
+        <%- end %>
       </td>
-      <td><%= lab.specimen_date.strftime("%m/%d/%Y %I:%M%p") %></td>
-      <td><%= lab.specimen_source %></td>
-      <td><%= lab.mrn %></td>
       <td>
         <div class='btn-group'>
-          <%= link_to 'Release',
-            new_specimen_record_path(lab_id: lab.id),
-            class: 'btn btn-primary', remote: true
-          %>
-          <%= link_to 'Expired/Unavailable',
-            lab_path(lab),
-            method: :patch,
-            class: 'btn btn-warning', remote: true,
-            data: { confirm: 'Are you sure you would like remove this lab?' }
-          %>
+          <%= link_to 'Release', new_specimen_record_path(protocol_ids: protocols.map(&:id).join(':')),  class: 'btn btn-primary', remote: true %>
         </div>
       </td>
     </tr>
