@@ -3,11 +3,6 @@
     %h2.card-title
       = t(:login)[:header]
     = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
-      - if flash[:alert]
-        .alert.alert-danger#errorMessages
-          %ul.list-unstyled.mb-0
-            %li
-              = flash[:alert]
       .form-group
         = f.text_field :login, autofocus: true, class: 'form-control', placeholder: t(:login)[:net_id]
       .form-group
@@ -17,4 +12,4 @@
           = f.check_box :remember_me, class: 'form-check-input'
           %label.form-check-label{ for: 'user_remember_me' }
             = t(:login)[:remember_me]
-      = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-primary'
+      = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-outline-primary'

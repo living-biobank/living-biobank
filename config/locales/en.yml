@@ -5,6 +5,7 @@ en:
     brand: "Living Biobank"
     specimens: "Specimens"
     requests: "Requests"
+    login: 'Login'
     logout: "Logout"
   login:
     header: "Login"
