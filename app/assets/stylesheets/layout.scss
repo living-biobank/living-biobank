@@ -27,14 +27,3 @@ html {
     }
   }
 }
-
-@include media-breakpoint-only(md) {
-  html {
-    body {
-      #content {
-        padding-left: 0;
-        padding-right: 0;
-      }
-    }
-  }
-}

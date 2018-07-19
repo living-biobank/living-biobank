@@ -1,12 +1,18 @@
 %header
-  %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
-    .container
-      %a.navbar-brand{ href: root_path }
-        = "Living Biobank"
-      %button.navbar-toggler{ type: 'button', data: { toggle: 'collapse', target: '#navbarContent' }, aria: { controls: 'navbarContent' } }
-        %span.navbar-toggler-icon
-      .collapse.navbar-collapse#navbarContent
-        %ul.navbar-nav.ml-auto
-          - if current_user
+  %nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top.border-bottom.p-0
+    .container.align-items-stretch.h-100
+      .navbar-header.container.d-flex.justify-content-between.h-100
+        %a.navbar-brand{ href: root_path }
+          = "Living Biobank"
+        %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
+          %span.navbar-toggler-icon
+      .collapse.navbar-collapse#navbarLinks
+        %ul.navbar-nav.ml-auto.h-100
+          - if current_user.honest_broker?
             %li.nav-item
-              = link_to "Logout", destroy_user_session_path, method: 'delete', id: 'logout', class: 'btn btn-warning'
+              = link_to "Specimens", labs_path, class: 'nav-link container h-100'
+          %li.nav-item
+            = link_to "Requests", sparc_requests_path, class: 'nav-link container h-100'
+          - if user_signed_in?
+            %li.nav-item
+              = link_to "Logout", destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link container text-danger h-100'
