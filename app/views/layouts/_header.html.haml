@@ -3,16 +3,16 @@
     .container.align-items-stretch.h-100
       .navbar-header.container.d-flex.justify-content-between.h-100
         %a.navbar-brand{ href: root_path }
-          = "Living Biobank"
+          = t(:header)[:brand]
         %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
           %span.navbar-toggler-icon
       .collapse.navbar-collapse#navbarLinks
         %ul.navbar-nav.ml-auto.h-100
           - if current_user.honest_broker?
             %li.nav-item
-              = link_to "Specimens", labs_path, class: 'nav-link container h-100'
+              = link_to t(:header)[:specimens], labs_path, class: 'nav-link container h-100'
           %li.nav-item
-            = link_to "Requests", sparc_requests_path, class: 'nav-link container h-100'
+            = link_to t(:header)[:requests], sparc_requests_path, class: 'nav-link container h-100'
           - if user_signed_in?
             %li.nav-item
-              = link_to "Logout", destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link container text-danger h-100'
+              = link_to t(:header)[:logout], destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link container text-danger h-100'
