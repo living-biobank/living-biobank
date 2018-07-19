@@ -1,0 +1,23 @@
+.card.col-lg-6.col-md-9.mx-auto#loginForm
+  .card-body
+    %h2.card-title
+      = "Login"
+    
+    = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
+      - if flash[:alert]
+        .alert.alert-danger#errorMessages
+          %ul.list-unstyled.mb-0
+            %li
+              = flash[:alert]
+
+      .form-group
+        = f.text_field :login, autofocus: true, class: 'form-control', placeholder: 'Net ID'
+      .form-group
+        = f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'password'
+      - if devise_mapping.rememberable?
+        .form-group.form-check
+          = f.check_box :remember_me, class: 'form-check-input'
+          %label.form-check-label{ for: 'user_remember_me' }
+            = "Remember Me"
+
+      = f.submit "Login", class: 'btn btn-lg btn-block btn-primary'

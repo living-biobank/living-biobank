@@ -1,0 +1,40 @@
+html {
+  min-height: 100%;
+  position: relative;
+
+  &.ready {
+    body {
+      opacity: 1;
+    }
+  }
+
+  body {
+    opacity: 0;
+    transition: 0.5s opacity ease-in-out;
+
+    #content {
+      padding-top: $spacer;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    body {
+      #content {
+        padding-top: $spacer * 6;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-only(md) {
+  html {
+    body {
+      #content {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}

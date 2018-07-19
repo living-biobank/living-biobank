@@ -1,0 +1,12 @@
+%header
+  %nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.fixed-top
+    .container
+      %a.navbar-brand{ href: root_path }
+        = "Living Biobank"
+      %button.navbar-toggler{ type: 'button', data: { toggle: 'collapse', target: '#navbarContent' }, aria: { controls: 'navbarContent' } }
+        %span.navbar-toggler-icon
+      .collapse.navbar-collapse#navbarContent
+        %ul.navbar-nav.ml-auto
+          - if current_user
+            %li.nav-item
+              = link_to "Logout", destroy_user_session_path, method: 'delete', id: 'logout', class: 'btn btn-warning'
