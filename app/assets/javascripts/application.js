@@ -12,9 +12,10 @@
 //
 //= require rails-ujs
 //= require turbolinks
-//= require jquery/dist/jquery
-//= require bootstrap/dist/js/bootstrap
+//= require jquery3
+//= require popper
+//= require bootstrap
 //= require bootstrap-datepicker
-//= require sweetalert/dist/sweetalert.min
-//= require bootstrap-3-typeahead/bootstrap3-typeahead.min
+//= require bootstrap-3-typeahead.min
+//= require sweetalert2.min
 //= require_tree .
