@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'ar-octopus'
-gem 'bootstrap-datepicker-rails'
 gem 'bootstrap', '~> 4.1.1'
+gem 'bootstrap-datepicker-rails'
 gem 'bootstrap-table-rails'
 gem 'coffee-rails', '~> 4.2'
 gem 'devise'

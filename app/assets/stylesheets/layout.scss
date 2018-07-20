@@ -18,6 +18,13 @@ html {
   }
 }
 
+.required {
+  span {
+    margin-left: $spacer * 0.25;
+    color: theme-color('danger');
+  }
+}
+
 @include media-breakpoint-up(md) {
   html {
     body {

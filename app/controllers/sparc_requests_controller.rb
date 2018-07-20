@@ -14,20 +14,32 @@ class SparcRequestsController < ApplicationController
   end
 
   def create
-    @sparc_request = current_user.sparc_requests.new sparc_request_params
+    @sparc_request = current_user.sparc_requests.new(sparc_request_params)
 
-    if @sparc_request.valid?
-      @sparc_request.save
-      flash.now[:success] = "Inquiry received, you should hear back from someone in 1-2 business days"
-      render :index
+    if @sparc_request.save
+      flash.now[:success] = t(:requests)[:created]
     else
-      flash.now[:error] = "Please complete all fields in order to proceed"
-      render :new
+      @errors = @sparc_request.errors
     end
   end
 
   private
+
   def sparc_request_params
-    params.require(:sparc_request).permit(:short_title, :title, :funding_status, :funding_source, :start_date, :end_date, :primary_pi_name, :query_name, :service_source, :service_id)
+    params[:sparc_request][:start_date] = sanitize_date(params[:sparc_request][:start_date])
+    params[:sparc_request][:end_date]   = sanitize_date(params[:sparc_request][:end_date])
+
+    params.require(:sparc_request).permit(
+      :short_title,
+      :title,
+      :funding_status,
+      :funding_source,
+      :start_date,
+      :end_date,
+      :primary_pi_name,
+      :query_name,
+      :service_source,
+      :service_id
+    )
   end
 end

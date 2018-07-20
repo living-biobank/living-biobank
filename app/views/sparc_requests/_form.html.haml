@@ -1,0 +1,66 @@
+.modal-dialog.modal-lg{ role: 'document' }
+  .modal-content
+    = form_for sparc_request, remote: true do |f|
+      .modal-header
+        %h5.modal-title.m-0
+          = t(:requests)[:form][:title]
+        %button.close{ data: { dismis: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        .card.mb-3
+          .card-header
+            %h5.card-title.m-0
+              = t(:requests)[:form][:headers][:project_information]
+          .card-body
+            .form-group
+              = f.label :short_title, t(:requests)[:fields][:short_title], class: 'required'
+              = f.text_field :short_title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:short_title]
+            .form-group
+              = f.label :title, t(:requests)[:fields][:title], class: 'required'
+              = f.text_field :title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:title]
+            .form-group
+              = f.label :funding_status, t(:requests)[:fields][:funding_status], class: 'required'
+              = f.select :funding_status, PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+            .form-group
+              = f.label :funding_source, t(:requests)[:fields][:funding_source], class: 'required'
+              = f.select :funding_source, PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+            .form-group
+              = f.label :start_date, t(:requests)[:fields][:start_date], class: 'required'
+              .input-group
+                = f.text_field :start_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
+                .input-group-append
+                  %span.input-group-text
+                    = fa_icon 'calendar'
+            .form-group
+              = f.label :end_date, t(:requests)[:fields][:end_date], class: 'required'
+              .input-group
+                = f.text_field :end_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
+                .input-group-append
+                  %span.input-group-text
+                    = fa_icon 'calendar'
+            .form-group
+              = f.label :primary_pi_name, t(:requests)[:fields][:primary_pi], class: 'required'
+              = f.text_field :primary_pi_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]
+        .card.mb-3
+          .card-header
+            %h5.card-title.m-0
+              = t(:requests)[:form][:headers][:specimen_information]
+          .card-body
+            .form-group
+              = f.label :service_id, t(:requests)[:fields][:service], class: 'required'
+              = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', @sparc_request.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+            .form-group
+              = f.label :service_source, t(:requests)[:fields][:service_source], class: 'required'
+              = f.text_field :service_source, placeholder: t(:requests)[:form][:placeholders][:service_source], class: 'form-control typeahead'
+        .card
+          .card-header
+            %h5.card-title.m-0
+              = t(:requests)[:form][:headers][:i2b2_information]
+          .card-body
+            .form-group
+              = f.label :query_name, t(:requests)[:fields][:query_name], class: 'required'
+              = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+      .modal-footer
+        = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
+        %button.btn.btn-danger{ data: { dismiss: 'modal' } }
+          = t(:actions)[:close]

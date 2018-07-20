@@ -1,0 +1,19 @@
+form {
+  input {
+    &.is-valid {
+      + .input-group-append {
+        .input-group-text {
+          border-color: theme-color('success');
+        }
+      }
+    }
+
+    &.is-invalid {
+      + .input-group-append {
+        .input-group-text {
+          border-color: theme-color('danger');
+        }
+      }
+    }
+  }
+}

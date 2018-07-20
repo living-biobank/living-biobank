@@ -5,4 +5,8 @@ class ApplicationController < ActionController::Base
   def honest_broker_check
     redirect_to root_path unless current_user.honest_broker?
   end
+
+  def sanitize_date(date)
+    Date.strptime(date, "%m/%d/%Y") rescue date
+  end
 end

@@ -1,6 +1,21 @@
 en:
   actions:
+    cancel: "Cancel"
     close: "Close"
+  activerecord:
+    attributes:
+      sparc_request:
+        short_title: "Short Title"
+        funding_status: "Funding Status"
+        funding_source: "Funding Source"
+        start_date: "Estimated Start Date"
+        end_date: "Estimated End Date"
+        primary_pi_name: "Primary PI Name"
+        service_source: "Service Source"
+        query_name: "Query Name"
+  constants:
+    select_placeholder: "Please Select"
+    date_placeholder: "MM/DD/YYYY"
   header:
     brand: "Living Biobank"
     specimens: "Specimens"
@@ -16,6 +31,7 @@ en:
   requests:
     header: "SPARC Requests"
     create: "Create New Request"
+    created: "Inquiry received. You should hear back from someone in 1-2 business days."
     fields:
       short_title: "Short Title"
       title: "Title"
@@ -27,4 +43,16 @@ en:
       service: "Service"
       service_source: "Service Source"
       query_name: "Query Name"
+    form:
+      title: "New Request"
+      headers:
+        project_information: "Project Information"
+        specimen_information: "Specimen Information"
+        i2b2_information: "i2b2 Information"
+      placeholders:
+        short_title: "Short Title"
+        title: "Title"
+        primary_pi: "Last Name (eg. Smith)"
+        service_source: "Source (eg. Whole Blood)"
+      submit: "Submit for Inquiry"
   site_name: "SPARC Living Biobank"

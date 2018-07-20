@@ -19,3 +19,6 @@ $(document).on 'turbolinks:load', ->
     return 1 if sort_a > sort_b
     return -1 if sort_a < sort_b
     return 0
+
+(exports ? this).setRequiredFields = () ->
+  $('.required').append('<span>*</span>')
