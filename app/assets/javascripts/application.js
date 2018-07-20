@@ -17,5 +17,6 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-3-typeahead.min
+//= require bootstrap-table
 //= require sweetalert2.min
 //= require_tree .

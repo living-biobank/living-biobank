@@ -1,7 +1,12 @@
 class SparcRequestsController < ApplicationController
 
   def index
-    @sparc_requests = current_user.sparc_requests
+    respond_to do |format|
+      format.html
+      format.json {
+        @sparc_requests = current_user.sparc_requests
+      }
+    end
   end
 
   def new

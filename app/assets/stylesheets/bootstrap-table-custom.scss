@@ -1,0 +1,27 @@
+@include media-breakpoint-down(md) {
+  .bootstrap-table {
+    .fixed-table-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+
+      .bs-bars {
+        width: 100%;
+        order: 1;
+
+        .custom-toolbar {
+          width: 100%;
+        }
+      }
+
+      .columns {
+        order: 3;
+      }
+
+      .search {
+        width: 100%;
+        order: 2;
+      }
+    }
+  }
+}

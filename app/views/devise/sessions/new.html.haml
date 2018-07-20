@@ -10,6 +10,5 @@
       - if devise_mapping.rememberable?
         .form-group.form-check
           = f.check_box :remember_me, class: 'form-check-input'
-          %label.form-check-label{ for: 'user_remember_me' }
-            = t(:login)[:remember_me]
-      = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-outline-primary'
+          = f.label :remember_me, t(:login)[:remember_me], class: 'form-check-label'
+      = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-primary'

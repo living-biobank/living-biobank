@@ -13,4 +13,18 @@ en:
     password: "Password"
     remember_me: "Remember Me"
     submit: "Login"
+  requests:
+    header: "SPARC Requests"
+    create: "Create New Request"
+    fields:
+      short_title: "Short Title"
+      title: "Title"
+      funding_status: "Funding Status"
+      funding_source: "Funding Source"
+      start_date: "Estimated Start Date"
+      end_date: "Estimated End Date"
+      primary_pi: "Primary PI Name"
+      service: "Service"
+      service_source: "Service Source"
+      query_name: "Query Name"
   site_name: "SPARC Living Biobank"
