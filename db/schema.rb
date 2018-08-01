@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018190808) do
+ActiveRecord::Schema.define(version: 20180801185143) do
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20171018190808) do
     t.boolean "removed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "visit_id"
+    t.integer "lab_visit_id"
+    t.string "accession_number", limit: 75
     t.index ["patient_id"], name: "index_labs_on_patient_id"
   end
 
