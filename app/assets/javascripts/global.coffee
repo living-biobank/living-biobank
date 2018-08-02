@@ -4,7 +4,8 @@ $(document).on 'turbolinks:load', ->
   $('#content').css('margin-top', $('nav.navbar').outerHeight())
   $('html').addClass('ready')
 
-  $('.bootstrap-table').bootstrapTable()
+  if $('.bootstrap-table').length == 0
+    $('.bs-table').bootstrapTable()
 
 (exports ? this).dateSorter = (a, b) ->
   if !a && !b

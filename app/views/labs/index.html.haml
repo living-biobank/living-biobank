@@ -3,7 +3,7 @@
 .bootstrap-table-dropdown-overflow
   .custom-toolbar#labsCustomToolbar
     %input.form-control#verifySpecimens{ type: 'text', placeholder: t(:labs)[:search] }
-  %table.bootstrap-table#labsTable{ data: { toggle: 'table', 'show-columns' => 'true', 'show-refresh' => 'true', url: labs_path(format: :json), striped: 'true', toolbar: '#labsCustomToolbar', pagination: 'true' } }
+  %table.bs-table#labsTable{ data: { toggle: 'table', 'show-columns' => 'true', 'show-refresh' => 'true', url: labs_path(format: :json), striped: 'true', toolbar: '#labsCustomToolbar', pagination: 'true' } }
     %thead
       %tr
         %th{ data: { field: 'order_id', align: 'left', sortable: 'true' } }

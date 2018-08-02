@@ -3,7 +3,7 @@
 .bootstrap-table-dropdown-overflow
   .custom-toolbar#requestsCustomToolbar
     = link_to t(:requests)[:create], new_sparc_request_path, remote: true, class: 'btn btn-block btn-primary'
-  %table.bootstrap-table#requestsTable{ data: { toggle: 'table', search: 'true', 'show-columns' => 'true', 'show-refresh' => 'true', url: sparc_requests_path(format: :json), striped: 'true', toolbar: '#requestsCustomToolbar', pagination: 'true' } }
+  %table.bs-table#requestsTable{ data: { toggle: 'table', search: 'true', 'show-columns' => 'true', 'show-refresh' => 'true', url: sparc_requests_path(format: :json), striped: 'true', toolbar: '#requestsCustomToolbar', pagination: 'true' } }
     %thead
       %tr
         %th{ data: { field: 'short_title', align: 'left', sortable: 'true' } }
