@@ -15,7 +15,21 @@
       }
 
       .columns {
+        width: 100%;
+        margin-left: 0;
         order: 3;
+
+        button[name="refresh"] {
+          width: 50%;
+        }
+
+        .btn-group {
+          width: 50%;
+
+          button {
+            width: 100%;
+          }
+        }
       }
 
       .search {
