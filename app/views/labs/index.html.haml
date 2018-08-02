@@ -1,0 +1,20 @@
+%h2.border-bottom.pb-2
+  = t(:labs)[:header]
+.bootstrap-table-dropdown-overflow
+  .custom-toolbar#labsCustomToolbar
+    %input.form-control#verifySpecimens{ type: 'text', placeholder: t(:labs)[:search] }
+  %table.bootstrap-table#labsTable{ data: { toggle: 'table', 'show-columns' => 'true', 'show-refresh' => 'true', url: labs_path(format: :json), striped: 'true', toolbar: '#labsCustomToolbar', pagination: 'true' } }
+    %thead
+      %tr
+        %th{ data: { field: 'order_id', align: 'left', sortable: 'true' } }
+          = t(:labs)[:fields][:order_id]
+        %th{ data: { field: 'protocols', align: 'left', sortable: 'true' } }
+          = t(:labs)[:fields][:protocols]
+        %th{ data: { field: 'specimen_date', align: 'left', sortable: 'true', sorter: 'dateSorter' } }
+          = t(:labs)[:fields][:specimen_date]
+        %th{ data: { field: 'specimen_source', align: 'left', sortable: 'true' } }
+          = t(:labs)[:fields][:specimen_source]
+        %th{ data: { field: 'mrn', align: 'left', sortable: 'true' } }
+          = t(:labs)[:fields][:mrn]
+        %th{ data: { field: 'actions', align: 'center' } }
+          = t(:labs)[:fields][:actions]

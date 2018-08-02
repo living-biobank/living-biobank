@@ -4,11 +4,11 @@
   .custom-toolbar#requestsCustomToolbar
     = link_to t(:requests)[:create], new_sparc_request_path, remote: true, class: 'btn btn-block btn-primary'
   %table.bootstrap-table#requestsTable{ data: { toggle: 'table', search: 'true', 'show-columns' => 'true', 'show-refresh' => 'true', url: sparc_requests_path(format: :json), striped: 'true', toolbar: '#requestsCustomToolbar', pagination: 'true' } }
-    %thead.thead-primary
+    %thead
       %tr
         %th{ data: { field: 'short_title', align: 'left', sortable: 'true' } }
           = t(:requests)[:fields][:short_title]
-        %th{ data: { field: 'title', align: 'left', sortable: 'true' } }
+        %th{ data: { field: 'title', align: 'left', sortable: 'true', visible: 'false' } }
           = t(:requests)[:fields][:title]
         %th{ data: { field: 'funding_status', align: 'left', sortable: 'true' } }
           = t(:requests)[:fields][:funding_status]
@@ -22,7 +22,7 @@
           = t(:requests)[:fields][:primary_pi]
         %th{ data: { field: 'service', align: 'left', sortable: 'true' } }
           = t(:requests)[:fields][:service]
-        %th{ data: { field: 'service_source', align: 'left', sortable: 'true' } }
+        %th{ data: { field: 'service_source', align: 'left', sortable: 'true', visible: 'false' } }
           = t(:requests)[:fields][:service_source]
-        %th{ data: { field: 'query_name', align: 'left', sortable: 'true' } }
+        %th{ data: { field: 'query_name', align: 'left', sortable: 'true', visible: 'false' } }
           = t(:requests)[:fields][:query_name]

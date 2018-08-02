@@ -1,20 +1,20 @@
 class Lab < ApplicationRecord
   belongs_to :patient
+
   has_many :specimen_records
 
-  def self.unreleased_labs
+  delegate :mrn, to: :patient
+  delegate :specimen_requests, to: :patient
+
+  scope :available, -> {
+    where(removed: false)
+  }
+
+  scope :unreleased, -> {
     where.not(id: SpecimenRecord.all.pluck(:lab_id))
-  end
+  }
 
   def protocols
-    patient.specimen_requests.map(&:protocol_id)
-  end
-
-  def specimen_requests
-    patient.specimen_requests.map(&:id)
-  end
-
-  def mrn
-    patient.mrn
+    patient.specimen_requests.pluck(:protocol_id)
   end
 end

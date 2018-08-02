@@ -27,6 +27,7 @@ gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', '~> 3.0', '>= 3.0.2'
+gem 'i18n-js'
 
 # adding oracle for i2b2 access
 gem 'activerecord-oracle_enhanced-adapter', '~> 1.8.0'

@@ -2,8 +2,9 @@ class SpecimenRecordsController < ApplicationController
   before_action :honest_broker_check
 
   def new
-    @specimen_record = SpecimenRecord.new
     @lab = Lab.find(params[:lab_id])
+    @specimen_record = @lab.specimen_records.new
+
     respond_to do |format|
       format.js
     end
@@ -11,20 +12,19 @@ class SpecimenRecordsController < ApplicationController
 
   def create
     @specimen_record = SpecimenRecord.new(specimen_record_params)
-    @specimen_record.release_date = DateTime.strptime(
-      specimen_record_params[:release_date], '%m/%d/%Y'
-    ).to_date
-    respond_to do |format|
-      if @specimen_record.save
-        @labs = Lab.unreleased_labs.includes(patient: :specimen_requests)
-        format.js
-      end
+
+    if @specimen_record.save
+      flash.now[:success] = t(:specimen_records)[:created]
+    else
+      @errors = @specimen_record.errors
     end
   end
 
   private
 
   def specimen_record_params
+    params[:specimen_record][:release_date] = sanitize_date(params[:specimen_record][:release_date])
+
     params.require(:specimen_record).permit(
       :lab_id,
       :protocol_id,

@@ -2,6 +2,7 @@ en:
   actions:
     cancel: "Cancel"
     close: "Close"
+    release: "Release"
   activerecord:
     attributes:
       sparc_request:
@@ -13,15 +14,36 @@ en:
         primary_pi_name: "Primary PI Name"
         service_source: "Service Source"
         query_name: "Query Name"
+      specimen_record:
+        release_date: "Release Date"
+        release_to: "Release To"
   constants:
-    select_placeholder: "Please Select"
     date_placeholder: "MM/DD/YYYY"
+    select_placeholder: "Please Select"
+  confirm:
+    title: "Are you sure?"
+    text: "This action cannot be undone."
+    confirm: "Yes"
+    cancel: "Cancel"
   header:
     brand: "Living Biobank"
     specimens: "Specimens"
     requests: "Requests"
     login: 'Login'
     logout: "Logout"
+  labs:
+    header: "Lab Specimens"
+    search: "Search for eligible requests"
+    fields:
+      order_id: "Order ID"
+      protocols: "Eligible Protocols"
+      specimen_date: "Specimen Date"
+      specimen_source: "Specimen Source"
+      mrn: "MRN"
+      actions: "Actions"
+      delete: "Expired/Unavailable"
+    form:
+      title: "Specimen Release"
   login:
     header: "Login"
     net_id: "Net ID"
@@ -37,9 +59,9 @@ en:
       title: "Title"
       funding_status: "Funding Status"
       funding_source: "Funding Source"
-      start_date: "Estimated Start Date"
-      end_date: "Estimated End Date"
-      primary_pi: "Primary PI Name"
+      start_date: "Est. Start Date"
+      end_date: "Est. End Date"
+      primary_pi: "Primary PI"
       service: "Service"
       service_source: "Service Source"
       query_name: "Query Name"
@@ -56,3 +78,7 @@ en:
         service_source: "Source (eg. Whole Blood)"
       submit: "Submit for Inquiry"
   site_name: "SPARC Living Biobank"
+  specimen_records:
+    created: "Lab Specimen released successfully."
+    form:
+      header: "Specimen Release"

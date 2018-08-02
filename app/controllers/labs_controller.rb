@@ -1,7 +1,13 @@
 class LabsController < ApplicationController
-  before_action :find_labs, :honest_broker_check
+  before_action :honest_broker_check
 
   def index
+    respond_to do |format|
+      format.html
+      format.json {
+        @labs = Lab.available.unreleased.includes(patient: :specimen_requests)
+      }
+    end
   end
 
   def update
@@ -10,13 +16,5 @@ class LabsController < ApplicationController
     respond_to do |format|
       format.js
     end
-  end
-
-  private
-
-  def find_labs
-    @labs = Lab.where(removed: false)
-      .unreleased_labs
-      .includes(patient: :specimen_requests)
   end
 end

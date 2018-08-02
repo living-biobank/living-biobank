@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require sweetalert2.min
+//= require sweetalert_integration
 //= require rails-ujs
 //= require turbolinks
 //= require jquery3
@@ -18,5 +20,4 @@
 //= require bootstrap3-typeahead.min
 //= require bootstrap-datepicker
 //= require bootstrap-table
-//= require sweetalert2.min
 //= require_tree .
