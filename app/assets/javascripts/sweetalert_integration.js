@@ -20,22 +20,27 @@
   const showConfirmationDialog = element => {
     const message = element.getAttribute('data-title')
     const text = element.getAttribute('data-text')
+    const confirm_text = element.getAttribute('data-confirm-text')
+    const cancel_text = element.getAttribute('data-cancel-text')
 
     swal({
       title: message || I18n.t('confirm.title'),
       text: text || I18n.t('confirm.text'),
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: I18n.t('confirm.confirm'),
-      cancelButtonText: I18n.t('confirm.cancel'),
+      confirmButtonText: confirm_text || I18n.t('confirm.confirm'),
+      cancelButtonText: cancel_text || I18n.t('confirm.cancel'),
     }).then(result => confirmed(element, result))
   }
 
   const confirmed = (element, result) => {
     if (result.value) {
       // User clicked confirm button
-      element.removeAttribute('data-confirm-swal')
-      element.click()
+      $.ajax({
+        method: 'GET',
+        url: element.getAttribute('href'),
+        dataType: element.getAttribute('data-remote') === 'true' ? 'script' : 'html'
+      });
     }
   }
 

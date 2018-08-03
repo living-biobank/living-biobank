@@ -2,7 +2,7 @@
   = t(:requests)[:header]
 .bootstrap-table-dropdown-overflow
   .custom-toolbar#requestsCustomToolbar
-    = link_to t(:requests)[:create], new_sparc_request_path, remote: true, class: 'btn btn-block btn-primary'
+    = link_to t(:requests)[:create], new_sparc_request_path, remote: true, class: 'btn btn-block btn-primary', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], text: t(:requests)[:create_confirm][:text], confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel] }
   %table.bs-table#requestsTable{ data: { toggle: 'table', search: 'true', 'show-columns' => 'true', 'show-refresh' => 'true', url: sparc_requests_path(format: :json), striped: 'true', toolbar: '#requestsCustomToolbar', pagination: 'true' } }
     %thead
       %tr

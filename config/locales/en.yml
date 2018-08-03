@@ -53,6 +53,11 @@ en:
   requests:
     header: "SPARC Requests"
     create: "Create New Request"
+    create_confirm:
+      title: "i2b2 Agreement"
+      text: "Placeholder agreement text here."
+      confirm: "Agree"
+      cancel: "Decline"
     created: "Inquiry received. You should hear back from someone in 1-2 business days."
     fields:
       short_title: "Short Title"
