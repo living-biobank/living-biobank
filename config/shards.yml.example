@@ -1,0 +1,17 @@
+octopus:
+  environments:
+    - development
+  development:
+    sparc:
+      host: localhost
+      username: root
+      password: password
+      adapter: mysql2
+      database: sparc-request_development
+    i2b2:
+      host: i2b2.url.com
+      port: 1234
+      username: username
+      password: password
+      adapter: mysql2
+      database: i2b2db
