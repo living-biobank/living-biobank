@@ -1,8 +1,8 @@
 class AddVisitIdLabVisitIdAccessionNumberToLabs < ActiveRecord::Migration[5.1]
   def up
-    add_column :labs, :visit_id, :integer
-    add_column :labs, :lab_visit_id, :integer
-    add_column :labs, :accession_number, :string, limit: 75
+    add_column :labs, :accession_number, :string, limit: 75, after: :order_id
+    add_column :labs, :lab_visit_id, :integer, after: :order_id
+    add_column :labs, :visit_id, :integer, after: :order_id
   end
 
   def down
