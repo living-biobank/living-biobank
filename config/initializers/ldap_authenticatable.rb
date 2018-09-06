@@ -15,7 +15,17 @@ module Devise
           ldap.auth "uid=#{login},ou=people,dc=musc,dc=edu", password
           if ldap.bind
             pwd = Devise.friendly_token
-            user = User.create_with(password: pwd, password_confirmation: pwd, email: Directory.search_ldap(login).first[:mail].first).find_or_create_by(net_id: "#{login}@musc.edu")
+            email = Directory.search_ldap(login).first[:mail].first
+            netid = "#{login}@musc.edu"
+
+            user = User.new(password: pwd, password_confirmation: pwd, email: email, net_id: netid)
+
+            if users = User.where(net_id: netid)
+              user = users.first
+            else
+              user.save
+            end
+
             success!(user)
           else
             fail(:invalid_login)

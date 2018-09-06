@@ -4,7 +4,6 @@ class SpecimenRecordsController < ApplicationController
   def new
     @lab = Lab.find(params[:lab_id])
     @specimen_record = @lab.specimen_records.new
-
     respond_to do |format|
       format.js
     end
@@ -26,10 +25,8 @@ class SpecimenRecordsController < ApplicationController
     params[:specimen_record][:release_date] = sanitize_date(params[:specimen_record][:release_date])
 
     params.require(:specimen_record).permit(
-      :lab_id,
       :protocol_id,
-      :release_date,
-      :release_to
+      :quantity
     )
   end
 end

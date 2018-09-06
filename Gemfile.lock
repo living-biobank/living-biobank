@@ -281,7 +281,7 @@ DEPENDENCIES
   bootstrap-datepicker-rails
   bootstrap-table-rails
   byebug
-  capistrano
+  capistrano (= 3.11.0)
   capistrano-passenger
   capistrano-rails
   capistrano-rvm

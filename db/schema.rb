@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20180801185143) do
 
-  create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.bigint "patient_id"
     t.datetime "specimen_date"
     t.integer "order_id"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20180801185143) do
     t.index ["patient_id"], name: "index_labs_on_patient_id"
   end
 
-  create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "mrn"
     t.datetime "preference_date"
     t.string "contact_pref"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20180801185143) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.bigint "specimen_request_id"
     t.bigint "patient_id"
     t.datetime "identified_date"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20180801185143) do
     t.integer "user_id"
     t.string "short_title"
     t.text "title"
+    t.text "description"
     t.string "funding_status"
     t.string "funding_source"
     t.date "start_date"
@@ -59,11 +60,16 @@ ActiveRecord::Schema.define(version: 20180801185143) do
     t.string "query_name"
     t.string "service_source"
     t.integer "service_id"
+    t.string "time_estimate"
+    t.string "status", default: "New"
+    t.integer "protocol_id"
+    t.string "minimum_sample_size"
+    t.integer "number_of_specimens_requested"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "specimen", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "specimen", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.bigint "specimen_request_id"
     t.bigint "lab_id"
     t.datetime "created_at", null: false
@@ -76,13 +82,15 @@ ActiveRecord::Schema.define(version: 20180801185143) do
     t.integer "protocol_id"
     t.datetime "release_date"
     t.string "release_to"
-    t.bigint "lab_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["lab_id"], name: "index_specimen_records_on_lab_id"
+    t.integer "quantity"
+    t.string "mrn"
+    t.string "service_source"
+    t.integer "service_id"
   end
 
-  create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "i2b2_query_name"
     t.bigint "protocol_id"
     t.bigint "line_item_id"

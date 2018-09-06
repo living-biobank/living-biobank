@@ -23,6 +23,35 @@ class SparcRequestsController < ApplicationController
     end
   end
 
+  def edit
+    @sparc_request = current_user.sparc_requests.find params[:id]
+  end
+
+  def update
+    @sparc_request = current_user.sparc_requests.find params[:id]
+    @sparc_request.assign_attributes sparc_request_params
+
+    if @sparc_request.save
+      flash.now[:success] = "Inquiry updated"
+      redirect_to action: 'index'
+    else
+      flash.now[:error] = "Please complete all fields in order to proceed"
+      render :edit
+    end
+  end
+
+  def update_status
+    @sparc_request = current_user.sparc_requests.find params[:sparc_request_id]
+
+    if @sparc_request.update_attributes status: params[:new_status]
+      flash.now[:success] = "Inquiry updated"
+    else
+      flash.now[:error] = "Unabled to update the status of your inquiry"
+    end
+
+    redirect_to action: 'index'
+  end
+
   private
 
   def sparc_request_params
