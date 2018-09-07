@@ -2,15 +2,22 @@ class SpecimenRecordsController < ApplicationController
   before_action :honest_broker_check
 
   def new
-    @lab = Lab.find(params[:lab_id])
-    @specimen_record = @lab.specimen_records.new
+    @patient          = Patient.find(params[:patient_id])
+    @specimen_record  = SpecimenRecord.new
+
     respond_to do |format|
       format.js
     end
   end
 
   def create
-    @specimen_record = SpecimenRecord.new(specimen_record_params)
+    sr                = Protocol.find(specimen_record_params[:protocol_id]).sparc_request
+    @specimen_record  = SpecimenRecord.new(specimen_record_params.merge(
+                          release_date: Date.today,
+                          release_to: sr.primary_pi_netid,
+                          service_id: sr.service_id,
+                          service_source: sr.service_source
+                        ))
 
     if @specimen_record.save
       flash.now[:success] = t(:specimen_records)[:created]
@@ -26,7 +33,8 @@ class SpecimenRecordsController < ApplicationController
 
     params.require(:specimen_record).permit(
       :protocol_id,
-      :quantity
+      :quantity,
+      :mrn
     )
   end
 end

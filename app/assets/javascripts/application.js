@@ -14,10 +14,11 @@
 //= require sweetalert_integration
 //= require rails-ujs
 //= require turbolinks
-//= require jquery3
-//= require popper
-//= require bootstrap
+//= require jquery/dist/jquery.min
+//= require popper.js/dist/umd/popper.min
+//= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-3-typeahead/bootstrap3-typeahead.min
 //= require bootstrap-datepicker
 //= require bootstrap-table
+//= require bootstrap-select/dist/js/bootstrap-select.min
 //= require_tree .

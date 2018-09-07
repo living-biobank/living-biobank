@@ -3,6 +3,9 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+  $(document).on 'load.bs.table', '#labsTable', ->
+    $('[data-toggle=tooltip]').tooltip()
+
   $("#quick_scan").click().focus()
 
   wto = null

@@ -1,7 +1,7 @@
 .modal-dialog.modal-lg{ role: 'document' }
   .modal-content
     = form_for specimen_record, remote: true do |f|
-      = f.hidden_field :lab_id
+      = f.hidden_field :mrn, value: patient.mrn
       .modal-header
         %h5.modal-title
           = t(:specimen_records)[:form][:header]
@@ -10,13 +10,10 @@
       .modal-body
         .form-group
           = f.label :protocol_id, class: 'required'
-          = f.select :protocol_id, lab.protocols, { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+          = f.select :protocol_id, patient.protocols, { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
         .form-group
-          = f.label :release_date, class: 'required'
-          = f.text_field :release_date, class: 'form-control', data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
-        .form-group
-          = f.label :release_to, class: 'required'
-          = f.text_field :release_to, class: 'form-control'
+          = f.label :quantity, class: 'required'
+          = f.text_field :quantity, class: 'form-control'
       .modal-footer
         = f.submit t(:actions)[:release], class: 'btn btn-primary'
         %button.btn.btn-secondary{ data: { dismiss: 'modal' } }

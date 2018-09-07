@@ -27,21 +27,19 @@ en:
     cancel: "Cancel"
   header:
     brand: "Living Biobank"
-    specimens: "Specimens"
+    labs: "Labs"
     requests: "Requests"
     login: 'Login'
     logout: "Logout"
   labs:
-    header: "Lab Specimens"
+    header: "Labs"
     search: "Search for eligible requests"
     fields:
-      order_id: "Order ID"
-      protocols: "Eligible Protocols"
-      specimen_date: "Specimen Date"
-      specimen_source: "Specimen Source"
       mrn: "MRN"
+      samples_available: "Potential Samples Available"
+      specimen_source: "Specimen Source"
+      protocols: "Eligible Protocols"
       actions: "Actions"
-      delete: "Expired/Unavailable"
     form:
       title: "Specimen Release"
   login:

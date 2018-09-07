@@ -11,7 +11,7 @@
           - if user_signed_in?
             - if current_user.honest_broker?
               %li.nav-item
-                = link_to t(:header)[:specimens], labs_path, class: ['nav-link container h-100', controller_name == 'labs' ? 'active' : '']
+                = link_to t(:header)[:labs], labs_path, class: ['nav-link container h-100', controller_name == 'labs' ? 'active' : '']
             %li.nav-item
               = link_to t(:header)[:requests], sparc_requests_path, class: ['nav-link container h-100', controller_name == 'sparc_requests' ? 'active' : '']
             %li.nav-item

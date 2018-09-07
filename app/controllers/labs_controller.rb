@@ -5,16 +5,8 @@ class LabsController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        @labs = Lab.available.unreleased.includes(patient: :specimen_requests)
+        @lab_groups = Lab.available.includes(patient: :specimen_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } }
       }
-    end
-  end
-
-  def update
-    @lab = Lab.find(params[:id])
-    @lab.update_attribute(:removed, true)
-    respond_to do |format|
-      format.js
     end
   end
 end

@@ -1,5 +1,11 @@
 class SpecimenRecord < ApplicationRecord
-  belongs_to :lab
+  validates :protocol_id,
+            :release_date,
+            :release_to,
+            :quantity,
+            :service_source,
+            :service_id,
+            presence: true
 
-  validates :protocol_id, :release_date, :release_to, presence: true
+  validates_numericality_of :quantity
 end
