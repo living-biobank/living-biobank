@@ -2,6 +2,11 @@ header {
   .navbar {
     height: 80px;
 
+    .navbar-brand {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
     .navbar-toggler {
       padding: 0.5rem 0.75rem;
     }
@@ -20,15 +25,17 @@ header {
       padding-top: 0;
       padding-bottom: 0;
 
+      a {
+        transition: all 0.2s linear;
+
+        &:hover, &:focus, &.active {
+          background-color: $gray-200;
+        }
+      }
+
       .nav-link {
         padding-left: $spacer !important;
         padding-right: $spacer !important;
-
-        transition: all 0.2s linear;
-
-        &:hover, &.active {
-          background-color: $gray-200;
-        }
       }
     }
   }

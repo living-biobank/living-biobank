@@ -18,6 +18,11 @@ html {
   }
 }
 
+a {
+  outline: none;
+  text-decoration: none;
+}
+
 .required {
   span {
     margin-left: $spacer * 0.25;
