@@ -35,6 +35,8 @@ a {
     body {
       #content {
         padding-top: $spacer * 3;
+        padding-left: $spacer * 3 !important;
+        padding-right: $spacer * 3 !important;
       }
     }
   }
