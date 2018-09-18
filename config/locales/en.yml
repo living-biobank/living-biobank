@@ -6,7 +6,6 @@ en:
   activerecord:
     attributes:
       sparc_request:
-        short_title: "Short Title"
         funding_status: "Funding Status"
         funding_source: "Funding Source"
         start_date: "Estimated Start Date"
@@ -53,16 +52,18 @@ en:
     create: "Create New Request"
     created: "Inquiry received. You should hear back from someone in 1-2 business days."
     fields:
-      short_title: "Short Title"
       title: "Title"
-      funding_status: "Funding Status"
-      funding_source: "Funding Source"
+      description: "Description"
       start_date: "Est. Start Date"
       end_date: "Est. End Date"
       primary_pi: "Primary PI"
       service: "Service"
       service_source: "Service Source"
-      query_name: "Query Name"
+      quantity: "# Requested"
+      minimum_sample: "Minimum Sample Size"
+      query_name: "i2b2 Query Name"
+      time_estimate: "Time Estimate"
+      status: "Status"
     form:
       title: "New Request"
       headers:
