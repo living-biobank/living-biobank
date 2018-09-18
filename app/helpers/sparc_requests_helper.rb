@@ -26,7 +26,7 @@ module SparcRequestsHelper
   end
 
   def cancel_request_button(sr)
-    link_to sparc_request_update_status_path(sr, sparc_request: { status: 'Cancelled' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: 'btn btn-danger' do
+    link_to sparc_request_update_status_path(sr, sparc_request: { status: 'Cancelled' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: 'btn btn-danger', data: { confirm_swal: true } do
       fa_icon 'times'
     end
   end
