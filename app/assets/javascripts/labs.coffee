@@ -3,40 +3,24 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  $(document).on 'load.bs.table', '#labsTable', ->
-    $('[data-toggle=tooltip]').tooltip()
+  $('#verifySpecimens').val('')
+  $('#verifySpecimens').click().focus()
 
-  $("#quick_scan").click().focus()
+  $(document).on 'change', '#verifySpecimens', ->
+    $this = $(this)
 
-  wto = null
+    $.ajax
+      type: 'GET'
+      dataType: 'json'
+      url: '/labs'
+      success: (data) ->
+        type = if data.map((el) -> el.mrn).includes($this.val()) then 'success' else 'error'
 
-  $("#quick_scan").change ->
-    match = false
+        swal {
+          type: type
+          showConfirmButton: false
+          timer: 1000
+          width: "20rem"
+        }
 
-    clearTimeout(wto)
-    wto = setTimeout ->
-      term = $("#quick_scan").val()
-      $(".lab-records table tr").each (index, row) ->
-        td_val = $(row).find("td").eq(0).text()
-
-        if !match and (td_val == term)
-          match = true
-          $("#match").show()
-          $("#match").fadeOut(3000)
-
-      $("#quick_scan").val("")
-
-    , 1000
-
-  # specimen source typeahead search, preventing user entry
-  $.get "/specimen_source.json", (data) ->
-    $("#service_source_typeahead .typeahead").typeahead
-      source: data
-  ,'json'
-
-  # pi name search
-  $("#pi_search_typeahead .typeahead").typeahead
-    source: (query, process) ->
-      $.get "/directory/search.json?query=#{query}", (data) ->
-        process(data.results)
-    display: 'name'
+        $('#verifySpecimens').val('')
