@@ -84,7 +84,7 @@ en:
       edit: "Edit Request"
       cancel: "Cancel Request"
     form:
-      title: "New SPARC Request"
+      title: "New Request"
       headers:
         project_information: "Project Information"
         specimen_information: "Specimen Information"
@@ -92,12 +92,13 @@ en:
       placeholders:
         short_title: "Short Title"
         title: "Title"
+        description: "Describe your request"
         primary_pi: "Last Name (eg. Smith)"
         service_source: "Source (eg. Whole Blood)"
         specimens_requested: "Number of Specimens Requested"
         minimum_sample: "Minimum Sample Size (eg. 2ml)"
       submit: "Submit for Inquiry"
-  site_name: "SPARC Living Biobank"
+  site_name: "Living Biobank"
   specimen_records:
     created: "Lab Specimen released successfully."
     form:
