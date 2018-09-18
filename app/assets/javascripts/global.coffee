@@ -7,6 +7,10 @@ $(document).on 'turbolinks:load', ->
   if $('.bootstrap-table').length == 0
     $('.bs-table').bootstrapTable()
 
+$(document).on 'change, keydown, changed.bs.select, changeDate', '.is-valid, .is-invalid', ->
+  $(this).removeClass('is-valid is-invalid')
+  $(this).parents('.form-group').children('.form-error').remove()
+
 (exports ? this).dateSorter = (a, b) ->
   if !a && !b
     return 0
@@ -23,3 +27,6 @@ $(document).on 'turbolinks:load', ->
 
 (exports ? this).setRequiredFields = () ->
   $('.required').append('<span>*</span>')
+
+(exports ? this).initializeSelectpickers = () ->
+  $('.selectpicker').selectpicker()

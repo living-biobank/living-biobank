@@ -44,9 +44,9 @@ header {
 @include media-breakpoint-down(md) {
   header {
     .navbar {
-      > .container {
+      .navbar-header {
         margin: 0;
-        max-width: 100%;
+        width: 100%;
       }
 
       .navbar-nav {
@@ -64,6 +64,16 @@ header {
             padding-right: $spacer !important;
           }
         }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  header {
+    .navbar {
+      .navbar-toggler {
+        margin-right: 15px;
       }
     }
   }

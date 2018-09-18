@@ -6,12 +6,15 @@ en:
   activerecord:
     attributes:
       sparc_request:
+        short_title: "Short Title"
         funding_status: "Funding Status"
         funding_source: "Funding Source"
         start_date: "Estimated Start Date"
         end_date: "Estimated End Date"
         primary_pi_name: "Primary PI Name"
         service_source: "Service Source"
+        number_of_specimens_requested: "Number of Specimens Requested"
+        minimum_sample_size: "Minimum Sample Size"
         query_name: "Query Name"
       specimen_record:
         release_date: "Release Date"
@@ -26,12 +29,12 @@ en:
     cancel: "Cancel"
   header:
     brand: "Living Biobank"
-    labs: "Labs"
+    labs: "Lab Specimens"
     requests: "Requests"
     login: 'Login'
     logout: "Logout"
   labs:
-    header: "Labs"
+    header: "Lab Specimens"
     search: "Search for eligible requests"
     fields:
       mrn: "MRN"
@@ -48,29 +51,40 @@ en:
     remember_me: "Remember Me"
     submit: "Login"
   requests:
-    header: "SPARC Requests"
+    header: "Requests"
     create: "Create New Request"
     create_confirm:
       title: "i2b2 Agreement"
-      text: "Placeholder agreement text here."
-      confirm: "Agree"
+      html: "<p>An i2b2 Query is required to make a Request.</p><p>Information on creating an i2b2 Query can be found at<br><a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a></p>"
+      confirm: "Accept"
       cancel: "Decline"
     created: "Inquiry received. You should hear back from someone in 1-2 business days."
+    updated: "Your inquiry has been updated successfully."
+    failed: "Your inquiry could not be updated at this time."
     fields:
+      short_title: "Short Title"
       title: "Title"
       description: "Description"
-      start_date: "Est. Start Date"
-      end_date: "Est. End Date"
+      funding_status: "Funding Status"
+      funding_source: "Funding Source"
+      start_date: "Est Start Date"
+      end_date: "Est End Date"
       primary_pi: "Primary PI"
       service: "Service"
       service_source: "Service Source"
-      quantity: "# Requested"
-      minimum_sample: "Minimum Sample Size"
+      specimens_requested: "Specimens Requested"
+      minimum_sample: "Min Sample Size"
       query_name: "i2b2 Query Name"
-      time_estimate: "Time Estimate"
+      time_estimate: "Est Time"
       status: "Status"
+      actions: "Actions"
+    tooltips:
+      time_estimate: "This request could take a long time to fulfill."
+      finalize: "Finalize Request"
+      edit: "Edit Request"
+      cancel: "Cancel Request"
     form:
-      title: "New Request"
+      title: "New SPARC Request"
       headers:
         project_information: "Project Information"
         specimen_information: "Specimen Information"
@@ -80,6 +94,8 @@ en:
         title: "Title"
         primary_pi: "Last Name (eg. Smith)"
         service_source: "Source (eg. Whole Blood)"
+        specimens_requested: "Number of Specimens Requested"
+        minimum_sample: "Minimum Sample Size (eg. 2ml)"
       submit: "Submit for Inquiry"
   site_name: "SPARC Living Biobank"
   specimen_records:

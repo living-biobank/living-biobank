@@ -16,4 +16,29 @@ form {
       }
     }
   }
+
+  select.selectpicker {
+    &.is-valid {
+      &+ button.dropdown-toggle {
+        border-color: theme-color('success');
+      }
+    }
+
+    &.is-invalid {
+      &+ button.dropdown-toggle {
+        border-color: theme-color('danger');
+      }
+    }
+  }
+}
+
+.btn.btn-warning {
+  color: white !important;
+}
+
+@include media-breakpoint-up(md) {
+  .container-fluid {
+    padding-left: $spacer * 3 !important;
+    padding-right: $spacer * 3 !important;
+  }
 }

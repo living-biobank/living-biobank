@@ -18,18 +18,21 @@
 
   // Display the confirmation dialog
   const showConfirmationDialog = element => {
-    const message = element.getAttribute('data-title')
-    const text = element.getAttribute('data-text')
-    const confirm_text = element.getAttribute('data-confirm-text')
-    const cancel_text = element.getAttribute('data-cancel-text')
+    const title = element.getAttribute('data-title');
+    const html = element.getAttribute('data-html');
+    const confirm_text = element.getAttribute('data-confirm-text');
+    const cancel_text = element.getAttribute('data-cancel-text');
 
     swal({
-      title: message || I18n.t('confirm.title'),
-      text: text || I18n.t('confirm.text'),
+      title: title || I18n.t('confirm.title'),
+      html: html || I18n.t('confirm.text'),
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: confirm_text || I18n.t('confirm.confirm'),
+      confirmButtonClass: 'btn btn-lg btn-primary mr-1',
       cancelButtonText: cancel_text || I18n.t('confirm.cancel'),
+      cancelButtonClass: 'btn btn-lg btn-secondary ml-1',
+      buttonsStyling: false
     }).then(result => confirmed(element, result))
   }
 

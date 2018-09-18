@@ -12,5 +12,6 @@ $("#specimen_record_<%= @fields[index] %>").parents('.form-group').append("<smal
 <% end %>
 <% else %>
 $('#modalContainer').modal('close')
+$('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 $('#labsTable').bootstrapTable('refresh')
 <% end %>

@@ -3,18 +3,19 @@ class SparcRequest < ApplicationRecord
   belongs_to :service
   belongs_to :protocol, optional: true
 
-  validates :title,
-            :description,
+  validates :short_title,
+            :title,
             :funding_status,
             :funding_source,
             :start_date,
             :end_date,
             :primary_pi_name,
-            :query_name,
-            :service_source,
             :service_id,
-            :minimum_sample_size,
+            :service_source,
             :number_of_specimens_requested,
+            :minimum_sample_size,
+            :query_name,
+            :status,
             presence: true
 
   scope :active, -> { where.not(status: 'Cancelled') }

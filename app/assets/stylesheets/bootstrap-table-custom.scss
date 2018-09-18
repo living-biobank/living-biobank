@@ -1,5 +1,5 @@
-@include media-breakpoint-down(md) {
-  .bs-table {
+@include media-breakpoint-down(sm) {
+  .bootstrap-table {
     .fixed-table-toolbar {
       display: flex;
       flex-wrap: wrap;
@@ -35,6 +35,10 @@
       .search {
         width: 100%;
         order: 2;
+      }
+
+      .bs-bars, .columns, .search {
+        margin-top: 0;
       }
     }
   }

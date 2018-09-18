@@ -1,13 +1,14 @@
 .modal-dialog.modal-lg{ role: 'document' }
   .modal-content
-    = form_for sparc_request, remote: true do |f|
+    = form_for sparc_request, remote: true, html: { autocomplete: 'off' } do |f|
+      = f.hidden_field :status, value: 'Pending'
       .modal-header
         %h5.modal-title
           = t(:requests)[:form][:title]
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
-        .card.mb-3
+        %section.card.mb-3
           .card-header
             %h5.card-title.m-0
               = t(:requests)[:form][:headers][:project_information]
@@ -19,11 +20,14 @@
               = f.label :title, class: 'required'
               = f.text_field :title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:title]
             .form-group
+              = f.label :description, class: 'required'
+              = f.text_area :description, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:description]
+            .form-group
               = f.label :funding_status, class: 'required'
-              = f.select :funding_status, PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+              = f.select :funding_status, PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
             .form-group
               = f.label :funding_source, class: 'required'
-              = f.select :funding_source, PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+              = f.select :funding_source, PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
             .form-group
               = f.label :start_date, class: 'required'
               .input-group
@@ -41,25 +45,31 @@
             .form-group
               = f.label :primary_pi_name, class: 'required'
               = f.text_field :primary_pi_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]
-        .card.mb-3
+        %section.card.mb-3
           .card-header
             %h5.card-title.m-0
               = t(:requests)[:form][:headers][:specimen_information]
           .card-body
             .form-group
               = f.label :service_id, class: 'required'
-              = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', @sparc_request.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+              = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', @sparc_request.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
             .form-group
               = f.label :service_source, class: 'required'
               = f.text_field :service_source, placeholder: t(:requests)[:form][:placeholders][:service_source], class: 'form-control typeahead'
-        .card
+            .form-group
+              = f.label :number_of_specimens_requested, class: 'required'
+              = f.text_field :number_of_specimens_requested, placeholder: t(:requests)[:form][:placeholders][:specimens_requested], class: 'form-control'
+            .form-group
+              = f.label :minimum_sample_size, class: 'required'
+              = f.text_field :minimum_sample_size, placeholder: t(:requests)[:form][:placeholders][:minimum_sample], class: 'form-control'
+        %section.card
           .card-header
             %h5.card-title.m-0
               = t(:requests)[:form][:headers][:i2b2_information]
           .card-body
             .form-group
               = f.label :query_name, class: 'required'
-              = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control'
+              = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
         %button.btn.btn-secondary{ data: { dismiss: 'modal' } }

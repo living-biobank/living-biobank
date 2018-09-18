@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   resources :labs, only: [:index, :update]
 
   resources :specimen_records, only: [:new, :create]
-  resources :sparc_requests do
-    get :update_status
+
+  resources :sparc_requests, only: [:index, :new, :create, :edit, :update] do
+    patch :update_status
   end
 
   get '/directory/search', to: 'directory#search'

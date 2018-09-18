@@ -1,5 +1,11 @@
-- flash.each do |type, message|
-  .alert.fade.show{ class: bootstrap_alert(type) }
-    = message
-    %button.close{ type: 'button', data: { dismiss: 'alert' }, aria: { label: t(:actions)[:close] } }
-      %span{ aria: { hidden: 'true' } } &times;
+#flashContainer
+  - flash.each do |type, message|
+    .alert.fade.show{ class: bootstrap_alert(type) }
+      = message
+      %button.close{ type: 'button', data: { dismiss: 'alert' }, aria: { label: t(:actions)[:close] } }
+        %span{ aria: { hidden: 'true' } } &times;
+
+:javascript
+  setTimeout( function() {
+    $('.alert').alert('close');
+  }, 2000);

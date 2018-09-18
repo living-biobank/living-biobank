@@ -4,7 +4,7 @@ class SparcRequestsController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        @sparc_requests = current_user.sparc_requests
+        @sparc_requests = current_user.sparc_requests.active
       }
     end
   end
@@ -24,32 +24,27 @@ class SparcRequestsController < ApplicationController
   end
 
   def edit
-    @sparc_request = current_user.sparc_requests.find params[:id]
+    @sparc_request = current_user.sparc_requests.find(params[:id])
   end
 
   def update
-    @sparc_request = current_user.sparc_requests.find params[:id]
-    @sparc_request.assign_attributes sparc_request_params
+    @sparc_request = current_user.sparc_requests.find(params[:id])
 
-    if @sparc_request.save
-      flash.now[:success] = "Inquiry updated"
-      redirect_to action: 'index'
+    if @sparc_request.update_attributes(sparc_request_params)
+      flash.now[:success] = t(:requests)[:updated]
     else
-      flash.now[:error] = "Please complete all fields in order to proceed"
-      render :edit
+      @errors = @sparc_request.errors
     end
   end
 
   def update_status
-    @sparc_request = current_user.sparc_requests.find params[:sparc_request_id]
+    @sparc_request = current_user.sparc_requests.find(params[:sparc_request_id])
 
-    if @sparc_request.update_attributes status: params[:new_status]
-      flash.now[:success] = "Inquiry updated"
+    if @sparc_request.update_attribute(:status, sparc_request_params[:status])
+      flash.now[:success] = t(:requests)[:updated]
     else
-      flash.now[:error] = "Unabled to update the status of your inquiry"
+      flash.now[:error] = t(:requests)[:failed]
     end
-
-    redirect_to action: 'index'
   end
 
   private
@@ -61,14 +56,18 @@ class SparcRequestsController < ApplicationController
     params.require(:sparc_request).permit(
       :short_title,
       :title,
+      :description,
       :funding_status,
       :funding_source,
       :start_date,
       :end_date,
       :primary_pi_name,
-      :query_name,
+      :service_id,
       :service_source,
-      :service_id
+      :number_of_specimens_requested,
+      :minimum_sample_size,
+      :query_name,
+      :status
     )
   end
 end
