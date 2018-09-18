@@ -18,7 +18,7 @@
 //= require popper.js/dist/umd/popper.min
 //= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-3-typeahead/bootstrap3-typeahead.min
-//= require bootstrap-datepicker
-//= require bootstrap-table
+//= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min
+//= require bootstrap-table/dist/bootstrap-table.min
 //= require bootstrap-select/dist/js/bootstrap-select.min
 //= require_tree .

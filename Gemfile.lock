@@ -54,9 +54,6 @@ GEM
     arel (8.0.0)
     bcrypt (3.1.12)
     bindex (0.5.0)
-    bootstrap-datepicker-rails (1.8.0.1)
-      railties (>= 3.0)
-    bootstrap-table-rails (1.12.1)
     builder (3.2.3)
     byebug (10.0.2)
     capistrano (3.11.0)
@@ -266,8 +263,6 @@ PLATFORMS
 DEPENDENCIES
   activerecord-oracle_enhanced-adapter (~> 1.8.0)
   ar-octopus
-  bootstrap-datepicker-rails
-  bootstrap-table-rails
   byebug
   capistrano (= 3.11.0)
   capistrano-passenger
