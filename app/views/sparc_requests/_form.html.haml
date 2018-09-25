@@ -1,4 +1,4 @@
-.modal-dialog.modal-lg{ role: 'document' }
+.modal-dialog#requestFormModal{ role: 'document' }
   .modal-content
     = form_for sparc_request, remote: true, html: { autocomplete: 'off' } do |f|
       = f.hidden_field :status, value: 'Pending'
@@ -13,35 +13,38 @@
             %h5.card-title.m-0
               = t(:requests)[:form][:headers][:project_information]
           .card-body
-            .form-group
-              = f.label :short_title, class: 'required'
-              = f.text_field :short_title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:short_title]
-            .form-group
-              = f.label :title, class: 'required'
-              = f.text_field :title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:title]
+            .form-row
+              .form-group.col-lg-6
+                = f.label :short_title, class: 'required'
+                = f.text_field :short_title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:short_title]
+              .form-group.col-lg-6
+                = f.label :title, class: 'required'
+                = f.text_field :title, class: 'form-control'
             .form-group
               = f.label :description, class: 'required'
-              = f.text_area :description, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:description]
-            .form-group
-              = f.label :funding_status, class: 'required'
-              = f.select :funding_status, PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-            .form-group
-              = f.label :funding_source, class: 'required'
-              = f.select :funding_source, PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-            .form-group
-              = f.label :start_date, class: 'required'
-              .input-group
-                = f.text_field :start_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
-                .input-group-append
-                  %span.input-group-text
-                    = fa_icon 'calendar'
-            .form-group
-              = f.label :end_date, class: 'required'
-              .input-group
-                = f.text_field :end_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
-                .input-group-append
-                  %span.input-group-text
-                    = fa_icon 'calendar'
+              = f.text_area :description, class: 'form-control'
+            .form-row
+              .form-group.col-sm-6
+                = f.label :funding_status, class: 'required'
+                = f.select :funding_status, PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+              .form-group.col-sm-6
+                = f.label :funding_source, class: 'required'
+                = f.select :funding_source, PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+            .form-row
+              .form-group.col-sm-6
+                = f.label :start_date, class: 'required'
+                .input-group
+                  = f.text_field :start_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
+                  .input-group-append
+                    %span.input-group-text
+                      = fa_icon 'calendar'
+              .form-group.col-sm-6
+                = f.label :end_date, class: 'required'
+                .input-group
+                  = f.text_field :end_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
+                  .input-group-append
+                    %span.input-group-text
+                      = fa_icon 'calendar'
             .form-group
               = f.label :primary_pi_name, class: 'required'
               = f.text_field :primary_pi_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]
@@ -50,18 +53,20 @@
             %h5.card-title.m-0
               = t(:requests)[:form][:headers][:specimen_information]
           .card-body
-            .form-group
-              = f.label :service_id, class: 'required'
-              = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', @sparc_request.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-            .form-group
-              = f.label :service_source, class: 'required'
-              = f.text_field :service_source, placeholder: t(:requests)[:form][:placeholders][:service_source], class: 'form-control typeahead'
-            .form-group
-              = f.label :number_of_specimens_requested, class: 'required'
-              = f.text_field :number_of_specimens_requested, placeholder: t(:requests)[:form][:placeholders][:specimens_requested], class: 'form-control'
-            .form-group
-              = f.label :minimum_sample_size, class: 'required'
-              = f.text_field :minimum_sample_size, placeholder: t(:requests)[:form][:placeholders][:minimum_sample], class: 'form-control'
+            .form-row
+              .form-group.col-sm-6
+                = f.label :service_id, class: 'required'
+                = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', @sparc_request.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+              .form-group.col-sm-6
+                = f.label :service_source, class: 'required'
+                = f.text_field :service_source, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:service_source]
+            .form-row
+              .form-group.col-sm-6
+                = f.label :number_of_specimens_requested, class: 'required'
+                = f.text_field :number_of_specimens_requested, class: 'form-control'
+              .form-group.col-sm-6
+                = f.label :minimum_sample_size, class: 'required'
+                = f.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample]
         %section.card
           .card-header
             %h5.card-title.m-0

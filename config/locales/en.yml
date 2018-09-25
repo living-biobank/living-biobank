@@ -90,13 +90,9 @@ en:
         specimen_information: "Specimen Information"
         i2b2_information: "i2b2 Information"
       placeholders:
-        short_title: "Short Title"
-        title: "Title"
-        description: "Describe your request"
-        primary_pi: "Last Name (eg. Smith)"
-        service_source: "Source (eg. Whole Blood)"
-        specimens_requested: "Number of Specimens Requested"
-        minimum_sample: "Minimum Sample Size (eg. 2ml)"
+        primary_pi: "e.g. Smith"
+        service_source: "e.g. Whole Blood"
+        minimum_sample: "e.g. 2mL"
       submit: "Submit for Inquiry"
   site_name: "Living Biobank"
   specimen_records:

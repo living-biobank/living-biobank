@@ -1,3 +1,13 @@
 // Place all the styles related to the SparcRequests controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#requestFormModal {
+  min-width: 90%;
+}
+
+@include media-breakpoint-up(xl) {
+  #requestFormModal {
+    min-width: 75%;
+  }
+}
