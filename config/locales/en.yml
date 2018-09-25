@@ -58,7 +58,8 @@ en:
       html: "<p>An i2b2 Query is required to make a Request.</p><p>Information on creating an i2b2 Query can be found at<br><a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a></p>"
       confirm: "Accept"
       cancel: "Decline"
-    created: "Inquiry received. You should hear back from someone in 1-2 business days."
+    created: "Your inquiry received. You should hear back from someone in 1-2 business days."
+    saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
     fields:
@@ -94,6 +95,7 @@ en:
         service_source: "e.g. Whole Blood"
         minimum_sample: "e.g. 2mL"
       submit: "Submit for Inquiry"
+      save_as_draft: "Save as Draft"
   site_name: "Living Biobank"
   specimen_records:
     created: "Lab Specimen released successfully."

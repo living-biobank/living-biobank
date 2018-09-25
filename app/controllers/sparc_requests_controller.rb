@@ -16,7 +16,10 @@ class SparcRequestsController < ApplicationController
   def create
     @sparc_request = current_user.sparc_requests.new(sparc_request_params)
 
-    if @sparc_request.save
+    if params[:save_draft]
+      @sparc_request.status = 'Draft'
+      @sparc_request.save(validate: false)
+    elsif @sparc_request.save
       flash.now[:success] = t(:requests)[:created]
     else
       @errors = @sparc_request.errors

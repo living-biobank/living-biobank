@@ -6,7 +6,7 @@ $('.form-text').remove()
 $("#sparc_request_<%= @fields[index] %>").removeClass('is-valid').addClass('is-invalid').parents('.form-group').append("<small class='form-text form-error text-danger '><%= message %></small>")
 <% end %>
 <% else %>
-$('#modalContainer').modal('close')
+$('#modalContainer').modal('hide')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 $('#requestsTable').bootstrapTable('refresh')
 <% end %>
