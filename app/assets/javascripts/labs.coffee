@@ -4,7 +4,7 @@
 
 $ ->
   $('#verifySpecimens').val('')
-  $('#verifySpecimens').click().focus()
+  $('#verifySpecimens').focus()
 
   $(document).on 'change', '#verifySpecimens', ->
     $this = $(this)
@@ -16,11 +16,11 @@ $ ->
       success: (data) ->
         type = if data.map((el) -> el.mrn).includes($this.val()) then 'success' else 'error'
 
-        swal {
+        swal({
           type: type
           showConfirmButton: false
           timer: 1000
           width: "20rem"
-        }
-
-        $('#verifySpecimens').val('')
+        }).then ->
+          $('#verifySpecimens').val('')
+          $('#verifySpecimens').focus()

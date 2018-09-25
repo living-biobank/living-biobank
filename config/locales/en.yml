@@ -35,7 +35,7 @@ en:
     logout: "Logout"
   labs:
     header: "Lab Specimens"
-    search: "Search for eligible requests"
+    search: "Verify Specimen"
     fields:
       mrn: "MRN"
       samples_available: "Potential Samples Available"
