@@ -5,6 +5,7 @@ class SparcRequest < ApplicationRecord
 
   validates :short_title,
             :title,
+            :description,
             :funding_status,
             :funding_source,
             :start_date,
