@@ -23,6 +23,7 @@
 
 .byebug_history
 /public/packs
+/public/javascripts
 /elm-stuff
 /node_modules
 
