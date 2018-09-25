@@ -12,7 +12,8 @@ gem 'foreman', '~> 0.84.0'
 gem 'haml'
 gem 'jbuilder', '~> 2.5'
 gem 'letter_opener'
-gem 'mini_racer', platforms: :ruby
+#gem 'mini_racer', platforms: :ruby
+gem 'therubyracer'
 gem 'mysql2'
 gem 'net-ldap', '~> 0.16.0'
 gem 'pry'
