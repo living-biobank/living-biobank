@@ -77,7 +77,8 @@
               = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
-        %button.btn.btn-warning#saveDraftRequestButton{ type: 'button' }
-          = t(:requests)[:form][:save_as_draft]
+        - if action_name == 'new'
+          %button.btn.btn-warning#saveDraftRequestButton{ type: 'button' }
+            = t(:requests)[:form][:save_as_draft]
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
           = t(:actions)[:close]
