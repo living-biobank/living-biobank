@@ -32,11 +32,20 @@ a {
   }
 }
 
+.table-overflow {
+  overflow-x: scroll;
+}
+
 @include media-breakpoint-down(md) {
   .card {
     border-radius: 0;
     border-left: 0;
     border-right: 0;
+
+    .card-body {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
 

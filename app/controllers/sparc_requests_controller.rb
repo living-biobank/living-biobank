@@ -1,11 +1,10 @@
 class SparcRequestsController < ApplicationController
 
   def index
+    @requests = current_user.sparc_requests.active
+
     respond_to do |format|
       format.html
-      format.json {
-        @sparc_requests = current_user.sparc_requests.active
-      }
     end
   end
 

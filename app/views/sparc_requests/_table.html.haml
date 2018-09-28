@@ -1,0 +1,66 @@
+- funding_statuses  = PermissibleValue.get_hash('funding_status')
+- funding_sources   = PermissibleValue.get_hash('funding_source')
+
+.table-overflow
+  %table.table#requestsTable
+    %thead
+      %tr
+        %th
+          = t(:requests)[:fields][:short_title]
+        %th
+          = t(:requests)[:fields][:funding_status]
+        %th
+          = t(:requests)[:fields][:funding_source]
+        %th
+          = t(:requests)[:fields][:start_date]
+        %th
+          = t(:requests)[:fields][:end_date]
+        %th
+          = t(:requests)[:fields][:primary_pi]
+        %th
+          = "Contact Email"
+        %th
+          = t(:requests)[:fields][:service_source]
+        %th
+          = t(:requests)[:fields][:specimens_requested]
+        %th
+          = t(:requests)[:fields][:minimum_sample]
+        %th
+          = t(:requests)[:fields][:query_name]
+        %th
+          = t(:requests)[:fields][:status]
+        %th.text-center
+          = t(:requests)[:fields][:actions]
+    %tbody
+      - if requests.any?
+        - requests.each do |request|
+          %td
+            = request.short_title
+          %td
+            = funding_statuses[request.funding_status]
+          %td
+            = funding_sources[request.funding_source]
+          %td
+            = format_date(request.start_date)
+          %td
+            = format_date(request.end_date)
+          %td
+            = request.primary_pi_name
+          %td
+            = request.primary_pi_email
+          %td
+            = request.service_source
+          %td
+            = request.number_of_specimens_requested
+          %td
+            = request.minimum_sample_size
+          %td
+            = request.query_name
+          %td
+            = request.status
+          %td.text-center
+            = request_actions(request)
+      - else
+        %tr
+          %td.text-center{ colspan: 13 }
+            = "No records to show."

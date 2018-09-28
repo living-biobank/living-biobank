@@ -8,5 +8,4 @@ $("#sparc_request_<%= @fields[index] %>").removeClass('is-valid').addClass('is-i
 <% else %>
 $('#modalContainer').modal('hide')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
-$('#requestsTable').bootstrapTable('refresh')
 <% end %>

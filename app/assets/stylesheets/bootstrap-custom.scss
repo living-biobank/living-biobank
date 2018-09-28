@@ -36,6 +36,12 @@ form {
   }
 }
 
+.table {
+  th {
+    border-top: none;
+  }
+}
+
 .btn.btn-warning {
   color: white !important;
 }

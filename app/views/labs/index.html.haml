@@ -10,18 +10,4 @@
     = icon('fas fa-2x', 'search')
   .card
     .card-body
-      .bootstrap-table-dropdown-overflow
-        .custom-toolbar#labsCustomToolbar
-        %table.bs-table#labsTable{ data: { toggle: 'table', 'show-columns' => 'true', 'show-refresh' => 'true', url: labs_path(format: :json), striped: 'true', toolbar: '#labsCustomToolbar', pagination: 'true' } }
-          %thead
-            %tr
-              %th{ data: { field: 'mrn', align: 'left', sortable: 'true' } }
-                = t(:labs)[:fields][:mrn]
-              %th{ data: { field: 'samples_available', align: 'left', sortable: 'true' } }
-                = t(:labs)[:fields][:samples_available]
-              %th{ data: { field: 'specimen_source', align: 'left', sortable: 'true' } }
-                = t(:labs)[:fields][:specimen_source]
-              %th{ data: { field: 'protocols', align: 'left', sortable: 'true' } }
-                = t(:labs)[:fields][:protocols]
-              %th{ data: { field: 'actions', align: 'center' } }
-                = t(:labs)[:fields][:actions]
+      = render 'labs/table', lab_groups: @lab_groups
