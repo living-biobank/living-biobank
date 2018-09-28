@@ -18,7 +18,7 @@
         %th
           = t(:requests)[:fields][:primary_pi]
         %th
-          = "Contact Email"
+          = t(:requests)[:fields][:contact_email]
         %th
           = t(:requests)[:fields][:service_source]
         %th
@@ -63,4 +63,4 @@
       - else
         %tr
           %td.text-center{ colspan: 13 }
-            = "No records to show."
+            = t(:constants)[:no_records]

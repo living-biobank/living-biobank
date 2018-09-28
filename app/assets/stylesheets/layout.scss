@@ -55,7 +55,7 @@ a {
       main#content {
         padding: 1.5rem;
 
-        &> :not(#flashContainer) {
+        &> *:nth-child(n+3) {
           margin-top: 1.5rem;
         }
       }
@@ -69,7 +69,7 @@ a {
       main#content {
         padding: 2rem;
 
-        &> :not(#flashContainer) {
+        &> *:nth-child(n+3) {
           margin-top: 2rem;
         }
       }
