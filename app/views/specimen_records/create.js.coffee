@@ -1,7 +1,7 @@
 <% if @errors %>
 $("[id^='specimen_record_']").removeClass('is-invalid').addClass('is-valid')
 $('.dropdown-toggle').removeClass('border-danger').addClass('border-success')
-$('.form-text').remove()
+$('.form-error').remove()
 <% @fields = @errors.messages.keys %>
 <% @errors.full_messages.each_with_index do |message, index| %>
 if $("#specimen_record_<%= @fields[index] %>").hasClass('selectpicker')

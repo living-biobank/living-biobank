@@ -11,6 +11,7 @@ class SparcRequest < ApplicationRecord
             :start_date,
             :end_date,
             :primary_pi_name,
+            :primary_pi_email,
             :service_id,
             :service_source,
             :number_of_specimens_requested,
@@ -19,5 +20,6 @@ class SparcRequest < ApplicationRecord
             :status,
             presence: true
 
+  validates_format_of :primary_pi_email, with: /\A[A-Za-z0-9]*@musc.edu\Z/
   scope :active, -> { where.not(status: 'Cancelled') }
 end

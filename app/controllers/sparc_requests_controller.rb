@@ -64,6 +64,7 @@ class SparcRequestsController < ApplicationController
       :start_date,
       :end_date,
       :primary_pi_name,
+      :primary_pi_email,
       :service_id,
       :service_source,
       :number_of_specimens_requested,

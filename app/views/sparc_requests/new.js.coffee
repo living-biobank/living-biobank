@@ -18,4 +18,7 @@ $("#sparc_request_primary_pi_name").typeahead(
     notFound: ->
       return "<span>Not Found</span>"
   display: 'name'
+  minLength: 3
+  afterSelect: (suggestion) ->
+    $('#sparc_request_primary_pi_email').val(suggestion.email)
 )
