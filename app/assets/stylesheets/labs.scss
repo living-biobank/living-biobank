@@ -1,3 +1,32 @@
 // Place all the styles related to the Labs controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#verifySpecimensContainer {
+  position: relative;
+
+  input {
+    padding: 0.5rem 1.25rem;
+  }
+
+  .fa-search {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 0.5rem 1.25rem;
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  #verifySpecimensContainer {
+    input {
+      border: none;
+      border-radius: 0;
+    }
+  }
+}

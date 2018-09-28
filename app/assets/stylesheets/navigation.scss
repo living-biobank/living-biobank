@@ -1,0 +1,168 @@
+.navbar {
+  position: absolute;
+  top: 0;
+  padding: 0;
+  z-index: 200;
+
+  .navbar-header {
+    .navbar-brand {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none !important;
+      font-weight: 500;
+    }
+  }
+
+  #navbarLinks {
+    .navbar-nav {
+      .nav-link {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none !important;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        color: theme-color('secondary');
+
+        &.active, &:hover, &:focus {
+          color: theme-color('light');
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .navbar {
+    width: 100%;
+    align-items: stretch;
+
+    .navbar-header {
+      .navbar-brand {
+        padding: 1rem 1.5rem;
+        font-size: 2rem;
+      }
+    }
+
+    #navbarLinks {
+      .navbar-nav {
+        width: 100%;
+        height: 100%;
+        justify-content: flex-end;
+
+        .nav-link {
+          height: 100%;
+          padding: 1rem 1.5rem;
+
+          i {
+            font-size: 1.5rem;
+          }
+
+          span {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .navbar {
+    #navbarLinks {
+      .navbar-nav {
+        .nav-link {
+          i {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .navbar {
+    .navbar-header {
+      flex: 1 0;
+    }
+
+    .navbar-toggler {
+      margin: 0 1.5rem;
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .navbar {
+    position: fixed;
+    bottom: 0;
+    padding: 0;
+    flex-flow: column;
+
+    .navbar-header {
+      width: 100%;
+
+      .navbar-brand {
+        padding: 1.5rem 2rem;
+        border-bottom: 2px solid theme-color('dark') !important;
+        font-size: 2.5rem;
+      }
+    }
+
+    #navbarLinks {
+      width: 100%;
+
+      .navbar-nav {
+        width: 100%;
+        height: 100%;
+        padding-top: 1rem;
+        flex-flow: column;
+
+        .nav-link {
+          padding: 1rem 2rem;
+
+          i {
+            flex: 20%;
+            font-size: 2rem;
+          }
+
+          span {
+            flex: 80%;
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-only(md) {
+  .navbar {
+    #navbarLinks {
+      .navbar-nav {
+        .nav-link {
+          padding: 1rem 2rem;
+
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-only(lg) {
+  .navbar {
+    #navbarLinks {
+      .navbar-nav {
+        .nav-link {
+          i {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}

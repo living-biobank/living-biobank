@@ -109,8 +109,8 @@ GEM
     faker (1.9.1)
       i18n (>= 0.7)
     ffi (1.9.25)
-    font-awesome-rails (4.7.0.4)
-      railties (>= 3.2, < 6.0)
+    font-awesome-sass (5.3.1)
+      sassc (>= 1.11)
     foreman (0.84.0)
       thor (~> 0.19.1)
     globalid (0.4.1)
@@ -280,7 +280,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   faker
-  font-awesome-rails
+  font-awesome-sass
   foreman (~> 0.84.0)
   haml
   i18n-js

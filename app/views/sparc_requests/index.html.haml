@@ -1,40 +1,47 @@
-%h2.border-bottom.pb-2
-  = t(:requests)[:header]
-.bootstrap-table-dropdown-overflow
-  .custom-toolbar#requestsCustomToolbar
-    = link_to t(:requests)[:create], new_sparc_request_path, remote: true, class: 'btn btn-block btn-primary', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], html: t(:requests)[:create_confirm][:html], confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel] }
-  %table.bs-table#requestsTable{ data: { toggle: 'table', search: 'true', 'show-columns' => 'true', 'show-refresh' => 'true', url: sparc_requests_path(format: :json), striped: 'true', toolbar: '#requestsCustomToolbar', pagination: 'true' } }
-    %thead
-      %tr
-        %th{ data: { field: 'short_title', align: 'left', sortable: 'true', visible: 'false' } }
-          = t(:requests)[:fields][:short_title]
-        %th{ data: { field: 'title', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:title]
-        %th{ data: { field: 'description', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:description]
-        %th{ data: { field: 'funding_status', align: 'left', sortable: 'true', visible: 'false' } }
-          = t(:requests)[:fields][:funding_status]
-        %th{ data: { field: 'funding_source', align: 'left', sortable: 'true', visible: 'false' } }
-          = t(:requests)[:fields][:funding_source]
-        %th{ data: { field: 'start_date', align: 'left', sortable: 'true', sorter: 'dateSorter' } }
-          = t(:requests)[:fields][:start_date]
-        %th{ data: { field: 'end_date', align: 'left', sortable: 'true', sorter: 'dateSorter' } }
-          = t(:requests)[:fields][:end_date]
-        %th{ data: { field: 'primary_pi', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:primary_pi]
-        %th{ data: { field: 'service', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:service]
-        %th{ data: { field: 'service_source', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:service_source]
-        %th{ data: { field: 'specimens_requested', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:specimens_requested]
-        %th{ data: { field: 'minimum_sample', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:minimum_sample]
-        %th{ data: { field: 'query_name', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:query_name]
-        %th{ data: { field: 'time_estimate', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:time_estimate]
-        %th{ data: { field: 'status', align: 'left', sortable: 'true' } }
-          = t(:requests)[:fields][:status]
-        %th{ data: { field: 'actions', align: 'center' } }
-          = t(:requests)[:fields][:actions]
+%header
+  .page-title
+    = icon('fas', 'flask')
+    = t(:requests)[:header]
+  = link_to t(:requests)[:create], new_sparc_request_path, remote: true, id: 'newRequest', class: 'btn btn-lg btn-primary', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], html: t(:requests)[:create_confirm][:html], confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel] }
+
+%main#content
+  = render 'layouts/flash'
+  .card
+    .card-body
+      .bootstrap-table-dropdown-overflow
+        .custom-toolbar#requestsCustomToolbar
+        %table.bs-table#requestsTable{ data: { toggle: 'table', search: 'true', 'show-columns' => 'true', 'show-refresh' => 'true', url: sparc_requests_path(format: :json), striped: 'true', toolbar: '#requestsCustomToolbar', pagination: 'true' } }
+          %thead
+            %tr
+              %th{ data: { field: 'short_title', align: 'left', sortable: 'true', visible: 'false' } }
+                = t(:requests)[:fields][:short_title]
+              %th{ data: { field: 'title', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:title]
+              %th{ data: { field: 'description', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:description]
+              %th{ data: { field: 'funding_status', align: 'left', sortable: 'true', visible: 'false' } }
+                = t(:requests)[:fields][:funding_status]
+              %th{ data: { field: 'funding_source', align: 'left', sortable: 'true', visible: 'false' } }
+                = t(:requests)[:fields][:funding_source]
+              %th{ data: { field: 'start_date', align: 'left', sortable: 'true', sorter: 'dateSorter' } }
+                = t(:requests)[:fields][:start_date]
+              %th{ data: { field: 'end_date', align: 'left', sortable: 'true', sorter: 'dateSorter' } }
+                = t(:requests)[:fields][:end_date]
+              %th{ data: { field: 'primary_pi', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:primary_pi]
+              %th{ data: { field: 'service', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:service]
+              %th{ data: { field: 'service_source', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:service_source]
+              %th{ data: { field: 'specimens_requested', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:specimens_requested]
+              %th{ data: { field: 'minimum_sample', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:minimum_sample]
+              %th{ data: { field: 'query_name', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:query_name]
+              %th{ data: { field: 'time_estimate', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:time_estimate]
+              %th{ data: { field: 'status', align: 'left', sortable: 'true' } }
+                = t(:requests)[:fields][:status]
+              %th{ data: { field: 'actions', align: 'center' } }
+                = t(:requests)[:fields][:actions]

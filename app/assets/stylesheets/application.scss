@@ -15,13 +15,16 @@
 @import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min';
 @import 'bootstrap-table/dist/bootstrap-table.min';
 @import 'bootstrap-select/dist/css/bootstrap-select.min';
+@import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'sweetalert2/dist/sweetalert2.min';
 
 @import 'bootstrap-custom';
 @import 'bootstrap-table-custom';
 @import 'layout';
+@import 'navigation';
 @import 'header';
 @import 'devise';
 @import 'directory';
+@import 'labs';
 @import 'sparc_requests';

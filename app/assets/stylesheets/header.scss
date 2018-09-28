@@ -1,82 +1,35 @@
 header {
-  .navbar {
-    height: 80px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  background: white;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 2rem;
 
-    .navbar-brand {
-      padding-left: 1rem;
-      padding-right: 1rem;
-      font-size: 2.5rem !important;
-    }
-
-    .navbar-toggler {
-      padding: 0.5rem 0.75rem;
-      margin-right: 1rem;
-    }
-
-    a {
-      display: flex;
-      align-items: center;
-      font-size: 1.5rem !important;
-    }
-  }
-}
-
-@include media-breakpoint-up(sm) {
-  header {
-    .navbar {
-      .navbar-brand {
-        font-size: 3rem !important;
-      }
+  .page-title {
+    i {
+      margin-right: 0.5rem;
     }
   }
 }
 
 @include media-breakpoint-up(lg) {
   header {
-    .navbar {
-      padding-top: 0;
-      padding-bottom: 0;
-
-      a {
-        transition: all 0.2s linear;
-
-        &:hover, &:focus, &.active {
-          background-color: $gray-200;
-        }
-      }
-
-      .nav-link {
-        padding-left: $spacer !important;
-        padding-right: $spacer !important;
-      }
-    }
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   }
 }
 
-@include media-breakpoint-down(md) {
+@include media-breakpoint-up(xl) {
   header {
-    .navbar {
-      .navbar-header {
-        margin: 0;
-        width: 100%;
-      }
-
-      .navbar-nav {
-        background: white;
-
-        .nav-item {
-          border-bottom: 1px solid $gray-300;
-
-          &:first-child {
-            border-top: 1px solid $gray-300;
-          }
-
-          .nav-link {
-            padding-left: $spacer !important;
-            padding-right: $spacer !important;
-          }
-        }
-      }
-    }
+    position: fixed;
+    padding: 1.5rem 2rem;
+    font-size: 2.5rem;
   }
 }

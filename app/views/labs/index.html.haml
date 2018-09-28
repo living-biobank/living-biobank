@@ -1,18 +1,27 @@
-%h2.border-bottom.pb-2
-  = t(:labs)[:header]
-.bootstrap-table-dropdown-overflow
-  .custom-toolbar#labsCustomToolbar
-    %input.form-control#verifySpecimens{ type: 'text', placeholder: t(:labs)[:search] }
-  %table.bs-table#labsTable{ data: { toggle: 'table', 'show-columns' => 'true', 'show-refresh' => 'true', url: labs_path(format: :json), striped: 'true', toolbar: '#labsCustomToolbar', pagination: 'true' } }
-    %thead
-      %tr
-        %th{ data: { field: 'mrn', align: 'left', sortable: 'true' } }
-          = t(:labs)[:fields][:mrn]
-        %th{ data: { field: 'samples_available', align: 'left', sortable: 'true' } }
-          = t(:labs)[:fields][:samples_available]
-        %th{ data: { field: 'specimen_source', align: 'left', sortable: 'true' } }
-          = t(:labs)[:fields][:specimen_source]
-        %th{ data: { field: 'protocols', align: 'left', sortable: 'true' } }
-          = t(:labs)[:fields][:protocols]
-        %th{ data: { field: 'actions', align: 'center' } }
-          = t(:labs)[:fields][:actions]
+%header
+  .page-title
+    = icon('fas', 'flask')
+    = t(:labs)[:header]
+
+%main#content
+  = render 'layouts/flash'
+  .m-0#verifySpecimensContainer
+    %input.form-control.form-control-lg#verifySpecimens{ type: 'text', placeholder: t(:labs)[:search] }
+    = icon('fas fa-2x', 'search')
+  .card
+    .card-body
+      .bootstrap-table-dropdown-overflow
+        .custom-toolbar#labsCustomToolbar
+        %table.bs-table#labsTable{ data: { toggle: 'table', 'show-columns' => 'true', 'show-refresh' => 'true', url: labs_path(format: :json), striped: 'true', toolbar: '#labsCustomToolbar', pagination: 'true' } }
+          %thead
+            %tr
+              %th{ data: { field: 'mrn', align: 'left', sortable: 'true' } }
+                = t(:labs)[:fields][:mrn]
+              %th{ data: { field: 'samples_available', align: 'left', sortable: 'true' } }
+                = t(:labs)[:fields][:samples_available]
+              %th{ data: { field: 'specimen_source', align: 'left', sortable: 'true' } }
+                = t(:labs)[:fields][:specimen_source]
+              %th{ data: { field: 'protocols', align: 'left', sortable: 'true' } }
+                = t(:labs)[:fields][:protocols]
+              %th{ data: { field: 'actions', align: 'center' } }
+                = t(:labs)[:fields][:actions]

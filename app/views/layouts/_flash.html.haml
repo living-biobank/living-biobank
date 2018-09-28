@@ -5,7 +5,7 @@
       %button.close{ type: 'button', data: { dismiss: 'alert' }, aria: { label: t(:actions)[:close] } }
         %span{ aria: { hidden: 'true' } } &times;
 
-:javascript
-  setTimeout( function() {
-    $('.alert').alert('close');
-  }, 2000);
+  :javascript
+    setTimeout( function() {
+      $('.alert').alert('close');
+    }, 2000);

@@ -29,7 +29,7 @@ en:
     cancel: "Cancel"
   header:
     brand: "Living Biobank"
-    labs: "Lab Specimens"
+    labs: "Specimens"
     requests: "Requests"
     login: 'Login'
     logout: "Logout"

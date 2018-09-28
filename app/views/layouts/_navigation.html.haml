@@ -1,0 +1,31 @@
+%nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+  .navbar-header
+    %a.navbar-brand.btn.btn-info.btn-block.m-0{ href: root_path, draggable: 'false' }
+      = t(:header)[:brand]
+  %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
+    %span.navbar-toggler-icon
+  .collapse.navbar-collapse#navbarLinks
+    %ul.navbar-nav
+      - if user_signed_in?
+        - if current_user.honest_broker?
+          %li.nav-item
+            = link_to labs_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''], draggable: 'false' do
+              = icon('fas', 'flask')
+              %span
+                = t(:header)[:labs]
+        %li.nav-item
+          = link_to sparc_requests_path, class: ['nav-link btn btn-dark', controller_name == 'sparc_requests' ? 'active' : ''], draggable: 'false' do
+            = icon('fas', 'file-invoice')
+            %span
+              = t(:header)[:requests]
+        %li.nav-item
+          = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link btn btn-dark text-danger', draggable: 'false' do
+            = icon('fas', 'sign-out-alt')
+            %span
+              = t(:header)[:logout]
+      - else
+        %li.nav-item
+          = link_to new_user_session_path, id: 'login', class: 'nav-link btn btn-dark text-success', draggable: 'false' do
+            = icon('fas', 'sign-in-alt')
+            %span
+              = t(:header)[:login]

@@ -1,7 +1,13 @@
 $ ->
 
 $(document).on 'turbolinks:load', ->
-  $('#content').css('margin-top', $('nav.navbar').outerHeight())
+  if $('html').width() > 1200
+    $('header').css('margin-left', $('.navbar').outerWidth())
+    $('#content').css('margin-top', $('header').outerHeight())
+    $('#content').css('margin-left', $('.navbar').outerWidth())
+  else
+    $('header').css('margin-top', $('.navbar').outerHeight())
+
   $('html').addClass('ready')
 
   if $('.bootstrap-table').length == 0

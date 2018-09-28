@@ -37,14 +37,14 @@
                   = f.text_field :start_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
                   .input-group-append
                     %span.input-group-text
-                      = fa_icon 'calendar'
+                      = icon('far', 'calendar')
               .form-group.col-sm-6
                 = f.label :end_date, class: 'required'
                 .input-group
                   = f.text_field :end_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
                   .input-group-append
                     %span.input-group-text
-                      = fa_icon 'calendar'
+                      = icon('far', 'calendar')
             .form-group
               = f.label :primary_pi_name, class: 'required'
               = f.text_field :primary_pi_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]

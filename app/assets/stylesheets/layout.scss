@@ -1,6 +1,7 @@
 html {
   min-height: 100%;
   position: relative;
+  background: theme-color('light');
 
   &.ready {
     body {
@@ -12,8 +13,8 @@ html {
     opacity: 0;
     transition: 0.5s opacity ease-in-out;
 
-    #content {
-      padding-top: $spacer;
+    main#content {
+      background: theme-color('light');
     }
   }
 }
@@ -30,13 +31,37 @@ a {
   }
 }
 
-@include media-breakpoint-up(md) {
+@include media-breakpoint-down(md) {
+  .card {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+}
+
+@include media-breakpoint-up(lg) {
   html {
     body {
-      #content {
-        padding-top: $spacer * 3;
-        padding-left: $spacer * 3 !important;
-        padding-right: $spacer * 3 !important;
+      main#content {
+        padding: 1.5rem;
+
+        &> :not(#flashContainer) {
+          margin-top: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  html {
+    body {
+      main#content {
+        padding: 2rem;
+
+        &> :not(#flashContainer) {
+          margin-top: 2rem;
+        }
       }
     }
   }
