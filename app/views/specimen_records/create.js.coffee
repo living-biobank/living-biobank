@@ -8,7 +8,7 @@ if $("#specimen_record_<%= @fields[index] %>").hasClass('selectpicker')
   $("#specimen_record_<%= @fields[index] %> + .dropdown-toggle").removeClass('border-success').addClass('border-danger')  
 else
   $("#specimen_record_<%= @fields[index] %>").removeClass('is-valid').addClass('is-invalid')
-$("#specimen_record_<%= @fields[index] %>").parents('.form-group').append("<small class='form-text text-danger'><%= message %></small>")
+$("#specimen_record_<%= @fields[index] %>").parents('.form-group').append("<small class='form-text form-error'><%= message %></small>")
 <% end %>
 <% else %>
 $('#modalContainer').modal('hide')

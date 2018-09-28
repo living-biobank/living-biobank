@@ -10,6 +10,7 @@ html {
   }
 
   body {
+    background: theme-color('light');
     opacity: 0;
     transition: 0.5s opacity ease-in-out;
 

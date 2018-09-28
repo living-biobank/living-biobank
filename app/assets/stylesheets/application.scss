@@ -11,6 +11,7 @@
  * It is generally better to create a new file per style scope.
  *
 */
+@import 'bootstrap-variables-custom';
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min';
 @import 'bootstrap-table/dist/bootstrap-table.min';

@@ -27,11 +27,9 @@ en:
     text: "This action cannot be undone."
     confirm: "Yes"
     cancel: "Cancel"
-  header:
-    brand: "Living Biobank"
+  navigation:
     labs: "Specimens"
     requests: "Requests"
-    login: 'Login'
     logout: "Logout"
   labs:
     header: "Lab Specimens"
@@ -52,7 +50,7 @@ en:
     submit: "Login"
   requests:
     header: "Requests"
-    create: "Create New Request"
+    create: "New Request"
     create_confirm:
       title: "i2b2 Agreement"
       html: "<p>An i2b2 Query is required to make a Request.</p><p>Information on creating an i2b2 Query can be found at<br><a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a></p>"

@@ -30,6 +30,10 @@ form {
       }
     }
   }
+
+  .form-error {
+    color: theme-color('danger');
+  }
 }
 
 .btn.btn-warning {
