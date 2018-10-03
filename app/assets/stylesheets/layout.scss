@@ -62,17 +62,3 @@ a {
     }
   }
 }
-
-@include media-breakpoint-up(xl) {
-  html {
-    body {
-      main#content {
-        padding: 2rem;
-
-        &> *:nth-child(n+3) {
-          margin-top: 2rem;
-        }
-      }
-    }
-  }
-}

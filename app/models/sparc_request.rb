@@ -21,5 +21,18 @@ class SparcRequest < ApplicationRecord
             presence: true
 
   validates_format_of :primary_pi_email, with: /\A[A-Za-z0-9]*@musc.edu\Z/
+
   scope :active, -> { where.not(status: 'Cancelled') }
+
+  def complete?
+    self.status == 'In Process'
+  end
+
+  def draft?
+    self.status == 'Draft'
+  end
+
+  def cancelled?
+    self.status == 'Cancelled'
+  end
 end

@@ -1,24 +1,39 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
   .navbar-header
-    %a.navbar-brand.bg-info.m-0{ href: root_path, draggable: 'false' }
+    %a.navbar-brand.bg-dark.text-center.m-0{ href: root_path, draggable: 'false' }
       = t(:site_name)
   %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
     %span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarLinks
-    %ul.navbar-nav
+    .navbar-nav
+      .text-muted.d-flex.d-md-none.d-xl-flex#userInformation
+        = icon('fas', 'user-circle')
+        %span
+          = current_user.full_name
       - if current_user.honest_broker?
-        %li.nav-item
+        .nav-item
           = link_to labs_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''], draggable: 'false' do
             = icon('fas', 'flask')
             %span
               = t(:navigation)[:labs]
-      %li.nav-item
+      .nav-item
         = link_to sparc_requests_path, class: ['nav-link btn btn-dark', controller_name == 'sparc_requests' ? 'active' : ''], draggable: 'false' do
           = icon('fas', 'file-invoice')
           %span
             = t(:navigation)[:requests]
-      %li.nav-item
+      .nav-item.d-block.d-md-none.d-xl-block
         = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link btn btn-dark text-danger', draggable: 'false' do
           = icon('fas', 'sign-out-alt')
           %span
             = t(:navigation)[:logout]
+      .nav-item.dropdown.d-none.d-md-block.d-xl-none
+        = link_to 'javascript:void(0)', id: 'profileDropdown', class: 'nav-link dropdown-toggle btn btn-dark', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: 'true', expanded: 'false' } do
+          = icon('fas', 'user-circle')
+        .dropdown-menu.dropdown-menu-right{ aria: { labelledby: 'profileDropdown' } }
+          .dropdown-header
+            = current_user.full_name
+          .dropdown-divider
+          = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'dropdown-item text-danger', draggable: 'false' do
+            = icon('fas', 'sign-out-alt')
+            %span
+              = t(:navigation)[:logout]

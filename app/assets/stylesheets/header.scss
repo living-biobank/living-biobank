@@ -14,8 +14,11 @@ header {
   font-size: 2rem;
 
   .page-title {
+    display: flex;
+    align-items: center;
+
     i {
-      margin-right: 0.5rem;
+      margin-right: 1.5rem;
     }
   }
 }
@@ -29,7 +32,6 @@ header {
 @include media-breakpoint-up(xl) {
   header {
     position: fixed;
-    padding: 1.5rem 2rem;
-    font-size: 2.5rem;
+    padding: 1.5rem;
   }
 }

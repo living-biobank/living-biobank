@@ -14,11 +14,14 @@ module Devise
                               )
           ldap.auth "uid=#{login},ou=people,dc=musc,dc=edu", password
           if ldap.bind
-            pwd = Devise.friendly_token
-            email = Directory.search_ldap(login).first[:mail].first
-            netid = "#{login}@musc.edu"
+            pwd         = Devise.friendly_token
+            ldap_record = Directory.search_ldap(login)
+            first_name  = ldap_record.first[:givenname]
+            last_name   = ldap_record.first[:sn]
+            email       = ldap_record.first[:mail].first
+            netid       = "#{login}@musc.edu"
 
-            user = User.new(password: pwd, password_confirmation: pwd, email: email, net_id: netid)
+            user = User.new(password: pwd, password_confirmation: pwd, first_name: first_name, last_name: last_name, email: email, net_id: netid)
 
             if users = User.where(net_id: netid)
               user = users.first

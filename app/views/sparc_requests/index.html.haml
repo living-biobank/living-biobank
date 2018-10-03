@@ -1,7 +1,8 @@
 %header
   .page-title
     = icon('fas', 'file-invoice')
-    = t(:requests)[:header]
+    %span
+      = t(:requests)[:header]
   = link_to new_sparc_request_path, remote: true, id: 'newRequest', class: 'btn btn-lg btn-primary', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], html: t(:requests)[:create_confirm][:html], confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel] } do
     = icon('fas', 'plus-circle')
     = t(:requests)[:create]

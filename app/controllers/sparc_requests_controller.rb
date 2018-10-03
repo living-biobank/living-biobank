@@ -1,7 +1,7 @@
 class SparcRequestsController < ApplicationController
 
   def index
-    @requests = current_user.sparc_requests.active
+    @requests = current_user.sparc_requests.order(:status)
 
     respond_to do |format|
       format.html
