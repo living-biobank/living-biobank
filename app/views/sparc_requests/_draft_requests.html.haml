@@ -4,6 +4,8 @@
       = t(:requests)[:draft][:header]
     - draft_requests.each do |dr|
       .alert.alert-warning.complete-draft-request{ role: 'alert' }
-        = link_to dr.title, edit_sparc_request_path(dr), remote: true
+        = link_to edit_sparc_request_path(dr), remote: true do
+          = icon('fas', 'edit')
+          = dr.title
         = link_to sparc_request_update_status_path(dr, sparc_request: { status: 'Cancelled' }), remote: true, method: :path, title: t(:requests)[:tooltips][:cancel], class: 'text-danger', data: { confirm_swal: true } do
           = icon('fas', 'times')
