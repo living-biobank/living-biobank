@@ -9,6 +9,8 @@ $(document).on 'turbolinks:load', ->
   $('html').addClass('ready')
 
 $ ->
+  initializeTooltips()
+
   $(document).on 'change keydown changed.bs.select changeDate', '.is-valid, .is-invalid', ->
     $(this).removeClass('is-valid is-invalid')
     $(this).parents('.form-group').children('.form-error').remove()
@@ -32,3 +34,6 @@ $ ->
 
 (exports ? this).initializeSelectpickers = () ->
   $('.selectpicker').selectpicker()
+
+(exports ? this).initializeTooltips = () ->
+  $('[data-toggle=tooltip]').tooltip()

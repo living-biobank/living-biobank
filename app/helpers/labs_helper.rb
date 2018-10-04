@@ -14,7 +14,7 @@ module LabsHelper
         "
 
         link_to protocol.id, 'javascript:void(0)', data: { toggle: 'tooltip', title: tooltip, html: true, placement: 'left' }
-      end.join('')
+      end.join(', ')
     else
       'N/A'
     end

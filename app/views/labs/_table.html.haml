@@ -1,7 +1,7 @@
 .card#labs
   .card-body
     .table-overflow
-      %table.table.table-sm.table-bordred.mb-0#labsTable
+      %table.table.table-bordered.mb-0#labsTable
         %thead
           %tr
             %th.col-2
@@ -25,8 +25,8 @@
                 %td
                   = grouping[:specimen_source]
                 %td
-                  = protocols_preview(grouping[:patient].protocols)
-                %td
+                  = raw(protocols_preview(grouping[:patient].protocols))
+                %td.text-center
                   = release_lab_button(grouping[:patient])
           - else
             %tr
