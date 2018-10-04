@@ -96,6 +96,8 @@ en:
         primary_pi_email: "For project updates"
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
+    draft:
+      header: "Draft Requests to Complete"
   site_name: "Living Biobank"
   specimen_records:
     created: "Lab Specimen released successfully."

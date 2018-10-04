@@ -11,6 +11,7 @@ else
 $("#specimen_record_<%= @fields[index] %>").parents('.form-group').append("<small class='form-text form-error'><%= message %></small>")
 <% end %>
 <% else %>
+$('#labs').replaceWith("<%= j render 'labs/table', lab_groups: @lab_groups %>")
 $('#modalContainer').modal('hide')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 <% end %>

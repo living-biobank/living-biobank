@@ -16,13 +16,18 @@ html {
 
     main#content {
       background: theme-color('light');
+      padding-top: 1.5rem;
+
+      &> *:nth-child(n+3) {
+        margin-top: 1.5rem;
+      }
     }
   }
 }
 
 a {
-  outline: none;
-  text-decoration: none;
+  outline: none !important;
+  text-decoration: none !important;
 }
 
 .required {
@@ -41,10 +46,22 @@ a {
     border-radius: 0;
     border-left: 0;
     border-right: 0;
+  }
 
+  .alert {
+    border-radius: 0;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .card {
     .card-body {
       padding-left: 0;
       padding-right: 0;
+
+      .card-title {
+        text-align: center;
+      }
     }
   }
 }
@@ -54,10 +71,6 @@ a {
     body {
       main#content {
         padding: 1.5rem;
-
-        &> *:nth-child(n+3) {
-          margin-top: 1.5rem;
-        }
       }
     }
   }

@@ -37,11 +37,64 @@ form {
 }
 
 .table {
+  &.table-bordered {
+    border: 0;
+
+    th:first-child, td:first-child {
+      border-left-color: white;
+    }
+
+    th:last-child, td:last-child {
+      border-right-color: white;
+    }
+
+    tbody {
+      tr:last-child td {
+        border-bottom: 0;
+      }
+    }
+  }
+
   th {
-    border-top: none;
+    border-top: none !important;
+    text-align: center;
+  }
+
+  th, td {
+    vertical-align: middle !important;
+  }
+
+  td {
+    &.no-records {
+      text-align: center;
+      background: theme-color('light');
+      border-left: $table-border-width solid $table-border-color !important;
+      border-right: $table-border-width solid $table-border-color !important;
+      border-bottom: $table-border-width solid $table-border-color !important;
+    }
   }
 }
 
 .btn.btn-warning {
   color: white !important;
+}
+
+.status {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  border-style: solid;
+  border-color: black;
+  display: inline-block;
+  font-size: 0.75rem;
+  text-align: center;
+
+  @each $color, $value in $theme-colors {
+    &.status-#{$color} {
+      background: theme-color($color);
+      border-color: theme-color($color);
+      color: white;
+    }
+  }
 }

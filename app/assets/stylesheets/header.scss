@@ -23,6 +23,12 @@ header {
   }
 }
 
+@include media-breakpoint-down(sm) {
+  header {
+    justify-content: center;
+  }
+}
+
 @include media-breakpoint-up(lg) {
   header {
     border-bottom: 2px solid rgba(0, 0, 0, 0.1);

@@ -24,6 +24,8 @@ class SparcRequest < ApplicationRecord
 
   scope :active, -> { where.not(status: 'Cancelled') }
 
+  scope :draft, -> { where(status: 'Draft') }
+
   def complete?
     self.status == 'In Process'
   end

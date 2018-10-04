@@ -9,6 +9,6 @@
 
 %main#content
   = render 'layouts/flash'
-  .card
-    .card-body
-      = render 'sparc_requests/table', requests: @requests
+  = render 'sparc_requests/table', requests: @requests
+  - if @draft_requests.any?
+    = render 'sparc_requests/draft_requests', draft_requests: @draft_requests

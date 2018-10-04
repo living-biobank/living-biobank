@@ -1,12 +1,15 @@
 module SparcRequestsHelper
   def status_context(sr)
-    if sr.complete?
-      'table-success'
-    elsif sr.draft?
-      'table-warning'
-    elsif sr.cancelled?
-      'table-danger'
-    end
+    klass =
+      if sr.complete?
+        'status-success'
+      elsif sr.cancelled?
+        'status-secondary'
+      else
+        'status-primary'
+      end
+
+    content_tag(:span, sr.status, class: ['status', klass])
   end
 
   def request_time_estimate(sr)
@@ -30,26 +33,26 @@ module SparcRequestsHelper
   end
 
   def finalize_request_button(sr)
-    unless sr.complete? || sr.draft? || sr.cancelled?
-      link_to sparc_request_update_status_path(sr, sparc_request: { status: 'In Process' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: 'btn btn-success' do
-        icon('fas', 'check')
-      end
+    disabled = sr.complete? || sr.draft? || sr.cancelled?
+
+    link_to sparc_request_update_status_path(sr, sparc_request: { status: 'In Process' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: ['btn btn-success', disabled ? 'disabled' : ''] do
+      icon('fas', 'check')
     end
   end
 
   def edit_request_button(sr)
-    unless sr.complete? || sr.cancelled?
-      link_to edit_sparc_request_path(sr), remote: true, title: t(:requests)[:tooltips][:edit], class: 'btn btn-warning' do
-        icon('fas', 'edit')
-      end
+    disabled = sr.complete? || sr.cancelled?
+
+    link_to edit_sparc_request_path(sr), remote: true, title: t(:requests)[:tooltips][:edit], class: ['btn btn-warning', disabled ? 'disabled' : ''] do
+      icon('fas', 'edit')
     end
   end
 
   def cancel_request_button(sr)
-    unless sr.complete? || sr.cancelled?
-      link_to sparc_request_update_status_path(sr, sparc_request: { status: 'Cancelled' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: 'btn btn-danger', data: { confirm_swal: true } do
-        icon('fas', 'times')
-      end
+    disabled = sr.complete? || sr.cancelled?
+
+    link_to sparc_request_update_status_path(sr, sparc_request: { status: 'Cancelled' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: ['btn btn-danger', disabled ? 'disabled' : ''], data: { confirm_swal: true } do
+      icon('fas', 'times')
     end
   end
 end
