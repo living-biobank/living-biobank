@@ -81,6 +81,8 @@
             .form-group
               = f.label :query_name, class: 'required'
               = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+              %small.form-text.text-muted
+                = raw(t(:requests)[:form][:subtext][:i2b2_query])
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
         - if action_name == 'new'

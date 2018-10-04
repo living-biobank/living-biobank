@@ -10,7 +10,7 @@
       width: 100%;
       font-size: 2rem;
       font-weight: 500;
-      transition: background-color 0.15s ease-in-out;
+      @include transition($btn-transition);
     }
   }
 

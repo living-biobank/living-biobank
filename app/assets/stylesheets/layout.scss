@@ -28,6 +28,7 @@ html {
 a {
   outline: none !important;
   text-decoration: none !important;
+  @include transition($btn-transition);
 }
 
 .required {
