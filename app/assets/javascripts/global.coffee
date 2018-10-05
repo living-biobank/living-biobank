@@ -6,6 +6,8 @@ $(document).on 'turbolinks:load', ->
   else
     $('header').css('margin-top', $('.navbar').outerHeight())
 
+  initializeSelectpickers()
+
   $('html').addClass('ready')
 
 $ ->
@@ -14,6 +16,22 @@ $ ->
   $(document).on 'change keydown changed.bs.select changeDate', '.is-valid, .is-invalid', ->
     $(this).removeClass('is-valid is-invalid')
     $(this).parents('.form-group').children('.form-error').remove()
+
+  $(document).on 'changed.bs.select', '.table-filters select.filter-select', ->
+    $container  = $(this).parents('.table-filters')
+    data        = {}
+
+    $container.find('select.filter-select').each (index, element) ->
+      field = $(element).data('field')
+      val   = $(element).val()
+      if val != ""
+        data[field] = val
+
+    $.ajax
+      method: 'GET'
+      dataType: 'script'
+      url: $container.data('url')
+      data: data
 
 (exports ? this).dateSorter = (a, b) ->
   if !a && !b

@@ -2,6 +2,10 @@
 - funding_sources   = PermissibleValue.get_hash('funding_source')
 
 .card#requests
+  .card-header.table-filters{ data: { url: sparc_requests_path } }
+    = select_tag 'sort_by', request_sort_filter_options(params[:sort_by]), id: 'sortRequests', class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_by], include_blank: true, data: { field: 'sort_by', style: 'btn-lg btn-link filter' }
+    = select_tag 'sort_order', options_for_select(t(:constants)[:order].invert, params[:sort_order]), id: 'sortRequests', class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_order], include_blank: true, data: { field: 'sort_order', style: 'btn-lg btn-link filter' }
+    = select_tag 'status', request_status_filter_options(params[:status]), id: 'filterStatuses', class: 'selectpicker filter-select', title: t(:requests)[:filters][:status], include_blank: true, data: { field: 'status', style: 'btn-lg btn-link filter' }
   .card-body
     .table-overflow
       %table.table.table-sm.table-bordered.mb-0#requestsTable

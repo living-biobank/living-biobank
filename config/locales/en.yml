@@ -24,6 +24,9 @@ en:
     date_placeholder: "MM/DD/YYYY"
     select_placeholder: "Please Select"
     no_records: "No records to show."
+    order:
+      asc: "Ascending"
+      desc: "Descending"
   confirm:
     title: "Are you sure?"
     text: "This action cannot be undone."
@@ -62,6 +65,15 @@ en:
     saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
+    statuses:
+      pending: "Pending"
+      draft: "Draft"
+      finalized: "In Process"
+      cancelled: "Cancelled"
+    filters:
+      sort_by: "Sort By"
+      sort_order: "Sort Order"
+      status: "Filter by Status"
     fields:
       short_title: "Short Title"
       funding_status: "Funding Status"

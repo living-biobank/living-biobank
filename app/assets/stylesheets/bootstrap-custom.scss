@@ -36,6 +36,40 @@ form {
   }
 }
 
+.table-filters {
+  padding: 0;
+  background: white;
+  display: flex;
+
+  .dropdown {
+    width: initial !important;
+
+    .filter {
+      position: initial;
+      width: initial;
+      padding-left: 0;
+      padding-right: 0;
+      border-radius: 0;
+      margin-left: 1.5rem;
+      margin-right: 1.5rem;
+      display: flex;
+      align-items: center;
+      color: black;
+      outline: none !important;
+
+      .filter-option {
+        position: initial;
+      }
+    }
+
+    li {
+      &:active, .active {
+        color: white !important;
+      }
+    }
+  }
+}
+
 .table {
   &.table-bordered {
     border: 0;

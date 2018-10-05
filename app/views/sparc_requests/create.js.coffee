@@ -7,7 +7,7 @@ $("#sparc_request_<%= @fields[index] %>").removeClass('is-valid').addClass('is-i
 <% end %>
 <% else %>
 $('#requests').replaceWith("<%= j render 'sparc_requests/table', requests: @requests %>")
-$('#draftRequests').replaceWith("<%= j render 'sparc_requests/draft_requests', draft_requests: @draft_requests ")
+$('#draftRequests').replaceWith("<%= j render 'sparc_requests/draft_requests', draft_requests: @draft_requests %>")
 $('#modalContainer').modal('hide')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 <% end %>

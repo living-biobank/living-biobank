@@ -1,11 +1,12 @@
 class SparcRequestsController < ApplicationController
 
   def index
-    @requests       = current_user.sparc_requests.where.not(status: 'Draft').order(status: :desc)
+    @requests       = current_user.sparc_requests.where.not(status: t(:requests)[:statuses][:draft]).with_status(params[:status]).order((params[:sort_by] || :status) => (params[:sort_order] || :desc))
     @draft_requests = current_user.sparc_requests.draft
 
     respond_to do |format|
       format.html
+      format.js
     end
   end
 
@@ -17,7 +18,7 @@ class SparcRequestsController < ApplicationController
     @sparc_request = current_user.sparc_requests.new(sparc_request_params)
 
     if params[:save_draft] && @sparc_request.title
-      @sparc_request.status = 'Draft'
+      @sparc_request.status = t(:requests)[:statuses][:draft]
       @sparc_request.save(validate: false)
     elsif @sparc_request.save
       flash.now[:success] = t(:requests)[:created]

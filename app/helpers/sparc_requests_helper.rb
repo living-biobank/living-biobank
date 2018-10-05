@@ -1,4 +1,23 @@
 module SparcRequestsHelper
+  def request_sort_filter_options(sort_by)
+    options_for_select(
+      [:short_title, :start_date, :end_date, :primary_pi, :service_source, :specimens_requested, :minimum_sample, :status].map do |k| 
+        [t(:requests)[:fields][k], k]
+      end, sort_by
+    )
+  end
+
+  def request_status_filter_options(status)
+    options_for_select(
+      [
+        [t(:requests)[:statuses][:finalized], class: 'text-success'],
+        [t(:requests)[:statuses][:pending], class: 'text-primary'],
+        [t(:requests)[:statuses][:cancelled], class: 'text-secondary']
+      ],
+      status
+    )
+  end
+
   def status_context(sr)
     klass =
       if sr.complete?
@@ -35,7 +54,7 @@ module SparcRequestsHelper
   def finalize_request_button(sr)
     disabled = sr.complete? || sr.draft? || sr.cancelled?
 
-    link_to sparc_request_update_status_path(sr, sparc_request: { status: 'In Process' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: ['btn btn-success', disabled ? 'disabled' : ''] do
+    link_to sparc_request_update_status_path(sr, sparc_request: { status: t(:requests)[:statuses][:finalized] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: ['btn btn-success', disabled ? 'disabled' : ''] do
       icon('fas', 'check')
     end
   end
@@ -51,7 +70,7 @@ module SparcRequestsHelper
   def cancel_request_button(sr)
     disabled = sr.complete? || sr.cancelled?
 
-    link_to sparc_request_update_status_path(sr, sparc_request: { status: 'Cancelled' }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: ['btn btn-danger', disabled ? 'disabled' : ''], data: { confirm_swal: true } do
+    link_to sparc_request_update_status_path(sr, sparc_request: { status: I18n.t(:requests)[:statuses][:cancelled] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: ['btn btn-danger', disabled ? 'disabled' : ''], data: { confirm_swal: true } do
       icon('fas', 'times')
     end
   end

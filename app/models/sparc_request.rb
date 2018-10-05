@@ -26,15 +26,19 @@ class SparcRequest < ApplicationRecord
 
   scope :draft, -> { where(status: 'Draft') }
 
+  scope :with_status, -> (status) {
+    where(status: status) if status
+  }
+
   def complete?
-    self.status == 'In Process'
+    self.status == I18n.t(:requests)[:statuses][:finalized]
   end
 
   def draft?
-    self.status == 'Draft'
+    self.status == I18n.t(:requests)[:statuses][:draft]
   end
 
   def cancelled?
-    self.status == 'Cancelled'
+    self.status == I18n.t(:requests)[:statuses][:cancelled]
   end
 end
