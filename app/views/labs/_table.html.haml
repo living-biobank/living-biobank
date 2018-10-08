@@ -1,4 +1,7 @@
 .card#labs
+  .card-header.table-filters{ data: { url: labs_path } }
+    = select_tag 'sort_by', lab_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select', title: t(:labs)[:filters][:sort_by], include_blank: true, data: { field: 'sort_by', style: 'btn-lg btn-link filter' }
+    = select_tag 'sort_order', options_for_select(t(:constants)[:order].invert, params[:sort_order]), class: 'selectpicker filter-select', title: t(:labs)[:filters][:sort_order], include_blank: true, data: { field: 'sort_order', style: 'btn-lg btn-link filter' }
   .card-body
     .table-overflow
       %table.table.table-sm.table-bordered.mb-0#labsTable

@@ -39,6 +39,9 @@ en:
   labs:
     header: "Lab Specimens"
     search: "Search for a Specimen by MRN"
+    filters:
+      sort_by: "Sort By"
+      sort_order: "Sort Order"
     fields:
       mrn: "MRN"
       samples_available: "Potential Samples Available"
