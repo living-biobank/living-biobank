@@ -64,7 +64,7 @@ en:
       html: "<h5 class='text-left font-weight-bold'>Before using the MUSC Living Biobank specimen request system, you must agree to the following Specimen Request System Agreement:</h5><p class='text-left'>The Specimen Request System Agreement is designed to provide principal investigators or study staff with access to de-identified specimens for the express purpose of MUSC IRB approved research.</p><p class='text-left'>Your acceptance of this assurance certifies that you understand and agree to all applicable terms contained herein.</p><p class='text-left'>I understand that only de-identified specimens will be provided.</p><p class='text-left'>I will make no attempt to learn the identity of any person or family who is the source of the specimen(s) and associated data, or attempt contact any individual or family member from whom the specimen or data were derived.</p><p class='text-left'>I understand that any effort to determine the identity of the source of the specimens, or to use the specimens provided for any purpose other than indicated above, is prohibited.</p><p class='text-left'>I understand that any violation of this assurance may result in a disciplinary action by my institution with the appropriate office(s) at my institution.</p><p class='text-left'>I agree to restrict my request for specimen(s) to those required for my MUSC IRB approved research study.</p><p class='text-left'>I declare that the requested specimens are necessary to accomplish the goals of the research.</p><p class='text-left'>I acknowledge the additional level of ethical sensitivity inherent in using the specimen(s) and agree to exercise exemplary ethical conduct in my use of the provided specimen(s).</p><p class='text-left'>I have completed the MUSC Code of Conduct training in MyQuest, Human Research Training (CITI) and other MUSC provided training, as required.</p>"
       confirm: "Accept"
       cancel: "Decline"
-    created: "Your inquiry received. You should hear back from someone in 1-2 business days."
+    created: "Your inquiry has been received. A confirmation email has been sent to your mailbox."
     saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
@@ -119,3 +119,8 @@ en:
     created: "Lab Specimen released successfully."
     form:
       header: "Specimen Release"
+  mailers:
+    request_mailer:
+      confirmation_email:
+        subject: "Living Biobank Request Confirmation"
+        text: "We have received your SPARC Living Biobank request. Your application will be processed within 3 business days. The initial fee for processing your request is <strong>$x</strong>. The average cost is <strong>$x</strong>. Your application will be reviewed and a cost estimate will be determined based on the work required to complete the process. You will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARC to arrange payment."

@@ -1,0 +1,7 @@
+!!!
+%html
+  %head
+    %meta{ content: 'text/html; charset=UTF-8', http_equiv: 'Content-Type' }
+  %body
+    %p
+      = raw t(:mailers)[:request_mailer][:confirmation_email][:text]

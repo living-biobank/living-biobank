@@ -20,7 +20,11 @@ class SparcRequestsController < ApplicationController
     if params[:save_draft] && @sparc_request.title
       @sparc_request.status = t(:requests)[:statuses][:draft]
       @sparc_request.save(validate: false)
+
+      flash.now[:success] = t(:requests)[:saved]
     elsif @sparc_request.save
+      RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
+
       flash.now[:success] = t(:requests)[:created]
     else
       @errors = @sparc_request.errors
