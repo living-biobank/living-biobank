@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181001142252) do
+ActiveRecord::Schema.define(version: 20181008155643) do
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.bigint "patient_id"
@@ -63,8 +63,10 @@ ActiveRecord::Schema.define(version: 20181001142252) do
     t.string "time_estimate"
     t.string "status", default: "New"
     t.integer "protocol_id"
+    t.bigint "line_item_id"
     t.string "minimum_sample_size"
     t.integer "number_of_specimens_requested"
+    t.integer "query_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
