@@ -23,7 +23,7 @@ gem 'sassc-rails'
 gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier', '>= 1.3.0'
-gem 'webpacker', '~> 3.0', '>= 3.0.2'
+gem 'webpacker', '~> 3.5'
 gem 'i18n-js'
 
 # adding oracle for i2b2 access
