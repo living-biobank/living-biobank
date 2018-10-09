@@ -13,17 +13,18 @@ module Devise
                                base: ldap_config['ldap_base']
                               )
           ldap.auth "uid=#{login},ou=people,dc=musc,dc=edu", password
+
           if ldap.bind
             pwd         = Devise.friendly_token
             ldap_record = Directory.search_ldap(login)
-            first_name  = ldap_record.first[:givenname]
-            last_name   = ldap_record.first[:sn]
+            first_name  = ldap_record.first[:givenname].first
+            last_name   = ldap_record.first[:sn].first
             email       = ldap_record.first[:mail].first
             netid       = "#{login}@musc.edu"
 
             user = User.new(password: pwd, password_confirmation: pwd, first_name: first_name, last_name: last_name, email: email, net_id: netid)
 
-            if users = User.where(net_id: netid)
+            if (users = User.where(net_id: netid)).any?
               user = users.first
             else
               user.save
@@ -37,7 +38,7 @@ module Devise
       end
 
       def login
-        params[:user][:login]
+        params[:user][:net_id]
       end
 
       def password
