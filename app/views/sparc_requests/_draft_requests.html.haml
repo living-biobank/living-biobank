@@ -1,4 +1,4 @@
-.card#draftRequests
+.card#draftRequests{ class: draft_requests.any? ? '' : 'd-none' }
   .card-body.d-flex.flex-column
     %h3.card-title
       = t(:requests)[:draft][:header]
@@ -7,5 +7,5 @@
         = link_to edit_sparc_request_path(dr), remote: true do
           = icon('fas', 'edit')
           = dr.title
-        = link_to sparc_request_update_status_path(dr, sparc_request: { status: 'Cancelled' }), remote: true, method: :path, title: t(:requests)[:tooltips][:cancel], class: 'text-danger', data: { confirm_swal: true } do
+        = link_to sparc_request_path(dr), remote: true, method: :delete, title: t(:requests)[:tooltips][:cancel], class: 'text-danger', data: { confirm_swal: true } do
           = icon('fas', 'times')

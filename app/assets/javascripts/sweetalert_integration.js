@@ -43,9 +43,12 @@
     if (result.value) {
       // User clicked confirm button
       $.ajax({
-        method: 'GET',
+        method: element.getAttribute('data-method') || 'GET',
         url: element.getAttribute('href'),
-        dataType: element.getAttribute('data-remote') === 'true' ? 'script' : 'html'
+        dataType: element.getAttribute('data-remote') === 'true' ? 'script' : 'html',
+        data: {
+          authenticity_token: $('meta[name=csrf-token]').attr('content')
+        }
       });
     }
   }

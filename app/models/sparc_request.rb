@@ -30,6 +30,12 @@ class SparcRequest < ApplicationRecord
     where(status: status) if status
   }
 
+  scope :filtered_for_index, -> (status, sort_by, sort_order) {
+    where.not(status: I18n.t(:requests)[:statuses][:draft]).
+    with_status(status).
+    order((sort_by || :status) => (sort_order.blank? ? :desc : sort_order))
+  }
+
   def complete?
     self.status == I18n.t(:requests)[:statuses][:finalized]
   end

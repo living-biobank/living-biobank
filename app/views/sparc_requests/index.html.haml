@@ -1,14 +1,5 @@
-%header
-  .page-title
-    = icon('fas', 'file-invoice')
-    %span
-      = t(:requests)[:header]
-  = link_to new_sparc_request_path, remote: true, id: 'newRequest', class: 'btn btn-lg btn-primary', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], html: t(:requests)[:create_confirm][:html], type: '', confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel], class: 'use-agreement text-left' } do
-    = icon('fas', 'plus-circle')
-    = t(:requests)[:create]
-
+= render 'sparc_requests/header'
 %main#content
   = render 'layouts/flash'
   = render 'sparc_requests/table', requests: @requests
-  - if @draft_requests.any?
-    = render 'sparc_requests/draft_requests', draft_requests: @draft_requests
+  = render 'sparc_requests/draft_requests', draft_requests: @draft_requests

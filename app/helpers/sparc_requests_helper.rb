@@ -54,7 +54,7 @@ module SparcRequestsHelper
   def finalize_request_button(sr)
     disabled = sr.complete? || sr.draft? || sr.cancelled?
 
-    link_to sparc_request_update_status_path(sr, sparc_request: { status: t(:requests)[:statuses][:finalized] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: ['btn btn-success', disabled ? 'disabled' : ''] do
+    link_to sparc_request_update_status_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:finalized] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: ['btn btn-success', disabled ? 'disabled' : ''] do
       icon('fas', 'check')
     end
   end
@@ -62,7 +62,7 @@ module SparcRequestsHelper
   def edit_request_button(sr)
     disabled = sr.complete? || sr.cancelled?
 
-    link_to edit_sparc_request_path(sr), remote: true, title: t(:requests)[:tooltips][:edit], class: ['btn btn-warning', disabled ? 'disabled' : ''] do
+    link_to edit_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order]), remote: true, title: t(:requests)[:tooltips][:edit], class: ['btn btn-warning', disabled ? 'disabled' : ''] do
       icon('fas', 'edit')
     end
   end
@@ -70,7 +70,7 @@ module SparcRequestsHelper
   def cancel_request_button(sr)
     disabled = sr.complete? || sr.cancelled?
 
-    link_to sparc_request_update_status_path(sr, sparc_request: { status: I18n.t(:requests)[:statuses][:cancelled] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: ['btn btn-danger', disabled ? 'disabled' : ''], data: { confirm_swal: true } do
+    link_to sparc_request_update_status_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: I18n.t(:requests)[:statuses][:cancelled] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: ['btn btn-danger', disabled ? 'disabled' : ''], data: { confirm_swal: true } do
       icon('fas', 'times')
     end
   end

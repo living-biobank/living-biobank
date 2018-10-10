@@ -2,9 +2,17 @@
   .modal-content
     = form_for sparc_request, remote: true, html: { autocomplete: 'off' } do |f|
       = f.hidden_field :status, value: t(:requests)[:statuses][:pending]
+
+      - if params[:status]
+        = hidden_field_tag :status, params[:status]
+      - if params[:sort_by]
+        = hidden_field_tag :sort_by, params[:sort_by]
+      - if params[:sort_order]
+        = hidden_field_tag :sort_order, params[:sort_order]
+
       .modal-header
         %h5.modal-title
-          = t(:requests)[:form][:title]
+          = t(:requests)[:form][action_name == 'new' ? :new_title : :edit_title]
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body

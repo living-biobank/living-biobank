@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :specimen_records, only: [:new, :create]
 
-  resources :sparc_requests, only: [:index, :new, :create, :edit, :update] do
+  resources :sparc_requests, only: [:index, :new, :create, :edit, :update, :destroy] do
     patch :update_status
   end
 

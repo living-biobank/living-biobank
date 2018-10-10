@@ -98,7 +98,8 @@ en:
       edit: "Edit Request"
       cancel: "Cancel Request"
     form:
-      title: "New Request"
+      new_title: "New Request"
+      edit_title: "Edit Request"
       headers:
         project_information: "Project Information"
         specimen_information: "Specimen Information"

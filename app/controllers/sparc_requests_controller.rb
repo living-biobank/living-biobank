@@ -1,9 +1,8 @@
 class SparcRequestsController < ApplicationController
 
-  def index
-    @requests       = current_user.sparc_requests.where.not(status: t(:requests)[:statuses][:draft]).with_status(params[:status]).order((params[:sort_by] || :status) => (params[:sort_order] || :desc))
-    @draft_requests = current_user.sparc_requests.draft
+  before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
 
+  def index
     respond_to do |format|
       format.html
       format.js
@@ -45,6 +44,10 @@ class SparcRequestsController < ApplicationController
     end
   end
 
+  def destroy
+    current_user.sparc_requests.find(params[:id]).destroy
+  end
+
   def update_status
     @sparc_request = current_user.sparc_requests.find(params[:sparc_request_id])
 
@@ -56,6 +59,11 @@ class SparcRequestsController < ApplicationController
   end
 
   private
+
+  def find_requests
+    @requests       = current_user.sparc_requests.filtered_for_index(params[:status], params[:sort_by], params[:sort_order])
+    @draft_requests = current_user.sparc_requests.draft
+  end
 
   def sparc_request_params
     params[:sparc_request][:start_date] = sanitize_date(params[:sparc_request][:start_date])
