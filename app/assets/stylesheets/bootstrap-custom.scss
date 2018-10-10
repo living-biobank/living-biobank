@@ -123,6 +123,7 @@ form {
   display: inline-block;
   font-size: 0.75rem;
   text-align: center;
+  white-space: nowrap;
 
   @each $color, $value in $theme-colors {
     &.status-#{$color} {

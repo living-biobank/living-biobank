@@ -1,0 +1,32 @@
+%p
+  = t('mailers.request_mailer.submission_email.intro', pi_name: @request.primary_pi_name, date: Date.today)
+
+%h3
+  = t(:mailers)[:request_mailer][:submission_email][:table_header]
+%table{ style: 'text-align: left' }
+  %tbody
+    %tr
+      %th
+        = t(:requests)[:fields][:title]
+      %td
+        = @request.title
+    %tr
+      %th
+        = t(:requests)[:fields][:start_date]
+      %td
+        = format_date(@request.start_date)
+    %tr
+      %th
+        = t(:requests)[:fields][:specimens_requested]
+      %td
+        = @request.number_of_specimens_requested
+    %tr
+      %th
+        = t(:requests)[:fields][:contact_email]
+      %td
+        = @request.primary_pi_email
+    %tr
+      %th
+        = t(:requests)[:fields][:query_name]
+      %td
+        = @request.query_name

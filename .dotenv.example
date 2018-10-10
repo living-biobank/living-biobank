@@ -1,3 +1,4 @@
 SERVICE_ID=nil
 ITEM_ID=nil
 NO_REPLY_EMAIL=noreply@musc.edu
+ADMIN_EMAIL=glickk@musc.edu,catesa@musc.edu,samuelsc@musc.edu,kirchoff@musc.edu

@@ -80,10 +80,11 @@ en:
       status: "Filter by Status"
     fields:
       short_title: "Short Title"
+      title: "Title"
       funding_status: "Funding Status"
       funding_source: "Funding Source"
-      start_date: "Start Date"
-      end_date: "End Date"
+      start_date: "Est Start Date"
+      end_date: "Est End Date"
       primary_pi: "Primary PI"
       contact_email: "Contact Email"
       service_source: "Service Source"
@@ -126,3 +127,7 @@ en:
       confirmation_email:
         subject: "Living Biobank Request Confirmation"
         text: "We have received your SPARC Living Biobank request. Your application will be processed within 3 business days. The initial fee for processing your request is <strong>$x</strong>. The average cost is <strong>$x</strong>. Your application will be reviewed and a cost estimate will be determined based on the work required to complete the process. You will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARC to arrange payment."
+      submission_email:
+        subect: "Living Biobank Request Application"
+        intro: "A new Biobank application was submitted for the PI %{pi_name} on %{date}."
+        table_header: "Request Details:"
