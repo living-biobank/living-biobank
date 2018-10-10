@@ -13,3 +13,26 @@ $ ->
       data:
         authenticity_token: $('meta[name=csrf-token]').attr('content')
         save_draft:         'true'
+
+(exports ? this).initializeSpecimenSourceTypeahead = () ->
+  # specimen source typeahead search, preventing user entry
+  $.get "/specimen_source.json", (data) ->
+    $("#sparc_request_service_source").typeahead
+      source: data
+  ,'json'
+
+(exports ? this).initializePrimaryPITypeahead = () ->
+  # pi name search
+  $("#sparc_request_primary_pi_name").typeahead(
+    source: (term, process) ->
+      $.get "/directory/search.json?term=#{term}", (data) ->
+        process(data.results)
+    templates:
+      notFound: ->
+        return "<span>Not Found</span>"
+    display: 'name'
+    minLength: 3
+    afterSelect: (suggestion) ->
+      $('#sparc_request_primary_pi_netid').val(suggestion.netid)
+      $('#sparc_request_primary_pi_email').val(suggestion.email)
+  )

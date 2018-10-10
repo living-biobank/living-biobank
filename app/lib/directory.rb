@@ -22,7 +22,14 @@ class Directory
 
   def self.get_ldap_filter(term, fields)
     search_terms = term.strip.split
-    (LDAP_FILTER && LDAP_FILTER.gsub('#{term}', term)) || fields.map { |f| Net::LDAP::Filter.contains(f, term) }.inject(:|)
+
+    if LDAP_FILTER
+      search_terms.each{ |t| LDAP_FILTER.gsub('#{t}', t) }
+    else
+      fields.map do |f|
+        search_terms.map{ |t| Net::LDAP::Filter.contains(f, t) }
+      end.flatten.inject(:|)
+    end
   end
 
   # Searches LDAP only for the given search string.  Returns an array of

@@ -57,7 +57,10 @@
               .form-group.col-sm-6
                 = f.label :primary_pi_name, class: 'required'
                 = f.text_field :primary_pi_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]
-              .form-group.col-sm-6
+              .form-group.col-sm-3
+                = f.label :primary_pi_netid, class: 'required'
+                = f.text_field :primary_pi_netid, class: 'form-control typeahead'
+              .form-group.col-sm-3
                 = f.label :primary_pi_email, class: 'required'
                 = f.email_field :primary_pi_email, class: 'form-control'
                 %small.form-text.text-muted
