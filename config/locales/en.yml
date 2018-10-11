@@ -117,6 +117,7 @@ en:
       save_as_draft: "Save as Draft"
     draft:
       header: "Draft Requests to Complete"
+      placeholder: "No Title Specified"
   site_name: "Living Biobank"
   specimen_records:
     created: "Lab Specimen released successfully."

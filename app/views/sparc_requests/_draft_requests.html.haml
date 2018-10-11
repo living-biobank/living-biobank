@@ -6,6 +6,11 @@
       .alert.alert-warning.complete-draft-request{ role: 'alert' }
         = link_to edit_sparc_request_path(dr), remote: true do
           = icon('fas', 'edit')
-          = dr.title
+          - if dr.title.present?
+            = dr.title
+          - elsif dr.short_title.present?
+            = dr.short_title
+          - else
+            = t(:requests)[:draft][:placeholder]
         = link_to sparc_request_path(dr), remote: true, method: :delete, title: t(:requests)[:tooltips][:cancel], class: 'text-danger', data: { confirm_swal: true } do
           = icon('fas', 'times')
