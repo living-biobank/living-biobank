@@ -1,6 +1,4 @@
-class PermissibleValue < ApplicationRecord
-  include SparcShard
-
+class PermissibleValue < SparcRequestBase
   default_scope -> {
     order(:sort_order)
   }

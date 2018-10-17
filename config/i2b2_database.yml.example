@@ -1,0 +1,23 @@
+default: &default
+  adapter: mysql2
+
+testing:
+  <<: *default
+  host:     localhost
+  username: username
+  password: password
+  database: i2b2db
+
+development:
+  <<: *default
+  host:     localhost
+  username: username
+  password: password
+  database: i2b2db
+
+test:
+  <<: *default
+  host:     localhost
+  username: username
+  password: password
+  database: i2b2db

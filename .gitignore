@@ -27,7 +27,8 @@
 /elm-stuff
 /node_modules
 
-config/shards.yml
+config/sparc_request_database.yml
+config/i2b2_database.yml
 config/database.yml
 config/ldap.yml
 

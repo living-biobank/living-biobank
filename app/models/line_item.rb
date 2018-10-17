@@ -1,5 +1,4 @@
-class LineItem < ApplicationRecord
-  include SparcShard
+class LineItem < SparcRequestBase
   belongs_to :sub_service_request
   belongs_to :service
 

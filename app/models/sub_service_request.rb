@@ -1,5 +1,5 @@
-class SubServiceRequest < ApplicationRecord
-  include SparcShard
-  has_many :line_items
+class SubServiceRequest < SparcRequestBase
   belongs_to :protocol
+
+  has_many :line_items
 end

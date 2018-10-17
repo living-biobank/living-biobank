@@ -1,3 +1,2 @@
-class Service < ApplicationRecord
-  include SparcShard
+class Service < SparcRequestBase
 end
