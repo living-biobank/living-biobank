@@ -3,6 +3,8 @@ class SparcRequest < ApplicationRecord
   belongs_to :service
   belongs_to :protocol, optional: true
 
+  has_many :patients
+
   validates :short_title,
             :title,
             :description,

@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181008155643) do
+ActiveRecord::Schema.define(version: 20181017154325) do
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.bigint "patient_id"
     t.datetime "specimen_date"
     t.integer "order_id"
+    t.integer "visit_id"
+    t.integer "lab_visit_id"
+    t.string "accession_number", limit: 75
     t.string "specimen_source"
     t.boolean "removed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "visit_id"
-    t.integer "lab_visit_id"
-    t.string "accession_number", limit: 75
     t.index ["patient_id"], name: "index_labs_on_patient_id"
   end
 
@@ -36,16 +36,16 @@ ActiveRecord::Schema.define(version: 20181008155643) do
   end
 
   create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.bigint "specimen_request_id"
+    t.bigint "sparc_request_id"
     t.bigint "patient_id"
     t.datetime "identified_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_populations_on_patient_id"
-    t.index ["specimen_request_id"], name: "index_populations_on_specimen_request_id"
+    t.index ["sparc_request_id"], name: "index_populations_on_sparc_request_id"
   end
 
-  create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "user_id"
     t.string "short_title"
     t.text "title"
@@ -71,16 +71,7 @@ ActiveRecord::Schema.define(version: 20181008155643) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "specimen", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.bigint "specimen_request_id"
-    t.bigint "lab_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["lab_id"], name: "index_specimen_on_lab_id"
-    t.index ["specimen_request_id"], name: "index_specimen_on_specimen_request_id"
-  end
-
-  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.integer "protocol_id"
     t.datetime "release_date"
     t.string "release_to"
@@ -92,16 +83,7 @@ ActiveRecord::Schema.define(version: 20181008155643) do
     t.integer "service_id"
   end
 
-  create_table "specimen_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
-    t.string "i2b2_query_name"
-    t.bigint "protocol_id"
-    t.bigint "line_item_id"
-    t.integer "query_cnt"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin" do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email", default: "", null: false
@@ -124,7 +106,5 @@ ActiveRecord::Schema.define(version: 20181008155643) do
 
   add_foreign_key "labs", "patients"
   add_foreign_key "populations", "patients"
-  add_foreign_key "populations", "specimen_requests"
-  add_foreign_key "specimen", "labs"
-  add_foreign_key "specimen", "specimen_requests"
+  add_foreign_key "populations", "sparc_requests"
 end
