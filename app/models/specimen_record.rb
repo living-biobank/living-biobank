@@ -1,4 +1,7 @@
 class SpecimenRecord < ApplicationRecord
+  belongs_to :service
+  belongs_to :protocol
+
   validates :protocol_id,
             :release_date,
             :release_to,
