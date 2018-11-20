@@ -1,10 +1,10 @@
 class RemoveSpecimens < ActiveRecord::Migration[5.1]
   def up
-    #remove_reference :populations, :specimen_request, index: true, foreign_key: true
-    #add_reference :populations, :sparc_request, index: true, foreign_key: true, after: :id
+    remove_reference :populations, :specimen_request, index: true, foreign_key: true
+    add_reference :populations, :sparc_request, index: true, foreign_key: true, after: :id
 
-    #drop_table :specimen
-    #drop_table :specimen_requests
+    drop_table :specimen
+    drop_table :specimen_requests
   end
 
   def down
