@@ -5,7 +5,8 @@ set :repo_url, "git@sparc_biobank:HSSC/sparc-biobank.git"
 
 set :linked_files, fetch(:linked_files, []).push('config/database.yml',
                                                  'config/secrets.yml',
-                                                 'config/shards.yml',
+                                                 'config/i2b2_database.yml',
+                                                 'config/sparc_request_database.yml',
                                                  'config/ldap.yml',
                                                  '.ruby-version',
                                                  '.ruby-gemset',
