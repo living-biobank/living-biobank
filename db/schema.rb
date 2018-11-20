@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181017183338) do
+ActiveRecord::Schema.define(version: 20181120194900) do
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.bigint "patient_id"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20181017183338) do
 
   create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.string "mrn", collation: "utf8_general_ci"
+    t.string "lastname"
+    t.string "firstname"
     t.datetime "preference_date"
     t.string "contact_pref", collation: "utf8_general_ci"
     t.string "bio_bank_pref", collation: "utf8_general_ci"
