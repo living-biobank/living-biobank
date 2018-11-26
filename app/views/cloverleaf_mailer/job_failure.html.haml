@@ -1,0 +1,15 @@
+%p
+  = t(:mailers)[:cloverleaf_mailer][:job_failure][:text]
+
+%table{ style: 'text-align: left' }
+  %tbody
+    %tr
+      %th
+        = t(:jobs)[:fields][:id]
+      %td
+        = @job.id
+    %tr
+      %th
+        = t(:labs)[:fields][:id]
+      %td
+        = @lab.id

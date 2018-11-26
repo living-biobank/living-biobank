@@ -1,0 +1,20 @@
+%p
+  = t(:mailers)[:cloverleaf_mailer][:job_error][:text]
+
+%table{ style: 'text-align: left' }
+  %tbody
+    %tr
+      %th
+        = t(:jobs)[:fields][:id]
+      %td
+        = @job.id
+    %tr
+      %th
+        = t(:labs)[:fields][:id]
+      %td
+        = @lab.id
+    %tr
+      %th
+        = t(:mailers)[:cloverleaf_mailer][:job_error][:error]
+      %td
+        = @exception.inspect
