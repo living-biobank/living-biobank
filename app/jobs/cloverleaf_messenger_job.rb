@@ -7,15 +7,13 @@ class CloverleafMessengerJob < Struct.new(:lab)
   end
 
   def perform
-    http          = Net::HTTP.new(@uri.host, @uri.port)
-    request       = Net::HTTP::Post.new(@uri.request_uri)
-    request.body  = message
-    response      = http.request(request)
-
-    case response
-    when Net::HTTPSuccess, Net::HTTPRedirection
-    else
-      raise "The request was not received by the Cloverleaf server"
+    begin
+      socket = TCPSocket.open(@uri.host, @uri.port)
+      socket.write(message.to_llp)
+      puts socket.recv(1024)
+      socket.close
+    rescue Exception => e
+      raise e
     end
   end
 
@@ -31,31 +29,76 @@ class CloverleafMessengerJob < Struct.new(:lab)
     false
   end
 
+  def message
+    @msg ||= SimpleHL7::Message.new
+    
+    generate_message_header
+    generate_patient_identification
+    generate_common_order
+    generate_observation_request
+
+    @msg
+  end
+
   private
 
-  def message
-    message ||= [
-      message_header,
-      patient_identification,
-      common_order,
-      observation_request
-    ].join("\n")
+  def generate_message_header
+    @msg.msh[4]     = 'EPIC'
+    @msg.msh[6]     = 'CERNER'
+    @msg.msh[7]     = format_date(Date.today)
+    @msg.msh[8]     = 'kgk200'
+    @msg.msh[9][1]  = 'ORM'
+    @msg.msh[9][2]  = '001'
+    @msg.msh[10]    = '8000'
+    @msg.msh[11]    = processing_id
+    @msg.msh[12]    = '2.2'
   end
 
-  def message_header
-    ["MSH", "^~\\&", "", "EPIC", "", "CERNER", Date.today.to_s, "kgk200", "ORM^001", "8000", processing_id, "2.2", "", "", "", "", "", "", "", "", "", "", ""].join("|")
+  def generate_patient_identification
+    @msg.pid[1]     = '1'
+    @msg.pid[3][1]  = lab.patient.mrn
+    @msg.pid[3][4]  = 'MRN'
+    @msg.pid[3][5]  = 'MRN'
+    @msg.pid[5][1]  = lab.patient.lastname
+    @msg.pid[5][2]  = lab.patient.firstname
   end
 
-  def patient_identification
-    ["PID", 1, "", "#{lab.patient.mrn}^^^MRN^MRN", "", "#{lab.patient.lastname}^#{lab.patient.firstname}", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""].join("|")
+  def generate_common_order
+    @msg.orc[1]       = 'NW'
+    @msg.orc[2][1]    = lab.order_id
+    @msg.orc[2][2]    = 'EPC'
+    @msg.orc[4]       = lab.visit_id
+    @msg.orc[9]       = format_date(Date.today)
+    @msg.orc[12][1]   = '18508'
+    @msg.orc[12][2]   = 'Lenert'
+    @msg.orc[12][3]   = 'Leslie'
+    @msg.orc[12][9]   = 'EPIC'
+    @msg.orc[12][13]  = '1053492413'
   end
 
-  def common_order
-    ["ORC", "NW", "#{lab.order_id}^EPC", "", "#{lab.visit_id}", "", "", "", "", Date.today.to_s, "", "", "18508^Lenert^Leslie^^^^^^EPIC^^^^1053492413", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""].join("|")
-  end
-
-  def observation_request
-    ["OBR", 1, "#{lab.order_id}^EPC", lab.accession_number, "10^biobank^bb^^biobank", "", DateTime.now.to_s, "", "", "", "", "Lab Collect", "", "", "", "", "18508^Lenert^Leslie^^^^^^EPIC^^^^1053492413", "", "", "", "", "", "", "", "Lab", "", "", "1^^^#{Date.today}^#{Date.today}^R^^Future^^^^1", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""].join("|")
+  def generate_observation_request
+    @msg.obr[1]       = '1'
+    @msg.obr[2][1]    = lab.order_id
+    @msg.obr[2][2]    = 'EPC'
+    @msg.obr[3]       = lab.accession_number
+    @msg.obr[4][1]    = '10'
+    @msg.obr[4][2]    = 'biobank'
+    @msg.obr[4][3]    = 'bb'
+    @msg.obr[4][5]    = 'biobank'
+    @msg.obr[6]       = format_datetime(DateTime.now)
+    @msg.obr[11]      = 'Lab Collect'
+    @msg.obr[16][1]   = '18508'
+    @msg.obr[16][2]   = 'Lenert'
+    @msg.obr[16][3]   = 'Leslie'
+    @msg.obr[16][9]   = 'EPIC'
+    @msg.obr[16][13]  = '1053492413'
+    @msg.obr[24]      = 'Lab'
+    @msg.obr[27][1]   = '1'
+    @msg.obr[27][4]   = format_date(Date.today)
+    @msg.obr[27][5]   = format_date(Date.today)
+    @msg.obr[27][6]   = 'R'
+    @msg.obr[27][8]   = 'Future'
+    @msg.obr[27][12]  = '1'
   end
 
   def processing_id
@@ -67,5 +110,13 @@ class CloverleafMessengerJob < Struct.new(:lab)
     else
       'T'
     end
+  end
+
+  def format_date(date)
+    date.strftime('%Y%m%d')
+  end
+
+  def format_datetime(datetime)
+    datetime.strftime('%Y%m%d%H%M%S%z')
   end
 end
