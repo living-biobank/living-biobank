@@ -52,6 +52,7 @@ class CloverleafMessengerJob < Struct.new(:lab)
     @msg.msh[10]    = '8000'
     @msg.msh[11]    = processing_id
     @msg.msh[12]    = '2.2'
+    @msg.msh[23]    = ''
   end
 
   def generate_patient_identification
@@ -61,24 +62,26 @@ class CloverleafMessengerJob < Struct.new(:lab)
     @msg.pid[3][5]  = 'MRN'
     @msg.pid[5][1]  = lab.patient.lastname
     @msg.pid[5][2]  = lab.patient.firstname
+    @msg.pid[30]    = ''
   end
 
   def generate_common_order
     @msg.orc[1]       = 'NW'
-    @msg.orc[2][1]    = lab.order_id
+    @msg.orc[2][1]    = lab.order_id.to_s
     @msg.orc[2][2]    = 'EPC'
-    @msg.orc[4]       = lab.visit_id
+    @msg.orc[4]       = lab.visit_id.to_s
     @msg.orc[9]       = format_date(Date.today)
     @msg.orc[12][1]   = '18508'
     @msg.orc[12][2]   = 'Lenert'
     @msg.orc[12][3]   = 'Leslie'
     @msg.orc[12][9]   = 'EPIC'
     @msg.orc[12][13]  = '1053492413'
+    @msg.orc[33]      = ''
   end
 
   def generate_observation_request
     @msg.obr[1]       = '1'
-    @msg.obr[2][1]    = lab.order_id
+    @msg.obr[2][1]    = lab.order_id.to_s
     @msg.obr[2][2]    = 'EPC'
     @msg.obr[3]       = lab.accession_number
     @msg.obr[4][1]    = '10'
@@ -99,6 +102,7 @@ class CloverleafMessengerJob < Struct.new(:lab)
     @msg.obr[27][6]   = 'R'
     @msg.obr[27][8]   = 'Future'
     @msg.obr[27][12]  = '1'
+    @msg.obr[45]      = ''
   end
 
   def processing_id
