@@ -2,6 +2,7 @@ $(document).on 'turbolinks:load', ->
   fixNavbarPlacement()
   fixHeaderPlacement()
   initializeSelectpickers()
+  initializeTooltips()
   $('html').addClass('ready')
 
 $ ->
