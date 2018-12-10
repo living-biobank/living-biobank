@@ -39,7 +39,10 @@ en:
     logout: "Logout"
   labs:
     header: "Lab Specimens"
-    search: "Search for a Specimen by MRN"
+    search:
+      placeholder: "Search for a Specimen by MRN"
+      found: "Specimens Found"
+      not_found: "No Specimens found"
     filters:
       sort_by: "Sort By"
       sort_order: "Sort Order"

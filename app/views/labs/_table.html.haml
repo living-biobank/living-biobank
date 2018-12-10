@@ -7,29 +7,29 @@
       %table.table.table-sm.table-bordered.mb-0#labsTable
         %thead
           %tr
-            %th.col-2
+            %th.col-2<
               = t(:labs)[:fields][:mrn]
-            %th.col-2
+            %th.col-2<
               = t(:labs)[:fields][:samples_available]
-            %th.col-3
+            %th.col-3<
               = t(:labs)[:fields][:specimen_source]
-            %th.col-3
+            %th.col-3<
               = t(:labs)[:fields][:protocols]
-            %th.col-2
+            %th.col-2<
               = t(:labs)[:fields][:actions]
         %tbody
           - if lab_groups.any?
             - lab_groups.each do |grouping, labs|
               %tr
-                %td
+                %td<
                   = grouping[:patient].mrn
-                %td
+                %td<
                   = labs.count
-                %td
+                %td<
                   = grouping[:specimen_source]
-                %td
+                %td<
                   = raw(protocols_preview(grouping[:patient].protocols))
-                %td.text-center
+                %td.text-center<
                   = release_lab_button(grouping[:patient])
           - else
             %tr

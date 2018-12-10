@@ -7,20 +7,31 @@ $ ->
   $('#verifySpecimens').focus()
 
   $(document).on 'change', '#verifySpecimens', ->
-    $this = $(this)
+    mrn = $(this).val()
 
     $.ajax
       type: 'GET'
       dataType: 'json'
       url: '/labs'
       success: (data) ->
-        type = if data.map((el) -> el.mrn).includes($this.val()) then 'success' else 'error'
+        type = if data.map((el) -> el.mrn).includes(mrn) then 'success' else 'error'
+
+        if type == 'success'
+          $('tr').removeClass('bg-success')
+          console.log $("td:textEquals(#{mrn})")
+          $("td:textEquals(#{mrn})").parent().addClass('alert-success')
 
         swal({
           type: type
+          title: if type == 'success' then I18n.t('labs.search.found') else I18n.t('labs.search.not_found')
           showConfirmButton: false
           timer: 1000
           width: "20rem"
         }).then ->
           $('#verifySpecimens').val('')
           $('#verifySpecimens').focus()
+
+$.expr[':'].textEquals = $.expr.createPseudo((arg) ->
+  return (elem) ->
+    return $(elem).text().match("^" + arg + "$")
+)

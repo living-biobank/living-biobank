@@ -7,6 +7,6 @@
 %main#content
   = render 'layouts/flash'
   #verifySpecimensContainer
-    %input.form-control.form-control-lg#verifySpecimens{ type: 'text', placeholder: t(:labs)[:search] }
+    %input.form-control.form-control-lg#verifySpecimens{ type: 'text', placeholder: t(:labs)[:search][:placeholder] }
     = icon('fas fa-2x', 'search')
   = render 'labs/table', lab_groups: @lab_groups
