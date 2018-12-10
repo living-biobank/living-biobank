@@ -16,8 +16,8 @@ $ ->
       success: (data) ->
         type = if data.map((el) -> el.mrn).includes(mrn) then 'success' else 'error'
 
+        $('tr').removeClass('alert-success')
         if type == 'success'
-          $('tr').removeClass('bg-success')
           console.log $("td:textEquals(#{mrn})")
           $("td:textEquals(#{mrn})").parent().addClass('alert-success')
 
