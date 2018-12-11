@@ -2,7 +2,7 @@ class LabsController < ApplicationController
   before_action :honest_broker_check
 
   def index
-    @lab_groups = sort_lab_groups(Lab.available.includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
+    @lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
 
     respond_to do |format|
       format.html

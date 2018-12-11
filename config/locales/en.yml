@@ -40,10 +40,11 @@ en:
   labs:
     header: "Lab Specimens"
     search:
-      placeholder: "Search for a Specimen by MRN"
+      placeholder: "Search by Patient MRN"
       found: "Specimens Found"
       not_found: "No Specimens found"
     filters:
+      search: "Search"
       sort_by: "Sort By"
       sort_order: "Sort Order"
     fields:
@@ -78,9 +79,10 @@ en:
       finalized: "In Process"
       cancelled: "Cancelled"
     filters:
+      search: "Search"
       sort_by: "Sort By"
       sort_order: "Sort Order"
-      status: "Filter by Status"
+      status: "Status"
     fields:
       short_title: "Short Title"
       title: "Title"

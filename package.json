@@ -26,6 +26,7 @@
     "jquery": "^3.3.1",
     "js-yaml": "^3.9.1",
     "node-sass": "^4.5.3",
+    "nprogress": "^0.2.0",
     "path-complete-extname": "^0.1.0",
     "popper.js": "^1.14.4",
     "postcss-loader": "^2.0.6",

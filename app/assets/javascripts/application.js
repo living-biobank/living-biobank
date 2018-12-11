@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require nprogress/nprogress
 //= require sweetalert2/dist/sweetalert2.min
 //= require sweetalert_integration
 //= require rails-ujs

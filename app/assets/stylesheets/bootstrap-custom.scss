@@ -40,6 +40,13 @@ form {
   padding: 0;
   background: white;
   display: flex;
+  flex-wrap: wrap;
+
+  .table-search {
+    margin: 0.5rem 0.5rem;
+    border: 0;
+    flex: 1 0;
+  }
 
   .dropdown {
     width: initial !important;
@@ -71,23 +78,7 @@ form {
 }
 
 .table {
-  &.table-bordered {
-    border: 0;
-
-    th:first-child, td:first-child {
-      border-left-color: white;
-    }
-
-    th:last-child, td:last-child {
-      border-right-color: white;
-    }
-
-    tbody {
-      tr:last-child td {
-        border-bottom: 0;
-      }
-    }
-  }
+  border: 0;
 
   th {
     border-top: none !important;
@@ -96,15 +87,30 @@ form {
 
   th, td {
     vertical-align: middle !important;
+
+    &:first-child {
+      border-left: 0;
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
   }
 
-  td {
-    &.no-records {
-      text-align: center;
-      background: theme-color('light');
-      border-left: $table-border-width solid $table-border-color !important;
-      border-right: $table-border-width solid $table-border-color !important;
-      border-bottom: $table-border-width solid $table-border-color !important;
+  tbody {
+    tr {
+      &:last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+
+      td {
+        &.no-records {
+          text-align: center;
+          background: theme-color('light');
+        }
+      }
     }
   }
 }
@@ -130,6 +136,17 @@ form {
       background: theme-color($color);
       border-color: theme-color($color);
       color: white;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .table-filters {
+    .filter-select {
+      display: flex;
+      flex: 1 0;
+
+      border-top: $table-border-width solid $table-border-color !important;
     }
   }
 }

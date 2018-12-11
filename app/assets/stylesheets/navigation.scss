@@ -83,10 +83,6 @@
 
 @include media-breakpoint-down(sm) {
   .navbar {
-    .navbar-header {
-      flex: 1 0;
-    }
-
     .navbar-toggler {
       margin: 0 1.5rem;
     }
