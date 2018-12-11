@@ -13,10 +13,10 @@ module LabsHelper
         sr = protocol.sparc_request
 
         tooltip = "
-          <span class='float-left text-left w-100 mb-2'><label class='m-0'>Title:</label><br>#{sr.title}</span>
-          <span class='float-left text-left w-100 mb-2'><label class='m-0'>Description:</label><br>#{sr.description}</span>
-          <span class='float-left text-left w-100 mb-2'><label class='m-0'># of Samples Requested:</label><br>#{sr.number_of_specimens_requested}</span>
-          <span class='float-left text-left w-100'><label class='m-0'>Minimum Sample Size:</label><br>#{sr.minimum_sample_size}</span>
+          <span class='float-left text-left w-100 mb-2'><strong>#{sr.title}</strong></span>
+          <span class='float-left text-left w-100 mb-2'>#{sr.description}</span>
+          <span class='float-left text-left w-100 mb-2'><strong>#{t(:requests)[:fields][:specimens_requested]}: </strong>#{sr.number_of_specimens_requested}</span>
+          <span class='float-left text-left w-100'><strong>#{t(:requests)[:fields][:minimum_sample]}: </strong>#{sr.minimum_sample_size}</span>
           <div class='clearfix'></div>
         "
 

@@ -6,6 +6,10 @@ $(document).on 'turbolinks:load', ->
   $('html').addClass('ready')
 
 $ ->
+  $(window).resize ->
+    fixNavbarPlacement()
+    fixHeaderPlacement()
+
   $(document).on 'change keydown changed.bs.select changeDate', '.is-valid, .is-invalid', ->
     $(this).removeClass('is-valid is-invalid')
     $(this).parents('.form-group').children('.form-error').remove()
@@ -47,15 +51,20 @@ $ ->
       data: data
 
 (exports ? this).fixNavbarPlacement = () ->
-  if $('html').width() > 1200
+  if $('html').width() > 1199
     $('#content').css('margin-top', $('header').outerHeight())
     $('#content').css('margin-left', $('.navbar').outerWidth())
+  else
+    $('#content').css('margin-top', 0)
+    $('#content').css('margin-left', 0)
 
 (exports ? this).fixHeaderPlacement = () ->
-  if $('html').width() > 1200
+  if $('html').width() > 1199
+    $('header').css('margin-top', 0)
     $('header').css('margin-left', $('.navbar').outerWidth())
   else
     $('header').css('margin-top', $('.navbar').outerHeight())
+    $('header').css('margin-left', 0)
 
 (exports ? this).setRequiredFields = () ->
   $('.required').append('<span>*</span>')

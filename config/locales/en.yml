@@ -11,9 +11,9 @@ en:
         funding_source: "Funding Source"
         start_date: "Estimated Start Date"
         end_date: "Estimated End Date"
-        primary_pi_name: "Primary PI"
-        primary_pi_netid: "MUSC NetID"
-        primary_pi_email: "MUSC Email Address"
+        primary_pi_name: "Name"
+        primary_pi_netid: "NetID"
+        primary_pi_email: "Email Address"
         service_source: "Service Source"
         number_of_specimens_requested: "Number of Specimens Requested"
         minimum_sample_size: "Minimum Sample Size"
@@ -57,7 +57,7 @@ en:
       title: "Specimen Release"
   login:
     header: "Login"
-    net_id: "Net ID"
+    net_id: "NetID"
     password: "Password"
     remember_me: "Remember Me"
     submit: "Login"
@@ -94,7 +94,7 @@ en:
       contact_email: "Contact Email"
       service_source: "Service Source"
       specimens_requested: "Specimens Requested"
-      minimum_sample: "Min Sample"
+      minimum_sample: "Min Sample Size"
       query_name: "i2b2 Query"
       time_estimate: "Est Time"
       status: "Status"
@@ -109,6 +109,7 @@ en:
       edit_title: "Edit Request"
       headers:
         project_information: "Project Information"
+        pi_information: "Primary PI Information"
         specimen_information: "Specimen Information"
         i2b2_information: "i2b2 Information"
       placeholders:

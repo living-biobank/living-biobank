@@ -83,8 +83,14 @@
 
 @include media-breakpoint-down(sm) {
   .navbar {
+    .navbar-header {
+      .navbar-brand {
+        padding: 0.5rem 0.75rem;
+      }
+    }
+
     .navbar-toggler {
-      margin: 0 1.5rem;
+      margin: 0 0.75rem;
     }
   }
 }
