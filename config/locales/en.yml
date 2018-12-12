@@ -40,7 +40,7 @@ en:
   labs:
     header: "Lab Specimens"
     search:
-      placeholder: "Search by Patient MRN"
+      placeholder: "Verify Samples"
       found: "Specimens Found"
       not_found: "No Specimens found"
     filters:
