@@ -36,11 +36,6 @@ form {
   }
 }
 
-.dropdown:nth-last-child(2) .dropdown-menu {
-  right: 0;
-  left: auto;
-}
-
 .table-filters {
   padding: 0;
   background: white;
@@ -74,9 +69,12 @@ form {
       }
     }
 
-    li {
-      &:active, .active {
-        color: white !important;
+    .dropdown-menu {
+      
+      .dropdown-item {
+        &:active, .active {
+          color: white !important;
+        }
       }
     }
   }
@@ -86,7 +84,6 @@ form {
   border: 0;
 
   th {
-    border-top: none !important;
     text-align: center;
   }
 
@@ -135,6 +132,8 @@ form {
 @include media-breakpoint-down(sm) {
   .table-filters {
     .dropdown.filter-select {
+      justify-content: center;
+
       .filter {
         margin-left: 0.75rem;
         margin-right: 0.75rem;
