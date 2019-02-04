@@ -1,0 +1,11 @@
+%h4
+  = t('mailers.request_mailer.completion_email.header', id: @request.id, short_title: @request.short_title)
+%p
+  = t('mailers.request_mailer.completion_email.completed_by', id: @user.full_name, date: format_date(Date.today))
+%p
+  %strong
+    = t('mailers.request_mailer.completion_email.samples_requested', quantity: @request.number_of_specimens_requested)
+%p
+  %strong
+    =
+    = t('mailers.request_mailer.completion_email.samples_received', quantity: @request.specimen_records.sum(:quantity))

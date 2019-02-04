@@ -40,6 +40,8 @@ class SparcRequestsController < ApplicationController
 
     if @sparc_request.update_attributes(sparc_request_params)
       flash.now[:success] = t(:requests)[:updated]
+
+      RequestMailer.with(user: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
     else
       @errors = @sparc_request.errors
     end

@@ -4,6 +4,13 @@ class SparcRequest < ApplicationRecord
   belongs_to :protocol, optional: true
 
   has_many :patients
+  has_many :specimen_records, -> (sparc_request) { 
+    unscope(:where).where(
+      protocol_id: sparc_request.protocol_id,
+      service_id: sparc_request.service_id,
+      service_source: sparc_request.service_source
+    )
+  }
 
   validates :short_title,
             :title,
@@ -98,8 +105,16 @@ class SparcRequest < ApplicationRecord
       order((sort_by || :status) => (sort_order.blank? ? :desc : sort_order))
   }
 
-  def complete?
-    self.status == I18n.t(:requests)[:statuses][:finalized]
+  def completed?
+    self.status == I18n.t(:requests)[:statuses][:completed]
+  end
+
+  def in_process?
+    self.status == I18n.t(:requests)[:statuses][:in_process]
+  end
+
+  def pending?
+    self.status == I18n.t(:requests)[:statuses][:pending]
   end
 
   def draft?

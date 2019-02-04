@@ -7,6 +7,10 @@ class User < ApplicationRecord
     :rememberable, :trackable, :validatable,
     authentication_keys: [:net_id]
 
+  scope :honest_brokers, -> {
+    where(honest_broker: true)
+  }
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if net_id = conditions.delete(:net_id)

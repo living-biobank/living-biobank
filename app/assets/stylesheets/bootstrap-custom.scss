@@ -120,28 +120,15 @@ form {
   }
 }
 
-.btn.btn-warning {
-  color: white !important;
+.btn {
+  &.btn-warning {
+    color: white;
+  }
 }
 
-.status {
-  width: 100%;
-  padding: 0.25rem 0.5rem;
-  border-width: 1px;
-  border-radius: 0.25rem;
-  border-style: solid;
-  border-color: black;
-  display: inline-block;
-  font-size: 0.75rem;
-  text-align: center;
-  white-space: nowrap;
-
-  @each $color, $value in $theme-colors {
-    &.status-#{$color} {
-      background: theme-color($color);
-      border-color: theme-color($color);
-      color: white;
-    }
+.badge {
+  &.badge-warning {
+    color: white;
   }
 }
 
