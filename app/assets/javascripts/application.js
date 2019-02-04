@@ -21,4 +21,5 @@
 //= require bootstrap-3-typeahead/bootstrap3-typeahead.min
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min
 //= require bootstrap-select/dist/js/bootstrap-select.min
+//= require i18n/translations
 //= require_tree .

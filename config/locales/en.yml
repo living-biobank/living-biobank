@@ -46,7 +46,7 @@ en:
     filters:
       search: "Search"
       sort_by: "Sort By"
-      sort_order: "Sort Order"
+      sort_order: "Order"
     fields:
       mrn: "MRN"
       accession_numbers: "Accession Numbers"
@@ -85,7 +85,7 @@ en:
     filters:
       search: "Search"
       sort_by: "Sort By"
-      sort_order: "Sort Order"
+      sort_order: "Order"
       status: "Status"
     fields:
       short_title: "Short Title"
@@ -145,7 +145,6 @@ en:
         table_header: "Request Details:"
       completion_email:
         subject: "Living Biobank Request Completed"
-        header: "Request #%{id} - %{short_title}"
         completed_by: "Completed by %{user} on %{date}"
         samples_requested: "%{quantity} samples requested"
         samples_received: "%{quantity} samples received"

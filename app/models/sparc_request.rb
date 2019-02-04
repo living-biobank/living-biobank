@@ -12,6 +12,8 @@ class SparcRequest < ApplicationRecord
     )
   }
 
+  delegate :identifier, to: :protocol
+
   validates :short_title,
             :title,
             :description,
@@ -123,5 +125,9 @@ class SparcRequest < ApplicationRecord
 
   def cancelled?
     self.status == I18n.t(:requests)[:statuses][:cancelled]
+  end
+
+  def identifier
+
   end
 end
