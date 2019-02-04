@@ -66,7 +66,7 @@ module SparcRequestsHelper
   end
 
   def begin_request_button(sr)
-    if sr.pending?
+    if sr.pending? && user.honest_broker?
       link_to sparc_request_update_status_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:in_process] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: 'btn btn-primary', data: { toggle: 'tooltip' } do
         icon('fas', 'check-circle')
       end
