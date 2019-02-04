@@ -32,7 +32,5 @@ config/i2b2_database.yml
 config/database.yml
 config/ldap.yml
 
-public/*
-
 *.swp
 .env
