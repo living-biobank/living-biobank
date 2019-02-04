@@ -11,10 +11,12 @@
             %th.col-2<
               = t(:labs)[:fields][:mrn]
             %th.col-2<
+              = t(:labs)[:fields][:accession_numbers]
+            %th.col-2<
               = t(:labs)[:fields][:samples_available]
-            %th.col-3<
+            %th.col-2<
               = t(:labs)[:fields][:specimen_source]
-            %th.col-3<
+            %th.col-2<
               = t(:labs)[:fields][:protocols]
             %th.col-2<
               = t(:labs)[:fields][:actions]
@@ -25,11 +27,13 @@
                 %td<
                   = grouping[:patient].mrn
                 %td<
+                  = accession_numbers(labs)
+                %td<
                   = labs.count
                 %td<
                   = grouping[:specimen_source]
                 %td<
-                  = raw(protocols_preview(grouping[:patient].protocols))
+                  = protocols_preview(grouping[:patient].protocols)
                 %td.text-center<
                   = release_lab_button(grouping[:patient])
           - else

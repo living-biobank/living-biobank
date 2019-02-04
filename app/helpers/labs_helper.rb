@@ -7,9 +7,15 @@ module LabsHelper
     )
   end
 
+  def accession_numbers(labs)
+    raw(labs.map do |lab|
+      content_tag(:span, lab.accession_number, class: 'w-100')
+    end.join(', '))
+  end
+
   def protocols_preview(protocols)
     if protocols.any?
-      protocols.map do |protocol|
+      raw(protocols.map do |protocol|
         sr = protocol.sparc_request
 
         tooltip = "
@@ -21,7 +27,7 @@ module LabsHelper
         "
 
         link_to protocol.id, 'javascript:void(0)', data: { toggle: 'tooltip', title: tooltip, html: true, placement: 'left' }
-      end.join(', ')
+      end.join(', '))
     else
       'N/A'
     end

@@ -49,6 +49,7 @@ en:
       sort_order: "Sort Order"
     fields:
       mrn: "MRN"
+      accession_numbers: "Accession Numbers"
       samples_available: "Potential Samples Available"
       specimen_source: "Specimen Source"
       protocols: "Eligible Protocols"
