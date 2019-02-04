@@ -64,8 +64,8 @@ class SparcRequestsController < ApplicationController
   private
 
   def find_requests
-    @requests       = current_user.sparc_requests.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order])
-    @draft_requests = current_user.sparc_requests.draft
+    @requests       = (current_user.honest_broker? ? SparcRequest.all : current_user.sparc_requests).filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order])
+    @draft_requests = current_user.honest_broker? ? SparcRequest.draft : current_user.sparc_requests.draft
   end
 
   def sparc_request_params

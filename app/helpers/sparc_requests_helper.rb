@@ -10,8 +10,9 @@ module SparcRequestsHelper
   def request_status_filter_options(status)
     options_for_select(
       [
-        [t(:requests)[:statuses][:finalized], class: 'text-success'],
-        [t(:requests)[:statuses][:pending], class: 'text-primary'],
+        [t(:requests)[:statuses][:completed], class: 'text-success'],
+        [t(:requests)[:statuses][:in_process], class: 'text-primary'],
+        [t(:requests)[:statuses][:pending], class: 'text-warning'],
         [t(:requests)[:statuses][:cancelled], class: 'text-secondary']
       ],
       status
@@ -57,7 +58,7 @@ module SparcRequestsHelper
   end
 
   def complete_request_button(sr)
-    if sr.in_process?
+    if current_user.honest_broker? && sr.in_process?
       link_to sparc_request_update_status_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:completed] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:complete], class: 'btn btn-success', data: { toggle: 'tooltip' } do
         'Complete'
       end

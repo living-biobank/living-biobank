@@ -55,6 +55,8 @@ en:
       actions: "Actions"
     form:
       title: "Specimen Release"
+    tooltips:
+      release: "Release Specimens"
   login:
     header: "Login"
     net_id: "NetID"

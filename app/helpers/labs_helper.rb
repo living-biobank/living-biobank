@@ -28,6 +28,6 @@ module LabsHelper
   end
 
   def release_lab_button(patient)
-    link_to t(:actions)[:release], new_specimen_record_path(patient_id: patient.id), remote: true, class: 'btn btn-primary'
+    link_to t(:actions)[:release], new_specimen_record_path(patient_id: patient.id), remote: true, title: t(:labs)[:tooltips][:release], class: 'btn btn-primary', data: { toggle: 'tooltip' }
   end
 end
