@@ -30,3 +30,9 @@ cp config/i2b2_database.yml.example config/i2b2_database.yml
 ```
 
 After copying the `.yml.example` files, modify the corresponding `.yml` files with your database and shard configuration.
+
+Create and migrate your database
+```
+rake db:create
+rake db:migrate
+```
