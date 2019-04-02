@@ -26,7 +26,7 @@ Set up your database and sharding configuration
 ```
 cp config/database.yml.example config/database.yml
 cp config/sparc_request_database.yml.example config/sparc_request_database.yml
-cp config/i2b2_database.yml.example
+cp config/i2b2_database.yml.example config/i2b2_database.yml
 ```
 
 After copying the `.yml.example` files, modify the corresponding `.yml` files with your database and shard configuration.
