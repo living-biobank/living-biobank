@@ -3,6 +3,7 @@ $(document).on 'turbolinks:load', ->
   fixHeaderPlacement()
   initializeSelectpickers()
   initializeTooltips()
+  initializePopovers()
   $('html').addClass('ready')
 
 $ ->
@@ -74,6 +75,9 @@ $ ->
 
 (exports ? this).initializeTooltips = () ->
   $('[data-toggle=tooltip]').tooltip()
+
+(exports ? this).initializePopovers = () ->
+  $('[data-toggle=popover]').popover()
 
 (exports ? this).replaceUrl = (data) ->
   query_string = "?" + Object.keys(data).map((k) ->

@@ -4,9 +4,9 @@
 .card#requests
   .card-header.table-filters{ data: { url: sparc_requests_path } }
     = text_field_tag 'searchRequests', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:requests)[:filters][:search]
-    = select_tag 'sort_by', request_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_by], include_blank: true, data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
-    = select_tag 'sort_order', options_for_select(t(:constants)[:order].invert, params[:sort_order]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_order], include_blank: true, data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
     = select_tag 'status', request_status_filter_options(params[:status]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:status], include_blank: true, data: { field: 'status', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
+    = select_tag 'sort_by', request_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_by], include_blank: true, data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
+    = select_tag 'sort_order', options_for_select(t(:constants)[:order].invert, params[:sort_order]), class: 'selectpicker filter-select', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
     .dropdown.filter-select.d-block.d-sm-none
   .card-body.p-0
     .table-overflow

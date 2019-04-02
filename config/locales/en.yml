@@ -2,6 +2,7 @@ en:
   actions:
     cancel: "Cancel"
     close: "Close"
+    complete: "Complete"
     release: "Release"
   activerecord:
     attributes:
@@ -28,6 +29,7 @@ en:
     order:
       asc: "Ascending"
       desc: "Descending"
+    na: "N/A"
   confirm:
     title: "Are you sure?"
     text: "This action cannot be undone."
@@ -46,7 +48,6 @@ en:
     filters:
       search: "Search"
       sort_by: "Sort By"
-      sort_order: "Order"
     fields:
       mrn: "MRN"
       accession_numbers: "Accession Numbers"
@@ -85,7 +86,6 @@ en:
     filters:
       search: "Search"
       sort_by: "Sort By"
-      sort_order: "Order"
       status: "Status"
     fields:
       short_title: "Short Title"

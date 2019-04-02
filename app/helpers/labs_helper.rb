@@ -18,22 +18,22 @@ module LabsHelper
       raw(protocols.map do |protocol|
         sr = protocol.sparc_request
 
-        tooltip = "
-          <span class='float-left text-left w-100 mb-2'><strong>#{sr.title}</strong></span>
-          <span class='float-left text-left w-100 mb-2'>#{sr.description}</span>
-          <span class='float-left text-left w-100 mb-2'><strong>#{t(:requests)[:fields][:specimens_requested]}: </strong>#{sr.number_of_specimens_requested}</span>
-          <span class='float-left text-left w-100'><strong>#{t(:requests)[:fields][:minimum_sample]}: </strong>#{sr.minimum_sample_size}</span>
-          <div class='clearfix'></div>
+        content = "
+          <div class='d-flex flex-column'>
+            <span class='d-flex justify-content-between mb-2'>#{sr.description}</span>
+            <span class='d-flex justify-content-between mb-2'><strong class='mr-2'>#{t(:requests)[:fields][:specimens_requested]}: </strong>#{sr.number_of_specimens_requested}</span>
+            <span class='d-flex justify-content-between'><strong class='mr-2'>#{t(:requests)[:fields][:minimum_sample]}: </strong>#{sr.minimum_sample_size}</span>
+          </div>
         "
 
-        link_to protocol.id, 'javascript:void(0)', data: { toggle: 'tooltip', title: tooltip, html: true, placement: 'left' }
+        link_to protocol.id, 'javascript:void(0)', data: { toggle: 'popover', trigger: 'hover', title: sr.title, content: content, html: true, placement: 'left' }
       end.join(', '))
-    else
-      'N/A'
     end
   end
 
   def release_lab_button(patient)
-    link_to t(:actions)[:release], new_specimen_record_path(patient_id: patient.id), remote: true, title: t(:labs)[:tooltips][:release], class: 'btn btn-primary', data: { toggle: 'tooltip' }
+    link_to new_specimen_record_path(patient_id: patient.id), remote: true, title: t(:labs)[:tooltips][:release], class: 'btn btn-primary', data: { toggle: 'tooltip' } do
+      raw(t(:actions)[:release] + icon('fas', 'share ml-1'))
+    end
   end
 end

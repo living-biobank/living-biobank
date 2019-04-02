@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
   resources :specimen_records, only: [:new, :create]
 
-  resources :sparc_requests, only: [:index, :new, :create, :edit, :update, :destroy] do
-    patch :update_status
+  resources :sparc_requests, except: [:show, :destroy] do
+    member do
+      patch :update_status
+    end
   end
 
   get '/directory/search', to: 'directory#search'

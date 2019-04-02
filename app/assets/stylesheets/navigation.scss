@@ -23,7 +23,6 @@
         display: flex;
         align-items: center;
         text-align: left;
-        color: theme-color('secondary');
 
         &.active, &:hover, &:focus {
           color: theme-color('light');

@@ -1,5 +1,5 @@
 default: &default
-  adapter: mysql2
+  adapter: oracle_enhanced
 
 testing:
   <<: *default

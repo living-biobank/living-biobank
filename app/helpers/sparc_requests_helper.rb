@@ -59,15 +59,15 @@ module SparcRequestsHelper
 
   def complete_request_button(sr)
     if current_user.honest_broker? && sr.in_process?
-      link_to sparc_request_update_status_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:completed] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:complete], class: 'btn btn-success', data: { toggle: 'tooltip' } do
-        'Complete'
+      link_to update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:completed] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:complete], class: 'btn btn-success', data: { toggle: 'tooltip' } do
+        raw(icon('fas', 'check-circle mr-1') + t(:actions)[:complete])
       end
     end
   end
 
   def begin_request_button(sr)
-    if sr.pending? && user.honest_broker?
-      link_to sparc_request_update_status_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:in_process] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: 'btn btn-primary', data: { toggle: 'tooltip' } do
+    if sr.pending? && current_user.honest_broker?
+      link_to update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:in_process] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:finalize], class: 'btn btn-primary', data: { toggle: 'tooltip' } do
         icon('fas', 'check-circle')
       end
     end
@@ -83,7 +83,7 @@ module SparcRequestsHelper
 
   def cancel_request_button(sr)
     if sr.pending?
-      link_to sparc_request_update_status_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:cancelled] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: 'btn btn-danger', data: { toggle: 'tooltip', confirm_swal: true } do
+      link_to update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:cancelled] }), remote: true, method: :patch, title: t(:requests)[:tooltips][:cancel], class: 'btn btn-danger', data: { toggle: 'tooltip', confirm_swal: true } do
         icon('fas', 'trash')
       end
     end

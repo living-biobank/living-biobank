@@ -1,5 +1,6 @@
 class SparcRequestsController < ApplicationController
 
+  before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
   before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
 
   def index
@@ -32,12 +33,9 @@ class SparcRequestsController < ApplicationController
   end
 
   def edit
-    @sparc_request = current_user.sparc_requests.find(params[:id])
   end
 
   def update
-    @sparc_request = current_user.sparc_requests.find(params[:id])
-
     if @sparc_request.update_attributes(sparc_request_params)
       flash.now[:success] = t(:requests)[:updated]
 
@@ -47,13 +45,7 @@ class SparcRequestsController < ApplicationController
     end
   end
 
-  def destroy
-    current_user.sparc_requests.find(params[:id]).destroy
-  end
-
   def update_status
-    @sparc_request = current_user.sparc_requests.find(params[:sparc_request_id])
-
     if @sparc_request.update_attribute(:status, sparc_request_params[:status])
       flash.now[:success] = t(:requests)[:updated]
     else
@@ -62,6 +54,10 @@ class SparcRequestsController < ApplicationController
   end
 
   private
+
+  def find_request
+    @sparc_request = SparcRequest.find(params[:id])
+  end
 
   def find_requests
     @requests       = (current_user.honest_broker? ? SparcRequest.all : current_user.sparc_requests).filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order])
