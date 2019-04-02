@@ -22,14 +22,15 @@ brew install yarn
 yarn install
 ```
 
-Set up your database and sharding configuration
+Set up your database, sharding, and environment configuration
 ```
 cp config/database.yml.example config/database.yml
 cp config/sparc_request_database.yml.example config/sparc_request_database.yml
 cp config/i2b2_database.yml.example config/i2b2_database.yml
+cp config/dotenv.example .env
 ```
 
-After copying the `.yml.example` files, modify the corresponding `.yml` files with your database and shard configuration.
+After copying the `.yml.example` files, modify the corresponding `.yml` files with your database and shard configuration. In addition, make any necessary changes to your `.env`.
 
 Create and migrate your database
 ```
