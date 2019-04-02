@@ -30,7 +30,7 @@ cp config/i2b2_database.yml.example config/i2b2_database.yml
 cp config/dotenv.example .env
 ```
 
-After copying the `.yml.example` files, modify the corresponding `.yml` files with your database and shard configuration.
+After copying the `.yml.example` files, modify the corresponding `.yml` files with your database and shard configuration. In addition, make any necessary changes to your `.env`.
 
 Create and migrate your database
 ```
