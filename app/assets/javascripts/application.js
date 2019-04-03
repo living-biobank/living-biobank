@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require nprogress/nprogress
 //= require sweetalert2/dist/sweetalert2.min
 //= require sweetalert_integration
 //= require rails-ujs
@@ -20,4 +21,5 @@
 //= require bootstrap-3-typeahead/bootstrap3-typeahead.min
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min
 //= require bootstrap-select/dist/js/bootstrap-select.min
+//= require i18n/translations
 //= require_tree .

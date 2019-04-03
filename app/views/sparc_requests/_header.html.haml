@@ -3,6 +3,8 @@
     = icon('fas', 'file-invoice')
     %span
       = t(:requests)[:header]
-  = link_to new_sparc_request_path(status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order]), remote: true, id: 'newRequest', class: 'btn btn-lg btn-primary', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], html: t(:requests)[:create_confirm][:html], type: '', confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel], class: 'use-agreement text-left' } do
+  = link_to new_sparc_request_path(status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order]), remote: true, id: 'newRequest', class: 'btn btn-lg btn-primary d-none d-sm-block', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], html: t(:requests)[:create_confirm][:html], type: '', confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel], class: 'use-agreement text-left' } do
     = icon('fas', 'plus-circle')
     = t(:requests)[:create]
+  = link_to new_sparc_request_path(status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order]), remote: true, id: 'newRequest', class: 'btn btn-primary d-block d-sm-none', data: { confirm_swal: true, title: t(:requests)[:create_confirm][:title], html: t(:requests)[:create_confirm][:html], type: '', confirm_text: t(:requests)[:create_confirm][:confirm], cancel_text: t(:requests)[:create_confirm][:cancel], class: 'use-agreement text-left' } do
+    = icon('fas', 'plus-circle')

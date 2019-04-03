@@ -11,7 +11,7 @@
       .modal-body
         .form-group
           = f.label :protocol_id, class: 'required'
-          = f.select :protocol_id, patient.protocols, { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+          = f.select :protocol_id, options_from_collection_for_select(patient.protocols, :id, :identifier ), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
         .form-group
           = f.label :quantity, class: 'required'
           = f.text_field :quantity, class: 'form-control'

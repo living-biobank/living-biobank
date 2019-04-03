@@ -3,71 +3,73 @@
 
 .card#requests
   .card-header.table-filters{ data: { url: sparc_requests_path } }
-    = select_tag 'sort_by', request_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_by], include_blank: true, data: { field: 'sort_by', style: 'btn-lg btn-link filter' }
-    = select_tag 'sort_order', options_for_select(t(:constants)[:order].invert, params[:sort_order]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_order], include_blank: true, data: { field: 'sort_order', style: 'btn-lg btn-link filter' }
-    = select_tag 'status', request_status_filter_options(params[:status]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:status], include_blank: true, data: { field: 'status', style: 'btn-lg btn-link filter' }
-  .card-body
+    = text_field_tag 'searchRequests', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:requests)[:filters][:search]
+    = select_tag 'status', request_status_filter_options(params[:status]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:status], include_blank: true, data: { field: 'status', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
+    = select_tag 'sort_by', request_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select', title: t(:requests)[:filters][:sort_by], include_blank: true, data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
+    = select_tag 'sort_order', options_for_select(t(:constants)[:order].invert, params[:sort_order]), class: 'selectpicker filter-select', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true' }
+    .dropdown.filter-select.d-block.d-sm-none
+  .card-body.p-0
     .table-overflow
-      %table.table.table-sm.table-bordered.mb-0#requestsTable
+      %table.table.table-bordered.mb-0#requestsTable
         %thead
           %tr
-            %th
+            %th<
               = t(:requests)[:fields][:short_title]
-            %th
+            %th<
               = t(:requests)[:fields][:funding_status]
-            %th
+            %th<
               = t(:requests)[:fields][:funding_source]
-            %th
+            %th<
               = t(:requests)[:fields][:start_date]
-            %th
+            %th<
               = t(:requests)[:fields][:end_date]
-            %th
+            %th<
               = t(:requests)[:fields][:primary_pi]
-            %th
+            %th<
               = t(:requests)[:fields][:contact_email]
-            %th
+            %th<
               = t(:requests)[:fields][:service_source]
-            %th
+            %th<
               = t(:requests)[:fields][:specimens_requested]
-            %th
+            %th<
               = t(:requests)[:fields][:minimum_sample]
-            %th
+            %th<
               = t(:requests)[:fields][:query_name]
-            %th
+            %th<
               = t(:requests)[:fields][:status]
-            %th
+            %th<
               = t(:requests)[:fields][:actions]
         %tbody
           - if requests.any?
             - requests.each do |request|
               %tr
-                %td
+                %td<
                   = request.short_title
-                %td
+                %td<
                   = funding_statuses[request.funding_status]
-                %td
+                %td<
                   = funding_sources[request.funding_source]
-                %td
+                %td<
                   = format_date(request.start_date)
-                %td
+                %td<
                   = format_date(request.end_date)
-                %td
+                %td<
                   = request.primary_pi_name
-                %td
+                %td<
                   = request.primary_pi_email
-                %td
+                %td<
                   = request.service_source
-                %td
+                %td<
                   = request.number_of_specimens_requested
-                %td
+                %td<
                   = request.minimum_sample_size
-                %td
+                %td<
                   = request.query_name
-                %td
+                %td.text-center<
                   = status_context(request)
-                %td
+                %td.text-center<
                   = request_actions(request)
           - else
             %tr
-              %td.no-records{ colspan: 13 }
+              %td.no-records{ colspan: 13 }<
                 = t(:constants)[:no_records]

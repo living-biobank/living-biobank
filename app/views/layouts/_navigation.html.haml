@@ -1,12 +1,12 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
   .navbar-header
-    %a.navbar-brand.bg-dark.text-center.m-0{ href: root_path }
+    %a.navbar-brand.btn.btn-dark.border-0.rounded-0.m-0{ href: root_path }
       = t(:site_name)
   %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
     %span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarLinks
     .navbar-nav
-      .text-muted.d-flex.d-md-none.d-xl-flex#userInformation
+      .text-white.d-flex.d-md-none.d-xl-flex#userInformation
         = icon('fas', 'user-circle')
         %span
           = current_user.full_name

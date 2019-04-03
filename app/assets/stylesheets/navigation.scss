@@ -23,7 +23,6 @@
         display: flex;
         align-items: center;
         text-align: left;
-        color: theme-color('secondary');
 
         &.active, &:hover, &:focus {
           color: theme-color('light');
@@ -84,11 +83,13 @@
 @include media-breakpoint-down(sm) {
   .navbar {
     .navbar-header {
-      flex: 1 0;
+      .navbar-brand {
+        padding: 0.5rem 0.75rem;
+      }
     }
 
     .navbar-toggler {
-      margin: 0 1.5rem;
+      margin: 0 0.75rem;
     }
   }
 }

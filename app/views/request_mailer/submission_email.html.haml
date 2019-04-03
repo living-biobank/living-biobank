@@ -1,5 +1,5 @@
 %p
-  = t('mailers.request_mailer.submission_email.intro', pi_name: @request.primary_pi_name, date: Date.today)
+  = t('mailers.request_mailer.submission_email.intro', pi_name: @request.primary_pi_name, date: format_date(Date.today))
 
 %h3
   = t(:mailers)[:request_mailer][:submission_email][:table_header]

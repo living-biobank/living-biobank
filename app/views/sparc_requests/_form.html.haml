@@ -23,36 +23,40 @@
           .card-body
             .form-row
               .form-group.col-lg-6
-                = f.label :short_title, class: 'required'
-                = f.text_field :short_title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:short_title]
-              .form-group.col-lg-6
                 = f.label :title, class: 'required'
                 = f.text_field :title, class: 'form-control'
+              .form-group.col-lg-6
+                = f.label :short_title, class: 'required'
+                = f.text_field :short_title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:short_title]
             .form-group
               = f.label :description, class: 'required'
               = f.text_area :description, class: 'form-control'
             .form-row
-              .form-group.col-sm-6
+              .form-group.col-6.col-lg-3
                 = f.label :funding_status, class: 'required'
                 = f.select :funding_status, PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-              .form-group.col-sm-6
+              .form-group.col-6.col-lg-3
                 = f.label :funding_source, class: 'required'
                 = f.select :funding_source, PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-            .form-row
-              .form-group.col-sm-6
+              .form-group.col-6.col-lg-3
                 = f.label :start_date, class: 'required'
                 .input-group
                   = f.text_field :start_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
                   .input-group-append
                     %label.input-group-text{ for: 'sparc_request_start_date' }
                       = icon('far', 'calendar')
-              .form-group.col-sm-6
+              .form-group.col-6.col-lg-3
                 = f.label :end_date, class: 'required'
                 .input-group
                   = f.text_field :end_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
                   .input-group-append
                     %label.input-group-text{ for: 'sparc_request_end_date' }
                       = icon('far', 'calendar')
+        %section.card.mb-3
+          .card-header
+            %h5.card-title.m-0
+              = t(:requests)[:form][:headers][:pi_information]
+          .card-body
             .form-row
               .form-group.col-sm-6
                 = f.label :primary_pi_name, class: 'required'
