@@ -1,6 +1,3 @@
-- funding_statuses  = PermissibleValue.get_hash('funding_status')
-- funding_sources   = PermissibleValue.get_hash('funding_source')
-
 .card#requests
   .card-header.table-filters{ data: { url: sparc_requests_path } }
     = text_field_tag 'searchRequests', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:requests)[:filters][:search]
@@ -10,66 +7,14 @@
     .dropdown.filter-select.d-block.d-sm-none
   .card-body.p-0
     .table-overflow
-      %table.table.table-bordered.mb-0#requestsTable
-        %thead
-          %tr
-            %th<
-              = t(:requests)[:fields][:short_title]
-            %th<
-              = t(:requests)[:fields][:funding_status]
-            %th<
-              = t(:requests)[:fields][:funding_source]
-            %th<
-              = t(:requests)[:fields][:start_date]
-            %th<
-              = t(:requests)[:fields][:end_date]
-            %th<
-              = t(:requests)[:fields][:primary_pi]
-            %th<
-              = t(:requests)[:fields][:contact_email]
-            %th<
-              = t(:requests)[:fields][:service_source]
-            %th<
-              = t(:requests)[:fields][:specimens_requested]
-            %th<
-              = t(:requests)[:fields][:minimum_sample]
-            %th<
-              = t(:requests)[:fields][:query_name]
-            %th<
-              = t(:requests)[:fields][:status]
-            %th<
-              = t(:requests)[:fields][:actions]
+      %table.table.table-bordered.mb-0
         %tbody
           - if requests.any?
             - requests.each do |request|
               %tr
-                %td<
-                  = request.short_title
-                %td<
-                  = funding_statuses[request.funding_status]
-                %td<
-                  = funding_sources[request.funding_source]
-                %td<
-                  = format_date(request.start_date)
-                %td<
-                  = format_date(request.end_date)
-                %td<
-                  = request.primary_pi_name
-                %td<
-                  = request.primary_pi_email
-                %td<
-                  = request.service_source
-                %td<
-                  = request.number_of_specimens_requested
-                %td<
-                  = request.minimum_sample_size
-                %td<
-                  = request.query_name
-                %td.text-center<
-                  = status_context(request)
-                %td.text-center<
-                  = request_actions(request)
+                %td
+                  = render 'sparc_requests/request', request: request
           - else
             %tr
-              %td.no-records{ colspan: 13 }<
+              %td.text-center
                 = t(:constants)[:no_records]

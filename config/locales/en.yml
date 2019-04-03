@@ -2,7 +2,7 @@ en:
   actions:
     cancel: "Cancel"
     close: "Close"
-    complete: "Complete"
+    complete_request: "Complete Request"
     release: "Release"
   activerecord:
     attributes:
@@ -92,13 +92,13 @@ en:
       title: "Title"
       funding_status: "Funding Status"
       funding_source: "Funding Source"
-      start_date: "Est Start Date"
-      end_date: "Est End Date"
+      start_date: "Start Date"
+      end_date: "End Date"
       primary_pi: "Primary PI"
       contact_email: "Contact Email"
       service_source: "Service Source"
       specimens_requested: "Specimens Requested"
-      minimum_sample: "Min Sample Size"
+      minimum_sample: "Minimum Sample Size"
       query_name: "i2b2 Query"
       time_estimate: "Est Time"
       status: "Status"
@@ -126,6 +126,13 @@ en:
         i2b2_query: "Information on creating an i2b2 Query can be found <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>here</a>."
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
+    table:
+      requester: "Requested by %{user}"
+      duration:
+        remaining: "%{duration} remaining"
+        overdue: "%{duration} overdue"
+      service: "<strong>%{service}</strong> - %{source} - %{amount_requested} samples &geq; %{min_sample_size}"
+      progress: "Progress: %{received} / %{total}"
     draft:
       header: "Draft Requests to Complete"
       placeholder: "No Title Specified"

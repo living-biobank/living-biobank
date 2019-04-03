@@ -106,13 +106,6 @@ form {
           border-bottom: 0;
         }
       }
-
-      td {
-        &.no-records {
-          text-align: center;
-          background: theme-color('light');
-        }
-      }
     }
   }
 }
@@ -126,6 +119,24 @@ form {
 .badge {
   &.badge-warning {
     color: white;
+  }
+}
+
+.progress {
+  position: relative;
+  background: theme-color-level('light', 2);
+  color: white;
+
+  .progress-bar {
+    position: absolute;
+    height: 100%;
+  }
+
+  .progress-text {
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1000;
   }
 }
 

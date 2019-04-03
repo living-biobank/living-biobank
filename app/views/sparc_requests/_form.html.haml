@@ -44,14 +44,14 @@
                   = f.text_field :start_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
                   .input-group-append
                     %label.input-group-text{ for: 'sparc_request_start_date' }
-                      = icon('far', 'calendar')
+                      = icon('far', 'calendar-alt')
               .form-group.col-6.col-lg-3
                 = f.label :end_date, class: 'required'
                 .input-group
                   = f.text_field :end_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
                   .input-group-append
                     %label.input-group-text{ for: 'sparc_request_end_date' }
-                      = icon('far', 'calendar')
+                      = icon('far', 'calendar-alt')
         %section.card.mb-3
           .card-header
             %h5.card-title.m-0

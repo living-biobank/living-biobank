@@ -1,0 +1,28 @@
+.request-container
+  .request-header.d-flex.align-items-start.w-100.border-bottom.pb-2.mb-2
+    .col-10.pl-0
+      %h3.d-flex.align-items-center.mb-0
+        %span.font-weight-bold.mr-2
+          = request.protocol.identifier.truncate(60)
+        = status_context(request)
+    .col-2.pr-0.text-right
+      = request_actions(request)
+  .request-body.w-100.d-flex.flex-wrap
+    .request-details.w-100.d-flex.mb-2
+      .col-6.p-0
+        %p.d-flex.align-items-center.mb-1<
+          = requester_display(request)
+        %p.d-flex.align-items-center.mb-1<
+          = icon('fas', 'database mr-2')
+          = request.query_name
+      .col-6.p-0
+        %p.d-flex.align-items-center.justify-content-end.mb-1<
+          = request_duration_display(request)
+    .requested-service-information.w-100
+      %p.mb-1
+        = service_display(request)
+      - if request.in_process? || request.completed?
+        .request-progress.progress.w-100
+          .progress-bar.bg-success{ role: 'progressbar', style: "width:#{request.percent_progress}%;", aria: { valuenow: request.specimen_records.count, valuemin: 0, valuemax: request.number_of_specimens_requested } }
+          %span.progress-text
+            = t('requests.table.progress', received: request.specimen_records.count, total: request.number_of_specimens_requested)
