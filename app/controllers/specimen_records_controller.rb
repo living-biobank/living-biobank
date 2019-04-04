@@ -36,7 +36,7 @@ class SpecimenRecordsController < ApplicationController
   private
 
   def find_patient
-    @patint = Patient.find(params[:patient_id])
+    @patient = Patient.find(params[:patient_id])
   end
 
   def specimen_record_params
