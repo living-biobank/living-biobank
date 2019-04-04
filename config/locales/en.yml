@@ -39,6 +39,9 @@ en:
     labs: "Specimens"
     requests: "Requests"
     logout: "Logout"
+  jobs:
+    fields:
+      id: "Job ID"
   labs:
     header: "Lab Specimens"
     search:
@@ -49,6 +52,7 @@ en:
       search: "Search"
       sort_by: "Sort By"
     fields:
+      id: "Lab ID"
       mrn: "MRN"
       accession_numbers: "Accession Numbers"
       samples_available: "Potential Samples Available"
@@ -135,6 +139,14 @@ en:
     form:
       header: "Specimen Release"
   mailers:
+    cloverleaf_mailer:
+      job_error:
+        subject: "Cloverleaf Message Job Error"
+        text: "A Cloverleaf message job encountered an error."
+        error: "Error"
+      job_failure:
+        subject: "Cloverleaf Message Job Failure"
+        text: "A Cloverleaf message job has failed. The message has not been sent to Cloverleaf."
     request_mailer:
       confirmation_email:
         subject: "Living Biobank Request Confirmation"

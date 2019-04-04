@@ -1,6 +1,7 @@
 .modal-dialog.modal-lg{ role: 'document' }
   .modal-content
     = form_for specimen_record, remote: true do |f|
+      = hidden_field_tag :patient_id, patient.id
       = f.hidden_field :mrn, value: patient.mrn
       .modal-header
         %h5.modal-title

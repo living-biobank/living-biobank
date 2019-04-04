@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'coffee-rails', '~> 4.2'
+gem 'delayed_job_active_record'
 gem 'devise'
 gem 'dotenv-rails'
 gem 'faker'
@@ -19,6 +20,7 @@ gem 'pry'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.3'
 gem 'sassc-rails'
+gem 'simple_hl7'
 gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier', '>= 1.3.0'
