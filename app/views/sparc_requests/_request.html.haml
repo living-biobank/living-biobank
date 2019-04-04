@@ -11,11 +11,13 @@
     .request-details.w-100.d-flex.mb-2
       .col-6.p-0
         %p.d-flex.align-items-center.mb-1<
-          = requester_display(request)
+          = primary_pi_display(request)
         %p.d-flex.align-items-center.mb-1<
           = icon('fas', 'database mr-2')
           = request.query_name
       .col-6.p-0
+        %p.d-flex.align-items-center.justify-content-end.mb-1<
+          = requester_display(request)
         %p.d-flex.align-items-center.justify-content-end.mb-1<
           = request_duration_display(request)
     .requested-service-information.w-100

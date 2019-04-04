@@ -19,8 +19,12 @@ module SparcRequestsHelper
     )
   end
 
+  def primary_pi_display(sr)
+    icon('fas', 'user mr-2') + sr.primary_pi_name + " (" + link_to(sr.primary_pi_email, "mailto:#{sr.primary_pi_email}") + ")"
+  end
+
   def requester_display(sr)
-    icon('fas', 'user mr-2') + t('requests.table.requester', user: sr.user.full_name_with_email)
+    raw t('requests.table.requester', name: sr.user.full_name) + " (" + link_to(sr.user.email, "mailto:#{sr.user.email}") + ")"
   end
 
   def request_duration_display(sr)

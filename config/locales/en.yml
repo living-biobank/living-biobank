@@ -105,7 +105,7 @@ en:
       actions: "Actions"
     tooltips:
       time_estimate: "This request could take a long time to fulfill."
-      complete: "Complete Request"
+      complete: "Complete this request once all specimens have been received"
       finalize: "Finalize Request"
       edit: "Edit Request"
       cancel: "Cancel Request"
@@ -127,7 +127,7 @@ en:
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
     table:
-      requester: "Requested by %{user}"
+      requester: "Requested by %{name}"
       duration:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"

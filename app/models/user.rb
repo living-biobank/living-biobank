@@ -23,8 +23,4 @@ class User < ApplicationRecord
   def full_name
     "#{self.first_name} #{self.last_name}"
   end
-
-  def full_name_with_email
-    "#{self.full_name} (#{self.email})"
-  end
 end
