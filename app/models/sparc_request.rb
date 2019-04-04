@@ -127,7 +127,7 @@ class SparcRequest < ApplicationRecord
     self.status == I18n.t(:requests)[:statuses][:cancelled]
   end
 
-  def identifier
-
+  def percent_progress
+    100 * self.specimen_records.count / self.number_of_specimens_requested.to_f
   end
 end

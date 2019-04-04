@@ -2,6 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.request-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 calc(1.5rem - 12px);
+
+  .request-header {
+    .request-status {
+      font-size: initial;
+    }
+  }
+}
+
 #requestFormModal {
   min-width: 90%;
 }

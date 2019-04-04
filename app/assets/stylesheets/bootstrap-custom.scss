@@ -1,3 +1,7 @@
+/////////////
+/// FORMS ///
+/////////////
+
 form {
   input {
     &.is-valid {
@@ -33,6 +37,40 @@ form {
 
   .form-error {
     color: theme-color('danger');
+  }
+}
+
+//////////////
+/// TABLES ///
+//////////////
+
+.table {
+  border: 0;
+
+  th {
+    text-align: center;
+  }
+
+  th, td {
+    vertical-align: middle !important;
+
+    &:first-child {
+      border-left: 0;
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+
+  tbody {
+    tr {
+      &:last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
   }
 }
 
@@ -80,55 +118,6 @@ form {
   }
 }
 
-.table {
-  border: 0;
-
-  th {
-    text-align: center;
-  }
-
-  th, td {
-    vertical-align: middle !important;
-
-    &:first-child {
-      border-left: 0;
-    }
-
-    &:last-child {
-      border-right: 0;
-    }
-  }
-
-  tbody {
-    tr {
-      &:last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-
-      td {
-        &.no-records {
-          text-align: center;
-          background: theme-color('light');
-        }
-      }
-    }
-  }
-}
-
-.btn {
-  &.btn-warning {
-    color: white;
-  }
-}
-
-.badge {
-  &.badge-warning {
-    color: white;
-  }
-}
-
 @include media-breakpoint-down(sm) {
   .table-filters {
     .dropdown.filter-select {
@@ -169,5 +158,47 @@ form {
         margin: 0;
       }
     }
+  }
+}
+
+///////////////
+/// BUTTONS ///
+///////////////
+
+.btn {
+  &.btn-warning {
+    color: white;
+  }
+}
+
+//////////////
+/// BADGES ///
+//////////////
+
+.badge {
+  &.badge-warning {
+    color: white;
+  }
+}
+
+////////////////
+/// PROGRESS ///
+////////////////
+
+.progress {
+  position: relative;
+  background: theme-color-level('light', 2);
+  color: white;
+
+  .progress-bar {
+    position: absolute;
+    height: 100%;
+  }
+
+  .progress-text {
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 1000;
   }
 }
