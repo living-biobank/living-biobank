@@ -43,8 +43,8 @@ module SparcRequestsHelper
     end
   end
 
-  def service_display(sr)
-    t('requests.table.service', service: sr.service.abbreviation, source: sr.service_source, amount_requested: sr.number_of_specimens_requested, min_sample_size: sr.minimum_sample_size).html_safe
+  def service_display(li)
+    t('requests.table.service', service: li.service.abbreviation, source: li.service_source, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size).html_safe
   end
 
   def status_context(sr)

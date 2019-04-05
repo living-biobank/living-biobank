@@ -12,12 +12,13 @@ class SparcRequestsController < ApplicationController
 
   def new
     @sparc_request = current_user.sparc_requests.new
+    @sparc_request.line_items.build
   end
 
   def create
     @sparc_request = current_user.sparc_requests.new(sparc_request_params)
 
-    if params[:save_draft] && @sparc_request.title
+    if params[:save_draft]
       @sparc_request.status = t(:requests)[:statuses][:draft]
       @sparc_request.save(validate: false)
 
@@ -29,6 +30,7 @@ class SparcRequestsController < ApplicationController
       flash.now[:success] = t(:requests)[:created]
     else
       @errors = @sparc_request.errors
+      @line_item_params = sparc_request_params[:line_items_attributes]
     end
   end
 
@@ -42,6 +44,7 @@ class SparcRequestsController < ApplicationController
       RequestMailer.with(user: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
     else
       @errors = @sparc_request.errors
+      @line_item_params = sparc_request_params[:line_items_attributes]
     end
   end
 
@@ -83,12 +86,15 @@ class SparcRequestsController < ApplicationController
       :primary_pi_name,
       :primary_pi_netid,
       :primary_pi_email,
-      :service_id,
-      :service_source,
-      :number_of_specimens_requested,
-      :minimum_sample_size,
       :query_name,
-      :status
+      :status,
+      line_items_attributes: [
+        :service_id,
+        :service_source,
+        :number_of_specimens_requested,
+        :minimum_sample_size,
+        :_destroy
+      ]
     )
   end
 end

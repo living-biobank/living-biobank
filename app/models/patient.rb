@@ -1,9 +1,10 @@
 class Patient < ApplicationRecord
-  has_many :populations
-  has_many :sparc_requests, through: :populations
   has_many :labs
+  has_many :populations
+  has_many :line_items, through: :populations
+  has_many :sparc_requests, through: :line_items
 
   def protocols
-    Protocol.where(id: self.sparc_requests.pluck(:protocol_id))
+    SPARC::Protocol.where(id: self.sparc_requests.pluck(:protocol_id))
   end
 end

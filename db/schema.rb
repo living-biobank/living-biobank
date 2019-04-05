@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181126172407) do
+ActiveRecord::Schema.define(version: 20190404184252) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -27,94 +27,101 @@ ActiveRecord::Schema.define(version: 20181126172407) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
     t.datetime "specimen_date"
     t.bigint "order_id"
     t.bigint "visit_id"
     t.bigint "lab_visit_id"
-    t.string "accession_number", limit: 75, collation: "utf8_general_ci"
-    t.string "specimen_source", collation: "utf8_general_ci"
+    t.string "accession_number", limit: 75
+    t.string "specimen_source"
     t.boolean "removed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["patient_id"], name: "index_labs_on_patient_id"
   end
 
-  create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string "mrn", collation: "utf8_general_ci"
-    t.string "lastname"
-    t.string "firstname"
-    t.datetime "preference_date"
-    t.string "contact_pref", collation: "utf8_general_ci"
-    t.string "bio_bank_pref", collation: "utf8_general_ci"
+  create_table "line_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "sparc_request_id"
+    t.integer "service_id"
+    t.integer "sparc_id"
+    t.string "service_source"
+    t.string "minimum_sample_size"
+    t.integer "number_of_specimens_requested"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.bigint "sparc_request_id"
+  create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "mrn"
+    t.string "lastname"
+    t.string "firstname"
+    t.datetime "preference_date"
+    t.string "contact_pref"
+    t.string "bio_bank_pref"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "populations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "patient_id"
     t.datetime "identified_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "line_item_id"
+    t.index ["line_item_id"], name: "index_populations_on_line_item_id"
     t.index ["patient_id"], name: "index_populations_on_patient_id"
-    t.index ["sparc_request_id"], name: "index_populations_on_sparc_request_id"
   end
 
-  create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
-    t.string "short_title", collation: "utf8_general_ci"
-    t.text "title", collation: "utf8_general_ci"
-    t.text "description", collation: "utf8_general_ci"
-    t.string "funding_status", collation: "utf8_general_ci"
-    t.string "funding_source", collation: "utf8_general_ci"
+    t.string "short_title"
+    t.text "title"
+    t.text "description"
+    t.string "funding_status"
+    t.string "funding_source"
     t.date "start_date"
     t.date "end_date"
-    t.string "primary_pi_netid", collation: "utf8_general_ci"
-    t.string "primary_pi_name", collation: "utf8_general_ci"
-    t.string "primary_pi_email", collation: "utf8_general_ci"
-    t.string "query_name", collation: "utf8_general_ci"
-    t.string "service_source", collation: "utf8_general_ci"
-    t.bigint "service_id"
-    t.string "time_estimate", collation: "utf8_general_ci"
-    t.string "status", default: "New", collation: "utf8_general_ci"
+    t.string "primary_pi_netid"
+    t.string "primary_pi_name"
+    t.string "primary_pi_email"
+    t.string "query_name"
+    t.string "time_estimate"
+    t.string "status", default: "New"
     t.bigint "protocol_id"
-    t.bigint "line_item_id"
-    t.string "minimum_sample_size", collation: "utf8_general_ci"
-    t.integer "number_of_specimens_requested"
     t.integer "query_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
+  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "protocol_id"
     t.datetime "release_date"
-    t.string "release_to", collation: "utf8_general_ci"
+    t.string "release_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "quantity"
-    t.string "mrn", collation: "utf8_general_ci"
-    t.string "service_source", collation: "utf8_general_ci"
+    t.string "mrn"
+    t.string "service_source"
     t.bigint "service_id"
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.string "first_name", collation: "utf8_general_ci"
-    t.string "last_name", collation: "utf8_general_ci"
-    t.string "email", default: "", null: false, collation: "utf8_general_ci"
-    t.string "net_id", collation: "utf8_general_ci"
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email", default: "", null: false
+    t.string "net_id"
     t.boolean "honest_broker", default: false
-    t.string "encrypted_password", default: "", null: false, collation: "utf8_general_ci"
-    t.string "reset_password_token", collation: "utf8_general_ci"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip", collation: "utf8_general_ci"
-    t.string "last_sign_in_ip", collation: "utf8_general_ci"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
@@ -122,6 +129,6 @@ ActiveRecord::Schema.define(version: 20181126172407) do
   end
 
   add_foreign_key "labs", "patients"
+  add_foreign_key "populations", "line_items"
   add_foreign_key "populations", "patients"
-  add_foreign_key "populations", "sparc_requests"
 end

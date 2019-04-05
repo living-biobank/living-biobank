@@ -34,10 +34,10 @@
             .form-row
               .form-group.col-6.col-lg-3
                 = f.label :funding_status, class: 'required'
-                = f.select :funding_status, PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+                = f.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
               .form-group.col-6.col-lg-3
                 = f.label :funding_source, class: 'required'
-                = f.select :funding_source, PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+                = f.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
               .form-group.col-6.col-lg-3
                 = f.label :start_date, class: 'required'
                 .input-group
@@ -52,11 +52,6 @@
                   .input-group-append
                     %label.input-group-text{ for: 'sparc_request_end_date' }
                       = icon('far', 'calendar-alt')
-        %section.card.mb-3
-          .card-header
-            %h5.card-title.m-0
-              = t(:requests)[:form][:headers][:pi_information]
-          .card-body
             .form-row
               .form-group.col-sm-6
                 = f.label :primary_pi_name, class: 'required'
@@ -67,37 +62,39 @@
               .form-group.col-sm-3
                 = f.label :primary_pi_email, class: 'required'
                 = f.email_field :primary_pi_email, class: 'form-control'
+            .form-row
+              .form-group.col-6
+                = f.label :query_name, class: 'required'
+                = f.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
                 %small.form-text.text-muted
-                  = t(:requests)[:form][:subtext][:primary_pi_email]
+                  = raw(t(:requests)[:form][:subtext][:i2b2_query])
         %section.card.mb-3
           .card-header
             %h5.card-title.m-0
-              = t(:requests)[:form][:headers][:specimen_information]
+              = t(:requests)[:form][:headers][:specimens]
           .card-body
-            .form-row
-              .form-group.col-sm-6
-                = f.label :service_id, class: 'required'
-                = f.select :service_id, options_from_collection_for_select(Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', @sparc_request.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-              .form-group.col-sm-6
-                = f.label :service_source, class: 'required'
-                = f.text_field :service_source, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:service_source]
-            .form-row
-              .form-group.col-sm-6
-                = f.label :number_of_specimens_requested, class: 'required'
-                = f.text_field :number_of_specimens_requested, class: 'form-control'
-              .form-group.col-sm-6
-                = f.label :minimum_sample_size, class: 'required'
-                = f.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample]
-        %section.card
-          .card-header
-            %h5.card-title.m-0
-              = t(:requests)[:form][:headers][:i2b2_information]
-          .card-body
+            = f.nested_fields_for :line_items do |ff_li|
+              .form-row
+                .form-group.col-sm-3
+                  = ff_li.label :service_id, class: 'required'
+                  = ff_li.select :service_id, options_from_collection_for_select(SPARC::Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', ff_li.object.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
+                .form-group.col-sm-3
+                  = ff_li.label :service_source, class: 'required'
+                  = ff_li.select :service_source, options_for_select(Lab::SOURCES, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
+                .form-group.col
+                  = ff_li.label :number_of_specimens_requested, class: 'required'
+                  = ff_li.text_field :number_of_specimens_requested, class: 'form-control'
+                .form-group.col
+                  = ff_li.label :minimum_sample_size, class: 'required'
+                  = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample]
+                .form-group.pr-1
+                  %label.w-100 &nbsp;
+                  = ff_li.remove_nested_fields_link class: 'btn btn-danger' do
+                    = icon('fas', 'trash')
             .form-group
-              = f.label :query_name, class: 'required'
-              = f.select :query_name, options_from_collection_for_select(I2b2QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-              %small.form-text.text-muted
-                = raw(t(:requests)[:form][:subtext][:i2b2_query])
+              = f.add_nested_fields_link :line_items, class: 'btn btn-primary' do
+                = icon('fas', 'plus-circle')
+                = 'Add Service'
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
         - if action_name == 'new'
