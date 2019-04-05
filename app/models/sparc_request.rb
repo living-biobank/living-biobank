@@ -2,7 +2,7 @@ class SparcRequest < ApplicationRecord
   belongs_to :user
   belongs_to :protocol, class_name: "SPARC::Protocol", optional: true
 
-  has_many :line_items
+  has_many :line_items, dependent: :destroy
 
   delegate :identifier, to: :protocol
 
