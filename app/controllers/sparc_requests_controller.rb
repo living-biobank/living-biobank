@@ -1,7 +1,7 @@
 class SparcRequestsController < ApplicationController
 
-  before_action :find_request,  only: [:edit, :update, :update_status]
-  before_action :find_requests, only: [:index, :create, :update, :update_status]
+  before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
+  before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
 
   def index
     respond_to do |format|
@@ -43,6 +43,10 @@ class SparcRequestsController < ApplicationController
     else
       @errors = @sparc_request.errors
     end
+  end
+
+  def destroy
+    @sparc_request.destroy
   end
 
   def update_status

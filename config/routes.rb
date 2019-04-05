@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :specimen_records, only: [:new, :create]
 
-  resources :sparc_requests, except: [:show, :destroy] do
+  resources :sparc_requests, except: [:show] do
     member do
       patch :update_status
     end
