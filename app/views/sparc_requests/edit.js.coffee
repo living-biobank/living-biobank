@@ -1,6 +1,5 @@
 $('#modalContainer').html("<%= j render 'sparc_requests/form', sparc_request: @sparc_request %>")
 setRequiredFields()
 initializeSelectpickers()
-initializeSpecimenSourceTypeahead()
 initializePrimaryPITypeahead()
 $('#modalContainer').modal('show')

@@ -13,4 +13,4 @@
           - else
             = t(:requests)[:draft][:placeholder]
         = link_to sparc_request_path(dr), remote: true, method: :delete, title: t(:requests)[:tooltips][:cancel], class: 'text-danger', data: { confirm_swal: true } do
-          = icon('fas', 'times')
+          = icon('fas', 'trash')

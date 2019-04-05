@@ -14,12 +14,13 @@ $ ->
         authenticity_token: $('meta[name=csrf-token]').attr('content')
         save_draft:         'true'
 
-(exports ? this).initializeSpecimenSourceTypeahead = () ->
-  # specimen source typeahead search, preventing user entry
-  $.get "/specimen_source.json", (data) ->
-    $("#sparc_request_service_source").typeahead
-      source: data
-  ,'json'
+  $.rails = {
+    allowAction: ($el) ->
+      return true
+  }
+
+  $(document).on 'fields_added.nested_form_fields', (event, param) ->
+    initializeSelectpickers()
 
 (exports ? this).initializePrimaryPITypeahead = () ->
   # pi name search

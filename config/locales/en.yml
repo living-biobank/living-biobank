@@ -6,19 +6,21 @@ en:
     release: "Release"
   activerecord:
     attributes:
+      line_item:
+        service_source: "Source"
+        number_of_specimens_requested: "Number of Specimens"
+        minimum_sample_size: "Minimum Sample Size"
       sparc_request:
+        title: "Project Title"
         short_title: "Short Title"
         funding_status: "Funding Status"
         funding_source: "Funding Source"
         start_date: "Estimated Start Date"
         end_date: "Estimated End Date"
-        primary_pi_name: "Name"
-        primary_pi_netid: "NetID"
-        primary_pi_email: "Email Address"
-        service_source: "Service Source"
-        number_of_specimens_requested: "Number of Specimens Requested"
-        minimum_sample_size: "Minimum Sample Size"
-        query_name: "Query Name"
+        primary_pi_name: "Primary PI Name"
+        primary_pi_netid: "Primary PI NetID"
+        primary_pi_email: "Primary PI Email"
+        query_name: "i2b2 Query Name"
       specimen_record:
         release_date: "Release Date"
         release_to: "Release To"
@@ -118,15 +120,11 @@ en:
       edit_title: "Edit Request"
       headers:
         project_information: "Project Information"
-        pi_information: "Primary PI Information"
-        specimen_information: "Specimen Information"
-        i2b2_information: "i2b2 Information"
+        specimens: "Specimens"
       placeholders:
         primary_pi: "e.g. Smith"
-        service_source: "e.g. Whole Blood"
         minimum_sample: "e.g. 2mL"
       subtext:
-        primary_pi_email: "For project updates"
         i2b2_query: "Information on creating an i2b2 Query can be found <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>here</a>."
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"

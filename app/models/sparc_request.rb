@@ -1,16 +1,8 @@
 class SparcRequest < ApplicationRecord
   belongs_to :user
-  belongs_to :service
-  belongs_to :protocol, optional: true
+  belongs_to :protocol, class_name: "SPARC::Protocol", optional: true
 
-  has_many :patients
-  has_many :specimen_records, -> (sparc_request) { 
-    unscope(:where).where(
-      protocol_id: sparc_request.protocol_id,
-      service_id: sparc_request.service_id,
-      service_source: sparc_request.service_source
-    )
-  }
+  has_many :line_items
 
   delegate :identifier, to: :protocol
 
@@ -24,15 +16,13 @@ class SparcRequest < ApplicationRecord
             :primary_pi_netid,
             :primary_pi_name,
             :primary_pi_email,
-            :service_id,
-            :service_source,
-            :number_of_specimens_requested,
-            :minimum_sample_size,
             :query_name,
             :status,
             presence: true
 
   validates_format_of :primary_pi_email, with: /\A[A-Za-z0-9]*@musc.edu\Z/
+
+  accepts_nested_attributes_for :line_items, allow_destroy: true
 
   scope :active, -> { where.not(status: 'Cancelled') }
 
@@ -125,9 +115,5 @@ class SparcRequest < ApplicationRecord
 
   def cancelled?
     self.status == I18n.t(:requests)[:statuses][:cancelled]
-  end
-
-  def percent_progress
-    100 * self.specimen_records.count / self.number_of_specimens_requested.to_f
   end
 end
