@@ -12,6 +12,4 @@
     = render 'layouts/navigation'
     = yield
     = render 'layouts/modal'
-    :javascript
-      I18n.defaultLocale = "<%= I18n.default_locale %>"
-      I18n.locale = "<%= I18n.locale || I18n.default_locale %>"
+    = render 'layouts/i18n_js'
