@@ -55,13 +55,11 @@
             .form-row
               .form-group.col-sm-6
                 = f.label :primary_pi_name, class: 'required'
-                = f.text_field :primary_pi_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]
-              .form-group.col-sm-3
-                = f.label :primary_pi_netid, class: 'required'
-                = f.text_field :primary_pi_netid, class: 'form-control typeahead'
-              .form-group.col-sm-3
-                = f.label :primary_pi_email, class: 'required'
-                = f.email_field :primary_pi_email, class: 'form-control'
+                = text_field_tag "name_search", f.object.pi_display_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]
+
+                = f.hidden_field :primary_pi_name
+                = f.hidden_field :primary_pi_netid
+                = f.hidden_field :primary_pi_email
             .form-row
               .form-group.col-6
                 = f.label :query_name, class: 'required'

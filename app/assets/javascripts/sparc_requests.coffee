@@ -24,16 +24,18 @@ $ ->
 
 (exports ? this).initializePrimaryPITypeahead = () ->
   # pi name search
-  $("#sparc_request_primary_pi_name").typeahead(
+  $("#name_search").typeahead(
     source: (term, process) ->
       $.get "/directory/search.json?term=#{term}", (data) ->
         process(data.results)
     templates:
       notFound: ->
         return "<span>Not Found</span>"
-    display: 'name'
     minLength: 3
+    displayText: (suggestion) ->
+      return suggestion.display_name
     afterSelect: (suggestion) ->
+      $('#sparc_request_primary_pi_name').val(suggestion.name)
       $('#sparc_request_primary_pi_netid').val(suggestion.netid)
       $('#sparc_request_primary_pi_email').val(suggestion.email)
   )

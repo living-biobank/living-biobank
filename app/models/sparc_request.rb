@@ -116,4 +116,13 @@ class SparcRequest < ApplicationRecord
   def cancelled?
     self.status == I18n.t(:requests)[:statuses][:cancelled]
   end
+
+  def pi_display_name
+    "#{primary_pi_name} ( #{primary_pi_email} )" if primary_pi_name && primary_pi_email
+  end
+
+  def identifier
+
+  end
+
 end
