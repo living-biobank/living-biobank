@@ -121,8 +121,5 @@ class SparcRequest < ApplicationRecord
     "#{primary_pi_name} ( #{primary_pi_email} )" if primary_pi_name && primary_pi_email
   end
 
-  def identifier
-
-  end
 
 end
