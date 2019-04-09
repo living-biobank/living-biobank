@@ -13,18 +13,19 @@
         %p.d-flex.align-items-center.mb-1<
           = primary_pi_display(request)
         %p.d-flex.align-items-center.mb-1<
-          = icon('fas', 'database mr-2')
-          = request.query_name
+          = request_duration_display(request)
       .col-6.p-0
         %p.d-flex.align-items-center.justify-content-end.mb-1<
           = requester_display(request)
-        %p.d-flex.align-items-center.justify-content-end.mb-1<
-          = request_duration_display(request)
     .requested-service-information.w-100
       - request.line_items.each do |li|
         .service.d-flex.w-100
-          %p.col-4.pl-0.mb-1
-            = service_display(li)
+          .col-4.pl-0
+            %p.mb-0
+              = service_display(li)
+            %p.mb-1
+              = icon('fas', 'database mr-2')
+              = li.query_name
           - if request.in_process? || request.completed?
             .request-progress.progress.col-8.p-0.mt-1
               .progress-bar.bg-success{ role: 'progressbar', style: "width:#{li.percent_progress}%;", aria: { valuenow: li.specimen_records.count, valuemin: 0, valuemax: li.number_of_specimens_requested } }

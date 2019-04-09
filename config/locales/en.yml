@@ -20,7 +20,7 @@ en:
         primary_pi_name: "Primary PI Name"
         primary_pi_netid: "Primary PI NetID"
         primary_pi_email: "Primary PI Email"
-        query_name: "i2b2 Query Name"
+        query_name: "i2b2 Query"
       specimen_record:
         release_date: "Release Date"
         release_to: "Release To"
@@ -116,11 +116,11 @@ en:
       edit: "Edit Request"
       cancel: "Cancel Request"
     form:
-      new_title: "New Request"
-      edit_title: "Edit Request"
+      new_title: "New Specimen Request"
+      edit_title: "Edit Specimen Request"
       headers:
         project_information: "Project Information"
-        specimens: "Specimens"
+        specimens: "Request Specimens"
       placeholders:
         primary_pi: "e.g. Smith"
         minimum_sample: "e.g. 2mL"
