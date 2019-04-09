@@ -37,3 +37,6 @@ config/ldap.yml
 
 # Environment Variables
 .env
+
+# Ignore precompiled assets
+public/assets/
