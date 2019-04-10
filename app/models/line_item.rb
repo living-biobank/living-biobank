@@ -11,7 +11,7 @@ class LineItem < ApplicationRecord
     )
   }
 
-  validates_presence_of :service_id, :service_source, :minimum_sample_size, :number_of_specimens_requested
+  validates_presence_of :service_id, :service_source, :query_name, :minimum_sample_size, :number_of_specimens_requested
   validates_numericality_of :number_of_specimens_requested, greater_than: 0
 
   def percent_progress

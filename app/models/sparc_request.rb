@@ -16,7 +16,6 @@ class SparcRequest < ApplicationRecord
             :primary_pi_netid,
             :primary_pi_name,
             :primary_pi_email,
-            :query_name,
             :status,
             presence: true
 
