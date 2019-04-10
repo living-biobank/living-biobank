@@ -31,31 +31,31 @@ class SparcRequest < ApplicationRecord
   scope :search, -> (term) {
     return if term.blank?
 
-    where(arel_table[:short_title].matches("%#{term}%")).or(
-      where(arel_table[:title].matches("%#{term}%"))
+    joins(:line_items).where(arel_table[:short_title].matches("%#{term}%")).or(
+      joins(:line_items).where(arel_table[:title].matches("%#{term}%"))
     ).or(
-      where(arel_table[:funding_status].matches("%#{term}%"))
+      joins(:line_items).where(arel_table[:funding_status].matches("%#{term}%"))
     ).or(
-      where(arel_table[:funding_source].matches("%#{term}%"))
+      joins(:line_items).where(arel_table[:funding_source].matches("%#{term}%"))
     ).or(
-      where(arel_table[:primary_pi_netid].matches("%#{term}%"))
+      joins(:line_items).where(arel_table[:primary_pi_netid].matches("%#{term}%"))
     ).or(
-      where(arel_table[:primary_pi_name].matches("%#{term}%"))
+      joins(:line_items).where(arel_table[:primary_pi_name].matches("%#{term}%"))
     ).or(
-      where(arel_table[:primary_pi_email].matches("%#{term}%"))
+      joins(:line_items).where(arel_table[:primary_pi_email].matches("%#{term}%"))
     ).or(
-      where(arel_table[:service_source].matches("%#{term}%"))
-    ).or(
-      where(arel_table[:number_of_specimens_requested].matches(term))
-    ).or(
-      where(arel_table[:minimum_sample_size].matches("%#{term}%"))
-    ).or(
-      where(arel_table[:query_name].matches("%#{term}%"))
-    ).or(
-      where(arel_table[:status].matches("%#{term}%"))
+      joins(:line_items).where(arel_table[:status].matches("%#{term}%"))
     ).or(
       by_date(term)
-    )
+    ).or(
+      joins(:line_items).where(LineItem.arel_table[:service_source].matches("%#{term}%"))
+    ).or(
+      joins(:line_items).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
+    ).or(
+      joins(:line_items).where(LineItem.arel_table[:minimum_sample_size].matches("%#{term}%"))
+    ).or(
+      joins(:line_items).where(LineItem.arel_table[:number_of_specimens_requested].matches(term))
+    ).distinct
   }
 
   scope :by_date, -> (date) {
@@ -67,22 +67,22 @@ class SparcRequest < ApplicationRecord
       date = date.delete("/").delete("-")
       mdy = Date.strptime(date, '%m%d%Y')
       dmy = Date.strptime(date, '%d%m%Y')
-      where(arel_table[:start_date].matches(mdy)).or(
-        where(arel_table[:end_date].matches(mdy))
+      joins(:line_items).where(arel_table[:start_date].matches(mdy)).or(
+        joins(:line_items).where(arel_table[:end_date].matches(mdy))
       ).or(
-        where(arel_table[:start_date].matches(dmy))
+        joins(:line_items).where(arel_table[:start_date].matches(dmy))
       ).or(
-        where(arel_table[:end_date].matches(dmy))
+        joins(:line_items).where(arel_table[:end_date].matches(dmy))
       )
     elsif date =~ /\A\d+\Z/
       start = Date.parse("1-1-#{date}")
       last  = Date.parse("31-12-#{date}")
 
-      where(arel_table[:start_date].gteq(start).and(arel_table[:start_date].lteq(last))).or(
-        where(arel_table[:end_date].gteq(start).and(arel_table[:end_date].lteq(last)))
+      joins(:line_items).where(arel_table[:start_date].gteq(start).and(arel_table[:start_date].lteq(last))).or(
+        joins(:line_items).where(arel_table[:end_date].gteq(start).and(arel_table[:end_date].lteq(last)))
       )
     else
-      none
+      joins(:line_items).none
     end
   }
 

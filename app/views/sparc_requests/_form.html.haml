@@ -60,32 +60,33 @@
                 = f.hidden_field :primary_pi_name
                 = f.hidden_field :primary_pi_netid
                 = f.hidden_field :primary_pi_email
-            .form-row
-              .form-group.col-6
-                = f.label :query_name, class: 'required'
-                = f.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', @sparc_request.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-                %small.form-text.text-muted
-                  = raw(t(:requests)[:form][:subtext][:i2b2_query])
         %section.card.mb-3
           .card-header
             %h5.card-title.m-0
               = t(:requests)[:form][:headers][:specimens]
           .card-body
+            .form-row
+              .form-group.col
+                %p.form-text.text-muted.m-0
+                  = raw(t(:requests)[:form][:subtext][:i2b2_query])
             = f.nested_fields_for :line_items do |ff_li|
               .form-row
                 .form-group.col-sm-3
                   = ff_li.label :service_id, class: 'required'
                   = ff_li.select :service_id, options_from_collection_for_select(SPARC::Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', ff_li.object.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
-                .form-group.col-sm-3
+                .form-group.col
                   = ff_li.label :service_source, class: 'required'
                   = ff_li.select :service_source, options_for_select(Lab::SOURCES, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
+                .form-group.col
+                  = ff_li.label :query_name, class: 'required'
+                  = ff_li.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
                 .form-group.col
                   = ff_li.label :number_of_specimens_requested, class: 'required'
                   = ff_li.text_field :number_of_specimens_requested, class: 'form-control'
                 .form-group.col
                   = ff_li.label :minimum_sample_size, class: 'required'
                   = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample]
-                .form-group.pr-1
+                .form-group.d-flex.flex-column.px-1
                   %label.w-100 &nbsp;
                   = ff_li.remove_nested_fields_link class: 'btn btn-danger' do
                     = icon('fas', 'trash')

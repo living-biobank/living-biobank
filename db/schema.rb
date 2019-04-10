@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404184252) do
+ActiveRecord::Schema.define(version: 20190409183518) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 20190404184252) do
     t.integer "service_id"
     t.integer "sparc_id"
     t.string "service_source"
+    t.string "query_name"
+    t.integer "query_count"
     t.string "minimum_sample_size"
     t.integer "number_of_specimens_requested"
     t.string "status"
@@ -86,11 +88,9 @@ ActiveRecord::Schema.define(version: 20190404184252) do
     t.string "primary_pi_netid"
     t.string "primary_pi_name"
     t.string "primary_pi_email"
-    t.string "query_name"
     t.string "time_estimate"
     t.string "status", default: "New"
     t.bigint "protocol_id"
-    t.integer "query_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

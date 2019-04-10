@@ -1,7 +1,7 @@
 module SparcRequestsHelper
   def request_sort_filter_options(sort_by)
     options_for_select(
-      [:title, :short_title, :start_date, :end_date, :primary_pi, :service_source, :specimens_requested, :minimum_sample, :status].map do |k| 
+      [:title, :short_title, :start_date, :end_date, :primary_pi, :status].map do |k|
         [t(:requests)[:fields][k], k]
       end, sort_by
     )
