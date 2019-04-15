@@ -16,7 +16,6 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
         t.timestamps
       end
 
-      remove_reference :populations, :sparc_request, index: true, foreign_key: true
       add_reference :populations, :line_item, index: true, foreign_key: true, before: :patient_id
 
       Population.reset_column_information
@@ -41,6 +40,8 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
       remove_column :sparc_requests, :minimum_sample_size
       remove_column :sparc_requests, :number_of_specimens_requested
       remove_column :sparc_requests, :line_item_id
+
+      remove_reference :populations, :sparc_request, index: true, foreign_key: true
     end
   end
 end
