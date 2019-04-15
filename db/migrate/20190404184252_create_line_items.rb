@@ -8,6 +8,8 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
         t.integer     :service_id
         t.integer     :sparc_id
         t.string      :service_source
+        t.string      :query_name
+        t.integer     :query_count
         t.string      :minimum_sample_size
         t.integer     :number_of_specimens_requested
         t.string      :status
@@ -23,6 +25,8 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
         li = LineItem.create(
           service_id:                     request.service_id,
           service_source:                 request.service_source,
+          query_name:                     request.query_name,
+          query_count:                    request.query_count,
           minimum_sample_size:            request.minimum_sample_size,
           number_of_specimens_requested:  request.number_of_specimens_requested
         )
@@ -32,6 +36,8 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
 
       remove_column :sparc_requests, :service_id
       remove_column :sparc_requests, :service_source
+      remove_column :sparc_requests, :query_name
+      remove_column :sparc_requests, :query_count
       remove_column :sparc_requests, :minimum_sample_size
       remove_column :sparc_requests, :number_of_specimens_requested
       remove_column :sparc_requests, :line_item_id
