@@ -132,7 +132,7 @@ class SparcRequest < ApplicationRecord
   private
 
   def update_sparc_records
-    sr        = @sparc_request.protocol.service_requests.first_or_create
+    sr        = self.protocol.service_requests.first_or_create
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
     self.line_items.eager_load(:service).each do |line_item|
@@ -142,7 +142,7 @@ class SparcRequest < ApplicationRecord
         ssr = sr.sub_service_requests.create(
           protocol:           self.protocol,
           organization:       service.process_ssrs_organization,
-          service_requester:  self.user
+          service_requester:  requester
         )
       end
 

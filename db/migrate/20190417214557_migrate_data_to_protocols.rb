@@ -15,7 +15,7 @@ class MigrateDataToProtocols < ActiveRecord::Migration[5.1]
 
         pi = SPARC::ProjectRole.create(
           protocol:       p,
-          identity:       SPARC::Directory.find_or_create("#{sparc_request.primary_pi_netid}@#{SPARC::Directory.domain}")
+          identity:       SPARC::Directory.find_or_create("#{sparc_request.primary_pi_netid}@#{SPARC::Directory.domain}"),
           role:           'primary-pi',
           project_rights: 'approve'
         )
