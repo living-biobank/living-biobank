@@ -1,0 +1,11 @@
+- @labs.each do |lab_patient|
+  .card.bg-dark
+    %h3.card-title.text-light
+      = "MRN: " + lab_patient.patient.mrn
+      .card.bg-secondary.ml-3
+        %h4.card-title.text-light
+          = "Specimen Source Placeholder Text"
+          .card-body.bg-light
+            %p.text-dark
+              = "Various Specimens"
+
