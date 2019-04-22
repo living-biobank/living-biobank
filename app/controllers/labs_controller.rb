@@ -1,5 +1,5 @@
 class LabsController < ApplicationController
-  before_action :honest_broker_check
+  before_action :verify_honest_broker
 
   def index
     @lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })

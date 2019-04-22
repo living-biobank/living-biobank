@@ -4,7 +4,7 @@ module ApplicationHelper
   end
 
   def format_date(date)
-    date.strftime("%m/%d/%Y")
+    date.strftime("%m/%d/%Y") if date
   end
 
   def protocol_preview protocol

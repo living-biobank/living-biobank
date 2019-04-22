@@ -11,7 +11,9 @@ class SparcRequestsController < ApplicationController
   end
 
   def new
-    @sparc_request = current_user.sparc_requests.new
+    @sparc_request = current_user.sparc_requests.new(status: t(:requests)[:statuses][:pending])
+    @sparc_request.build_protocol(type: 'Project')
+    @sparc_request.protocol.build_primary_pi_role
     @sparc_request.line_items.build
   end
 
@@ -30,7 +32,6 @@ class SparcRequestsController < ApplicationController
       flash.now[:success] = t(:requests)[:created]
     else
       @errors = @sparc_request.errors
-      @line_item_params = sparc_request_params[:line_items_attributes]
     end
   end
 
@@ -39,12 +40,11 @@ class SparcRequestsController < ApplicationController
 
   def update
     if @sparc_request.update_attributes(sparc_request_params)
-      flash.now[:success] = t(:requests)[:updated]
-
       RequestMailer.with(user: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
+
+      flash.now[:success] = t(:requests)[:updated]
     else
       @errors = @sparc_request.errors
-      @line_item_params = sparc_request_params[:line_items_attributes]
     end
   end
 
@@ -72,29 +72,34 @@ class SparcRequestsController < ApplicationController
   end
 
   def sparc_request_params
-    params[:sparc_request][:start_date] = sanitize_date(params[:sparc_request][:start_date])
-    params[:sparc_request][:end_date]   = sanitize_date(params[:sparc_request][:end_date])
+    if params[:sparc_request][:protocol_attributes]
+      params[:sparc_request][:protocol_attributes][:start_date] = sanitize_date(params[:sparc_request][:protocol_attributes][:start_date])
+      params[:sparc_request][:protocol_attributes][:end_date]   = sanitize_date(params[:sparc_request][:protocol_attributes][:end_date])
+    end
 
-    params.require(:sparc_request).permit(
-      :short_title,
-      :title,
-      :description,
-      :funding_status,
-      :funding_source,
-      :start_date,
-      :end_date,
-      :primary_pi_name,
-      :primary_pi_netid,
-      :primary_pi_email,
-      :query_name,
-      :status,
-      line_items_attributes: [
+    params.require(:sparc_request).permit([
+      { protocol_attributes: [
+        :type,
+        :short_title,
+        :title,
+        :brief_description,
+        :funding_status,
+        :funding_source,
+        :start_date,
+        :end_date,
+        primary_pi_role_attributes: [
+          :identity_id
+        ]
+      ] },
+      { line_items_attributes: [
         :service_id,
         :service_source,
+        :query_name,
         :number_of_specimens_requested,
         :minimum_sample_size,
         :_destroy
-      ]
-    )
+      ] },
+      :status
+    ])
   end
 end

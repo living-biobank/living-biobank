@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   devise_for :users
 
   resources :labs, only: [:index, :update]
@@ -12,7 +11,7 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/directory/search', to: 'directory#search'
+  get 'directory/index', to: 'directory#index'
 
   root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? request.env['warden'].user.honest_broker? : false } # we have an honest broker
   root to: 'sparc_requests#index', constraints: lambda { |request| request.env['warden'].user } # no honest broker but we are signed in
