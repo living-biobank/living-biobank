@@ -7,27 +7,39 @@ en:
   activerecord:
     attributes:
       line_item:
-        service_source: "Source"
-        number_of_specimens_requested: "Number of Specimens"
+        service_source: "Specimen Source"
+        query_name: "i2b2 Query"
+        number_of_specimens_requested: "Quantity Requested"
         minimum_sample_size: "Minimum Sample Size"
-      sparc_request:
+      sparc/protocol:
         title: "Project Title"
         short_title: "Short Title"
+        brief_description: "Brief Description"
         funding_status: "Funding Status"
         funding_source: "Funding Source"
-        start_date: "Estimated Start Date"
-        end_date: "Estimated End Date"
-        primary_pi_name: "Primary PI Name"
-        primary_pi_netid: "Primary PI NetID"
-        primary_pi_email: "Primary PI Email"
-        query_name: "i2b2 Query"
+        potential_funding_source: "Potential Funding Source"
+        start_date: "Project Timeline"
+      sparc/project_role:
+        identity: "Primary PI"
       specimen_record:
         release_date: "Release Date"
         release_to: "Release To"
+    errors:
+      models:
+        line_item:
+          attributes:
+            service:
+              required: "can't be blank"
+            number_of_specimens_requested:
+              not_a_number: "must be a number"
+        sparc/project_role:
+          attributes:
+            identity:
+              required: "can't be blank"
   constants:
     date_placeholder: "MM/DD/YYYY"
     select_placeholder: "Please Select"
-    no_records: "No records to show."
+    no_records: "No records found"
     order:
       asc: "Ascending"
       desc: "Descending"
@@ -94,21 +106,15 @@ en:
       sort_by: "Sort By"
       status: "Status"
     fields:
-      short_title: "Short Title"
+      protocol_id: "Protocol ID"
       title: "Title"
-      funding_status: "Funding Status"
-      funding_source: "Funding Source"
+      short_title: "Short Title"
+      time_remaining: "Time Remaining"
       start_date: "Start Date"
       end_date: "End Date"
       primary_pi: "Primary PI"
-      contact_email: "Contact Email"
-      service_source: "Service Source"
-      specimens_requested: "Specimens Requested"
-      minimum_sample: "Minimum Sample Size"
-      query_name: "i2b2 Query"
-      time_estimate: "Est Time"
+      requester: "Requester"
       status: "Status"
-      actions: "Actions"
     tooltips:
       time_estimate: "This request could take a long time to fulfill."
       complete: "Complete this request once all specimens have been received"
@@ -118,6 +124,7 @@ en:
     form:
       new_title: "New Specimen Request"
       edit_title: "Edit Specimen Request"
+      date_separator: "to"
       headers:
         project_information: "Project Information"
         specimens: "Request Specimens"
@@ -126,6 +133,8 @@ en:
         minimum_sample: "e.g. 2mL"
       subtext:
         i2b2_query: "Information on creating an i2b2 Query can be found <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>here</a>."
+      add_specimen: "Add Specimen"
+      delete_specimen: "Delete Specimen"
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
     table:

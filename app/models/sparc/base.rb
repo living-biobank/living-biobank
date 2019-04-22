@@ -4,6 +4,11 @@ module SPARC
 
     establish_connection(SPARC_REQUEST_DB)
 
+    def self.find_sti_class(type_name)
+      type_name = ["SPARC", type_name].join('::')
+      super
+    end
+
     def self.inherited(child)
       child.establish_connection(SPARC_REQUEST_DB)
       super

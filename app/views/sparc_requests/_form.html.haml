@@ -1,7 +1,7 @@
 .modal-dialog#requestFormModal{ role: 'document' }
   .modal-content
     = form_for sparc_request, remote: true, html: { autocomplete: 'off' } do |f|
-      = f.hidden_field :status, value: t(:requests)[:statuses][:pending]
+      = f.hidden_field :status
 
       - if params[:status]
         = hidden_field_tag :status, params[:status]
@@ -21,45 +21,42 @@
             %h5.card-title.m-0
               = t(:requests)[:form][:headers][:project_information]
           .card-body
-            .form-row
-              .form-group.col-lg-6
-                = f.label :title, class: 'required'
-                = f.text_field :title, class: 'form-control'
-              .form-group.col-lg-6
-                = f.label :short_title, class: 'required'
-                = f.text_field :short_title, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:short_title]
-            .form-group
-              = f.label :description, class: 'required'
-              = f.text_area :description, class: 'form-control'
-            .form-row
-              .form-group.col-6.col-lg-3
-                = f.label :funding_status, class: 'required'
-                = f.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-              .form-group.col-6.col-lg-3
-                = f.label :funding_source, class: 'required'
-                = f.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-              .form-group.col-6.col-lg-3
-                = f.label :start_date, class: 'required'
-                .input-group
-                  = f.text_field :start_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
-                  .input-group-append
-                    %label.input-group-text{ for: 'sparc_request_start_date' }
-                      = icon('far', 'calendar-alt')
-              .form-group.col-6.col-lg-3
-                = f.label :end_date, class: 'required'
-                .input-group
-                  = f.text_field :end_date, class: 'form-control', placeholder: t(:constants)[:date_placeholder], data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true' }
-                  .input-group-append
-                    %label.input-group-text{ for: 'sparc_request_end_date' }
-                      = icon('far', 'calendar-alt')
-            .form-row
-              .form-group.col-sm-6
-                = f.label :primary_pi_name, class: 'required'
-                = text_field_tag "name_search", f.object.pi_display_name, class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi]
-
-                = f.hidden_field :primary_pi_name
-                = f.hidden_field :primary_pi_netid
-                = f.hidden_field :primary_pi_email
+            = f.fields_for :protocol do |ff_p|
+              = ff_p.hidden_field :type
+              .form-row
+                .form-group.col-lg-6
+                  = ff_p.label :title, class: 'required'
+                  = ff_p.text_field :title, class: 'form-control', readonly: ff_p.object.persisted?
+                .form-group.col-lg-6
+                  = ff_p.label :short_title, class: 'required'
+                  = ff_p.text_field :short_title, class: 'form-control', readonly: ff_p.object.persisted?
+              .form-group
+                = ff_p.label :brief_description
+                = ff_p.text_area :brief_description, class: 'form-control', readonly: ff_p.object.persisted?
+              .form-row
+                .form-group.col-6.col-lg-3
+                  = ff_p.label :funding_status, class: 'required'
+                  = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? ? 'btn-light disabled' : 'btn-light' }
+                .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.funded? ? 'd-none' : '' }
+                  = ff_p.label :potential_funding_source, class: 'required'
+                  = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? ? 'btn-light disabled' : 'btn-light' }
+                .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? ? '' : 'd-none' }
+                  = ff_p.label :funding_source, class: 'required'
+                  = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? ? 'btn-light disabled' : 'btn-light' }
+                .form-group.col-6
+                  = ff_p.label :start_date, class: 'required'
+                  .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
+                    = ff_p.text_field :start_date, value: format_date(ff_p.object.start_date), class: 'form-control', placeholder: t(:requests)[:fields][:start_date], readonly: ff_p.object.persisted?
+                    .input-group-append.input-group-prepend
+                      %label.input-group-text<
+                        = t(:requests)[:form][:date_separator]
+                    = ff_p.text_field :end_date, value: format_date(ff_p.object.end_date), class: 'form-control', placeholder: t(:requests)[:fields][:end_date], readonly: ff_p.object.persisted?
+              = ff_p.fields_for :primary_pi_role do |ff_ppi|
+                .form-row
+                  .form-group.col-sm-6
+                    = label_tag :primary_pi_search, t(:requests)[:fields][:primary_pi], class: 'required'
+                    = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: ff_p.object.persisted?
+                    = ff_ppi.hidden_field :identity_id
         %section.card.mb-3
           .card-header
             %h5.card-title.m-0
@@ -71,15 +68,15 @@
                   = raw(t(:requests)[:form][:subtext][:i2b2_query])
             = f.nested_fields_for :line_items do |ff_li|
               .form-row
-                .form-group.col-sm-3
+                .form-group.col
                   = ff_li.label :service_id, class: 'required'
-                  = ff_li.select :service_id, options_from_collection_for_select(SPARC::Service.where(id: ENV.fetch('SERVICE_ID')), 'id', 'name', ff_li.object.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
+                  = ff_li.select :service_id, options_from_collection_for_select(SPARC::Service.where(id: ENV.fetch('SERVICE_ID').split(',')), 'id', 'name', ff_li.object.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
                 .form-group.col
                   = ff_li.label :service_source, class: 'required'
                   = ff_li.select :service_source, options_for_select(Lab::SOURCES, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
                 .form-group.col
                   = ff_li.label :query_name, class: 'required'
-                  = ff_li.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order("create_date DESC"), 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+                  = ff_li.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order(create_date: :desc), 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
                 .form-group.col
                   = ff_li.label :number_of_specimens_requested, class: 'required'
                   = ff_li.text_field :number_of_specimens_requested, class: 'form-control'
@@ -88,12 +85,12 @@
                   = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample]
                 .form-group.d-flex.flex-column.px-1
                   %label.w-100 &nbsp;
-                  = ff_li.remove_nested_fields_link class: 'btn btn-danger' do
+                  = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                     = icon('fas', 'trash')
             .form-group
               = f.add_nested_fields_link :line_items, class: 'btn btn-primary' do
                 = icon('fas', 'plus-circle')
-                = 'Add Service'
+                = t(:requests)[:form][:add_specimen]
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
         - if action_name == 'new'

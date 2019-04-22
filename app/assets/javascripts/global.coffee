@@ -68,7 +68,7 @@ $ ->
     $('header').css('margin-left', 0)
 
 (exports ? this).setRequiredFields = () ->
-  $('.required').append('<span>*</span>')
+  $('.required:not(.has-indicator)').addClass('has-indicator').append('<span class="required-indicator">*</span>')
 
 (exports ? this).initializeSelectpickers = () ->
   $('.selectpicker').selectpicker()
