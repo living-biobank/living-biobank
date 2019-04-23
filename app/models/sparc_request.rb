@@ -6,7 +6,7 @@ class SparcRequest < ApplicationRecord
 
   has_many :line_items, dependent: :destroy
 
-  delegate :identifier, :start_date, :end_date, to: :protocol
+  delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
 
   accepts_nested_attributes_for :line_items, allow_destroy: true
   accepts_nested_attributes_for :protocol
