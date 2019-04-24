@@ -1,7 +1,7 @@
 module SparcRequestsHelper
   def request_sort_filter_options(sort_by)
     options_for_select(
-      [:title, :short_title, :start_date, :end_date, :primary_pi, :status].map do |k|
+      [:protocol_id, :title, :short_title, :time_remaining, :primary_pi, :requester, :status].map do |k|
         [t(:requests)[:fields][k], k]
       end, sort_by
     )
@@ -20,25 +20,25 @@ module SparcRequestsHelper
   end
 
   def primary_pi_display(sr)
-    icon('fas', 'user mr-2') + sr.primary_pi_name + " (" + link_to(sr.primary_pi_email, "mailto:#{sr.primary_pi_email}") + ")"
+    icon('fas', 'user mr-2') + sr.primary_pi.display_name
   end
 
   def requester_display(sr)
-    raw t('requests.table.requester', name: sr.user.full_name) + " (" + link_to(sr.user.email, "mailto:#{sr.user.email}") + ")"
+    raw t('requests.table.requester', name: sr.user.display_name)
   end
 
   def request_duration_display(sr)
-    if sr.end_date < Date.today
+    if sr.end_date < DateTime.now.utc
       content_tag :span, class: 'text-danger' do
-        icon('fas', 'hourglass-end mr-2') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, Date.today))
+        icon('fas', 'hourglass-end mr-2') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, DateTime.now.utc).capitalize)
       end
-    elsif (sr.end_date - Date.today).to_i <= 30
+    elsif (sr.end_date - DateTime.now.utc).to_i <= 30
       content_tag :span, class: 'text-warning' do
-        icon('fas', 'hourglass-half mr-2') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(Date.today, sr.end_date).capitalize)
+        icon('fas', 'hourglass-half mr-2') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
       end
     else
       content_tag :span do
-        icon('fas', 'hourglass-half mr-2') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(Date.today, sr.end_date).capitalize)
+        icon('fas', 'hourglass-half mr-2') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
       end
     end
   end

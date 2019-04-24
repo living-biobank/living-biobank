@@ -3,9 +3,7 @@ class User < ApplicationRecord
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :recoverable,
-    :rememberable, :trackable, :validatable,
-    authentication_keys: [:net_id]
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:net_id]
 
   scope :honest_brokers, -> {
     where(honest_broker: true)
@@ -21,6 +19,10 @@ class User < ApplicationRecord
   end
 
   def full_name
-    "#{self.first_name} #{self.last_name}"
+    "#{self.first_name} #{self.last_name}".strip
   end
+
+  def display_name
+      "#{first_name.try(:humanize)} #{last_name.try(:humanize)} (#{email})".strip
+    end
 end

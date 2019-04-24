@@ -3,7 +3,7 @@
     .col-10.pl-0
       %h3.d-flex.align-items-center.mb-0
         %strong.font-weight-bold.mr-2
-          = request.short_title.truncate(60)
+          = request.identifier.truncate(60)
         = status_context(request)
     .col-2.pr-0.text-right
       = request_actions(request)

@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
 
   before_action :authenticate_user!
+  before_action :preload_settings
 
   def layout_by_resource
     if devise_controller?
@@ -13,7 +14,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def honest_broker_check
+  def preload_settings
+    SPARC::Setting.preload_values
+  end
+
+  def verify_honest_broker
     redirect_to root_path unless current_user.honest_broker?
   end
 

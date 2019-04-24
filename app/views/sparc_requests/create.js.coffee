@@ -2,24 +2,25 @@
 $("[id^='sparc_request_']").removeClass('is-invalid').addClass('is-valid')
 $('.form-error').remove()
 
-<% @errors.keys.each do |attr| %>
-<% @errors.full_messages_for(attr).each do |message| %>
-$("#sparc_request_<%= attr.to_s %>").removeClass('is-valid').addClass('is-invalid').parents('.form-group').append("<small class='form-text form-error'><%= message %></small>")
+# Protocol Errors
+<% @sparc_request.protocol.errors.messages.each do |attr, messages| %>
+<% messages.each do |message| %>
+$("#sparc_request_protocol_attributes_<%= attr.to_s %>").removeClass('is-valid').addClass('is-invalid').parents('.form-group').append("<small class='form-text form-error'><%= message.capitalize %></small>")
 <% end %>
 <% end %>
 
+# Primary PI Errors
+<% @sparc_request.protocol.primary_pi_role.errors.messages[:identity].each do |message| %>
+$('#primary_pi_search').removeClass('is-valid').addClass('is-invalid').parents('.form-group').append("<small class='form-text form-error'><%= message.capitalize %></small>")
+<% end %>
+
 # Line Item Errors
-<% line_item_index = 0 %>
-<% @line_item_params.each do |index, values| %>
-<% unless values['_destroy'] %>
-<% if li_errors = @sparc_request.line_items[index.to_i].errors %>
-<% li_errors.keys.each do |attr| %>
-<% li_errors.full_messages_for(attr).each do |message| %>
-$("#sparc_request_line_items_attributes_<%= index %>_<%= attr.to_s %>").removeClass('is-valid').addClass('is-invalid').parents('.form-group').append("<small class='form-text form-error'><%= message %></small>")
+<% @sparc_request.line_items.each_with_index do |line_item, index| %>
+<% line_item.errors.messages.each do |attr, messages| %>
+<% attr = :service_id if attr == :service %>
+<% messages.each do |message| %>
+$(".nested_sparc_request_line_items:visible:nth(<%= index %>) [name*='[<%= attr.to_s %>]']").removeClass('is-valid').addClass('is-invalid').parents('.form-group').append("<small class='form-text form-error'><%= message.capitalize %></small>")
 <% end %>
-<% end %>
-<% end %>
-<% line_item_index += 1 %>
 <% end %>
 <% end %>
 

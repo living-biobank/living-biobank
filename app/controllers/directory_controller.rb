@@ -1,12 +1,11 @@
 class DirectoryController < ApplicationController
-  def search
-    results = Directory.search_ldap(params[:term]) || []
+  def index
+    respond_to :json
 
-    render json: { results: results.map { |r| {
-      display_name: [r[:givenname].first, r[:sn].first, '(', r[:mail].first, ')'].join(' '),
-      name: [r[:givenname].first, r[:sn].first].join(' '),
-      netid: r[:uid].first,
-      email: r[:mail].first
-    } } }
+    results = SPARC::Directory.search(params[:term]).map{ |i| {
+      label: i.display_name, value: i.suggestion_value, email: i.email, id: i.id
+    }}
+
+    render json: results.to_json
   end
 end
