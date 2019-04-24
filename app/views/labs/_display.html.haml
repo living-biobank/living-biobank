@@ -1,11 +1,24 @@
-- @lab_patients.each do |lab_patient|
-  .card.bg-dark
-    %h3.card-title.text-light
-      = "MRN: " + lab_patient.patient.mrn
-      .card.bg-secondary.ml-3
-        %h4.card-title.text-light
-          = "Specimen Source Placeholder Text"
-          .card-body.bg-light
-            %p.text-dark
-              = "Various Specimens"
-
+.panel_group#patient_accordion
+  - @patients.each do |patient|
+    .panel.panel-default.border.border-secondary.rounded.bg-dark.my-2
+      .panel-heading
+        %h3.panel-title
+          %a.accordion-toggle.text-light.pl-1{"data-toggle" => "collapse", "data-parent" => "#patient_accordion", "href" => "#collapse_patient_#{patient.id}"}
+            %span.fas.fa-angle-double-down.mr-2
+            = "MRN: #{patient.mrn}"
+      .panel-collapse.collapse.bg-light{id: "collapse_patient_#{patient.id}"}
+        - patient.labs.group_by(&:specimen_source).each do |source, group|
+          .panel_group{id: "patient_#{patient.id}"}
+            .panel.panel-default.pl-3.py-2.border.border-bottom-1.border-secondary
+              .panel-heading
+                %h5.panel-title
+                  - html_safe_source = source.dup.sub!(', ', '_')
+                  %a.accordion-toggle.text-dark{"data-toggle" => "collapse", "data-parent" => "#patient_#{patient.id}", "href" => "#collapse_#{patient.id}_#{html_safe_source}"}
+                    %span.fas.fa-angle-double-down.mr-2
+                    = "#{source}: Qty. #{group.size}"
+              .panel-collapse.collapse{id: "collapse_#{patient.id}_#{html_safe_source}"}
+                .panel-body.pl-5
+                  = "Placeholder text for requests for specimen"
+         
+      
+              
