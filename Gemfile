@@ -17,7 +17,6 @@ gem 'letter_opener'
 gem 'mysql2'
 gem 'nested_form_fields'
 gem 'net-ldap', '~> 0.16.0'
-gem 'pry'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.3'
 gem 'request_store'
@@ -46,10 +45,14 @@ end
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'pry'
+  gem 'rspec-rails'
 end
 
 group :test do
-  gem 'capybara', '>= 2.15', '< 4.0'
-  gem 'chromedriver-helper'
+  gem 'capybara'
+  gem 'webdrivers', '~> 3.0'
   gem 'selenium-webdriver'
 end

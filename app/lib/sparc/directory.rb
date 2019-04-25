@@ -99,6 +99,7 @@ module SPARC
       # search the ldap using unid, create the record in database, and then return it
       m = /(.*)@#{@@domain}/.match(ldap_uid)
       ldap_results = self.search_ldap(m[1])
+      binding.pry
       self.create_or_update_database_from_ldap(ldap_results, [])
       Identity.find_by_ldap_uid(ldap_uid)
     end
