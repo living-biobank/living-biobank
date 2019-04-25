@@ -2,7 +2,7 @@ class LabsController < ApplicationController
   before_action :verify_honest_broker
 
   def index
-    # @lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
+    @lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
 
     @patients = Patient.joins(:labs).distinct
 
@@ -19,19 +19,19 @@ class LabsController < ApplicationController
   private
 
   # NOTE:  sort_lab_groups may be deprecated in the future!
-  # def sort_lab_groups(lab_groups)
-  #   groups = lab_groups.sort do |l, r|
-  #     if params[:sort_by] == 'samples_available'
-  #       l.last.count <=> r.last.count
-  #     elsif params[:sort_by] == 'specimen_source'
-  #       l.first[:specimen_source] <=> r.first[:specimen_source]
-  #     else
-  #       l.first[:patient].mrn <=> r.first[:patient].mrn
-  #     end
-  #   end
+  def sort_lab_groups(lab_groups)
+    groups = lab_groups.sort do |l, r|
+      if params[:sort_by] == 'samples_available'
+        l.last.count <=> r.last.count
+      elsif params[:sort_by] == 'specimen_source'
+        l.first[:specimen_source] <=> r.first[:specimen_source]
+      else
+        l.first[:patient].mrn <=> r.first[:patient].mrn
+      end
+    end
 
-  #   groups = groups.reverse if params[:sort_order] == 'desc'
+    groups = groups.reverse if params[:sort_order] == 'desc'
 
-  #   groups
-  # end
+    groups
+  end
 end
