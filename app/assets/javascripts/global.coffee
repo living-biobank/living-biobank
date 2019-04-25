@@ -7,6 +7,9 @@ $(document).on 'turbolinks:load', ->
   $('html').addClass('ready')
 
 $ ->
+  fixNavbarPlacement()
+  fixHeaderPlacement()
+
   $(window).resize ->
     fixNavbarPlacement()
     fixHeaderPlacement()

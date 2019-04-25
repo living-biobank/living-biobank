@@ -7,7 +7,7 @@ class RequestMailer < ApplicationMailer
     @user     = params[:user]
     @request  = params[:request]
 
-    mail(to: @request.primary_pi_email, cc: @user.email, subject: t(:mailers)[:request_mailer][:confirmation_email][:subject])
+    mail(to: @request.primary_pi.email, cc: @user.email, subject: t(:mailers)[:request_mailer][:confirmation_email][:subject])
   end
 
   def submission_email

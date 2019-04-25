@@ -96,7 +96,7 @@
 
 @include media-breakpoint-up(xl) {
   .navbar {
-    max-width: 300px;
+    max-width: 250px;
     position: fixed;
     bottom: 0;
     border-right: 2px solid theme-color-level('dark', 5);
@@ -107,7 +107,7 @@
       width: 100%;
 
       .navbar-brand {
-        padding: 1.5rem;
+        padding: 1.5rem 0;
       }
     }
 

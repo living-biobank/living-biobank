@@ -96,8 +96,8 @@ en:
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
     statuses:
-      pending: "Pending"
       draft: "Draft"
+      pending: "Pending"
       in_process: "In Process"
       completed: "Completed"
       cancelled: "Cancelled"
