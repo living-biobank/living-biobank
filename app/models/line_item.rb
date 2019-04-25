@@ -1,7 +1,7 @@
 class LineItem < ApplicationRecord
   belongs_to :sparc_request
   belongs_to :service, class_name: "SPARC::Service"
-  belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional:
+  belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional: true
 
   has_many :populations
   has_many :specimen_records, -> (line_item) {
