@@ -103,7 +103,7 @@ class SparcRequest < ApplicationRecord
     end
   }
 
-  before_save :update_sparc_records
+  after_save :update_sparc_records
 
   def completed?
     self.status == I18n.t(:requests)[:statuses][:completed]
@@ -125,17 +125,13 @@ class SparcRequest < ApplicationRecord
     self.status == I18n.t(:requests)[:statuses][:cancelled]
   end
 
-  def pi_display_name
-    "#{primary_pi_name} ( #{primary_pi_email} )" if primary_pi_name && primary_pi_email
-  end
-
   private
 
   def update_sparc_records
     sr        = self.protocol.service_requests.first_or_create
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
-    self.line_items.eager_load(:service).each do |line_item|
+    self.line_items.includes(:service).each do |line_item|
       service = line_item.service
 
       unless ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).first
@@ -152,7 +148,7 @@ class SparcRequest < ApplicationRecord
         optional:         true
       )
 
-      line_item.sparc_id = sparc_li.id
+      line_item.update_attribute(:sparc_id, sparc_li.id)
     end
   end
 end

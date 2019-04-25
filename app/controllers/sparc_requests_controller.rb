@@ -31,6 +31,7 @@ class SparcRequestsController < ApplicationController
 
       flash.now[:success] = t(:requests)[:created]
     else
+      binding.pry
       @errors = @sparc_request.errors
     end
   end
@@ -85,6 +86,7 @@ class SparcRequestsController < ApplicationController
         :brief_description,
         :funding_status,
         :funding_source,
+        :potential_funding_source,
         :start_date,
         :end_date,
         primary_pi_role_attributes: [
