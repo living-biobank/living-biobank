@@ -10,5 +10,4 @@ RSpec.configure do |config|
   end
 
   config.include System::SOS, type: :system
-  config.include System::Login, type: :system
 end
