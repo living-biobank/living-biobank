@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :line_item do
     service_source                { Lab::SOURCES.sample }
-    query_name                    { Faker::Lorem.sentence(3, false, 3) }
+    query_name                    { I2b2::QueryName.first }
     minimum_sample_size           { Faker::Measurement.metric_volume }
     number_of_specimens_requested { Faker::Number.number(4) }
 

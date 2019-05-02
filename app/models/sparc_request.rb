@@ -103,7 +103,7 @@ class SparcRequest < ApplicationRecord
     end
   }
 
-  after_save :update_sparc_records
+  after_save :update_sparc_records, unless: Proc.new{ |request| request.draft? }
 
   def completed?
     self.status == I18n.t(:requests)[:statuses][:completed]
