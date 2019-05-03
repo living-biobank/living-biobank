@@ -1,12 +1,8 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 $ ->
   funding_source = null
   potential_funding_source = null
 
-  $(document).on 'change', '#sparc_request_protocol_attributes_funding_status', ->
+  $('#sparc_request_protocol_attributes_funding_status').on 'change', ->
     if $(this).val() == 'funded'
       potential_funding_source = $('#sparc_request_protocol_attributes_potential_funding_source').val()
       $('#fundingSource').removeClass('d-none')
@@ -20,14 +16,12 @@ $ ->
       $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '')
       $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', potential_funding_source)
 
-  $(document).on 'change', '#sparc_request_protocol_attributes_start_date', ->
+  $('#sparc_request_protocol_attributes_start_date').on 'change', ->
     if $(this).val()
       $(this).datepicker('hide')
       $('#sparc_request_protocol_attributes_end_date').focus()
 
-  $(document).on 'click', '#saveDraftRequestButton', ->
-    serialized_params = $('form#new_sparc_request').serialize()
-
+  $('#saveDraftRequestButton').on 'click', ->
     $.ajax
       method: 'POST'
       dataType: 'script'

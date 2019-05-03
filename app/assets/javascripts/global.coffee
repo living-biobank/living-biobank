@@ -14,6 +14,14 @@ $ ->
     fixNavbarPlacement()
     fixHeaderPlacement()
 
+  $(document).on 'click', 'button[data-url], a[href="javascript:void(0)"]', ->
+    $.ajax
+      method: $(this).data('method') || 'get'
+      dataType: 'script'
+      url: $(this).data('url')
+      data:
+        authenticity_token: $('meta[name=csrf-token]').attr('content')
+
   $(document).on 'change keydown changed.bs.select changeDate', '.is-valid, .is-invalid', ->
     $(this).removeClass('is-valid is-invalid')
     $(this).parents('.form-group').children('.form-error').remove()

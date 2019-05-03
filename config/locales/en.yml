@@ -145,7 +145,7 @@ en:
       service: "<strong>%{service}</strong> - %{source} - %{amount_requested} samples &geq; %{min_sample_size}"
       progress: "Progress: %{received} / %{total}"
     draft:
-      header: "Draft Requests to Complete"
+      header: "Draft Requests"
       placeholder: "No Title Specified"
   site_name: "Living Biobank"
   specimen_records:
