@@ -14,7 +14,7 @@ $ ->
     fixNavbarPlacement()
     fixHeaderPlacement()
 
-  $(document).on 'click', 'button[data-url], a[href="javascript:void(0)"]', ->
+  $(document).on 'click', 'button[data-url]:not([data-confirm-swal]), a[href="javascript:void(0)"]:not([data-confirm-swal])', ->
     $.ajax
       method: $(this).data('method') || 'get'
       dataType: 'script'

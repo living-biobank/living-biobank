@@ -2,7 +2,7 @@
   .modal-content
     = form_for sparc_request, remote: true, html: { autocomplete: 'off' } do |f|
       = f.hidden_field :status
-      - sparc_request.reload
+      - sparc_request.reload if sparc_request.persisted?
 
       - if params[:status]
         = hidden_field_tag :status, params[:status]

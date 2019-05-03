@@ -13,7 +13,7 @@ RSpec.describe 'User begins a new request', js: true do
   it 'should create the new request' do
     visit sparc_requests_path
 
-    click_link I18n.t(:requests)[:create]
+    click_button I18n.t(:requests)[:create]
     click_button I18n.t(:requests)[:create_confirm][:confirm]
 
     expect(page).to have_selector('#requestFormModal', wait: 10)
