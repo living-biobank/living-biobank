@@ -36,6 +36,7 @@ class SparcRequestsController < ApplicationController
   end
 
   def edit
+    @sparc_request.status = t(:requests)[:statuses][:pending]
   end
 
   def update
