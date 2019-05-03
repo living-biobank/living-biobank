@@ -7,9 +7,20 @@ $(document).on 'turbolinks:load', ->
   $('html').addClass('ready')
 
 $ ->
+  fixNavbarPlacement()
+  fixHeaderPlacement()
+
   $(window).resize ->
     fixNavbarPlacement()
     fixHeaderPlacement()
+
+  $(document).on 'click', 'button[data-url]:not([data-confirm-swal]), a[href="javascript:void(0)"]:not([data-confirm-swal])', ->
+    $.ajax
+      method: $(this).data('method') || 'get'
+      dataType: 'script'
+      url: $(this).data('url')
+      data:
+        authenticity_token: $('meta[name=csrf-token]').attr('content')
 
   $(document).on 'change keydown changed.bs.select changeDate', '.is-valid, .is-invalid', ->
     $(this).removeClass('is-valid is-invalid')

@@ -3,8 +3,8 @@
     %h3.card-title
       = t(:requests)[:draft][:header]
     - draft_requests.each do |dr|
-      .alert.alert-warning.complete-draft-request{ role: 'alert' }
-        = link_to edit_sparc_request_path(dr), remote: true do
+      .alert.alert-warning.draft-request{ role: 'alert' }
+        = link_to 'javascript:void(0)', class: 'edit-draft-request', data: { url: edit_sparc_request_path(dr) } do
           = icon('fas', 'edit')
           - if dr.title.present?
             = dr.title
@@ -12,5 +12,5 @@
             = dr.short_title
           - else
             = t(:requests)[:draft][:placeholder]
-        = link_to sparc_request_path(dr), remote: true, method: :delete, title: t(:requests)[:tooltips][:cancel], class: 'text-danger', data: { confirm_swal: true } do
+        = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:cancel], class: 'text-danger cancel-draft-request', data: { confirm_swal: true, url: sparc_request_path(dr), method: :delete } do
           = icon('fas', 'trash')

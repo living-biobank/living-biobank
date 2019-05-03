@@ -96,8 +96,8 @@ en:
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
     statuses:
-      pending: "Pending"
       draft: "Draft"
+      pending: "Pending"
       in_process: "In Process"
       completed: "Completed"
       cancelled: "Cancelled"
@@ -145,7 +145,7 @@ en:
       service: "<strong>%{service}</strong> - %{source} - %{amount_requested} samples &geq; %{min_sample_size}"
       progress: "Progress: %{received} / %{total}"
     draft:
-      header: "Draft Requests to Complete"
+      header: "Draft Requests"
       placeholder: "No Title Specified"
   site_name: "Living Biobank"
   specimen_records:
@@ -162,15 +162,16 @@ en:
         subject: "Cloverleaf Message Job Failure"
         text: "A Cloverleaf message job has failed. The message has not been sent to Cloverleaf."
     request_mailer:
+      primary_pi: "<strong>Primary PI:</strong> %{pi_name}"
+      services_header: "Services Requested"
       confirmation_email:
         subject: "Living Biobank Request Confirmation"
         text: "We have received your SPARC Living Biobank request. Your application will be processed within 3 business days. The initial fee for processing your request is <strong>$x</strong>. The average cost is <strong>$x</strong>. Your application will be reviewed and a cost estimate will be determined based on the work required to complete the process. You will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARC to arrange payment."
       submission_email:
         subect: "Living Biobank Request Application"
-        intro: "A new Biobank application was submitted for the PI %{pi_name} on %{date}."
-        table_header: "Request Details:"
+        intro: "A new Living Biobank application was submitted by %{requester} on %{date}."
+        service: "<strong>%{service}</strong> - %{source} - %{requested} samples ≥ %{min_sample_size}"
       completion_email:
         subject: "Living Biobank Request Completed"
         completed_by: "Completed by %{user} on %{date}"
-        samples_requested: "%{quantity} samples requested"
-        samples_received: "%{quantity} samples received"
+        service: "<strong>%{service}</strong> - %{source} - %{received} / %{requested} samples ≥ %{min_sample_size}"

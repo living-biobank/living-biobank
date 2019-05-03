@@ -7,11 +7,13 @@ class RequestMailer < ApplicationMailer
     @user     = params[:user]
     @request  = params[:request]
 
-    mail(to: @request.primary_pi_email, cc: @user.email, subject: t(:mailers)[:request_mailer][:confirmation_email][:subject])
+    mail(to: @request.primary_pi.email, cc: @user.email, subject: t(:mailers)[:request_mailer][:confirmation_email][:subject])
   end
 
   def submission_email
-    @request = params[:request]
+    @user     = params[:user]
+    @request  = params[:request]
+    @protocol = params[:protocol]
 
     mail(to: ENV.fetch('ADMIN_EMAIL'), subject: t(:mailers)[:request_mailer][:submission_email][:subject])
   end
@@ -19,6 +21,7 @@ class RequestMailer < ApplicationMailer
   def completion_email
     @user     = params[:user]
     @request  = params[:request]
+    @protocol = params[:protocol]
 
     mail(to: User.honest_brokers.pluck(:email), subject: t(:mailers)[:request_mailer][:completion_email][:subject])
   end
