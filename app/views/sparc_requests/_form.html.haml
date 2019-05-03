@@ -26,36 +26,36 @@
               .form-row
                 .form-group.col-lg-6
                   = ff_p.label :title, class: 'required'
-                  = ff_p.text_field :title, class: 'form-control', readonly: ff_p.object.persisted?
+                  = ff_p.text_field :title, class: 'form-control', readonly: ff_p.object.persisted? && !sparc_request.draft?
                 .form-group.col-lg-6
                   = ff_p.label :short_title, class: 'required'
-                  = ff_p.text_field :short_title, class: 'form-control', readonly: ff_p.object.persisted?
+                  = ff_p.text_field :short_title, class: 'form-control', readonly: ff_p.object.persisted? && !sparc_request.draft?
               .form-group
                 = ff_p.label :brief_description
-                = ff_p.text_area :brief_description, class: 'form-control', readonly: ff_p.object.persisted?
+                = ff_p.text_area :brief_description, class: 'form-control', readonly: ff_p.object.persisted? && !sparc_request.draft?
               .form-row
                 .form-group.col-6.col-lg-3
                   = ff_p.label :funding_status, class: 'required'
-                  = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? ? 'btn-light disabled' : 'btn-light' }
+                  = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && !sparc_request.draft? ? 'btn-light disabled' : 'btn-light' }
                 .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.funded? ? 'd-none' : '' }
                   = ff_p.label :potential_funding_source, class: 'required'
-                  = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? ? 'btn-light disabled' : 'btn-light' }
+                  = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && !sparc_request.draft? ? 'btn-light disabled' : 'btn-light' }
                 .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? ? '' : 'd-none' }
                   = ff_p.label :funding_source, class: 'required'
-                  = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? ? 'btn-light disabled' : 'btn-light' }
+                  = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && !sparc_request.draft? ? 'btn-light disabled' : 'btn-light' }
                 .form-group.col-6
                   = ff_p.label :start_date, class: 'required'
                   .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
-                    = ff_p.text_field :start_date, value: format_date(ff_p.object.start_date), class: 'form-control', placeholder: t(:requests)[:fields][:start_date], readonly: ff_p.object.persisted?
+                    = ff_p.text_field :start_date, value: format_date(ff_p.object.start_date), class: 'form-control', placeholder: t(:requests)[:fields][:start_date], readonly: ff_p.object.persisted? && !sparc_request.draft?
                     .input-group-append.input-group-prepend
                       %label.input-group-text<
                         = t(:requests)[:form][:date_separator]
-                    = ff_p.text_field :end_date, value: format_date(ff_p.object.end_date), class: 'form-control', placeholder: t(:requests)[:fields][:end_date], readonly: ff_p.object.persisted?
+                    = ff_p.text_field :end_date, value: format_date(ff_p.object.end_date), class: 'form-control', placeholder: t(:requests)[:fields][:end_date], readonly: ff_p.object.persisted? && !sparc_request.draft?
               = ff_p.fields_for :primary_pi_role do |ff_ppi|
                 .form-row
                   .form-group.col-sm-6
                     = label_tag :primary_pi_search, t(:requests)[:fields][:primary_pi], class: 'required'
-                    = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: ff_p.object.persisted?
+                    = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: ff_p.object.persisted? && !sparc_request.draft?
                     = ff_ppi.hidden_field :identity_id
         %section.card.mb-3
           .card-header

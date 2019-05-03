@@ -27,11 +27,10 @@ class SparcRequestsController < ApplicationController
       flash.now[:success] = t(:requests)[:saved]
     elsif @sparc_request.save
       RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
-      RequestMailer.with(request: @sparc_request).submission_email.deliver_later
+      RequestMailer.with(user: current_user, request: @sparc_request).submission_email.deliver_later
 
       flash.now[:success] = t(:requests)[:created]
     else
-      binding.pry
       @errors = @sparc_request.errors
     end
   end
@@ -41,8 +40,6 @@ class SparcRequestsController < ApplicationController
 
   def update
     if @sparc_request.update_attributes(sparc_request_params)
-      RequestMailer.with(user: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
-
       flash.now[:success] = t(:requests)[:updated]
     else
       @errors = @sparc_request.errors
@@ -55,6 +52,8 @@ class SparcRequestsController < ApplicationController
 
   def update_status
     if @sparc_request.update_attribute(:status, sparc_request_params[:status])
+      RequestMailer.with(user: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
+
       flash.now[:success] = t(:requests)[:updated]
     else
       flash.now[:error] = t(:requests)[:failed]
@@ -94,6 +93,7 @@ class SparcRequestsController < ApplicationController
         ]
       ] },
       { line_items_attributes: [
+        :id,
         :service_id,
         :service_source,
         :query_name,
