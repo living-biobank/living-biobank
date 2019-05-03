@@ -2,7 +2,7 @@ $ ->
   funding_source = null
   potential_funding_source = null
 
-  $('#sparc_request_protocol_attributes_funding_status').on 'change', ->
+  $(document).on 'change', '#sparc_request_protocol_attributes_funding_status', ->
     if $(this).val() == 'funded'
       potential_funding_source = $('#sparc_request_protocol_attributes_potential_funding_source').val()
       $('#fundingSource').removeClass('d-none')
@@ -16,12 +16,12 @@ $ ->
       $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '')
       $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', potential_funding_source)
 
-  $('#sparc_request_protocol_attributes_start_date').on 'change', ->
+  $(document).on 'change', '#sparc_request_protocol_attributes_start_date', ->
     if $(this).val()
       $(this).datepicker('hide')
       $('#sparc_request_protocol_attributes_end_date').focus()
 
-  $('#saveDraftRequestButton').on 'click', ->
+  $(document).on 'click', '#saveDraftRequestButton', ->
     $.ajax
       method: 'POST'
       dataType: 'script'
