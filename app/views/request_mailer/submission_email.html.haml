@@ -1,32 +1,11 @@
 %p
-  = t('mailers.request_mailer.submission_email.intro', pi_name: @request.primary_pi_name, date: format_date(Date.today))
-
-%h3
-  = t(:mailers)[:request_mailer][:submission_email][:table_header]
-%table{ style: 'text-align: left' }
-  %tbody
-    %tr
-      %th
-        = t(:requests)[:fields][:title]
-      %td
-        = @request.title
-    %tr
-      %th
-        = t(:requests)[:fields][:start_date]
-      %td
-        = format_date(@request.start_date)
-    %tr
-      %th
-        = t(:requests)[:fields][:specimens_requested]
-      %td
-        = @request.number_of_specimens_requested
-    %tr
-      %th
-        = t(:requests)[:fields][:contact_email]
-      %td
-        = @request.primary_pi_email
-    %tr
-      %th
-        = t(:requests)[:fields][:query_name]
-      %td
-        = @request.query_name
+  = t('mailers.request_mailer.submission_email.intro', requester: @user.full_name, date: format_date(Date.today))
+%h3{ style: 'margin-bottom: 0;' }
+  = @protocol.identifier
+%p{ style: 'margin-top: 0;' }
+  = raw t('mailers.request_mailer.primary_pi', pi_name: @protocol.primary_pi.display_name)
+%h3{ style: 'margin-bottom: 0;' }
+  = t(:mailers)[:request_mailer][:services_header]
+- @request.line_items.includes(:service).each do |line_item|
+  %p{ style: 'margin-top: 0;' }
+    = raw t('mailers.request_mailer.submission_email.service', service: line_item.service.name, source: line_item.service_source, requested: line_item.number_of_specimens_requested, min_sample_size: line_item.minimum_sample_size)

@@ -1,7 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 $ ->
   funding_source = null
   potential_funding_source = null
@@ -26,8 +22,6 @@ $ ->
       $('#sparc_request_protocol_attributes_end_date').focus()
 
   $(document).on 'click', '#saveDraftRequestButton', ->
-    serialized_params = $('form#new_sparc_request').serialize()
-
     $.ajax
       method: 'POST'
       dataType: 'script'

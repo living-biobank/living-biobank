@@ -44,8 +44,8 @@
       // User clicked confirm button
       $.ajax({
         method: element.getAttribute('data-method') || 'GET',
-        url: element.getAttribute('href'),
-        dataType: element.getAttribute('data-remote') === 'true' ? 'script' : 'html',
+        url: (element.getAttribute('tagName') === 'A' && element.getAttribute('href') !== 'javascript:void(0)') ? element.getAttribute('href') : element.getAttribute('data-url'),
+        dataType: (element.getAttribute('tagName') === 'A' && element.getAttribute('href') !== 'javascript:void(0)' && element.getAttribute('data-remote') !== 'true') ? 'html' : 'script',
         data: {
           authenticity_token: $('meta[name=csrf-token]').attr('content')
         }
@@ -57,7 +57,7 @@
   // with `method: :delete`.
   // See https://github.com/rails/rails/blob/master/actionview/app/assets/javascripts/rails-ujs/start.coffee#L69
   document.addEventListener('rails:attachBindings', element => {
-    Rails.delegate(document, 'a[data-confirm-swal]', 'click', handleConfirm)
+    Rails.delegate(document, '[data-confirm-swal]', 'click', handleConfirm)
   })
 
 }).call(this)
