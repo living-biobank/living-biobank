@@ -19,7 +19,14 @@ module SPARC
     before_validation :default_values
 
     def identifier
-      "#{self.id} - #{self.short_title}"
+      "#{self.id} - " +
+        if self.short_title.present?
+          self.short_title
+        elsif self.title.present?
+          self.title
+        else
+          I18n.t(:requests)[:draft][:placeholder]
+        end
     end
 
     def funded?

@@ -22,13 +22,10 @@ $ ->
       $('#sparc_request_protocol_attributes_end_date').focus()
 
   $(document).on 'click', '#saveDraftRequestButton', ->
-    $.ajax
-      method: 'POST'
-      dataType: 'script'
-      url: "/sparc_requests?#{$('form#new_sparc_request').serialize()}"
-      data:
-        authenticity_token: $('meta[name=csrf-token]').attr('content')
-        save_draft:         'true'
+    $('#sparc_request_status').remove()
+    $form = $('form#sparcRequestForm')
+    $form.append("<input name='save_draft' type='hidden' value='true' />")
+    Rails.fire($form[0], 'submit')
 
   $.rails = {
     allowAction: ($el) ->
