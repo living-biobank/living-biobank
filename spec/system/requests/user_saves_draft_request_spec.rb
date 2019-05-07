@@ -19,6 +19,6 @@ RSpec.describe 'User saves a request as draft', js: true do
     expect(SparcRequest.count).to eq(1)
     expect(SparcRequest.first.status).to eq(I18n.t(:requests)[:statuses][:draft])
     expect(page).to have_selector('.draft-request')
-    expect(page).to have_content(SparcRequest.first.title)
+    expect(page).to have_content(SparcRequest.first.identifier.truncate(60))
   end
 end

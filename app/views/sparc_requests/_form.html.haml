@@ -1,6 +1,6 @@
 .modal-dialog#requestFormModal{ role: 'document' }
   .modal-content
-    = form_for sparc_request, remote: true, html: { autocomplete: 'off' } do |f|
+    = form_for sparc_request, remote: true, method: sparc_request.persisted? ? :put : :post, html: { id: 'sparcRequestForm', autocomplete: 'off' } do |f|
       = f.hidden_field :status
       - sparc_request.reload if sparc_request.persisted?
 
@@ -94,7 +94,7 @@
                 = t(:requests)[:form][:add_specimen]
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
-        - if action_name == 'new'
+        - unless sparc_request.persisted? && sparc_request.pending?
           %button.btn.btn-warning#saveDraftRequestButton{ type: 'button' }
             = t(:requests)[:form][:save_as_draft]
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

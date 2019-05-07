@@ -6,11 +6,6 @@
       .alert.alert-warning.draft-request{ role: 'alert' }
         = link_to 'javascript:void(0)', class: 'edit-draft-request', data: { url: edit_sparc_request_path(dr) } do
           = icon('fas', 'edit')
-          - if dr.title.present?
-            = dr.title
-          - elsif dr.short_title.present?
-            = dr.short_title
-          - else
-            = t(:requests)[:draft][:placeholder]
+          = dr.identifier.truncate(60)
         = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:cancel], class: 'text-danger cancel-draft-request', data: { confirm_swal: true, url: sparc_request_path(dr), method: :delete } do
           = icon('fas', 'trash')

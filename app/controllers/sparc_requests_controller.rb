@@ -40,7 +40,12 @@ class SparcRequestsController < ApplicationController
   end
 
   def update
-    if @sparc_request.update_attributes(sparc_request_params)
+    if params[:save_draft]
+      @sparc_request.assign_attributes(sparc_request_params)
+      @sparc_request.save(validate: false)
+
+      flash.now[:success] = t(:requests)[:saved]
+    elsif @sparc_request.update_attributes(sparc_request_params)
       flash.now[:success] = t(:requests)[:updated]
     else
       @errors = @sparc_request.errors
@@ -80,6 +85,7 @@ class SparcRequestsController < ApplicationController
 
     params.require(:sparc_request).permit([
       { protocol_attributes: [
+        :id,
         :type,
         :short_title,
         :title,
@@ -90,6 +96,7 @@ class SparcRequestsController < ApplicationController
         :start_date,
         :end_date,
         primary_pi_role_attributes: [
+          :id,
           :identity_id
         ]
       ] },
