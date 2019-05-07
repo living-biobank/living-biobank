@@ -4,7 +4,7 @@ class LabsController < ApplicationController
   def index
     @lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
 
-    @patients = Patient.joins(:labs).distinct
+    @labs = Lab.joins(:patient)
 
     # @patients = labs.patient_id
     # @patients_mrn = @patients.patient.mrn

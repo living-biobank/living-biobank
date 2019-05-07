@@ -1,13 +1,19 @@
-- @patients.each do |patient|
-  .card.bg-dark.my-2.text-light
-    %h3.card-header
-      = "MRN: #{patient.mrn}"
-      - patient.labs.group_by(&:specimen_source).each do |source, group|
-        .card.text-dark.mb-1
-          %h5.card-header
-            = "#{source}: Qty. #{group.size}"
-            .card-body.pl-5
-              = "Placeholder text for requests for specimen"
-         
-      
-              
+- @labs.each do |lab|
+  .card
+    .card-header.bg-white
+      .row
+        .col-5.h3.font-weight-bold
+          = "Accession Number: #{lab.accession_number}"
+        .col-5.h5{style: "margin-top: 6px;"}
+          = "MRN: #{lab.patient.mrn}  |  DOB: #{lab.patient.dob}"
+        .col-2.h4
+          - if lab.status == 'Available'
+            .badge.badge-primary
+              = "#{lab.status}"
+          - elsif lab.status == 'Released'
+            .badge.badge-success
+              = "#{lab.status}"
+    %h5.card-body
+      = "#{lab.specimen_source}"
+      %p.mx-4
+        = "Placeholder text for studies"
