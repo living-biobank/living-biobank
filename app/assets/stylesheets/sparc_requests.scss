@@ -5,12 +5,19 @@
 .request-container {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 calc(1.5rem - 12px);
 
   .requested-service-information {
     .service {
       .service-details {
-        padding-left: 0;
+        .query {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .request-progress {
+        padding-right: 0;
       }
     }
   }
@@ -25,12 +32,14 @@
   padding: 1.5rem;
 }
 
-.draft-request {
-  display: flex;
-  justify-content: space-between;
+#draftRequests {
+  .draft-request {
+    display: flex;
+    justify-content: space-between;
 
-  &:last-child {
-    margin-bottom: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -64,8 +73,8 @@
   .request-container {
     .requested-service-information {
       .service {
-        .service-details {
-          padding-right: 0;
+        .request-progress {
+          padding-left: 0;
         }
       }
     }

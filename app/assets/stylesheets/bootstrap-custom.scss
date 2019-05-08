@@ -203,3 +203,12 @@ form {
     line-height: 1rem;
   }
 }
+
+/////////////
+/// CARDS ///
+/////////////
+.card {
+  .card-header, .card-body, .card-footer {
+    padding: 0.75rem;
+  }
+}
