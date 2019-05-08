@@ -80,3 +80,15 @@ a, .btn-link {
     }
   }
 }
+
+@media (max-width: 1679.98px) {
+  html {
+    font-size: 75%;
+  }
+}
+
+@media (min-width: 1680px) and (max-width: 1919.98px) {
+  html {
+    font-size: 87.5%;
+  }
+}
