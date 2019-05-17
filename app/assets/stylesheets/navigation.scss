@@ -96,7 +96,6 @@
 
 @include media-breakpoint-up(xl) {
   .navbar {
-    max-width: 250px;
     position: fixed;
     bottom: 0;
     border-right: 2px solid theme-color-level('dark', 5);
@@ -183,5 +182,17 @@
         }
       }
     }
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1919.98px) {
+  .navbar {
+    max-width: 250px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .navbar {
+    max-width: 275px;
   }
 }

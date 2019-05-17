@@ -1,9 +1,9 @@
 %p
-  = t('mailers.request_mailer.submission_email.intro', requester: @user.full_name, date: format_date(Date.today))
+  = t('mailers.request_mailer.submission_email.intro', requester: @user.display_name, date: format_date(Date.today))
 %h3{ style: 'margin-bottom: 0;' }
-  = @protocol.identifier
+  = @request.identifier
 %p{ style: 'margin-top: 0;' }
-  = raw t('mailers.request_mailer.primary_pi', pi_name: @protocol.primary_pi.display_name)
+  = raw t('mailers.request_mailer.primary_pi', pi_name: @request.primary_pi.display_name)
 %h3{ style: 'margin-bottom: 0;' }
   = t(:mailers)[:request_mailer][:services_header]
 - @request.line_items.includes(:service).each do |line_item|
