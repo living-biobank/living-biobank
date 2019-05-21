@@ -15,6 +15,8 @@ module SPARC
     validates_presence_of :funding_source, if: Proc.new{ |p| p.funded? }
     validates_presence_of :potential_funding_source, if: Proc.new{ |p| !p.funded? }
 
+    validate :rmid_valid?, if: :rmid_enabled?
+
     accepts_nested_attributes_for :primary_pi_role
 
     before_validation :default_values
@@ -31,6 +33,18 @@ module SPARC
         where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
       )
     }
+
+    def self.get_rmid(rmid)
+      begin
+        HTTParty.get("#{SPARC::Setting.get_value('research_master_api')}research_masters/#{rmid}.json",
+          headers: {
+            "Content-Type" => "application/json",
+            "Authorization" => "Token token=\"#{SPARC::Setting.get_value('rmid_api_token')}\""
+          })
+      rescue
+        nil
+      end
+    end
 
     def self.arel_identifier(field)
       SPARC::Protocol.arel_table[:id].concat(Arel::Nodes.build_quoted(' - ')).concat(SPARC::Protocol.arel_table[field])
@@ -59,6 +73,14 @@ module SPARC
 
     def rmid_enabled?
       SPARC::Setting.get_value('research_master_enabled') || false
+    end
+
+    def rmid_valid?
+      rmid_record = SPARC::Protocol.get_rmid(self.research_master_id)
+
+      if rmid_record.nil? || rmid_record['status'] == 404
+        errors.add(:research_master_id)
+      end
     end
   end
 end
