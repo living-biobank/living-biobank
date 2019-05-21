@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :protocols, only: [:index]
+
+  resource :protocol, only: [:show]
+
   get 'directory/index', to: 'directory#index'
 
   root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? request.env['warden'].user.honest_broker? : false } # we have an honest broker

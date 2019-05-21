@@ -13,7 +13,6 @@ class RequestMailer < ApplicationMailer
   def submission_email
     @user     = params[:user]
     @request  = params[:request]
-    @protocol = params[:protocol]
 
     mail(to: ENV.fetch('ADMIN_EMAIL'), subject: t(:mailers)[:request_mailer][:submission_email][:subject])
   end

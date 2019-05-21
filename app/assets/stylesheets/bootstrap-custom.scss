@@ -40,6 +40,16 @@ form {
   }
 }
 
+//////////////////
+/// DATEPICKER ///
+//////////////////
+.datepicker {
+  td, th {
+    width: 32px;
+    height: 32px;
+  }
+}
+
 //////////////
 /// TABLES ///
 //////////////
@@ -75,7 +85,7 @@ form {
 }
 
 .table-filters {
-  padding: 0;
+  padding: 0 !important;
   background: white;
   display: flex;
   flex-wrap: wrap;

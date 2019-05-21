@@ -18,7 +18,6 @@ RSpec.describe 'User submits a draft request', js: true do
     find('.edit-draft-request').click
     wait_for_ajax
 
-    expect(page).to have_selector('#requestFormModal', wait: 10)
     fill_in 'sparc_request_line_items_attributes_0_number_of_specimens_requested', with: 5
     fill_in 'sparc_request_line_items_attributes_0_minimum_sample_size', with: '1mL'
 

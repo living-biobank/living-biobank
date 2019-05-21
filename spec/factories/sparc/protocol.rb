@@ -1,14 +1,15 @@
 FactoryBot.define do
   factory :sparc_protocol, class: "SPARC::Protocol" do
-    type                      { %w(Project Study).sample }
-    short_title               { Faker::Lorem.unique.sentence(3, false, 2) }
-    title                     { Faker::Lorem.unique.sentence(5, false, 5) }
-    brief_description         { Faker::Lorem.paragraph(1, false, 2) }
-    funding_status            { SPARC::PermissibleValue.get_hash('funding_status').keys.sample }
-    funding_source            { SPARC::PermissibleValue.get_hash('funding_source').keys.sample }
-    potential_funding_source  { SPARC::PermissibleValue.get_hash('funding_source').keys.sample }
-    start_date                { Date.today }
-    end_date                  { Date.today + 1.year }
+    type                          { %w(Project Study).sample }
+    short_title                   { Faker::Lorem.unique.sentence(3, false, 2) }
+    title                         { Faker::Lorem.unique.sentence(5, false, 5) }
+    brief_description             { Faker::Lorem.paragraph(1, false, 2) }
+    funding_status                { SPARC::PermissibleValue.get_hash('funding_status').keys.sample }
+    funding_source                { SPARC::PermissibleValue.get_hash('funding_source').keys.sample }
+    potential_funding_source      { SPARC::PermissibleValue.get_hash('funding_source').keys.sample }
+    start_date                    { Date.today }
+    end_date                      { Date.today + 1.year }
+    sequence(:research_master_id) { |n| n }
 
     trait :study do
       type { 'Study' }

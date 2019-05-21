@@ -8,8 +8,8 @@ RSpec.describe 'User saves a request as draft', js: true do
 
     click_button I18n.t(:requests)[:create]
     click_button I18n.t(:requests)[:create_confirm][:confirm]
+    wait_for_ajax
 
-    expect(page).to have_selector('#requestFormModal', wait: 10)
     fill_in 'sparc_request_protocol_attributes_title', with: 'A Not So Short Title'
     fill_in 'sparc_request_protocol_attributes_short_title', with: 'A Short Title'
 

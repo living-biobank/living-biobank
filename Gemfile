@@ -10,6 +10,7 @@ gem 'faker'
 gem 'font-awesome-sass'
 gem 'foreman', '~> 0.84.0'
 gem 'haml'
+gem 'httparty'
 gem 'i18n-js'
 gem 'jbuilder', '~> 2.5'
 gem 'letter_opener'
@@ -53,6 +54,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'webdrivers', '~> 3.0'
   gem 'selenium-webdriver'
+  gem 'webdrivers', '~> 3.0'
 end

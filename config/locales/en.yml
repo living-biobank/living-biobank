@@ -12,13 +12,14 @@ en:
         number_of_specimens_requested: "Quantity Requested"
         minimum_sample_size: "Minimum Sample Size"
       sparc/protocol:
-        title: "Project Title"
+        research_master_id: "Research Master ID"
+        title: "Title"
         short_title: "Short Title"
         brief_description: "Brief Description"
         funding_status: "Funding Status"
         funding_source: "Funding Source"
         potential_funding_source: "Potential Funding Source"
-        start_date: "Project Timeline"
+        start_date: "Timeline"
       sparc/project_role:
         identity: "Primary PI"
       specimen_record:
@@ -126,12 +127,21 @@ en:
       edit_title: "Edit Specimen Request"
       date_separator: "to"
       headers:
-        project_information: "Project Information"
+        protocol_information: "Protocol Information"
         specimens: "Request Specimens"
+      fields:
+        protocol_search: "Protocol"
       placeholders:
+        protocol_search: "Search for your Protocol by ID, title, or short title"
         primary_pi: "e.g. Smith"
         minimum_sample: "e.g. 2mL"
       subtext:
+        rmid: "Please provide your <a href='https://rmid.musc.edu' target='blank'>Research Master ID</a> so that we can fill in information about your Protocol for you."
+        rmid_not_found: "Research Master ID not found"
+        rmid_server_down: "The Research Master ID server is unavailable at this time. Please try again later."
+        protocol: "If you already have a Protocol in SPARCRequest, search for it so that we can fill in its information for you."
+        protocol_found: "Imported data from Protocol #%{id}"
+        protocol_not_found: "Could not find a corresponding Protocol. Please fill in the information below to create a new Project"
         i2b2_query: "Information on creating an i2b2 Query can be found <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>here</a>."
       add_specimen: "Add Specimen"
       delete_specimen: "Delete Specimen"

@@ -79,13 +79,14 @@ class SparcRequestsController < ApplicationController
 
   def sparc_request_params
     if params[:sparc_request][:protocol_attributes]
-      params[:sparc_request][:protocol_attributes][:start_date] = sanitize_date(params[:sparc_request][:protocol_attributes][:start_date])
-      params[:sparc_request][:protocol_attributes][:end_date]   = sanitize_date(params[:sparc_request][:protocol_attributes][:end_date])
+      params[:sparc_request][:protocol_attributes][:start_date] = sanitize_date(params[:sparc_request][:protocol_attributes][:start_date]) if params[:sparc_request][:protocol_attributes][:start_date]
+      params[:sparc_request][:protocol_attributes][:end_date]   = sanitize_date(params[:sparc_request][:protocol_attributes][:end_date]) if params[:sparc_request][:protocol_attributes][:end_date]
     end
 
     params.require(:sparc_request).permit([
       { protocol_attributes: [
         :id,
+        :research_master_id,
         :type,
         :short_title,
         :title,
@@ -109,7 +110,8 @@ class SparcRequestsController < ApplicationController
         :minimum_sample_size,
         :_destroy
       ] },
-      :status
+      :status,
+      :protocol_id
     ])
   end
 end
