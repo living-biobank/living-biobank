@@ -5,11 +5,20 @@
 .request-container {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 calc(1.5rem - 12px);
 
-  .request-header {
-    .request-status {
-      font-size: initial;
+  .requested-service-information {
+    .service {
+      .service-details {
+        .query {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+
+      .request-progress {
+        padding-right: 0;
+      }
     }
   }
 }
@@ -23,12 +32,14 @@
   padding: 1.5rem;
 }
 
-.complete-draft-request {
-  display: flex;
-  justify-content: space-between;
+#draftRequests {
+  .draft-request {
+    display: flex;
+    justify-content: space-between;
 
-  &:last-child {
-    margin-bottom: 0;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -54,6 +65,18 @@
 
     .swal2-content * {
       font-size: 1rem !important;
+    }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  .request-container {
+    .requested-service-information {
+      .service {
+        .request-progress {
+          padding-left: 0;
+        }
+      }
     }
   }
 }

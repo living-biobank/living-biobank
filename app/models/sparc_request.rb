@@ -29,8 +29,15 @@ class SparcRequest < ApplicationRecord
   scope :search, -> (term) {
     return if term.blank?
 
-    joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%")).or(
+    joins(:protocol, line_items: :service).where("#{SPARC::Protocol.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    ).or(
+      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
+    ).or(
       joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
+    ).or(
+      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
+    ).or(
+      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
     ).or(
       joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:funding_status].matches("%#{term}%"))
     ).or(
@@ -59,12 +66,9 @@ class SparcRequest < ApplicationRecord
   scope :by_date, -> (date) {
     return none if date.blank?
 
-    parsed_date = Date.parse(date).to_s rescue nil
-
-    if parsed_date
-      date = date.delete("/").delete("-")
-      mdy = Date.strptime(date, '%m%d%Y')
-      dmy = Date.strptime(date, '%d%m%Y')
+    if parsed_date = Date.parse(date).strftime('%m%d%Y') rescue nil
+      mdy = Date.strptime(parsed_date, '%m%d%Y') rescue nil
+      dmy = Date.strptime(parsed_date, '%d%m%Y') rescue nil
       joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:start_date].matches(mdy)).or(
         joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:end_date].matches(mdy))
       ).or(
@@ -89,21 +93,21 @@ class SparcRequest < ApplicationRecord
 
     case sort_by
     when 'title', 'short_title'
-      joins(:protocol).order(SPARC::Protocol.arel_table[sort_by].send(sort_order))
+      joins(:protocol).order(SPARC::Protocol.arel_table[sort_by].send(sort_order), created_at: :desc)
     when 'protocol_id'
-      joins(:protocol).order(SPARC::Protocol.arel_table[:id].send(sort_order))
+      joins(:protocol).order(SPARC::Protocol.arel_table[:id].send(sort_order), created_at: :desc)
     when 'time_remaining'
-      joins(:protocol).order(SPARC::Protocol.arel_table[:end_date].send(sort_order))
+      joins(:protocol).order(SPARC::Protocol.arel_table[:end_date].send(sort_order), created_at: :desc)
     when 'primary_pi'
-      joins(protocol: :primary_pi).order(SPARC::Identity.arel_table[:last_name].send(sort_order))
+      joins(protocol: :primary_pi).order(SPARC::Identity.arel_table[:last_name].send(sort_order), created_at: :desc)
     when 'requester'
-      joins(:user).order(User.arel_table[:last_name].send(sort_order))
+      joins(:user).order(User.arel_table[:last_name].send(sort_order), created_at: :desc)
     else # Includes status
-      order(status: sort_order)
+      order(status: sort_order, created_at: :desc)
     end
   }
 
-  after_save :update_sparc_records
+  after_save :update_sparc_records, unless: Proc.new{ |request| request.draft? }
 
   def completed?
     self.status == I18n.t(:requests)[:statuses][:completed]

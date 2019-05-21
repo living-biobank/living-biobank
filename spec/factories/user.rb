@@ -12,6 +12,10 @@ FactoryBot.define do
       honest_broker { true }
     end
 
+    before :create do |user|
+      create(:sparc_identity, first_name: user.first_name, last_name: user.last_name, email: user.email, ldap_uid: user.net_id)
+    end
+
     factory :honest_broker, traits: [:honest_broker]
   end
 end

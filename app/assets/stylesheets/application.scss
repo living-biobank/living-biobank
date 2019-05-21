@@ -15,14 +15,14 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min';
 @import 'bootstrap-select/dist/css/bootstrap-select.min';
-@import 'nprogress/nprogress';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'sweetalert2/dist/sweetalert2.min';
 
+@import 'nprogress-custom';
 @import 'bootstrap-custom';
 @import 'typeahead-custom';
-@import 'nprogress-custom';
+@import 'turbolinks-custom';
 @import 'layout';
 @import 'navigation';
 @import 'header';

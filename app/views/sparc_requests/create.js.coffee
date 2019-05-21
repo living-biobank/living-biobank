@@ -1,5 +1,5 @@
 <% if @errors %>
-$("[id^='sparc_request_']").removeClass('is-invalid').addClass('is-valid')
+$("[id^='sparc_request_'], [id=primary_pi_search]").removeClass('is-invalid').addClass('is-valid')
 $('.form-error').remove()
 
 # Protocol Errors

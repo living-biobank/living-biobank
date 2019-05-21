@@ -40,6 +40,16 @@ form {
   }
 }
 
+//////////////////
+/// DATEPICKER ///
+//////////////////
+.datepicker {
+  td, th {
+    width: 32px;
+    height: 32px;
+  }
+}
+
 //////////////
 /// TABLES ///
 //////////////
@@ -75,7 +85,7 @@ form {
 }
 
 .table-filters {
-  padding: 0;
+  padding: 0 !important;
   background: white;
   display: flex;
   flex-wrap: wrap;
@@ -200,5 +210,15 @@ form {
     right: 0;
     margin: auto;
     z-index: 1000;
+    line-height: 1rem;
+  }
+}
+
+/////////////
+/// CARDS ///
+/////////////
+.card {
+  .card-header, .card-body, .card-footer {
+    padding: 0.75rem;
   }
 }

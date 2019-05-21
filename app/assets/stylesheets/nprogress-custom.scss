@@ -1,3 +1,19 @@
-#nprogress .bar {
-  background: theme-color('primary');
+@import 'nprogress/nprogress';
+
+#nprogress {
+  .bar, .spinner {
+    z-index: 10000;
+  }
+
+  .bar {
+    height: 4px;
+    background: theme-color('primary');
+  }
+
+  .spinner {
+    .spinner-icon {
+      border-top-color: theme-color('primary');
+      border-left-color: theme-color('primary');
+    }
+  }
 }

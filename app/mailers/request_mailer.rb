@@ -11,7 +11,8 @@ class RequestMailer < ApplicationMailer
   end
 
   def submission_email
-    @request = params[:request]
+    @user     = params[:user]
+    @request  = params[:request]
 
     mail(to: ENV.fetch('ADMIN_EMAIL'), subject: t(:mailers)[:request_mailer][:submission_email][:subject])
   end
@@ -19,6 +20,7 @@ class RequestMailer < ApplicationMailer
   def completion_email
     @user     = params[:user]
     @request  = params[:request]
+    @protocol = params[:protocol]
 
     mail(to: User.honest_brokers.pluck(:email), subject: t(:mailers)[:request_mailer][:completion_email][:subject])
   end
