@@ -23,6 +23,6 @@ class User < ApplicationRecord
   end
 
   def display_name
-      "#{first_name.try(:humanize)} #{last_name.try(:humanize)} (#{email})".strip
-    end
+    "#{first_name.try(:humanize)} #{last_name.try(:humanize)} (#{email})".strip
+  end
 end

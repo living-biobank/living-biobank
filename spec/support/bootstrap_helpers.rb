@@ -8,6 +8,11 @@ def bootstrap_select(selector, option=nil)
 end
 
 def bootstrap_typeahead(selector, text)
-  find("input#{selector}.typeahead").send_keys(text)
+  field = find("input#{selector}.typeahead")
+  field.send_keys(text)
+  wait_for_ajax
+  expect(page).to have_selector('.tt-suggestion', visible: false)
+  field.send_keys :down
   find('.tt-menu.tt-open').first('.tt-suggestion').click
+  wait_for_ajax
 end

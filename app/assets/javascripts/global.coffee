@@ -26,23 +26,32 @@ $ ->
     $(this).removeClass('is-valid is-invalid')
     $(this).parents('.form-group').children('.form-error').remove()
 
-  $(document).on 'change', '.table-search', ->
-    $container  = $(this).parents('.table-filters')
-    data        = { term: $(this).val() }
+  searchTimer = null
 
-    $container.find('select.filter-select').each (index, element) ->
-      field = $(element).data('field')
-      val   = $(element).val()
-      if val != ""
-        data[field] = val
+  $(document).on('keyup', '.table-search', ->
+    term = $(this).val()
+    clearTimeout(searchTimer)
+    searchTimer = setTimeout( (->
+      $container  = $(this).parents('.table-filters')
+      data        = { term: term }
 
-    replaceUrl(data)
+      $container.find('select.filter-select').each (index, element) ->
+        field = $(element).data('field')
+        val   = $(element).val()
+        if val != ""
+          data[field] = val
 
-    $.ajax
-      method: 'GET'
-      dataType: 'script'
-      url: $container.data('url')
-      data: data
+      replaceUrl(data)
+
+      $.ajax
+        method: 'GET'
+        dataType: 'script'
+        url: $container.data('url')
+        data: data
+    ), 500)
+  ).on('keydown', '.table-search', ->
+    clearTimeout(searchTimer)
+  )
 
   $(document).on 'changed.bs.select', '.table-filters select.filter-select', ->
     $container  = $(this).parents('.table-filters')

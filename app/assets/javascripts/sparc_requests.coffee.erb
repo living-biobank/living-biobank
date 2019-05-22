@@ -1,0 +1,136 @@
+$ ->
+  rmidTimer = null
+
+  $(document).on 'keyup', '#protocol_search', ->
+    if !$(this).val()
+      resetProtocolFields()
+
+  $(document).on('keyup', '#sparc_request_protocol_attributes_research_master_id:not([readonly=readonly])', ->
+    clearTimeout(rmidTimer)
+    if rmid = $(this).val()
+      rmidTimer = setTimeout( (->
+        $.ajax
+          url: "/protocol"
+          type: 'GET'
+          dataType: 'script'
+          data:
+            rmid: rmid
+      ), 500)
+    else
+      resetProtocolFields()
+      initializePrimaryPITypeahead()
+  ).on('keydown', '#sparc_request_protocol_attributes_research_master_id', ->
+    clearTimeout(rmidTimer)
+  )
+
+  funding_source = null
+  potential_funding_source = null
+
+  $(document).on 'change', '#sparc_request_protocol_attributes_funding_status', ->
+    if $(this).val() == 'funded'
+      potential_funding_source = $('#sparc_request_protocol_attributes_potential_funding_source').val()
+      $('#fundingSource').removeClass('d-none')
+      $('#potentialFundingSource').addClass('d-none')
+      $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', funding_source)
+      $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', '')
+    else if $(this).val() == 'pending_funding'
+      funding_source = $('#sparc_request_protocol_attributes_funding_source').val()
+      $('#fundingSource').addClass('d-none')
+      $('#potentialFundingSource').removeClass('d-none')
+      $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '')
+      $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', potential_funding_source)
+
+  $(document).on 'change', '#sparc_request_protocol_attributes_start_date', ->
+    if $(this).val()
+      $(this).datepicker('hide')
+      $('#sparc_request_protocol_attributes_end_date').focus()
+
+  $(document).on 'click', '#saveDraftRequestButton', ->
+    $('#sparc_request_status').remove()
+    $form = $('form#sparcRequestForm')
+    $form.append("<input name='save_draft' type='hidden' value='true' />")
+    Rails.fire($form[0], 'submit')
+
+  $.rails = {
+    allowAction: ($el) ->
+      return true
+  }
+
+  $(document).on 'fields_added.nested_form_fields', (event, param) ->
+    setRequiredFields()
+    initializeSelectpickers()
+    initializeTooltips()
+
+  $(document).on 'fields_removed.nested_form_fields', (event, param) ->
+    $('.tooltip').tooltip('hide')
+
+resetProtocolFields = () ->
+  $("[id^='sparc_request_'], [id=primary_pi_search]").removeClass('is-valid is-invalid')
+  $('.form-error, .form-alert').remove()
+  $('#sparc_request_protocol_id').remove()
+  $('#sparc_request_protocol_attributes_id').remove()
+  $('#sparc_request_protocol_attributes_primary_pi_role_attributes_id').remove()
+  $('#sparc_request_protocol_attributes_type').prop('disabled', false)
+  $('#sparc_request_protocol_attributes_title').val('').prop('readonly', false)
+  $('#sparc_request_protocol_attributes_short_title').val('').prop('readonly', false)
+  $('#sparc_request_protocol_attributes_brief_description').val('').prop('readonly', false)
+  $('#sparc_request_protocol_attributes_funding_status').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
+  $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
+  $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
+  $('#sparc_request_protocol_attributes_start_date').datepicker('update', '').prop('readonly', false)
+  $('#sparc_request_protocol_attributes_end_date').datepicker('update', '').prop('readonly', false)
+  $('#primary_pi_search').val('').prop('readonly', false)
+  $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val('')
+
+(exports ? this).initializeProtocolTypeahead = () ->
+  protocols = new Bloodhound(
+    datumTokenizer: Bloodhound.tokenizers.whitespace
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+    remote:
+      url: "/protocols?term=%TERM"
+      wildcard: "%TERM"
+  )
+
+  protocols.initialize()
+
+  $('#protocol_search').typeahead({
+    minLength: 3
+    hint: false
+    highlight: true
+  }, {
+    displayKey: 'label'
+    source: protocols.ttAdapter()
+    limit: 100
+    templates:
+      empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
+  }).on 'typeahead:select', (event, suggestion) ->
+    $.ajax
+      url: "/protocol"
+      type: 'GET'
+      dataType: 'script'
+      data:
+        id: suggestion.id
+
+(exports ? this).initializePrimaryPITypeahead = () ->
+  identities = new Bloodhound(
+    datumTokenizer: Bloodhound.tokenizers.whitespace
+    queryTokenizer: Bloodhound.tokenizers.whitespace
+    remote:
+      url: "/directory/index?term=%TERM"
+      wildcard: "%TERM"
+  )
+
+  identities.initialize()
+
+  $("#primary_pi_search:not([readonly=readonly])").typeahead({
+    minLength: 3
+    hint: false
+    highlight: true
+  }, {
+    displayKey: 'label'
+    source: identities.ttAdapter()
+    limit: 100
+    templates:
+      empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
+  }).on 'typeahead:select', (event, suggestion) ->
+    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)

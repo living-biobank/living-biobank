@@ -1,5 +1,5 @@
 .request-container
-  .request-header.d-flex.align-items-start.w-100.border-bottom.pb-2.mb-2
+  .request-header.d-sm-flex.d-none.align-items-start.w-100.border-bottom.pb-2.mb-2
     .col-10.pl-0
       %h3.d-flex.align-items-center.mb-0
         %strong.font-weight-bold.mr-2
@@ -7,27 +7,37 @@
         = status_context(request)
     .col-2.pr-0.text-right
       = request_actions(request)
+  .request-header.d-sm-none.d-flex.w-100.border-bottom.pb-2.mb-2
+    .col-8.pl-0
+      %h3.m-0
+        = request.identifier.truncate(60)
+    .col-4.p-0
+      %h3.w-100.d-flex.flex-column.align-items-stretch
+        = status_context(request)
+      .w-100.d-flex.justify-content-between
+        = request_actions(request)
   .request-body.w-100.d-flex.flex-wrap
     .request-details.w-100.d-flex.mb-2
       .col-6.p-0
-        %p.d-flex.align-items-center.mb-1<
+        %p.d-flex.align-items-center.mb-0<
           = primary_pi_display(request)
-        %p.d-flex.align-items-center.mb-1<
+        %p.d-flex.align-items-center.mb-0<
           = request_duration_display(request)
       .col-6.p-0
-        %p.d-flex.align-items-center.justify-content-end.mb-1<
+        %p.text-right.mb-0<
           = requester_display(request)
     .requested-service-information.w-100
       - request.line_items.each do |li|
-        .service.d-flex.w-100
-          .col-4.pl-0
-            %p.mb-0
+        .service.d-flex.flex-wrap.w-100
+          .col-sm-4.col-12.p-0.service-details
+            %p.mb-0.service-display<
               = service_display(li)
-            %p.mb-1
+            %p.mb-0.query<
               = icon('fas', 'database mr-2')
-              = li.query_name
+              = li.query_name.truncate(50)
           - if request.in_process? || request.completed?
-            .request-progress.progress.col-8.p-0.mt-1
-              .progress-bar.bg-success{ role: 'progressbar', style: "width:#{li.percent_progress}%;", aria: { valuenow: li.specimen_records.count, valuemin: 0, valuemax: li.number_of_specimens_requested } }
-              %span.progress-text
-                = t('requests.table.progress', received: li.specimen_records.count, total: li.number_of_specimens_requested)
+            .request-progress.col-sm-8.col-12.mt-1
+              .progress
+                .progress-bar.bg-success{ role: 'progressbar', style: "width:#{li.percent_progress}%;", aria: { valuenow: li.specimen_records.count, valuemin: 0, valuemax: li.number_of_specimens_requested } }
+                %span.progress-text
+                  = t('requests.table.progress', received: li.specimen_records.count, total: li.number_of_specimens_requested)
