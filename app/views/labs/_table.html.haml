@@ -16,10 +16,10 @@
               = t(:labs)[:fields][:samples_available]
             %th.col-2<
               = t(:labs)[:fields][:specimen_source]
-            %th.col-2<
+            %th.col-3<
               = t(:labs)[:fields][:protocols]
-            %th.col-2<
-              = t(:labs)[:fields][:actions]
+            %th.col-1<
+              = t(:labs)[:fields][:release]
         %tbody
           - if lab_groups.any?
             - lab_groups.each do |grouping, labs|
@@ -33,9 +33,10 @@
                 %td<
                   = grouping[:specimen_source] || t(:constants)[:na]
                 %td<
-                  = protocols_preview(grouping[:patient].protocols) || t(:constants)[:na]
+                  = protocols_preview(grouping[:patient], labs.first.specimen_source)
                 %td.text-center<
-                  = release_lab_button(grouping[:patient])
+                  %button.btn.btn-primary{ title: t(:labs)[:tooltips][:release], data: { toggle: 'tooltip', url: new_specimen_record_path(patient_id: grouping[:patient].id) } }
+                    = icon('fas', 'share')
           - else
             %tr
               %td.text-center{ colspan: 5 }

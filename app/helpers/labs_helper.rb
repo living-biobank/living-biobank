@@ -8,32 +8,29 @@ module LabsHelper
   end
 
   def accession_numbers(labs)
-    raw(labs.map do |lab|
-      content_tag(:span, lab.accession_number, class: 'w-100')
-    end.join(', '))
-  end
-
-  def protocols_preview(protocols)
-    if protocols.any?
-      raw(protocols.map do |protocol|
-        sr = protocol.sparc_request
-
-        content = "
-          <div class='d-flex flex-column'>
-            <span class='d-flex justify-content-between mb-2'>#{sr.description}</span>
-            <span class='d-flex justify-content-between mb-2'><strong class='mr-2'>#{t(:requests)[:fields][:specimens_requested]}: </strong>#{sr.number_of_specimens_requested}</span>
-            <span class='d-flex justify-content-between'><strong class='mr-2'>#{t(:requests)[:fields][:minimum_sample]}: </strong>#{sr.minimum_sample_size}</span>
-          </div>
-        "
-
-        link_to protocol.id, 'javascript:void(0)', data: { toggle: 'popover', trigger: 'hover', title: sr.title, content: content, html: true, placement: 'left' }
+    if labs.any?
+      raw(labs.map do |lab|
+        content_tag(:span, lab.accession_number, class: 'w-100')
       end.join(', '))
     end
   end
 
-  def release_lab_button(patient)
-    link_to new_specimen_record_path(patient_id: patient.id), remote: true, title: t(:labs)[:tooltips][:release], class: 'btn btn-primary', data: { toggle: 'tooltip' } do
-      raw(t(:actions)[:release] + icon('fas', 'share ml-1'))
+  def protocols_preview(patient, source)
+    if patient.sparc_requests.any?
+      content_tag :div, class: 'd-flex flex-column' do
+        raw(patient.sparc_requests.in_process.map do |request|
+          content = request.line_items.where(service_source: source).map do |line_item|
+            content_tag :div, class: 'd-flex flex-column request-preview' do
+              content_tag(:span, t('labs.requests.specimens_requested', amount_requested: line_item.number_of_specimens_requested, min_sample_size: line_item.minimum_sample_size)) +
+              raw(render('line_items/progress_bar', li: line_item))
+            end
+          end.join('')
+
+          content_tag :div do
+            link_to request.identifier, 'javascript:void(0)', data: { toggle: 'popover', trigger: 'hover', title: request.identifier, content: content, html: true, placement: 'left' }
+          end
+        end.join(''))
+      end
     end
   end
 end

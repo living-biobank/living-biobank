@@ -22,6 +22,12 @@
   }
 }
 
+.request-preview {
+  &:not(:last-child) {
+    @extend .mb-2;
+  }
+}
+
 @include media-breakpoint-down(md) {
   #verifySpecimensContainer {
     input {

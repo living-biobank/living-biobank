@@ -72,12 +72,14 @@ en:
       accession_numbers: "Accession Numbers"
       samples_available: "Potential Samples Available"
       specimen_source: "Specimen Source"
-      protocols: "Eligible Protocols"
-      actions: "Actions"
+      protocols: "Eligible Requests"
+      release: "Release"
     form:
-      title: "Specimen Release"
+      title: "Release Specimens"
     tooltips:
       release: "Release Specimens"
+    requests:
+      specimens_requested: "%{amount_requested} samples ≥ %{min_sample_size} requested"
   login:
     header: "Login"
     net_id: "NetID"
