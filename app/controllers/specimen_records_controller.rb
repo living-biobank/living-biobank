@@ -1,5 +1,5 @@
 class SpecimenRecordsController < ApplicationController
-  before_action :honest_broker_check
+  before_action :verify_honest_broker
 
   before_action :find_patient
 

@@ -11,7 +11,7 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :line_items, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  scope :active, -> { where.not(status: I18n.t(:requests)[:statuses][:cancelled]) }
+  scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
 
   scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
 
