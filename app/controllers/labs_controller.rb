@@ -16,6 +16,25 @@ class LabsController < ApplicationController
     end
   end
 
+  def update
+    @lab = Lab.find(params[:id])
+
+    if params[:type] == "release"
+      if @lab.update_attributes(status: "Released")
+        redirect_to '/labs'
+      end
+    elsif params[:type] == "discard"
+      if @lab.update_attributes(status: "Discarded")
+        redirect_to '/labs'
+      end
+    elsif params[:type] == "retrieve"
+      if @lab.update_attributes(status: "Retrieved")
+        redirect_to '/labs'
+      end
+    end
+
+  end
+
   private
 
   # NOTE:  sort_lab_groups may be deprecated in the future!
@@ -34,4 +53,9 @@ class LabsController < ApplicationController
 
     groups
   end
+
+  # def lab_params
+  #   lab = params.permit(:lab_id)
+  # end
+
 end

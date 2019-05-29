@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190506171657) do
+ActiveRecord::Schema.define(version: 20190524153133) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20190506171657) do
     t.boolean "removed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
+    t.string "status", default: "Available"
     t.index ["patient_id"], name: "index_labs_on_patient_id"
   end
 

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resource :protocol, only: [:show]
 
   get 'directory/index', to: 'directory#index'
+  get 'labs/update', to: 'labs#update'
 
   root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? request.env['warden'].user.honest_broker? : false } # we have an honest broker
   root to: 'sparc_requests#index', constraints: lambda { |request| request.env['warden'].user } # no honest broker but we are signed in
