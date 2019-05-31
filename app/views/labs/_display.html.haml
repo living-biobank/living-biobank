@@ -8,10 +8,10 @@
           = "MRN: #{lab.patient.mrn}  |  DOB: #{lab.patient.dob}"
         .col-2.h4
           - if lab.status == "Available"
-            .badge.badge-primary
+            .badge.badge-info
               = "#{lab.status}"
           - elsif lab.status == "Released"
-            .badge.badge-success
+            .badge.badge-primary
               = "#{lab.status}"   
     %h5.card-body
       = "#{lab.specimen_source}"
@@ -23,14 +23,12 @@
                 .col-8
                   = "#{population.line_item.sparc_request.protocol.title}"
                 .col-3
-                  = link_to "", lab_path(lab, type: "release"), method: :patch, class: "btn btn-success fas fa-external-link-alt", title: "Release Specimen", data: {toggle: "tooltip"}
+                  = link_to "", lab_path(lab, type: "release", line_item: population.line_item.id, recipient: population.line_item.sparc_request.primary_pi.id), method: :patch, class: "btn btn-primary fas fa-dolly", title: "Release Specimen", data: {toggle: "tooltip"}
       - elsif lab.status == "Released"
-        - lab.populations.each do |population|
-          .row
-            %p.mx-4
-              - if lab.specimen_source == population.line_item.service_source
-                .col-8
-                  = "#{population.line_item.sparc_request.protocol.title}"
-                .col-3
-                  = link_to "", lab_path(lab, type: "retrieve"), method: :patch, class: "btn btn-warning fas fa-dolly", title: "Retrieve Specimen", data: {toggle: "tooltip"}
-                  = link_to "", lab_path(lab, type: "discard"), method: :patch, class: "btn btn-danger fas fa-trash-alt", title: "Discard Specimen", data: {toggle: "tooltip"}
+        .row
+          %p.mx-4
+            .col-8
+              = "#{lab.line_item.sparc_request.protocol.title} | Intended Recipient: #{lab.recipient.last_name}, #{lab.recipient.first_name}"
+            .col-3
+              = link_to "", lab_path(lab, type: "retrieve"), method: :patch, class: "btn btn-success fas fa-check-circle", title: "Retrieve Specimen", data: {toggle: "tooltip"}
+              = link_to "", lab_path(lab, type: "discard"), method: :patch, class: "btn btn-danger fas fa-trash-alt", title: "Discard Specimen", data: {toggle: "tooltip"}

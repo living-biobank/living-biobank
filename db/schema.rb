@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190524153133) do
+ActiveRecord::Schema.define(version: 20190531185326) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -39,6 +39,12 @@ ActiveRecord::Schema.define(version: 20190524153133) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "status", default: "Available"
+    t.bigint "line_item_id"
+    t.bigint "recipient_id"
+    t.datetime "released_at"
+    t.datetime "retrieved_at"
+    t.datetime "discarded_at"
+    t.index ["line_item_id"], name: "fk_rails_f32b2a1d2a"
     t.index ["patient_id"], name: "index_labs_on_patient_id"
   end
 
@@ -87,18 +93,6 @@ ActiveRecord::Schema.define(version: 20190524153133) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "specimen_records", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "protocol_id"
-    t.datetime "release_date"
-    t.string "release_to"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "quantity"
-    t.string "mrn"
-    t.string "service_source"
-    t.bigint "service_id"
-  end
-
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "first_name"
     t.string "last_name"
@@ -120,6 +114,7 @@ ActiveRecord::Schema.define(version: 20190524153133) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "labs", "line_items"
   add_foreign_key "labs", "patients"
   add_foreign_key "populations", "line_items"
   add_foreign_key "populations", "patients"

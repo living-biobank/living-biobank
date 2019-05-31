@@ -20,15 +20,15 @@ class LabsController < ApplicationController
     @lab = Lab.find(params[:id])
 
     if params[:type] == "release"
-      if @lab.update_attributes(status: "Released")
+      if @lab.update_attributes(status: "Released", released_at: Time.now, line_item_id: params[:line_item], recipient_id: params[:recipient])
         redirect_to '/labs'
       end
     elsif params[:type] == "discard"
-      if @lab.update_attributes(status: "Discarded")
+      if @lab.update_attributes(status: "Discarded", discarded_at: Time.now)
         redirect_to '/labs'
       end
     elsif params[:type] == "retrieve"
-      if @lab.update_attributes(status: "Retrieved")
+      if @lab.update_attributes(status: "Retrieved", retrieved_at: Time.now)
         redirect_to '/labs'
       end
     end
