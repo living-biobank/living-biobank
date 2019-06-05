@@ -23,7 +23,7 @@ class LineItem < ApplicationRecord
   end
 
   def lab_count 
-    labs.select{|lab| lab.status == "Retrieved"}.size
+    labs.select{|lab| lab.status == I18n.t(:labs)[:statuses][:retrieved]}.size
   end
 
 end

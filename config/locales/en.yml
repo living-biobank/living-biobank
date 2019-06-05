@@ -68,12 +68,14 @@ en:
       sort_by: "Sort By"
     fields:
       id: "Lab ID"
-      mrn: "MRN"
-      accession_numbers: "Accession Numbers"
+      mrn: "MRN: %{mrn}"
+      dob: "DOB: %{dob}"
+      accession_number: "Accession Number: %{accession_number}"
       samples_available: "Potential Samples Available"
       specimen_source: "Specimen Source"
       protocols: "Eligible Requests"
       release: "Release"
+      intended_recipient: "Intended Recipient: %{last_name}, %{first_name}"
     form:
       title: "Release Specimens"
     tooltips:

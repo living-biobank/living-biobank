@@ -13,12 +13,6 @@ class Lab < ApplicationRecord
     where(status: [I18n.t(:labs)[:statuses][:available], I18n.t(:labs)[:statuses][:released]]) 
   }
 
-
-  #NOTE:  This code snippet may not be necessary after the rework of the specimens' view search function.
-  # scope :available, -> {
-  #   where(removed: false)
-  # }
-
   scope :search, -> (term) {
     return if term.blank?
 

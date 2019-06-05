@@ -2,10 +2,6 @@ class LabsController < ApplicationController
   before_action :verify_honest_broker
 
   def index
-
-    #NOTE:  search function may be deprecated
-    #@lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
-
     @labs = Lab.joins(:patient).includes(:populations, :line_item)
 
     respond_to do |format|
@@ -17,15 +13,15 @@ class LabsController < ApplicationController
     @lab = Lab.find(params[:id])
 
     if params[:type] == "release"
-      if @lab.update_attributes(status: "Released", released_at: Time.now, line_item_id: params[:line_item], recipient_id: params[:recipient])
+      if @lab.update_attributes(status: I18n.t(:labs)[:statuses][:released], released_at: Time.now, line_item_id: params[:line_item], recipient_id: params[:recipient])
         redirect_to action: :index
       end
     elsif params[:type] == "discard"
-      if @lab.update_attributes(status: "Discarded", discarded_at: Time.now)
+      if @lab.update_attributes(status: I18n.t(:labs)[:statuses][:discarded], discarded_at: Time.now)
         redirect_to action: :index
       end
     elsif params[:type] == "retrieve"
-      if @lab.update_attributes(status: "Retrieved", retrieved_at: Time.now)
+      if @lab.update_attributes(status: I18n.t(:labs)[:statuses][:retrieved], retrieved_at: Time.now)
         redirect_to action: :index
       end
     end
@@ -54,8 +50,5 @@ class LabsController < ApplicationController
     groups
   end
 
-  # def lab_params
-  #   lab = params.permit(:lab_id)
-  # end
 
 end

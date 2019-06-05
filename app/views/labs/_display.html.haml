@@ -3,33 +3,33 @@
     .card-header.bg-white
       .row
         .col-5.h3.font-weight-bold
-          = "Accession Number: #{lab.accession_number}"
+          = t('labs.fields.accession_number', accession_number: lab.accession_number)
         .col-5.h5{style: "margin-top: 6px;"}
-          = "MRN: #{lab.patient.mrn}  |  DOB: #{lab.patient.dob}"
+          = t('labs.fields.mrn', mrn: lab.patient.mrn ) + "  |  " +  t('labs.fields.dob', dob: lab.patient.dob)
         .col-2.h4
           - if lab.status == t(:labs)[:statuses][:available]
             .badge.badge-info
-              = "#{lab.status}"
+              = lab.status
           - elsif lab.status == t(:labs)[:statuses][:released]
             .badge.badge-primary
-              = "#{lab.status}"   
+              = lab.status   
     %h5.card-body
-      = "#{lab.specimen_source}"
+      = lab.specimen_source
       - if lab.status == t(:labs)[:statuses][:available]
         - lab.populations.each do |population|
           .row
             %p.mx-4
               - if lab.specimen_source == population.line_item.service_source
                 .col-8
-                  = "#{population.line_item.sparc_request.protocol.title}"
+                  = population.line_item.sparc_request.protocol.title
                 .col-3
                   = link_to "", lab_path(lab, type: "release", line_item: population.line_item.id, recipient: population.line_item.sparc_request.primary_pi.id), method: :patch, class: "btn btn-primary fas fa-dolly", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, remote: true
       - elsif lab.status == t(:labs)[:statuses][:released]
         .row
           %p.mx-4
             .col-8
-              = "#{lab.line_item.sparc_request.protocol.title} | Intended Recipient: #{lab.recipient.last_name}, #{lab.recipient.first_name}"
-              = render 'labs/progress_bar', li: lab.line_item
+              = lab.line_item.sparc_request.protocol.title + " | " + t('labs.fields.intended_recipient', last_name: lab.recipient.last_name, first_name: lab.recipient.first_name)
+              = render 'line_items/progress_bar', li: lab.line_item
             .col-3
               = link_to "", lab_path(lab, type: "retrieve"), method: :patch, class: "btn btn-success fas fa-check-circle", title: t(:labs)[:actions][:retrieve_specimen], data: {toggle: "tooltip"}, remote: true
               = link_to "", lab_path(lab, type: "discard"), method: :patch, class: "btn btn-danger fas fa-trash-alt", title: t(:labs)[:actions][:discard_specimen], data: {toggle: "tooltip"}, remote: true
