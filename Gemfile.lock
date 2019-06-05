@@ -341,7 +341,6 @@ DEPENDENCIES
   rspec-rails
   ruby-oci8
   sassc-rails
-  selenium-webdriver
   simple_hl7
   spring
   spring-watcher-listen (~> 2.0.0)

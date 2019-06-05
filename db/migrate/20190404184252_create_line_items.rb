@@ -41,6 +41,8 @@ class CreateLineItems < ActiveRecord::Migration[5.1]
       remove_column :sparc_requests, :number_of_specimens_requested
       remove_column :sparc_requests, :line_item_id
 
+      SparcRequest.reset_column_information
+
       remove_reference :populations, :sparc_request, index: true, foreign_key: true
     end
   end
