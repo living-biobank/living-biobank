@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
   resources :labs, only: [:index, :update]
 
-  resources :specimen_records, only: [:new, :create]
-
   resources :sparc_requests, except: [:show] do
     member do
       patch :update_status
@@ -16,7 +14,6 @@ Rails.application.routes.draw do
   resource :protocol, only: [:show]
 
   get 'directory/index', to: 'directory#index'
-  get 'labs/update', to: 'labs#update'
 
   root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? request.env['warden'].user.honest_broker? : false } # we have an honest broker
   root to: 'sparc_requests#index', constraints: lambda { |request| request.env['warden'].user } # no honest broker but we are signed in

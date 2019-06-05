@@ -2,17 +2,14 @@ class LabsController < ApplicationController
   before_action :verify_honest_broker
 
   def index
-    @lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
 
-    @labs = Lab.joins(:patient)
+    #NOTE:  search function may be deprecated
+    #@lab_groups = sort_lab_groups(Lab.available.search(params[:term]).includes(patient: :sparc_requests).group_by{ |l| { patient: l.patient, specimen_source: l.specimen_source } })
 
-    # @patients = labs.patient_id
-    # @patients_mrn = @patients.patient.mrn
+    @labs = Lab.joins(:patient).includes(:populations, :line_item)
 
     respond_to do |format|
       format.html
-      format.js
-      format.json
     end
   end
 
@@ -21,18 +18,21 @@ class LabsController < ApplicationController
 
     if params[:type] == "release"
       if @lab.update_attributes(status: "Released", released_at: Time.now, line_item_id: params[:line_item], recipient_id: params[:recipient])
-        redirect_to '/labs'
+        redirect_to action: :index
       end
     elsif params[:type] == "discard"
       if @lab.update_attributes(status: "Discarded", discarded_at: Time.now)
-        redirect_to '/labs'
+        redirect_to action: :index
       end
     elsif params[:type] == "retrieve"
       if @lab.update_attributes(status: "Retrieved", retrieved_at: Time.now)
-        redirect_to '/labs'
+        redirect_to action: :index
       end
     end
 
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

@@ -9,9 +9,15 @@ class Lab < ApplicationRecord
   delegate :mrn, to: :patient
   delegate :sparc_requests, to: :patient
 
-  scope :available, -> {
-    where(removed: false)
+  scope :usable, -> {
+    where(status: [I18n.t(:labs)[:statuses][:available], I18n.t(:labs)[:statuses][:released]]) 
   }
+
+
+  #NOTE:  This code snippet may not be necessary after the rework of the specimens' view search function.
+  # scope :available, -> {
+  #   where(removed: false)
+  # }
 
   scope :search, -> (term) {
     return if term.blank?

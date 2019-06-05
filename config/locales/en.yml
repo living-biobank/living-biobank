@@ -80,6 +80,15 @@ en:
       release: "Release Specimens"
     requests:
       specimens_requested: "%{amount_requested} samples ≥ %{min_sample_size} requested"
+    statuses:
+      available: "Available"
+      released: "Released"
+      retrieved: "Retrieved"
+      discarded: "Discarded"
+    actions:
+      release_specimen: "Release Specimen"
+      retrieve_specimen:  "Retrieve Specimen"
+      discard_specimen:  "Discard Specimen"
   login:
     header: "Login"
     net_id: "NetID"
