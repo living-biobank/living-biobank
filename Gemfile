@@ -6,7 +6,6 @@ gem 'coffee-rails', '~> 4.2'
 gem 'delayed_job_active_record'
 gem 'devise'
 gem 'dotenv-rails'
-gem 'faker'
 gem 'font-awesome-sass'
 gem 'foreman', '~> 0.84.0'
 gem 'haml'
@@ -54,6 +53,5 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'selenium-webdriver'
   gem 'webdrivers', '~> 3.0'
 end
