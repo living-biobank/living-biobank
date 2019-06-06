@@ -16,20 +16,26 @@
     %h5.card-body
       = lab.specimen_source
       - if lab.status == t(:labs)[:statuses][:available]
-        - lab.populations.each do |population|
+        - lab.line_items.each do |line_item|
           .row
-            %p.mx-4
-              - if lab.specimen_source == population.line_item.service_source
-                .col-8
-                  = population.line_item.sparc_request.protocol.title
-                .col-3
-                  = link_to "", lab_path(lab, type: "release", line_item: population.line_item.id, recipient: population.line_item.sparc_request.primary_pi.id), method: :patch, class: "btn btn-primary fas fa-dolly", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, remote: true
+            %p.mx-4    
+              .col-8
+                = line_item.sparc_request.protocol.title
+              .col-3
+                = link_to "", lab_path(lab, type: "release", line_item: line_item.id, recipient: line_item.sparc_request.primary_pi.id), method: :patch, class: "btn btn-primary fas fa-dolly", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, remote: true
+          .row
+            %p.mx-5  
+              .col-6
+                = render 'line_items/progress_bar', li: lab.line_item
+          .row
+            %p.mx-5
+              .col-4
+                = request_duration_display(line_item.sparc_request)
       - elsif lab.status == t(:labs)[:statuses][:released]
         .row
           %p.mx-4
             .col-8
               = lab.line_item.sparc_request.protocol.title + " | " + t('labs.fields.intended_recipient', last_name: lab.recipient.last_name, first_name: lab.recipient.first_name)
-              = render 'line_items/progress_bar', li: lab.line_item
             .col-3
               = link_to "", lab_path(lab, type: "retrieve"), method: :patch, class: "btn btn-success fas fa-check-circle", title: t(:labs)[:actions][:retrieve_specimen], data: {toggle: "tooltip"}, remote: true
               = link_to "", lab_path(lab, type: "discard"), method: :patch, class: "btn btn-danger fas fa-trash-alt", title: t(:labs)[:actions][:discard_specimen], data: {toggle: "tooltip"}, remote: true
