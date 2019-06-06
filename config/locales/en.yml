@@ -165,7 +165,7 @@ en:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"
       service: "<strong>%{service}</strong> - %{source} - %{amount_requested} samples &geq; %{min_sample_size}"
-      progress: "Progress: %{received} / %{total}"
+      progress: "Specimens Collected: %{received} / %{total}"
     draft:
       header: "Draft Requests"
       placeholder: "No Title Specified"
