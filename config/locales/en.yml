@@ -68,10 +68,8 @@ en:
       sort_by: "Sort By"
     fields:
       id: "Lab ID"
-      mrn: "MRN: %{mrn}"
-      dob: "DOB: %{dob}"
-      identifier: "Identifier: %{identifier}"
-      accession_number: "Accession Number: %{accession_number}"
+      header: "Specimen #: %{accession_number} (%{source})"
+      sub_header: "Patient ID: %{id} | MRN: %{mrn} | DOB: %{dob}"
       samples_available: "Potential Samples Available"
       specimen_source: "Specimen Source"
       protocols: "Eligible Requests"
@@ -90,8 +88,8 @@ en:
       discarded: "Discarded"
     actions:
       release_specimen: "Release Specimen"
-      retrieve_specimen:  "Retrieve Specimen"
-      discard_specimen:  "Discard Specimen"
+      retrieve_specimen:  "Specimen Retrieved"
+      discard_specimen:  "Specimen Discarded"
   login:
     header: "Login"
     net_id: "NetID"

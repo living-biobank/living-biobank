@@ -47,7 +47,7 @@ module SparcRequestsHelper
     t('requests.table.service', service: li.service.abbreviation, source: li.service_source, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size).html_safe
   end
 
-  def status_context(sr)
+  def request_status_context(sr)
     klass =
       if sr.completed?
         'badge-success'
@@ -59,7 +59,7 @@ module SparcRequestsHelper
         'badge-warning'
       end
 
-    content_tag(:span, sr.status, class: ['badge request-status p-2', klass])
+    content_tag(:span, sr.status, class: ['badge p-2 mb-sm-0 request-status', klass])
   end
 
   def request_actions(sr)
