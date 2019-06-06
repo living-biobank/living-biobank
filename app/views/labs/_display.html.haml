@@ -5,7 +5,7 @@
         .col-5.h3.font-weight-bold
           = t('labs.fields.accession_number', accession_number: lab.accession_number)
         .col-5.h5{style: "margin-top: 6px;"}
-          = t('labs.fields.mrn', mrn: lab.patient.mrn ) + "  |  " +  t('labs.fields.dob', dob: lab.patient.dob)
+          = t('labs.fields.mrn', mrn: lab.patient.mrn ) + "  |  " +  t('labs.fields.dob', dob: lab.patient.dob) + "  |  " + t('labs.fields.identifier', identifier: lab.patient.identifier)
         .col-2.h4
           - if lab.status == t(:labs)[:statuses][:available]
             .badge.badge-info

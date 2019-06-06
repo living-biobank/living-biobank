@@ -70,6 +70,7 @@ en:
       id: "Lab ID"
       mrn: "MRN: %{mrn}"
       dob: "DOB: %{dob}"
+      identifier: "Identifier: %{identifier}"
       accession_number: "Accession Number: %{accession_number}"
       samples_available: "Potential Samples Available"
       specimen_source: "Specimen Source"
