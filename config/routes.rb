@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
   resources :labs, only: [:index, :update]
 
-  resources :specimen_records, only: [:new, :create]
-
   resources :sparc_requests, except: [:show] do
     member do
       patch :update_status

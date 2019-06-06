@@ -9,4 +9,4 @@
   #verifySpecimensContainer
     = text_field_tag 'verifySpecimens', '', class: 'form-control form-control-lg', placeholder: t(:labs)[:search][:placeholder], autofocus: true
     = icon('fas fa-2x', 'search')
-  = render 'labs/table', lab_groups: @lab_groups
+  = render 'labs/display', labs: @labs
