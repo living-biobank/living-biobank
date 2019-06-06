@@ -197,7 +197,7 @@ form {
 
 .progress {
   position: relative;
-  background: theme-color-level('light', 2);
+  background: theme-color-level('light', 4);
   color: white;
 
   .progress-bar {
@@ -220,5 +220,9 @@ form {
 .card {
   .card-header, .card-body, .card-footer {
     padding: 0.75rem;
+  }
+
+  .card-header, .card-footer {
+    background: white;
   }
 }

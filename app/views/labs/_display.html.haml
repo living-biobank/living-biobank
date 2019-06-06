@@ -1,0 +1,49 @@
+- labs.usable.order(status: :desc).each do |lab|
+  .card
+    .card-header
+      .row
+        %h3.d-flex.w-100.font-weight-bold.m-0
+          .col-10
+            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.specimen_source)
+            %br
+            %small.text-muted
+              = t('labs.fields.sub_header', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
+          .col-2.text-right
+            = lab_status_context(lab)
+    .card-body
+      - if lab.available?
+        - lab.line_items.each do |line_item|
+          .row.mb-3
+            .col-10
+              %h5.font-weight-bold.mb-0
+                = line_item.sparc_request.protocol.title
+              .d-flex.pl-3
+                %p.d-flex.align-items-center.mb-0<
+                  = primary_pi_display(lab.line_item.sparc_request)
+                %p.d-flex.align-items-center.mb-0.ml-2<
+                  = request_duration_display(lab.line_item.sparc_request)
+              .d-flex.pl-3
+                %p.mb-0.service-display<
+                  = icon('fas', 'flask mr-2')
+                  = raw "#{lab.line_item.number_of_specimens_requested} Samples &geq; #{lab.line_item.minimum_sample_size}"
+            .col-2.text-right
+              = link_to lab_path(lab, type: "release", line_item: line_item.id, recipient: line_item.sparc_request.primary_pi.id), remote: true, class: "btn btn-primary", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"} do
+                = icon('fas', 'dolly')
+            .col-12
+              .pl-3
+                = render 'line_items/progress_bar', li: lab.line_item
+      - elsif lab.status == t(:labs)[:statuses][:released]
+        .row
+          .col-10
+            %h5.font-weight-bold.mb-0
+              = lab.line_item.sparc_request.title
+            .d-flex
+              %p.d-flex.align-items-center.mb-0<
+                = primary_pi_display(lab.line_item.sparc_request)
+              %p.d-flex.align-items-center.mb-0.ml-2<
+                = request_duration_display(lab.line_item.sparc_request)
+          .col-2.text-right
+            = link_to lab_path(lab, type: "retrieve"), remote: true, class: "btn btn-success mr-1", title: t(:labs)[:actions][:retrieve_specimen], data: {toggle: "tooltip"} do
+              = icon('fas', 'check-circle')
+            = link_to lab_path(lab, type: "discard"), remote: true, class: "btn btn-danger", title: t(:labs)[:actions][:discard_specimen], data: {toggle: "tooltip"} do
+              = icon('fas', 'trash-alt')
