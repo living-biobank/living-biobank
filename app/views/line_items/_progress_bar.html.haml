@@ -1,5 +1,5 @@
 .request-progress
   .progress
-    .progress-bar.bg-success{ role: 'progressbar', style: "width:#{li.percent_progress}%;", aria: { valuenow: li.specimen_records.count, valuemin: 0, valuemax: li.number_of_specimens_requested } }
+    .progress-bar.bg-success{ role: 'progressbar', style: "width:#{li.percent_progress}%;", aria: { valuenow: li.lab_count, valuemin: 0, valuemax: li.number_of_specimens_requested } }
     %span.progress-text
-      = t('requests.table.progress', received: li.specimen_records.count, total: li.number_of_specimens_requested)
+      = t('requests.table.progress', received: li.lab_count, total: li.number_of_specimens_requested)
