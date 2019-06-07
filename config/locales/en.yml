@@ -81,6 +81,16 @@ en:
       release: "Release Specimens"
     requests:
       specimens_requested: "%{amount_requested} samples ≥ %{min_sample_size} requested"
+    sources:
+      blood:
+        simple: "Blood"
+        epic: "WHOLE BLOOD-VENOUS"
+      nasal_swab:
+        simple: "Nasal Swab"
+        epic: "MRSA SURVEILLANCE CULTURE"
+      perianal_swab:
+        simple: "Perianal Swab"
+        epic: "VRE SURVEILLANCE CULTURE"
     statuses:
       available: "Available"
       released: "Released"
