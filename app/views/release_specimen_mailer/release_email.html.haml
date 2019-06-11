@@ -1,0 +1,6 @@
+%p
+  = t(:mailers)[:release_specimen_mailer][:release_email][:intro].html_safe
+%p
+  = t('mailers.release_specimen_mailer.release_email.text', study: @study).html_safe
+%p
+  = t(:mailers)[:release_specimen_mailer][:release_email][:closing].html_safe

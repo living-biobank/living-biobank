@@ -14,6 +14,9 @@ class LabsController < ApplicationController
 
     if params[:type] == "release"
       if @lab.update_attributes(status: I18n.t(:labs)[:statuses][:released], released_at: Time.now, line_item_id: params[:line_item], recipient_id: params[:recipient])
+        @primary_pi = SPARC::Identity.find(params[:recipient])
+        ReleaseSpecimenMailer.release_email(@primary_pi, params[:study]).deliver_now
+
         redirect_to action: :index
       end
     elsif params[:type] == "discard"
