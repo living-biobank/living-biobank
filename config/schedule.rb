@@ -21,5 +21,7 @@
 
 
 every :weekday, at: '7am' do
-	rake 'email_tasks:daily_specimen_check'
+	if Lab.where(status: (I18n.t(:labs)[:statuses][:available])).any?
+		rake 'email_tasks:daily_specimen_check'
+	end
 end

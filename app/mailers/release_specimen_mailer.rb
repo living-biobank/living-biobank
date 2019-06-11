@@ -3,8 +3,9 @@ class ReleaseSpecimenMailer < ApplicationMailer
 
   default from: ENV.fetch('NO_REPLY_EMAIL')
 
-  def release_email(primary_pi, study)
-    @study = study
+  def release_email(primary_pi, request)
+    @study = request.protocol.title
+    @study_type = request.protocol.type
     mail(to: primary_pi.email, subject: t(:mailers)[:release_specimen_mailer][:release_email][:subject])
   end
 end

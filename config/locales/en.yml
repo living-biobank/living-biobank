@@ -216,6 +216,6 @@ en:
       release_email:
         subject: "Specimen Pickup for You"
         intro: "Dear Investigator, "
-        text:  "The specimen you have requested for the study <em>%{study}</em> is ready for pick-up.  Your sample will be available for pick up on the 7th floor of the Basic Science Building in the Hollings Cancer Center Biorepository between the hours of 9AM and 5PM.  Your sample will be discarded by noon the following day should you fail to retrieve it.  Please email Dr. Ivey directly at <a href='mailto:turnerbp@musc.edu'>turnerbp@musc.edu</a> if you have any questions. <p> Thank you, "
+        text:  "A specimen you requested for the %{type} <em>%{study}</em> is ready for pick-up.  Your sample will be available for pick up on the 7th floor of the Basic Science Building in the Hollings Cancer Center Biorepository between the hours of 9AM and 5PM.  Your sample will be discarded by noon the following day should you fail to retrieve it.  Please email Dr. Ivey directly at <a href='mailto:turnerbp@musc.edu'>turnerbp@musc.edu</a> if you have any questions. <p> Thank you, "
         closing: "Brittany Ivey, Ph.D. <p> Operations Manager <br /> Biorepository & Tissue Analysis Shared Resource <br /> Medical University of South Carolina"
 

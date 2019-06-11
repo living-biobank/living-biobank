@@ -27,7 +27,7 @@
                   = icon('fas', 'flask mr-2')
                   = raw "#{lab.line_item.number_of_specimens_requested} Samples &geq; #{lab.line_item.minimum_sample_size}"
             .col-2.text-right
-              = link_to lab_path(lab, type: "release", line_item: line_item.id, recipient: line_item.sparc_request.primary_pi.id, study: lab.line_item.sparc_request.protocol.title), remote: true, class: "btn btn-primary", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, method: :patch do
+              = link_to lab_path(lab, type: "release", line_item_id: line_item), remote: true, class: "btn btn-primary", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, method: :patch do
                 = icon('fas', 'dolly')
             .col-12
               .pl-3
@@ -36,7 +36,7 @@
         .row
           .col-10
             %h5.font-weight-bold.mb-0
-              = lab.line_item.sparc_request.title
+              = lab.line_item.sparc_request.protocol.title
             .d-flex.pl-3
               %p.d-flex.align-items-center.mb-0<
                 = primary_pi_display(lab.line_item.sparc_request)
