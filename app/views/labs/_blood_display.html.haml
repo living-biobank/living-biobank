@@ -1,3 +1,5 @@
+%h3
+  = "Blood Display"
 - labs.usable.order(status: :desc).each do |lab|
   .card
     .card-header
@@ -7,7 +9,7 @@
             = t('labs.fields.header', accession_number: lab.accession_number, source: lab.specimen_source)
             %br
             %small.text-muted
-              = t('labs.fields.sub_header', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
+              = t('labs.fields.blood_sub_header', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
           .col-2.text-right
             = lab_status_context(lab)
     .card-body

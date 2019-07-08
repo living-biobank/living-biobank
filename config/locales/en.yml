@@ -69,7 +69,8 @@ en:
     fields:
       id: "Lab ID"
       header: "Specimen #: %{accession_number} (%{source})"
-      sub_header: "Patient ID: %{id} | MRN: %{mrn} | DOB: %{dob}"
+      blood_sub_header: "Patient ID: %{id} | MRN: %{mrn} | DOB: %{dob}"
+      microbiome_sub_header: "Patient ID: %{id} | MRN: %{mrn} | Name: %{lastname}, %{firstname} | DOB: %{dob}"
       samples_available: "Potential Samples Available"
       specimen_source: "Specimen Source"
       protocols: "Eligible Requests"
