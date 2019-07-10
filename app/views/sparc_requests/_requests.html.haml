@@ -1,0 +1,37 @@
+#requests
+  - if requests.any?
+    - requests.each do |request|
+      .card
+        .card-header
+          .row
+            .col-12.col-sm-10
+              %h3.d-flex.w-100.font-weight-bold.mb-1
+                = request_title_display(request)
+                .d-none.d-sm-block
+                  = request_status_context(request)
+              %h4.mb-0
+                %small.d-flex.d-sm-block.text-muted<
+                  = requester_display(request)
+                  %span.ml-2<
+                    = request_duration_display(request)
+            .col-12.col-sm-2.d-flex.align-items-start.justify-content-between.justify-content-sm-end
+              %h3.d-block.d-sm-none.mb-0
+                = request_status_context(request)
+              = request_actions(request)
+        .card-body
+          - request.line_items.each do |li|
+            .row.service
+              .col-sm-5.col-12.mb-sm-2
+                %h5.d-flex.flex-column.mb-0<
+                  .mb-1
+                    = service_display(li)
+                  %small.text-muted<
+                    = query_display(li)
+              .col-sm-7.col-12
+                - unless request.cancelled?
+                  = render 'line_items/progress_bar', li: li
+  - else
+    .card
+      .card-body
+        %p.text-center.mb-0
+          = t(:constants)[:no_records]

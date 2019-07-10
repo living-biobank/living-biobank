@@ -2,13 +2,14 @@
   .card
     .card-header
       .row
-        %h3.d-flex.w-100.font-weight-bold.m-0
-          .col-10
-            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.specimen_source)
-            %br
+        .col-12.col-sm-10
+          %h3.d-flex.w-100.font-weight-bold.mb-1
+            = t('labs.fields.header', accession_number: lab.accession_number, source: Lab::SOURCES[lab.specimen_source])
+          %h4.mb-0
             %small.text-muted
               = t('labs.fields.sub_header', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
-          .col-2.text-right
+        .col-2.text-right
+          %h3.mb-0
             = lab_status_context(lab)
     .card-body
       - if lab.available?
@@ -16,12 +17,10 @@
           .row.mb-3
             .col-10
               %h5.font-weight-bold.mb-0
-                = line_item.sparc_request.protocol.title
+                = request_title_display(line_item.sparc_request)
               .d-flex.pl-3
-                %p.d-flex.align-items-center.mb-0<
-                  = primary_pi_display(line_item.sparc_request)
-                %p.d-flex.align-items-center.mb-0.ml-2<
-                  = request_duration_display(line_item.sparc_request)
+                = primary_pi_display(line_item.sparc_request)
+                = request_duration_display(line_item.sparc_request)
               .d-flex.pl-3
                 %p.mb-0.service-display<
                   = icon('fas', 'flask mr-2')
@@ -36,12 +35,10 @@
         .row
           .col-10
             %h5.font-weight-bold.mb-0
-              = lab.line_item.sparc_request.protocol.title
+              = request_title_display(lab.line_item.sparc_request)
             .d-flex.pl-3
-              %p.d-flex.align-items-center.mb-0<
-                = primary_pi_display(lab.line_item.sparc_request)
-              %p.d-flex.align-items-center.mb-0.ml-2<
-                = request_duration_display(lab.line_item.sparc_request)
+              = primary_pi_display(lab.line_item.sparc_request)
+              = request_duration_display(lab.line_item.sparc_request)
           .col-2.text-right
             = link_to lab_path(lab, type: "retrieve"), remote: true, class: "btn btn-success mr-1", title: t(:labs)[:actions][:retrieve_specimen], data: {toggle: "tooltip"}, method: :patch do
               = icon('fas', 'check-circle')

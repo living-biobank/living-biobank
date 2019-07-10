@@ -1,5 +1,5 @@
 class Lab < ApplicationRecord
-  SOURCES = I18n.t(:labs)[:sources].map{ |_, source| [source[:simple], source[:epic]] }.to_h
+  SOURCES = I18n.t(:labs)[:sources].map{ |_, source| [source[:epic], source[:simple]] }.to_h
 
   belongs_to :patient
   belongs_to :line_item, optional: true #This association is for releasing a speciment to a line item

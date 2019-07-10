@@ -25,7 +25,7 @@ $(".nested_sparc_request_line_items:visible:nth(<%= index %>) [name*='[<%= attr.
 <% end %>
 
 <% else %>
-$('#requests').replaceWith("<%= j render 'sparc_requests/table', requests: @requests %>")
+$('#requests').replaceWith("<%= j render 'sparc_requests/requests', requests: @requests %>")
 $('#draftRequests').replaceWith("<%= j render 'sparc_requests/draft_requests', draft_requests: @draft_requests %>")
 initializeSelectpickers()
 $('#modalContainer').modal('hide')

@@ -85,7 +85,7 @@
                   = ff_li.select :service_id, options_from_collection_for_select(SPARC::Service.where(id: ENV.fetch('SERVICE_ID').split(',')), 'id', 'name', ff_li.object.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
                 .form-group.col
                   = ff_li.label :service_source, class: 'required'
-                  = ff_li.select :service_source, options_for_select(Lab::SOURCES, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+                  = ff_li.select :service_source, options_for_select(Lab::SOURCES.invert, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
                 .form-group.col
                   = ff_li.label :query_name, class: 'required'
                   = ff_li.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order(create_date: :desc), 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
