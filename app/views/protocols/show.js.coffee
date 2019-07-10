@@ -31,6 +31,7 @@ $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').v
 $('#primary_pi_search').typeahead('destroy')
 <% else %>
 resetProtocolFields()
+initializePrimaryPITypeahead()
 $('#sparc_request_protocol_attributes_research_master_id').after("<span class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</span>")
 <% end %>
 <% if @rmid_record %>
