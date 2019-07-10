@@ -76,6 +76,7 @@ en:
       protocols: "Eligible Requests"
       release: "Release"
       intended_recipient: "Intended Recipient: %{last_name}, %{first_name}"
+      samples_needed:  "%{requested_number} Samples &geq; %{requested_size}"
     form:
       title: "Release Specimens"
     tooltips:
