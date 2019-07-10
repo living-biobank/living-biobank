@@ -76,7 +76,7 @@ RSpec.describe 'User begins a new request', js: true do
         start_new_request
 
         find('#sparc_request_protocol_attributes_research_master_id').send_keys('1')
-        expect(page).to have_content(I18n.t(:protocols)[:rmid][:errors][:not_found], wait: 5)
+        expect(page).to have_content(I18n.t(:requests)[:form][:subtext][:rmid_not_found], wait: 5)
       end
     end
   end
