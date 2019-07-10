@@ -23,7 +23,8 @@ class SparcRequest < ApplicationRecord
     where.not(status: I18n.t(:requests)[:statuses][:draft]).
       search(term).
       with_status(status).
-      ordered_by(sort_by, sort_order)
+      ordered_by(sort_by, sort_order).
+      distinct
   }
 
   scope :search, -> (term) {
@@ -60,7 +61,7 @@ class SparcRequest < ApplicationRecord
       joins(:protocol, line_items: :service).where(SPARC::Service.arel_table[:name].matches("%#{term}%"))
     ).or(
       joins(:protocol, line_items: :service).where(SPARC::Service.arel_table[:abbreviation].matches("%#{term}%"))
-    ).distinct
+    )
   }
 
   scope :by_date, -> (date) {

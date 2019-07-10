@@ -17,10 +17,6 @@ html {
     main#content {
       background: theme-color('light');
       padding-top: 1.5rem;
-
-      &> *:nth-child(n+3) {
-        margin-top: 1.5rem;
-      }
     }
   }
 }
@@ -60,9 +56,6 @@ a, .btn-link {
   main {
     .card {
       .card-body {
-        padding-left: 0;
-        padding-right: 0;
-
         .card-title {
           text-align: center;
         }
