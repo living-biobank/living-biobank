@@ -25,7 +25,7 @@
               .d-flex.pl-3
                 %p.mb-0.service-display<
                   = icon('fas', 'flask mr-2')
-                  = t('labs.fields.samples_needed', requested_number: lab.line_item.number_of_specimens_requested, requested_size: lab.line_item.minimum_sample_size).html_safe
+                  = t('labs.fields.samples_needed', requested_number: line_item.number_of_specimens_requested, requested_size: line_item.minimum_sample_size).html_safe
             .col-2.text-right
               = link_to lab_path(lab, type: "release", line_item_id: line_item), remote: true, class: "btn btn-primary", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, method: :patch do
                 = icon('fas', 'dolly')
