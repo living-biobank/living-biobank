@@ -64,7 +64,7 @@ $ ->
   $(document).on 'fields_removed.nested_form_fields', (event, param) ->
     $('.tooltip').tooltip('hide')
 
-resetProtocolFields = () ->
+(exports ? this).resetProtocolFields = () ->
   $("[id^='sparc_request_'], [id=primary_pi_search]").removeClass('is-valid is-invalid')
   $('.form-error, .form-alert').remove()
   $('#sparc_request_protocol_id').remove()
@@ -77,6 +77,8 @@ resetProtocolFields = () ->
   $('#sparc_request_protocol_attributes_funding_status').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
   $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
   $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
+  $('#fundingSource').removeClass('d-none')
+  $('#potentialFundingSource').addClass('d-none')
   $('#sparc_request_protocol_attributes_start_date').datepicker('update', '').prop('readonly', false)
   $('#sparc_request_protocol_attributes_end_date').datepicker('update', '').prop('readonly', false)
   $('#primary_pi_search').val('').prop('readonly', false)

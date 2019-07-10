@@ -50,12 +50,12 @@
                 .form-group.col-6.col-lg-3
                   = ff_p.label :funding_status, class: 'required'
                   = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
-                .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.funded? ? 'd-none' : '' }
-                  = ff_p.label :potential_funding_source, class: 'required'
-                  = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
-                .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? ? '' : 'd-none' }
+                .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? || ff_p.object.new_record? ? '' : 'd-none' }
                   = ff_p.label :funding_source, class: 'required'
                   = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
+                .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.pending_funding? ? '' : 'd-none' }
+                  = ff_p.label :potential_funding_source, class: 'required'
+                  = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
                 .form-group.col-6
                   = ff_p.label :start_date, class: 'required'
                   .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
