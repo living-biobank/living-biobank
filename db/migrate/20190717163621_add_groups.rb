@@ -6,6 +6,8 @@ class AddGroups < ActiveRecord::Migration[5.1]
       t.timestamps
     end
 
+    add_index :groups, :name, unique: true
+
     add_reference :users, :honest_broker, index: true, after: :net_id
     add_foreign_key :users, :groups, column: :honest_broker_id
 

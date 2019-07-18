@@ -5,5 +5,7 @@ class AddServices < ActiveRecord::Migration[5.1]
       t.integer     :sparc_id
       t.timestamps
     end
+
+    add_index :services, [:group_id, :sparc_id], unique: true
   end
 end

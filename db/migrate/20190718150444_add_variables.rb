@@ -5,5 +5,7 @@ class AddVariables < ActiveRecord::Migration[5.1]
       t.string      :name
       t.timestamps
     end
+
+    add_index :variables, [:group_id, :name], unique: true
   end
 end

@@ -6,5 +6,7 @@ class AddSources < ActiveRecord::Migration[5.1]
       t.string      :value
       t.timestamps
     end
+
+    add_index :sources, [:group_id, :key], unique: true
   end
 end

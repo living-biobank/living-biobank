@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20190718150444) do
     t.boolean "process_specimen_retrieval"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_groups_on_name", unique: true
   end
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -97,14 +98,18 @@ ActiveRecord::Schema.define(version: 20190718150444) do
     t.integer "sparc_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id", "sparc_id"], name: "index_services_on_group_id_and_sparc_id", unique: true
     t.index ["group_id"], name: "index_services_on_group_id"
   end
 
   create_table "sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "group_id"
     t.string "key"
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id", "key"], name: "index_sources_on_group_id_and_key", unique: true
+    t.index ["group_id"], name: "index_sources_on_group_id"
   end
 
   create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -142,6 +147,7 @@ ActiveRecord::Schema.define(version: 20190718150444) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id", "name"], name: "index_variables_on_group_id_and_name", unique: true
     t.index ["group_id"], name: "index_variables_on_group_id"
   end
 
