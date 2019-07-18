@@ -19,12 +19,27 @@ module SparcRequestsHelper
     )
   end
 
+  def request_title_display(sr)
+    # Bootstrap 4 Popover's fallbackPlacement attribute is broken
+    # so we need to use a second element to change the positioning
+    # of popovers on XS screens
+    raw(
+      sr.identifier.truncate(60) +
+      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-none d-md-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'click hover', content: render('sparc_requests/details_popover', request: sr) }) +
+      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-inline-block d-md-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click hover', content: render('sparc_requests/details_popover', request: sr) })
+    )
+  end
+
   def primary_pi_display(sr)
-    icon('fas', 'user mr-2') + sr.primary_pi.display_name
+    content_tag :span do
+      icon('fas', 'user mr-2') + t('requests.table.primary_pi', name: sr.primary_pi.display_name)
+    end
   end
 
   def requester_display(sr)
-    raw t('requests.table.requester', name: sr.user.display_name)
+    content_tag :span do
+      icon('fas', 'user mr-2') + t('requests.table.requester', name: sr.user.display_name)
+    end
   end
 
   def request_duration_display(sr)
@@ -44,7 +59,15 @@ module SparcRequestsHelper
   end
 
   def service_display(li)
-    t('requests.table.service', service: li.service.abbreviation, source: li.service_source, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size).html_safe
+    content_tag :span do
+      icon('fas', 'flask mr-2') + t('requests.table.line_item', source: Lab::SOURCES[li.service_source], amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size).html_safe
+    end
+  end
+
+  def query_display(li)
+    content_tag :span do
+      icon('fas', 'database mr-2') + li.query_name.truncate(50)
+    end
   end
 
   def request_status_context(sr)
@@ -59,16 +82,18 @@ module SparcRequestsHelper
         'badge-warning'
       end
 
-    content_tag(:span, sr.status, class: ['badge p-2 mb-sm-0 request-status', klass])
+    content_tag(:span, sr.status, class: ['badge p-2 ml-sm-2 mb-sm-0 request-status', klass])
   end
 
   def request_actions(sr)
-    raw([
-      complete_request_button(sr),
-      finalize_request_button(sr),
-      edit_request_button(sr),
-      cancel_request_button(sr)
-    ].join(''))
+    content_tag :div do
+      raw([
+        complete_request_button(sr),
+        finalize_request_button(sr),
+        edit_request_button(sr),
+        cancel_request_button(sr)
+      ].join(''))
+    end
   end
 
   def complete_request_button(sr)

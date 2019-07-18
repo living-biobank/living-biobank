@@ -11,6 +11,8 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :line_items, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
+  after_save :update_sparc_records
+
   scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
 
   scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
@@ -23,7 +25,8 @@ class SparcRequest < ApplicationRecord
     where.not(status: I18n.t(:requests)[:statuses][:draft]).
       search(term).
       with_status(status).
-      ordered_by(sort_by, sort_order)
+      ordered_by(sort_by, sort_order).
+      distinct
   }
 
   scope :search, -> (term) {
@@ -60,7 +63,7 @@ class SparcRequest < ApplicationRecord
       joins(:protocol, line_items: :service).where(SPARC::Service.arel_table[:name].matches("%#{term}%"))
     ).or(
       joins(:protocol, line_items: :service).where(SPARC::Service.arel_table[:abbreviation].matches("%#{term}%"))
-    ).distinct
+    )
   }
 
   scope :by_date, -> (date) {
@@ -107,8 +110,6 @@ class SparcRequest < ApplicationRecord
     end
   }
 
-  after_save :update_sparc_records, unless: Proc.new{ |request| request.draft? }
-
   def completed?
     self.status == I18n.t(:requests)[:statuses][:completed]
   end
@@ -135,24 +136,26 @@ class SparcRequest < ApplicationRecord
     sr        = self.protocol.service_requests.first_or_create
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
-    self.line_items.includes(:service).each do |line_item|
-      service = line_item.service
+    unless self.draft?
+      self.line_items.includes(:service).each do |line_item|
+        service = line_item.service
 
-      unless ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).first
-        ssr = sr.sub_service_requests.create(
-          protocol:           self.protocol,
-          organization:       service.process_ssrs_organization,
-          service_requester:  requester
+        unless ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).first
+          ssr = sr.sub_service_requests.create(
+            protocol:           self.protocol,
+            organization:       service.process_ssrs_organization,
+            service_requester:  requester
+          )
+        end
+
+        sparc_li = ssr.line_items.first_or_create(
+          service_request:  sr,
+          service:          service,
+          optional:         true
         )
+
+        line_item.update_attribute(:sparc_id, sparc_li.id)
       end
-
-      sparc_li = ssr.line_items.first_or_create(
-        service_request:  sr,
-        service:          service,
-        optional:         true
-      )
-
-      line_item.update_attribute(:sparc_id, sparc_li.id)
     end
   end
 end

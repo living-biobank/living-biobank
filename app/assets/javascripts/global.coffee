@@ -72,6 +72,11 @@ $ ->
       url: $container.data('url')
       data: data
 
+  $(document).on 'mouseup', (e) ->
+    target = $(e.target)
+    if target[0].className.indexOf('popover') == -1 && (target.data('toggle') != 'popover' || (target.data('toggle') == 'popover' && target.data('trigger').indexOf('click') == -1))
+      $('.popover').popover('hide')
+
 (exports ? this).fixNavbarPlacement = () ->
   if $('html').width() > 1199
     $('#content').css('margin-top', $('header').outerHeight())

@@ -65,6 +65,10 @@ module SPARC
       self.funding_status == 'funded'
     end
 
+    def pending_funding?
+      self.funding_status == 'pending_funding'
+    end
+
     private
 
     def default_values

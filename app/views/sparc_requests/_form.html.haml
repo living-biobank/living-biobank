@@ -50,12 +50,12 @@
                 .form-group.col-6.col-lg-3
                   = ff_p.label :funding_status, class: 'required'
                   = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
-                .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.funded? ? 'd-none' : '' }
-                  = ff_p.label :potential_funding_source, class: 'required'
-                  = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
-                .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? ? '' : 'd-none' }
+                .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? || ff_p.object.new_record? ? '' : 'd-none' }
                   = ff_p.label :funding_source, class: 'required'
                   = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
+                .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.pending_funding? ? '' : 'd-none' }
+                  = ff_p.label :potential_funding_source, class: 'required'
+                  = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
                 .form-group.col-6
                   = ff_p.label :start_date, class: 'required'
                   .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
@@ -85,7 +85,7 @@
                   = ff_li.select :service_id, options_from_collection_for_select(SPARC::Service.where(id: ENV.fetch('SERVICE_ID').split(',')), 'id', 'name', ff_li.object.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
                 .form-group.col
                   = ff_li.label :service_source, class: 'required'
-                  = ff_li.select :service_source, options_for_select(Lab::SOURCES, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+                  = ff_li.select :service_source, options_for_select(Lab::SOURCES.invert, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
                 .form-group.col
                   = ff_li.label :query_name, class: 'required'
                   = ff_li.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order(create_date: :desc), 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }

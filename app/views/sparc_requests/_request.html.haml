@@ -1,12 +1,15 @@
 .request-container
   .request-header.d-sm-flex.d-none.align-items-start.w-100.border-bottom.pb-2.mb-2
     .col-10.pl-0
-      %h3.d-flex.align-items-center.mb-0.font-weight-bold
+      %h3.d-flex.mb-0.font-weight-bold
         %span.mr-2
           = request.identifier.truncate(60)
+        .d-flex.w-100.p-0
+          %p.d-flex.align-items-center.mb-0<
+            = primary_pi_display(request)
+          %p.d-flex.align-items-center.mb-0.ml-2<
+            = request_duration_display(request)
         = request_status_context(request)
-    .col-2.pr-0.text-right
-      = request_actions(request)
   .request-header.d-sm-none.d-flex.w-100.border-bottom.pb-2.mb-2
     .col-8.pl-0
       %h3.m-0
@@ -17,15 +20,11 @@
       .w-100.d-flex.justify-content-between
         = request_actions(request)
   .request-body.w-100.d-flex.flex-wrap
-    .request-details.w-100.d-flex.mb-2
-      .col-6.p-0
-        %p.d-flex.align-items-center.mb-0<
-          = primary_pi_display(request)
-        %p.d-flex.align-items-center.mb-0<
-          = request_duration_display(request)
-      .col-6.p-0
-        %p.text-right.mb-0<
-          = requester_display(request)
+    .request-details.w-100.d-flex.flex-wrap.mb-2
+      .col-2.pr-0.text-right
+        = request_actions(request)
+      %p.text-right.mb-0<
+        = requester_display(request)
     .requested-service-information.w-100
       - request.line_items.each do |li|
         .service.d-flex.flex-wrap.w-100

@@ -172,11 +172,12 @@ en:
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
     table:
+      primary_pi: "Primary PI: %{name}"
       requester: "Requested by %{name}"
       duration:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"
-      service: "<strong>%{service}</strong> - %{source} - %{amount_requested} samples &geq; %{min_sample_size}"
+      line_item: "%{source} - %{amount_requested} samples &geq; %{min_sample_size}"
       progress: "Specimens Collected: %{received} / %{total}"
     draft:
       header: "Draft Requests"

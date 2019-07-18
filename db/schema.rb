@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20190708144647) do
+=======
+ActiveRecord::Schema.define(version: 20190718150444) do
+>>>>>>> master
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -25,6 +29,14 @@ ActiveRecord::Schema.define(version: 20190708144647) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.boolean "process_specimen_retrieval"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_groups_on_name", unique: true
   end
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -85,6 +97,25 @@ ActiveRecord::Schema.define(version: 20190708144647) do
     t.index ["patient_id"], name: "index_populations_on_patient_id"
   end
 
+  create_table "services", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "group_id"
+    t.integer "sparc_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "sparc_id"], name: "index_services_on_group_id_and_sparc_id", unique: true
+    t.index ["group_id"], name: "index_services_on_group_id"
+  end
+
+  create_table "sources", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "group_id"
+    t.string "key"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "key"], name: "index_sources_on_group_id_and_key", unique: true
+    t.index ["group_id"], name: "index_sources_on_group_id"
+  end
+
   create_table "sparc_requests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
     t.string "status", default: "New"
@@ -98,7 +129,11 @@ ActiveRecord::Schema.define(version: 20190708144647) do
     t.string "last_name"
     t.string "email", default: "", null: false
     t.string "net_id"
+<<<<<<< HEAD
     t.bigint "honest_broker", default: 0
+=======
+    t.bigint "honest_broker_id"
+>>>>>>> master
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -111,11 +146,23 @@ ActiveRecord::Schema.define(version: 20190708144647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["honest_broker_id"], name: "index_users_on_honest_broker_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "variables", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "group_id"
+    t.integer "service_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id", "name"], name: "index_variables_on_group_id_and_name", unique: true
+    t.index ["group_id"], name: "index_variables_on_group_id"
   end
 
   add_foreign_key "labs", "line_items"
   add_foreign_key "labs", "patients"
   add_foreign_key "populations", "line_items"
   add_foreign_key "populations", "patients"
+  add_foreign_key "users", "groups", column: "honest_broker_id"
 end
