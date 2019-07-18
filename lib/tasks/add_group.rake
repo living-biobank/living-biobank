@@ -19,9 +19,13 @@ namespace :data do
       process_specimens_valid     = false
       while !process_specimens_valid
         print "Should #{group_name} track whether specimens have been retrieved or discarded? [y/n]: "
-        process_specimen_retrieval = STDIN.gets.chomp.downcase.strip
+        process_specimen_retrieval_input = STDIN.gets.chomp.downcase.strip
 
-        if ['y', 'yes', 'n', 'no'].include?(process_specimen_retrieval)
+        if ['y', 'yes'].include?(process_specimen_retrieval_input)
+          process_specimens_retrieval = true
+          process_specimens_valid = true
+        elsif ['n', 'no'].include?(process_specimen_retrieval_input)
+          process_specimens_retrieval = false
           process_specimens_valid = true
         else
           puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
