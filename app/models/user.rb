@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  belongs_to :group, class_name: "Group", foreign_key: :honest_broker_id, optional: true
+
   has_many :sparc_requests
 
   # Include default devise modules. Others available are:
