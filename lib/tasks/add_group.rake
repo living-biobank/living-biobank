@@ -49,7 +49,24 @@ namespace :data do
         end
       end
 
-      group = Group.create(name: group_name, process_specimen_retrieval: process_specimen_retrieval, process_sample_size: process_sample_size)
+      display_patient_information  = nil
+      display_patient_valid     = false
+      while !display_patient_valid
+        print "Should #{group_name} display patient information (eg. name)? [y/n]: "
+        display_patient_information_input = STDIN.gets.chomp.downcase.strip
+
+        if ['y', 'yes'].include?(display_patient_information_input)
+          display_patient_valid  = true
+          display_patient_information = true
+        elsif ['n', 'no'].include?(process_sample_size_input)
+          display_patient_valid  = true
+          display_patient_information = false
+        else
+          puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
+        end
+      end
+
+      group = Group.create(name: group_name, process_specimen_retrieval: process_specimen_retrieval, process_sample_size: process_sample_size, display_patient_information: display_patient_information)
 
       puts "\nNow you will be asked to enter Specimen Sources that will be handled by #{group_name}."
       sources_done = false

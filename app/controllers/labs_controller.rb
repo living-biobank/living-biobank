@@ -3,8 +3,8 @@ class LabsController < ApplicationController
 
   def index
     @labs = Lab.where(specimen_source: current_user.honest_broker.sources.pluck(:key)).includes(:patient, :populations, :line_item)
-    
-    @size_matters = current_user.honest_broker.process_sample_size
+
+    @group_options = current_user.honest_broker
 
     respond_to do |format|
       format.html
