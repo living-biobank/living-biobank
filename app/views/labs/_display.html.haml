@@ -1,15 +1,17 @@
-- labs.usable.order(status: :desc).each do |lab|
+- labs.usable.retrievable(current_user).order(status: :desc).each do |lab|
   .card
     .card-header
       .row
-        .col-12.col-sm-10
-          %h3.d-flex.w-100.font-weight-bold.mb-1
-            = t('labs.fields.header', accession_number: lab.accession_number, source: Lab::SOURCES[lab.specimen_source])
-          %h4.mb-0
+        %h3.d-flex.w-100.font-weight-bold.m-0
+          .col-10
+            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.specimen_source)
+            %br
             %small.text-muted
-              = t('labs.fields.sub_header', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
-        .col-2.text-right
-          %h3.mb-0
+              - if group_options.display_patient_information
+                = t('labs.fields.sub_header_with_patient_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
+              - else
+                = t('labs.fields.sub_header_without_patient_name', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
+          .col-2.text-right
             = lab_status_context(lab)
     .card-body
       - if lab.available?
@@ -19,25 +21,25 @@
               %h5.font-weight-bold.mb-0
                 = request_title_display(line_item.sparc_request)
               .d-flex.pl-3
-                = primary_pi_display(line_item.sparc_request)
-                = request_duration_display(line_item.sparc_request)
-              .d-flex.pl-3
-                %p.mb-0.service-display<
-                  = icon('fas', 'flask mr-2')
-                  = raw "#{line_item.number_of_specimens_requested} Samples &geq; #{line_item.minimum_sample_size}"
+                %p.d-flex.align-items-center.mb-0.ml-2
+                  = request_duration_display(line_item.sparc_request)
+              - if group_options.process_sample_size
+                .d-flex.pl-3
+                  %p.mb-0.service-display<
+                    = icon('fas', 'flask mr-2')
+                    = t('labs.fields.samples_needed', requested_number: line_item.number_of_specimens_requested, requested_size: line_item.minimum_sample_size).html_safe
             .col-2.text-right
               = link_to lab_path(lab, type: "release", line_item_id: line_item), remote: true, class: "btn btn-primary", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, method: :patch do
                 = icon('fas', 'dolly')
             .col-12
               .pl-3
-                = render 'line_items/progress_bar', li: line_item
+                = render 'line_items/progress_bar', li: lab.line_item
       - elsif lab.released?
         .row
           .col-10
             %h5.font-weight-bold.mb-0
-              = request_title_display(lab.line_item.sparc_request)
+              =  request_title_display(lab.line_item.sparc_request)
             .d-flex.pl-3
-              = primary_pi_display(lab.line_item.sparc_request)
               = request_duration_display(lab.line_item.sparc_request)
           .col-2.text-right
             = link_to lab_path(lab, type: "retrieve"), remote: true, class: "btn btn-success mr-1", title: t(:labs)[:actions][:retrieve_specimen], data: {toggle: "tooltip"}, method: :patch do

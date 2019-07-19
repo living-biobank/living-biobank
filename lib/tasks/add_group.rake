@@ -22,17 +22,51 @@ namespace :data do
         process_specimen_retrieval_input = STDIN.gets.chomp.downcase.strip
 
         if ['y', 'yes'].include?(process_specimen_retrieval_input)
+          process_specimens_valid = true
           process_specimens_retrieval = true
-          process_specimens_valid = true
         elsif ['n', 'no'].include?(process_specimen_retrieval_input)
-          process_specimens_retrieval = false
           process_specimens_valid = true
+          process_specimens_retrieval = false
         else
           puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
         end
       end
 
-      group = Group.create(name: group_name, process_specimen_retrieval: process_specimen_retrieval)
+      process_sample_size  = nil
+      process_sample_valid     = false
+      while !process_sample_valid
+        print "Should #{group_name} track whether sample is of a given size? [y/n]: "
+        process_sample_size_input = STDIN.gets.chomp.downcase.strip
+
+        if ['y', 'yes'].include?(process_sample_size_input)
+          process_sample_valid = true
+          process_sample_size = true
+        elsif ['n', 'no'].include?(process_sample_size_input)
+          process_sample_valid = true
+          process_sample_size = false
+        else
+          puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
+        end
+      end
+
+      display_patient_information  = nil
+      display_patient_valid     = false
+      while !display_patient_valid
+        print "Should #{group_name} display patient information (eg. name)? [y/n]: "
+        display_patient_information_input = STDIN.gets.chomp.downcase.strip
+
+        if ['y', 'yes'].include?(display_patient_information_input)
+          display_patient_valid  = true
+          display_patient_information = true
+        elsif ['n', 'no'].include?(process_sample_size_input)
+          display_patient_valid  = true
+          display_patient_information = false
+        else
+          puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
+        end
+      end
+
+      group = Group.create(name: group_name, process_specimen_retrieval: process_specimen_retrieval, process_sample_size: process_sample_size, display_patient_information: display_patient_information)
 
       puts "\nNow you will be asked to enter Specimen Sources that will be handled by #{group_name}."
       sources_done = false

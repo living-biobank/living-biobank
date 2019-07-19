@@ -97,13 +97,13 @@ module SparcRequestsHelper
   end
 
   def complete_request_button(sr)
-    if current_user.honest_broker? && sr.in_process?
+    if current_user.honest_broker.present? && sr.in_process?
       content_tag(:button, t(:actions)[:complete_request], type: 'button', title: t(:requests)[:tooltips][:complete], class: 'btn btn-success complete-request', data: { toggle: 'tooltip', url: update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:completed] }), method: :patch })
     end
   end
 
   def finalize_request_button(sr)
-    if sr.pending? && current_user.honest_broker?
+    if sr.pending? && current_user.honest_broker.present?
       content_tag(:button, icon('fas', 'check-circle'), type: 'button', title: t(:requests)[:tooltips][:finalize], class: 'btn btn-primary finalize-request', data: { toggle: 'tooltip', url: update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:in_process] }), method: :patch })
     end
   end

@@ -10,7 +10,7 @@
         = icon('fas', 'user-circle')
         %span
           = current_user.full_name
-      - if current_user.honest_broker?
+      - if current_user.honest_broker.present?
         .nav-item
           = link_to labs_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''] do
             = icon('fas', 'flask')
