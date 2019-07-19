@@ -1,4 +1,4 @@
-- labs.usable.order(status: :desc).each do |lab|
+- labs.usable.retrievable(current_user).order(status: :desc).each do |lab|
   .card
     .card-header
       .row
@@ -36,7 +36,7 @@
             .col-12
               .pl-3
                 = render 'line_items/progress_bar', li: lab.line_item
-      - elsif lab.released? && current_user.group.process_specimen_retrieval == true
+      - elsif lab.released?
         .row
           .col-10
             %h5.font-weight-bold.mb-0

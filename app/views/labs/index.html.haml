@@ -9,7 +9,4 @@
   .mb-4#verifySpecimensContainer
     = text_field_tag 'verifySpecimens', '', class: 'form-control form-control-lg', placeholder: t(:labs)[:search][:placeholder], autofocus: true
     = icon('fas fa-2x', 'search')
-  - if current_user.honest_broker == 1
-    = render 'labs/blood_display', labs: @labs
-  - elsif current_user.honest_broker == 2
-    = render 'labs/microbiome_display', labs: @labs
+  = render 'labs/display', labs: @labs

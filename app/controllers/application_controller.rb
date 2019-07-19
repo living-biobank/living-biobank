@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def verify_honest_broker
-    redirect_to root_path unless current_user.honest_broker?
+    redirect_to root_path unless current_user.honest_broker.present?
   end
 
   def sanitize_date(date)

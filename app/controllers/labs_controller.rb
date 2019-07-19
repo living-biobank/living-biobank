@@ -2,7 +2,7 @@ class LabsController < ApplicationController
   before_action :verify_honest_broker
 
   def index
-    @labs = Lab.where(specimen_source: current_user.group.sources.pluck(:key)).includes(:patient, :populations, :line_item)
+    @labs = Lab.where(specimen_source: current_user.honest_broker.sources.pluck(:key)).includes(:patient, :populations, :line_item)
 
     respond_to do |format|
       format.html
