@@ -17,19 +17,15 @@
           .row.mb-3
             .col-10
               %h5.font-weight-bold.mb-0
-                = line_item.sparc_request.protocol.title
+                = request_title_display(line_item.sparc_request)
               .d-flex.pl-3
-                %p.d-flex.align-items-center.mb-0<
-                  = primary_pi_display(lab.line_item.sparc_request)
-                  = primary_pi_display(line_item.sparc_request)
-                %p.d-flex.align-items-center.mb-0.ml-2<
-                  = request_duration_display(lab.line_item.sparc_request)
+                %p.d-flex.align-items-center.mb-0.ml-2
                   = request_duration_display(line_item.sparc_request)
-              .d-flex.pl-3
-                %p.mb-0.service-display<
-                  = icon('fas', 'flask mr-2')
-                  = raw "#{lab.line_item.number_of_specimens_requested} Samples &geq; #{lab.line_item.minimum_sample_size}"
-                  = t('labs.fields.samples_needed', requested_number: line_item.number_of_specimens_requested, requested_size: line_item.minimum_sample_size).html_safe
+              - if size_matters == true
+                .d-flex.pl-3
+                  %p.mb-0.service-display<
+                    = icon('fas', 'flask mr-2')
+                    = t('labs.fields.samples_needed', requested_number: line_item.number_of_specimens_requested, requested_size: line_item.minimum_sample_size).html_safe
             .col-2.text-right
               = link_to lab_path(lab, type: "release", line_item_id: line_item), remote: true, class: "btn btn-primary", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, method: :patch do
                 = icon('fas', 'dolly')
@@ -40,12 +36,9 @@
         .row
           .col-10
             %h5.font-weight-bold.mb-0
-              = lab.line_item.sparc_request.protocol.title
+              =  request_title_display(lab.line_item.sparc_request)
             .d-flex.pl-3
-              %p.d-flex.align-items-center.mb-0<
-                = primary_pi_display(lab.line_item.sparc_request)
-              %p.d-flex.align-items-center.mb-0.ml-2<
-                = request_duration_display(lab.line_item.sparc_request)
+              = request_duration_display(lab.line_item.sparc_request)
           .col-2.text-right
             = link_to lab_path(lab, type: "retrieve"), remote: true, class: "btn btn-success mr-1", title: t(:labs)[:actions][:retrieve_specimen], data: {toggle: "tooltip"}, method: :patch do
               = icon('fas', 'check-circle')

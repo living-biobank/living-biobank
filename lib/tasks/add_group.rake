@@ -32,7 +32,24 @@ namespace :data do
         end
       end
 
-      group = Group.create(name: group_name, process_specimen_retrieval: process_specimen_retrieval)
+      process_sample_size  = nil
+      process_sample_valid     = false
+      while !process_sample_valid
+        print "Should #{group_name} track whether sample is of a given size? [y/n]: "
+        process_sample_size_input = STDIN.gets.chomp.downcase.strip
+
+        if ['y', 'yes'].include?(process_sample_size_input)
+          process_sample_valid = true
+          process_sample_size = true
+        elsif ['n', 'no'].include?(process_sample_size_input)
+          process_sample_valid = true
+          process_sample_size = false
+        else
+          puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
+        end
+      end
+
+      group = Group.create(name: group_name, process_specimen_retrieval: process_specimen_retrieval, process_sample_size: process_sample_size)
 
       puts "\nNow you will be asked to enter Specimen Sources that will be handled by #{group_name}."
       sources_done = false
