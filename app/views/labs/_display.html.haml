@@ -4,7 +4,7 @@
       .row
         %h3.d-flex.w-100.font-weight-bold.m-0
           .col-10
-            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.specimen_source)
+            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.source.key)
             %br
             %small.text-muted
               - if group_options.display_patient_information

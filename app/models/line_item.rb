@@ -2,6 +2,7 @@ class LineItem < ApplicationRecord
   belongs_to :sparc_request
   belongs_to :service, class_name: "SPARC::Service"
   belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional: true
+  belongs_to :source, class_name: "Source", foreign_key: "service_source"
 
   has_many :populations
   has_many :labs

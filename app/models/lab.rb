@@ -3,7 +3,8 @@ class Lab < ApplicationRecord
 
   belongs_to :patient
   belongs_to :line_item, optional: true #This association is for releasing a speciment to a line item
-  belongs_to :recipient, class_name: "SPARC::Identity", optional: true 
+  belongs_to :recipient, class_name: "SPARC::Identity", optional: true
+  belongs_to :source, class_name: "Source", foreign_key: "specimen_source"
 
   has_many :populations, through: :patient
   has_many :line_items, -> (lab) { where(service_source: lab.specimen_source) }, through: :populations #This association is for matching specimen sources between labs and line items

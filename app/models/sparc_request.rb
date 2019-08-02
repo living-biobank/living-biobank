@@ -5,6 +5,9 @@ class SparcRequest < ApplicationRecord
   has_one :primary_pi, through: :protocol, class_name: "SPARC::Identity"
 
   has_many :line_items, dependent: :destroy
+  has_many :sources, through: :line_items
+  has_many :groups, through: :sources
+  has_many :additional_services, through: :groups, source: :services
 
   delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
 
@@ -12,6 +15,7 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :protocol
 
   after_save :update_sparc_records
+  after_update :add_additional_services, if: Proc.new{ |request| request.in_process? && request.additional_services.any? }
 
   scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
 
@@ -131,6 +135,12 @@ class SparcRequest < ApplicationRecord
   end
 
   private
+
+  def add_additional_services
+    self.additional_services.each{ |service|
+      self.line_items.create(service: service)
+    }
+  end
 
   def update_sparc_records
     sr        = self.protocol.service_requests.first_or_create

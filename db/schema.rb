@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190719182939) do
+ActiveRecord::Schema.define(version: 20190801150651) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20190719182939) do
     t.bigint "visit_id"
     t.bigint "lab_visit_id"
     t.string "accession_number", limit: 75
-    t.string "specimen_source"
+    t.bigint "specimen_source"
     t.boolean "removed", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,13 +56,14 @@ ActiveRecord::Schema.define(version: 20190719182939) do
     t.datetime "discarded_at"
     t.index ["line_item_id"], name: "fk_rails_f32b2a1d2a"
     t.index ["patient_id"], name: "index_labs_on_patient_id"
+    t.index ["specimen_source"], name: "fk_rails_29b66496fe"
   end
 
   create_table "line_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "sparc_request_id"
     t.integer "service_id"
     t.integer "sparc_id"
-    t.string "service_source"
+    t.bigint "service_source"
     t.string "query_name"
     t.integer "query_count"
     t.string "minimum_sample_size"
@@ -70,6 +71,7 @@ ActiveRecord::Schema.define(version: 20190719182939) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["service_source"], name: "fk_rails_553628c76e"
   end
 
   create_table "patients", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -156,6 +158,8 @@ ActiveRecord::Schema.define(version: 20190719182939) do
 
   add_foreign_key "labs", "line_items"
   add_foreign_key "labs", "patients"
+  add_foreign_key "labs", "sources", column: "specimen_source"
+  add_foreign_key "line_items", "sources", column: "service_source"
   add_foreign_key "populations", "line_items"
   add_foreign_key "populations", "patients"
   add_foreign_key "users", "groups", column: "honest_broker_id"
