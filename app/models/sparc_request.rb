@@ -138,7 +138,7 @@ class SparcRequest < ApplicationRecord
 
   def add_additional_services
     self.additional_services.each{ |service|
-      self.line_items.create(service: service)
+      self.line_items.create(service: SPARC::Service.find(service.sparc_id))
     }
   end
 
