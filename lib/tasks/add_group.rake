@@ -16,24 +16,24 @@ namespace :data do
       end
 
       process_specimen_retrieval  = nil
-      process_specimens_valid     = false
-      while !process_specimens_valid
+      process_specimen_valid      = false
+      while !process_specimen_valid
         print "Should #{group_name} track whether specimens have been retrieved or discarded? [y/n]: "
         process_specimen_retrieval_input = STDIN.gets.chomp.downcase.strip
 
         if ['y', 'yes'].include?(process_specimen_retrieval_input)
-          process_specimens_valid = true
-          process_specimens_retrieval = true
+          process_specimen_valid = true
+          process_specimen_retrieval = true
         elsif ['n', 'no'].include?(process_specimen_retrieval_input)
-          process_specimens_valid = true
-          process_specimens_retrieval = false
+          process_specimen_valid = true
+          process_specimen_retrieval = false
         else
           puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
         end
       end
 
       process_sample_size  = nil
-      process_sample_valid     = false
+      process_sample_valid = false
       while !process_sample_valid
         print "Should #{group_name} track whether sample is of a given size? [y/n]: "
         process_sample_size_input = STDIN.gets.chomp.downcase.strip
@@ -49,8 +49,8 @@ namespace :data do
         end
       end
 
-      display_patient_information  = nil
-      display_patient_valid     = false
+      display_patient_information   = nil
+      display_patient_valid         = false
       while !display_patient_valid
         print "Should #{group_name} display patient information (eg. name)? [y/n]: "
         display_patient_information_input = STDIN.gets.chomp.downcase.strip

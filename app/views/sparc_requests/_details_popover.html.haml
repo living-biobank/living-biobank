@@ -1,7 +1,7 @@
 .d-flex.w-100
   = primary_pi_display(request)
 
-- if request.protocol.brief_description
+- if request.protocol.brief_description.present?
   %hr.my-2
   .d-flex.w-100
     = request.protocol.brief_description

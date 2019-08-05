@@ -45,6 +45,14 @@ $ ->
       $(this).datepicker('hide')
       $('#sparc_request_protocol_attributes_end_date').focus()
 
+  $(document).on 'changed.bs.select', '.source-select', ->
+    $minSampleContainer = $(this).parents('.form-group').siblings('.min-sample-size-container')
+    if $(this).find('option:selected').data('validates-sample-size') == true
+      $minSampleContainer.removeClass('d-none')
+    else
+      $minSampleContainer.addClass('d-none')
+      $minSampleContainer.find('input').val('')
+
   $(document).on 'click', '#saveDraftRequestButton', ->
     $('#sparc_request_status').remove()
     $form = $('form#sparcRequestForm')

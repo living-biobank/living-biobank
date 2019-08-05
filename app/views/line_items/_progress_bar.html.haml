@@ -1,5 +1,8 @@
 .request-progress.mt-2.mt-sm-0
   .progress
-    .progress-bar.bg-success{ role: 'progressbar', style: "width:#{li.percent_progress}%;", aria: { valuenow: li.lab_count, valuemin: 0, valuemax: li.number_of_specimens_requested } }
+    .progress-bar.bg-success{ role: 'progressbar', style: "width:#{li.percent_progress}%;", aria: { valuenow: li.progress, valuemin: li.progress_start, valuemax: li.progress_end } }
     %span.progress-text
-      = t('requests.table.progress', received: li.lab_count, total: li.number_of_specimens_requested)
+      - if li.specimen_request?
+        = t('requests.table.specimens.progress', received: li.progress, total: li.progress_end)
+      - else
+        = t('requests.table.additional_services.progress', current: li.progress, end: li.progress_end)

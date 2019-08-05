@@ -1,13 +1,7 @@
 NProgress.configure({ trickleRate: 0.025, trickleSpeed: 100 })
 
-$(document).on('ajaxStart', ->
+$(document).on('ajaxSend ajax:send', ->
   NProgress.start()
-).on('ajaxStop', ->
+).on('ajaxComplete ajax:complete', ->
   NProgress.done()
 )
-
-$(document).on 'turbolinks:click', ->
-  NProgress.start()
-
-$(document).on 'turbolinks:render', ->
-  NProgress.done()

@@ -12,14 +12,14 @@
         = hidden_field_tag :sort_order, params[:sort_order]
 
       .modal-header
-        %h5.modal-title
+        %h4.modal-title
           = t(:requests)[:form][sparc_request.persisted? ? :edit_title : :new_title]
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
         %section.card.mb-3
-          .card-header
-            %h5.card-title.m-0
+          .card-header.bg-light
+            %h4.card-title.m-0
               = t(:requests)[:form][:headers][:protocol_information]
           .card-body
             = f.fields_for :protocol do |ff_p|
@@ -71,38 +71,37 @@
                     = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: ff_p.object.persisted? && ff_p.object.valid?
                     = ff_ppi.hidden_field :identity_id
         %section.card.mb-3
-          .card-header
-            %h5.card-title.m-0
+          .card-header.bg-light
+            %h4.card-title.m-0
               = t(:requests)[:form][:headers][:specimens]
           .card-body
             .form-group
               %p.form-text.text-muted.m-0
                 = raw(t(:requests)[:form][:subtext][:i2b2_query])
+            - queries = I2b2::QueryName.where(user_id: current_user.net_id).order(create_date: :desc)
             = f.nested_fields_for :line_items do |ff_li|
+              = ff_li.hidden_field :service_id, value: ENV.fetch('SERVICE_ID')
               .form-row
                 .form-group.col
-                  = ff_li.label :service_id, class: 'required'
-                  = ff_li.select :service_id, options_from_collection_for_select(SPARC::Service.where(id: ENV.fetch('SERVICE_ID').split(',')), 'id', 'name', ff_li.object.service_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
-                .form-group.col
-                  = ff_li.label :service_source, class: 'required'
-                  = ff_li.select :service_source, options_for_select(Source.all.map  {|source| [source.value, source.id]}, ff_li.object.service_source), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker'
+                  = ff_li.label :source_id, class: 'required'
+                  = ff_li.select :source_id, options_for_select(Source.includes(:group).all.map{ |s| [s.value, s.id, { data: { validates_sample_size: s.group.process_sample_size?.to_s } }] }, ff_li.object.source_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker source-select'
                 .form-group.col
                   = ff_li.label :query_name, class: 'required'
-                  = ff_li.select :query_name, options_from_collection_for_select(I2b2::QueryName.where(user_id: current_user.net_id).order(create_date: :desc), 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
+                  = ff_li.select :query_name, options_from_collection_for_select(queries, 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
                 .form-group.col
                   = ff_li.label :number_of_specimens_requested, class: 'required'
-                  = ff_li.text_field :number_of_specimens_requested, class: 'form-control'
-                .form-group.col
+                  = ff_li.number_field :number_of_specimens_requested, class: 'form-control', min: 1
+                .form-group.col.min-sample-size-container.d-none
                   = ff_li.label :minimum_sample_size, class: 'required'
                   = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample]
-                .form-group.d-flex.flex-column.px-1
+                .form-group.d-flex.flex-column.px-1.mx-1
                   %label.w-100 &nbsp;
                   = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                     = icon('fas', 'trash')
             .form-group
-              = f.add_nested_fields_link :line_items, class: 'btn btn-primary' do
-                = icon('fas', 'plus-circle')
-                = t(:requests)[:form][:add_specimen]
+              = f.add_nested_fields_link :line_items, class: 'btn btn-success' do
+                = succeed t(:requests)[:form][:add_specimen] do
+                  = icon('fas', 'plus mr-2')
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
         - unless sparc_request.persisted? && sparc_request.pending?

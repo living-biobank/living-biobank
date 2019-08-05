@@ -2,13 +2,9 @@ class LabsController < ApplicationController
   before_action :verify_honest_broker
 
   def index
-    @labs = Lab.where(specimen_source: current_user.honest_broker.sources).includes(:patient, :populations, :line_item)
+    @labs = current_user.honest_broker.labs.includes(:patient, :populations, :line_item)
 
-    @group_options = current_user.honest_broker
-
-    respond_to do |format|
-      format.html
-    end
+    respond_to :html
   end
 
   def update
@@ -34,29 +30,6 @@ class LabsController < ApplicationController
       end
     end
 
-    respond_to do |format|
-      format.js
-    end
+    respond_to :js
   end
-
-  private
-
-  # NOTE:  sort_lab_groups may be deprecated in the future!
-  def sort_lab_groups(lab_groups)
-    groups = lab_groups.sort do |l, r|
-      if params[:sort_by] == 'samples_available'
-        l.last.count <=> r.last.count
-      elsif params[:sort_by] == 'specimen_source'
-        l.first[:specimen_source] <=> r.first[:specimen_source]
-      else
-        l.first[:patient].mrn <=> r.first[:patient].mrn
-      end
-    end
-
-    groups = groups.reverse if params[:sort_order] == 'desc'
-
-    groups
-  end
-
-
 end

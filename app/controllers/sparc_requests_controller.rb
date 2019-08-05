@@ -15,6 +15,8 @@ class SparcRequestsController < ApplicationController
     @sparc_request.build_protocol(type: 'Project')
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.line_items.build
+
+    respond_to :js
   end
 
   def create
@@ -33,10 +35,14 @@ class SparcRequestsController < ApplicationController
     else
       @errors = @sparc_request.errors
     end
+
+    respond_to :js
   end
 
   def edit
     @sparc_request.status = t(:requests)[:statuses][:pending]
+
+    respond_to :js
   end
 
   def update
@@ -50,10 +56,14 @@ class SparcRequestsController < ApplicationController
     else
       @errors = @sparc_request.errors
     end
+
+    respond_to :js
   end
 
   def destroy
     @sparc_request.destroy
+
+    respond_to :js
   end
 
   def update_status
@@ -64,6 +74,8 @@ class SparcRequestsController < ApplicationController
     else
       flash.now[:error] = t(:requests)[:failed]
     end
+
+    respond_to :js
   end
 
   private
@@ -83,8 +95,10 @@ class SparcRequestsController < ApplicationController
       params[:sparc_request][:protocol_attributes][:end_date]   = sanitize_date(params[:sparc_request][:protocol_attributes][:end_date]) if params[:sparc_request][:protocol_attributes][:end_date]
     end
 
-    params.require(:sparc_request).permit([
-      { protocol_attributes: [
+    params.require(:sparc_request).permit(
+      :protocol_id,
+      :status,
+      protocol_attributes: [
         :id,
         :research_master_id,
         :type,
@@ -100,18 +114,16 @@ class SparcRequestsController < ApplicationController
           :id,
           :identity_id
         ]
-      ] },
-      { line_items_attributes: [
+      ],
+      line_items_attributes: [
         :id,
         :service_id,
-        :service_source,
+        :source_id,
         :query_name,
         :number_of_specimens_requested,
         :minimum_sample_size,
         :_destroy
-      ] },
-      :status,
-      :protocol_id
-    ])
+      ]
+    )
   end
 end
