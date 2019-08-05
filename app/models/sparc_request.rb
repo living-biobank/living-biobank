@@ -5,13 +5,17 @@ class SparcRequest < ApplicationRecord
   has_one :primary_pi, through: :protocol, class_name: "SPARC::Identity"
 
   has_many :line_items, dependent: :destroy
+  has_many :specimen_requests, -> { where.not(source_id: nil) }, class_name: "LineItem"
+  has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem"
   has_many :sources, through: :line_items
   has_many :groups, through: :sources
-  has_many :additional_services, through: :groups, source: :services
+  has_many :services, through: :groups, source: :services
+
+  validates :specimen_requests, length: { minimum: 1 }
 
   delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
 
-  accepts_nested_attributes_for :line_items, allow_destroy: true
+  accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
   after_save :update_sparc_records, unless: :draft?
@@ -136,24 +140,29 @@ class SparcRequest < ApplicationRecord
   private
 
   def update_sparc_records
-    self.line_items.includes(:service).each{ |li| create_sparc_line_item(li) }
-  end
-
-  def add_additional_services
-    self.additional_services.each do |service|
-      unless self.line_items.exists?(service: service.sparc_service)
-        line_item = self.line_items.create(service: service.sparc_service)
-        create_sparc_line_item(line_item)
-      end
-    end
-  end
-
-  def create_sparc_line_item(line_item)
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
     # Find or create an Identity for the requester
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
+    self.specimen_requests.includes(:service).each{ |li| create_sparc_line_item(li, sr, requester) }
+  end
+
+  def add_additional_services
+    # Find or create a Service Request
+    sr = self.protocol.service_requests.first_or_create
+    # Find or create an Identity for the requester
+    requester = SPARC::Directory.find_or_create(self.user.net_id)
+
+    self.services.each do |service|
+      unless self.additional_services.exists?(service: service.sparc_service)
+        line_item = self.additional_services.create(service: service.sparc_service)
+        create_sparc_line_item(line_item, sr, requester)
+      end
+    end
+  end
+
+  def create_sparc_line_item(line_item, sr, requester)
     service = line_item.service
 
     # Find or create a Sub Service Request for the SPARC Line Item

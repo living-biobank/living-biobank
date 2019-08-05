@@ -6,7 +6,7 @@ RSpec.describe 'User saves a request as draft', js: true do
   it 'should save the request as a draft' do
     visit sparc_requests_path
 
-    click_button I18n.t(:requests)[:create]
+    click_link I18n.t(:requests)[:create]
     click_button I18n.t(:requests)[:create_confirm][:confirm]
     wait_for_ajax
 

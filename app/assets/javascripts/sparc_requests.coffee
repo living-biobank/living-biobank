@@ -65,11 +65,15 @@ $ ->
   }
 
   $(document).on 'fields_added.nested_form_fields', (event, param) ->
+    if $('.nested_sparc_request_specimen_requests:visible').length > 0
+      $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', false)
     setRequiredFields()
     initializeSelectpickers()
     initializeTooltips()
 
   $(document).on 'fields_removed.nested_form_fields', (event, param) ->
+    if $('.nested_sparc_request_specimen_requests:visible').length == 0
+      $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', true)
     $('.tooltip').tooltip('hide')
 
 (exports ? this).resetProtocolFields = () ->
@@ -122,6 +126,8 @@ $ ->
         id: suggestion.id
 
 (exports ? this).initializePrimaryPITypeahead = () ->
+  $("#primary_pi_search:not([readonly=readonly])").typeahead('destroy')
+
   identities = new Bloodhound(
     datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace

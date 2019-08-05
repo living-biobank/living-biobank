@@ -16,8 +16,8 @@ RSpec.describe 'User edits a pending request', js: true do
     find('.edit-request').click
     wait_for_ajax
 
-    fill_in 'sparc_request_line_items_attributes_0_number_of_specimens_requested', with: 100
-    fill_in 'sparc_request_line_items_attributes_0_minimum_sample_size', with: '1mL'
+    fill_in 'sparc_request_specimen_requests_attributes_0_number_of_specimens_requested', with: 100
+    fill_in 'sparc_request_specimen_requests_attributes_0_minimum_sample_size', with: '1mL'
 
     click_button I18n.t(:requests)[:form][:submit]
     wait_for_ajax

@@ -79,7 +79,7 @@
               %p.form-text.text-muted.m-0
                 = raw(t(:requests)[:form][:subtext][:i2b2_query])
             - queries = I2b2::QueryName.where(user_id: current_user.net_id).order(create_date: :desc)
-            = f.nested_fields_for :line_items do |ff_li|
+            = f.nested_fields_for :specimen_requests do |ff_li|
               = ff_li.hidden_field :service_id, value: ENV.fetch('SERVICE_ID')
               .form-row
                 .form-group.col
@@ -91,7 +91,7 @@
                 .form-group.col
                   = ff_li.label :number_of_specimens_requested, class: 'required'
                   = ff_li.number_field :number_of_specimens_requested, class: 'form-control', min: 1
-                .form-group.col.min-sample-size-container.d-none
+                .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
                   = ff_li.label :minimum_sample_size, class: 'required'
                   = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample]
                 .form-group.d-flex.flex-column.px-1.mx-1
@@ -99,7 +99,7 @@
                   = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                     = icon('fas', 'trash')
             .form-group
-              = f.add_nested_fields_link :line_items, class: 'btn btn-success' do
+              = f.add_nested_fields_link :specimen_requests, class: 'btn btn-success' do
                 = succeed t(:requests)[:form][:add_specimen] do
                   = icon('fas', 'plus mr-2')
       .modal-footer

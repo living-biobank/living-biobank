@@ -33,6 +33,10 @@ en:
               required: "can't be blank"
             number_of_specimens_requested:
               not_a_number: "must be a number"
+        sparc_request:
+          attributes:
+            specimen_requests:
+              too_short: "must request at least 1 Specimen"
         sparc/project_role:
           attributes:
             identity:

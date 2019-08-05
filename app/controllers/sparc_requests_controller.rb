@@ -14,7 +14,7 @@ class SparcRequestsController < ApplicationController
     @sparc_request = current_user.sparc_requests.new(status: t(:requests)[:statuses][:pending])
     @sparc_request.build_protocol(type: 'Project')
     @sparc_request.protocol.build_primary_pi_role
-    @sparc_request.line_items.build
+    @sparc_request.specimen_requests.build
 
     respond_to :js
   end
@@ -115,7 +115,7 @@ class SparcRequestsController < ApplicationController
           :identity_id
         ]
       ],
-      line_items_attributes: [
+      specimen_requests_attributes: [
         :id,
         :service_id,
         :source_id,

@@ -123,7 +123,7 @@ module SparcRequestsHelper
 
   def cancel_request_button(sr)
     if sr.pending?
-      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:cancelled] }), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip' }
+      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:cancelled] }), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip', confirm_swal: true }
     end
   end
 end
