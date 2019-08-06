@@ -5,13 +5,22 @@ class SparcRequest < ApplicationRecord
   has_one :primary_pi, through: :protocol, class_name: "SPARC::Identity"
 
   has_many :line_items, dependent: :destroy
+  has_many :specimen_requests, -> { where.not(source_id: nil) }, class_name: "LineItem"
+  has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem"
+  has_many :sources, through: :line_items
+  has_many :groups, through: :sources
+  has_many :services, through: :groups, source: :services
+
+  validates :specimen_requests, length: { minimum: 1 }
 
   delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
 
-  accepts_nested_attributes_for :line_items, allow_destroy: true
+  accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :update_sparc_records
+  after_save :update_sparc_records, unless: :draft?
+
+  after_update :add_additional_services, if: :in_process?
 
   scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
 
@@ -51,8 +60,6 @@ class SparcRequest < ApplicationRecord
       joins(:protocol, line_items: :service).where(arel_table[:status].matches("%#{term}%"))
     ).or(
       by_date(term)
-    ).or(
-      joins(:protocol, line_items: :service).where(LineItem.arel_table[:service_source].matches("%#{term}%"))
     ).or(
       joins(:protocol, line_items: :service).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
     ).or(
@@ -133,29 +140,47 @@ class SparcRequest < ApplicationRecord
   private
 
   def update_sparc_records
-    sr        = self.protocol.service_requests.first_or_create
+    # Find or create a Service Request
+    sr = self.protocol.service_requests.first_or_create
+    # Find or create an Identity for the requester
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
-    unless self.draft?
-      self.line_items.includes(:service).each do |line_item|
-        service = line_item.service
+    self.specimen_requests.includes(:service).each{ |li| create_sparc_line_item(li, sr, requester) }
+  end
 
-        unless ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).first
-          ssr = sr.sub_service_requests.create(
-            protocol:           self.protocol,
-            organization:       service.process_ssrs_organization,
-            service_requester:  requester
-          )
-        end
+  def add_additional_services
+    # Find or create a Service Request
+    sr = self.protocol.service_requests.first_or_create
+    # Find or create an Identity for the requester
+    requester = SPARC::Directory.find_or_create(self.user.net_id)
 
-        sparc_li = ssr.line_items.first_or_create(
-          service_request:  sr,
-          service:          service,
-          optional:         true
-        )
-
-        line_item.update_attribute(:sparc_id, sparc_li.id)
+    self.services.each do |service|
+      unless self.additional_services.exists?(service: service.sparc_service)
+        line_item = self.additional_services.create(service: service.sparc_service)
+        create_sparc_line_item(line_item, sr, requester)
       end
     end
+  end
+
+  def create_sparc_line_item(line_item, sr, requester)
+    service = line_item.service
+
+    # Find or create a Sub Service Request for the SPARC Line Item
+    unless ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).first
+      ssr = sr.sub_service_requests.create(
+        protocol:           self.protocol,
+        organization:       service.process_ssrs_organization,
+        service_requester:  requester
+      )
+    end
+
+    # Find or create a SPARC Line Item for the Line Item
+    sparc_li = ssr.line_items.first_or_create(
+      service_request:  sr,
+      service:          service,
+      optional:         true
+    )
+
+    line_item.update_attribute(:sparc_id, sparc_li.id)
   end
 end

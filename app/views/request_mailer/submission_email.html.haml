@@ -8,4 +8,4 @@
   = t(:mailers)[:request_mailer][:services_header]
 - @request.line_items.includes(:service).each do |line_item|
   %p{ style: 'margin-top: 0;' }
-    = raw t('mailers.request_mailer.submission_email.service', service: line_item.service.name, source: line_item.service_source, requested: line_item.number_of_specimens_requested, min_sample_size: line_item.minimum_sample_size)
+    = raw t('mailers.request_mailer.submission_email.service', service: line_item.service.name, source: line_item.source.value, requested: line_item.number_of_specimens_requested, min_sample_size: line_item.minimum_sample_size)

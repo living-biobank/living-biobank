@@ -44,8 +44,8 @@
       // User clicked confirm button
       $.ajax({
         method: element.getAttribute('data-method') || 'GET',
-        url: (element.getAttribute('tagName') === 'A' && element.getAttribute('href') !== 'javascript:void(0)') ? element.getAttribute('href') : element.getAttribute('data-url'),
-        dataType: (element.getAttribute('tagName') === 'A' && element.getAttribute('href') !== 'javascript:void(0)' && element.getAttribute('data-remote') !== 'true') ? 'html' : 'script',
+        url: (element.tagName === 'A' && element.getAttribute('href') !== 'javascript:void(0)') ? element.getAttribute('href') : element.getAttribute('data-url'),
+        dataType: (element.tagName === 'A' && element.getAttribute('href') !== 'javascript:void(0)' && element.getAttribute('data-remote') !== 'true') ? 'html' : 'script',
         data: {
           authenticity_token: $('meta[name=csrf-token]').attr('content')
         }

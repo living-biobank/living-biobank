@@ -14,7 +14,6 @@
 //= require sweetalert2/dist/sweetalert2.min
 //= require sweetalert_integration
 //= require rails-ujs
-//= require turbolinks
 //= require jquery/dist/jquery.min
 //= require popper.js/dist/umd/popper.min
 //= require bootstrap/dist/js/bootstrap.min

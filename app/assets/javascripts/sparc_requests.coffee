@@ -45,6 +45,14 @@ $ ->
       $(this).datepicker('hide')
       $('#sparc_request_protocol_attributes_end_date').focus()
 
+  $(document).on 'changed.bs.select', '.source-select', ->
+    $minSampleContainer = $(this).parents('.form-group').siblings('.min-sample-size-container')
+    if $(this).find('option:selected').data('validates-sample-size') == true
+      $minSampleContainer.removeClass('d-none')
+    else
+      $minSampleContainer.addClass('d-none')
+      $minSampleContainer.find('input').val('')
+
   $(document).on 'click', '#saveDraftRequestButton', ->
     $('#sparc_request_status').remove()
     $form = $('form#sparcRequestForm')
@@ -57,11 +65,15 @@ $ ->
   }
 
   $(document).on 'fields_added.nested_form_fields', (event, param) ->
+    if $('.nested_sparc_request_specimen_requests:visible').length > 0
+      $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', false)
     setRequiredFields()
     initializeSelectpickers()
     initializeTooltips()
 
   $(document).on 'fields_removed.nested_form_fields', (event, param) ->
+    if $('.nested_sparc_request_specimen_requests:visible').length == 0
+      $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', true)
     $('.tooltip').tooltip('hide')
 
 (exports ? this).resetProtocolFields = () ->
@@ -114,6 +126,8 @@ $ ->
         id: suggestion.id
 
 (exports ? this).initializePrimaryPITypeahead = () ->
+  $("#primary_pi_search:not([readonly=readonly])").typeahead('destroy')
+
   identities = new Bloodhound(
     datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace

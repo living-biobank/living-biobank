@@ -22,7 +22,6 @@ gem 'rails', '~> 5.1.3'
 gem 'request_store'
 gem 'sassc-rails'
 gem 'simple_hl7'
-gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'whenever'
@@ -52,5 +51,5 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'webdrivers', '~> 3.0'
+  gem 'webdrivers', '~> 4.0'
 end

@@ -138,15 +138,14 @@ end
 def start_new_request
   visit sparc_requests_path
 
-  click_button I18n.t(:requests)[:create]
+  click_link I18n.t(:requests)[:create]
   click_button I18n.t(:requests)[:create_confirm][:confirm]
   wait_for_ajax
 end
 
 def fill_in_line_item(service)
-  bootstrap_select '#sparc_request_line_items_attributes_0_service_id', service.name
-  bootstrap_select '#sparc_request_line_items_attributes_0_service_source'
-  bootstrap_select '#sparc_request_line_items_attributes_0_query_name'
-  fill_in 'sparc_request_line_items_attributes_0_number_of_specimens_requested', with: 5
-  fill_in 'sparc_request_line_items_attributes_0_minimum_sample_size', with: '1mL'
+  bootstrap_select '#sparc_request_specimen_requests_attributes_0_source_id'
+  bootstrap_select '#sparc_request_specimen_requests_attributes_0_query_name'
+  fill_in 'sparc_request_specimen_requests_attributes_0_number_of_specimens_requested', with: 5
+  fill_in 'sparc_request_specimen_requests_attributes_0_minimum_sample_size', with: '1mL'
 end

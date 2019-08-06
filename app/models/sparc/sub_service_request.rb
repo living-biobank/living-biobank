@@ -11,6 +11,10 @@ module SPARC
 
     before_validation :default_values
 
+    def complete?
+      SPARC::Setting.get_value('finished_statuses').include?(self.status)
+    end
+
     private
 
     def default_values

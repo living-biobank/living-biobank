@@ -1,4 +1,4 @@
-$(document).on 'turbolinks:load', ->
+$ ->
   fixNavbarPlacement()
   fixHeaderPlacement()
   initializeSelectpickers()
@@ -6,13 +6,33 @@ $(document).on 'turbolinks:load', ->
   initializePopovers()
   $('html').addClass('ready')
 
-$ ->
-  fixNavbarPlacement()
-  fixHeaderPlacement()
+  $(document).on 'ajax:complete', ->
+    initializeSelectpickers()
+    initializeTooltips()
+    initializePopovers()
 
   $(window).resize ->
     fixNavbarPlacement()
     fixHeaderPlacement()
+
+  $(document).on 'show.bs.collapse hide.bs.collapse', 'div[data-toggle=collapse] + .collapse', (event) ->
+    if event.delegateTarget.activeElement.tagName == 'A'
+      event.preventDefault()
+
+  $(document).on('mouseover', 'div[data-toggle=collapse]', (event) ->
+    if ['A', 'BUTTON'].includes(event.target.tagName) || (event.target.tagName == 'I' && ['A', 'BUTTON'].includes(event.target.parentElement.tagName))
+      $(this).removeClass('hover')
+    else
+      $(this).addClass('hover')
+  ).on('mouseleave', 'div[data-toggle=collapse]', (event) ->
+    $(this).removeClass('hover')
+  ).on('mousedown', 'div[data-toggle=collapse]', (event) ->
+    if event.target.tagName == 'DIV'
+      $(this).addClass('active')
+  ).on('mouseup', 'div[data-toggle=collapse]', (event) ->
+    if event.target.tagName == 'DIV'
+      $(this).removeClass('active')
+  )
 
   $(document).on 'click', 'button[data-url]:not([data-confirm-swal]), a[href="javascript:void(0)"]:not([data-confirm-swal])', ->
     if $(this).data('url')
@@ -100,6 +120,7 @@ $ ->
   $('.selectpicker').selectpicker()
 
 (exports ? this).initializeTooltips = () ->
+  $('.tooltip').tooltip('hide')
   $('[data-toggle=tooltip]').tooltip()
 
 (exports ? this).initializePopovers = () ->

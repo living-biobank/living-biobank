@@ -2,10 +2,11 @@
   - if requests.any?
     - requests.each do |request|
       .card
-        .card-header
+        .card-header{ data: { toggle: 'collapse', target: ".request-#{request.id}-collapse" } }
           .row
             .col-12.col-sm-10
-              %h3.d-flex.w-100.font-weight-bold.mb-1
+              %h3.d-flex.align-items-start.w-100.font-weight-bold.mb-1
+                = icon('fas', 'caret-down mr-2 mt-1')
                 = request_title_display(request)
                 .d-none.d-sm-block
                   = request_status_context(request)
@@ -18,18 +19,33 @@
               %h3.d-block.d-sm-none.mb-0
                 = request_status_context(request)
               = request_actions(request)
-        .card-body
-          - request.line_items.each do |li|
-            .row.service
-              .col-sm-5.col-12.mb-sm-2
-                %h5.d-flex.flex-column.mb-0<
-                  .mb-1
-                    = service_display(li)
-                  %small.text-muted<
-                    = query_display(li)
-              .col-sm-7.col-12
-                - unless request.cancelled?
-                  = render 'line_items/progress_bar', li: li
+        .collapse.show{ class: "request-#{request.id}-collapse" }
+          .card-body
+            %h4.card-title.font-weight-bold
+              = t('requests.table.specimens.header')
+            - request.line_items.specimen_requests.each do |li|
+              .row.line-item
+                .col-sm-4.col-12
+                  %h5.d-flex.flex-column.mb-0<
+                    .mb-1
+                      = line_item_text(li)
+                    %small.text-muted<
+                      = query_display(li)
+                .col-sm-8.col-12
+                  - unless request.cancelled?
+                    = render 'line_items/progress_bar', li: li
+          - if request.line_items.additional_services.any?
+            .card-body.border-top
+              %h4.card-title.font-weight-bold<
+                = t('requests.table.additional_services.header')
+              - request.line_items.additional_services.each do |li|
+                .row.line-item
+                  .col-sm-4.col-12
+                    %h5.mb-0<
+                      = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
+                      = li.service.name
+                  .col-sm-8.col-12
+                    = render 'line_items/progress_bar', li: li
   - else
     .card
       .card-body

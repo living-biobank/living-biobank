@@ -16,7 +16,7 @@ module SPARC
     mattr_accessor :ldap_filter
 
     begin
-      use_ldap = Setting.get_value("use_ldap") || Rails.env == 'test'
+      use_ldap = SPARC::Setting.get_value("use_ldap") || Rails.env == 'test'
     rescue
       use_ldap = true
     end
@@ -61,10 +61,10 @@ module SPARC
     # Returns an array of Identities that match the query.
     def self.search(term)
       # Search ldap (if enabled) and the database
-      if Setting.get_value("use_ldap") && !Setting.get_value("suppress_ldap_for_user_search")
+      if SPARC::Setting.get_value("use_ldap") && !SPARC::Setting.get_value("suppress_ldap_for_user_search")
         # If there are any entries returned from ldap that were not in the
         # database, then create them
-        if Setting.get_value("lazy_load_ldap")
+        if SPARC::Setting.get_value("lazy_load_ldap")
           return self.search_and_merge_ldap_and_database_results(term)
         else
           return self.search_and_merge_and_update_ldap_and_database_results(term)

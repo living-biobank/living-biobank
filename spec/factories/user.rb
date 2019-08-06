@@ -9,7 +9,7 @@ FactoryBot.define do
     honest_broker         { false }
 
     trait :honest_broker do
-      honest_broker { true }
+      honest_broker_id { Group.first.try(:id) || create(:group).id }
     end
 
     before :create do |user|

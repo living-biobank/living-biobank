@@ -4,10 +4,10 @@
       .row
         %h3.d-flex.w-100.font-weight-bold.m-0
           .col-10
-            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.specimen_source)
+            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.source.key)
             %br
             %small.text-muted
-              - if group_options.display_patient_information
+              - if current_user.honest_broker.display_patient_information?
                 = t('labs.fields.sub_header_with_patient_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
               - else
                 = t('labs.fields.sub_header_without_patient_name', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
@@ -23,7 +23,7 @@
               .d-flex.pl-3
                 %p.d-flex.align-items-center.mb-0.ml-2
                   = request_duration_display(line_item.sparc_request)
-              - if group_options.process_sample_size
+              - if current_user.honest_broker.process_sample_size?
                 .d-flex.pl-3
                   %p.mb-0.service-display<
                     = icon('fas', 'flask mr-2')

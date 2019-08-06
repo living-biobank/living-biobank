@@ -12,7 +12,7 @@ module SPARC
 
     validates_presence_of :research_master_id, if: :rmid_enabled?
     validates_presence_of :short_title, :title, :funding_status, :start_date, :end_date, :next_ssr_id
-    validates_presence_of :funding_source, if: Proc.new{ |p| p.funded? }
+    validates_presence_of :funding_source, if: Proc.new{ |p| p.funded? || p.funding_status.blank? }
     validates_presence_of :potential_funding_source, if: Proc.new{ |p| !p.funded? }
 
     validate :rmid_valid?, if: :rmid_enabled?
