@@ -21,5 +21,5 @@
 
 
 every :weekday, at: '7am' do
-	rake 'email_tasks:daily_specimen_check'
+  rake 'email_tasks:daily_specimen_check'
 end
