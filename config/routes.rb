@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :sparc_requests, except: [:show] do
     member do
       patch :update_status
+      get :completion_note
     end
   end
 

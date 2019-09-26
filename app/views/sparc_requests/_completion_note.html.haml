@@ -1,0 +1,19 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for sparc_request, remote: true, url: update_status_sparc_request_path(@sparc_request), method: :patch do |form|
+      .modal-header
+        %h4#myModalLabel.modal-title
+          = "Add Completion Notes"
+        %button.close{"data-dismiss" => "modal", type: "button"} &times;
+      .modal-body
+        %p
+          = form.label :note_text
+          %br
+          = form.text_area :note_text
+        %p
+          = form.label :note_links
+          %br
+          = form.text_area :note_links
+          = form.hidden_field :status, value: t(:requests)[:statuses][:completed]
+      .modal-footer
+        = form.submit "Complete Request", class: 'btn btn-success'

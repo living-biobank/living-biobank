@@ -1,6 +1,6 @@
 class SparcRequestsController < ApplicationController
 
-  before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
+  before_action :find_request,  only: [:edit, :update, :destroy, :update_status, :completion_note]
   before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
 
   def index
@@ -67,13 +67,18 @@ class SparcRequestsController < ApplicationController
   end
 
   def update_status
-    if @sparc_request.update_attribute(:status, sparc_request_params[:status])
+    if @sparc_request.update_attributes({status: sparc_request_params[:status], note_text: sparc_request_params[:note_text], note_links: sparc_request_params[:note_links]})
       RequestMailer.with(user: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
 
       flash.now[:success] = t(:requests)[:updated]
     else
       flash.now[:error] = t(:requests)[:failed]
     end
+
+    respond_to :js
+  end
+
+  def completion_note
 
     respond_to :js
   end
@@ -98,6 +103,8 @@ class SparcRequestsController < ApplicationController
     params.require(:sparc_request).permit(
       :protocol_id,
       :status,
+      :note_text,
+      :note_links,
       protocol_attributes: [
         :id,
         :research_master_id,

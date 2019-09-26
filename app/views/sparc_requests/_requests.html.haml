@@ -20,7 +20,19 @@
                 = request_status_context(request)
               = request_actions(request)
         .collapse.show{ class: "request-#{request.id}-collapse" }
-          .card-body
+          - if request.completed?
+            .card-body.border-top
+              %h4.card-title.font-weight-bold
+                = "Completion Notes"
+              - if request.note_text.present?
+                %p
+                  = request.note_text
+              - if request.note_links.present?
+                %p
+                  = link_to request.note_links, "http://#{request.note_links}"
+              - if request.note_text.present? == false && request.note_links.present? == false
+                = "No Notes"
+          .card-body.border-top
             %h4.card-title.font-weight-bold
               = t('requests.table.specimens.header')
             - request.line_items.specimen_requests.each do |li|
@@ -46,6 +58,7 @@
                       = li.service.name
                   .col-sm-8.col-12
                     = render 'line_items/progress_bar', li: li
+          
   - else
     .card
       .card-body

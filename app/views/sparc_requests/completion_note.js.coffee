@@ -1,0 +1,7 @@
+$('#modalContainer').html("<%= j render 'sparc_requests/completion_note', sparc_request: @sparc_request %>")
+setRequiredFields()
+initializeTooltips()
+initializeSelectpickers()
+initializePrimaryPITypeahead()
+$('#modalContainer').modal('show')
+$('#modalContainer').modal('hide')
