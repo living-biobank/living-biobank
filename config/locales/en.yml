@@ -11,6 +11,9 @@ en:
         query_name: "i2b2 Query"
         number_of_specimens_requested: "Quantity Requested"
         minimum_sample_size: "Minimum Sample Size"
+        one_month_accrual: "Past Month"
+        six_month_accrual: "Past 6 Months"
+        one_year_accrual: "Past Year"
       sparc/protocol:
         research_master_id: "Research Master ID"
         title: "Title"
@@ -173,6 +176,10 @@ en:
         overdue: "%{duration} overdue"
       specimens:
         header: "Specimens Requested"
+        chart:
+          header: "%{source} Sample Accrual"
+          loading: "Loading..."
+          no_data: "We haven't received any data yet for samples matching your request. Pleease try again later."
         line_item_no_sample_size:
           singular: "%{source} - %{amount_requested} sample"
           plural: "%{source} - %{amount_requested} samples"
@@ -183,6 +190,8 @@ en:
       additional_services:
         header: "Additional Services"
         progress: "Progress: %{current} / %{end}"
+        complete: "This service has been completed"
+        incomplete: "This service has not yet been completed"
     draft:
       header: "Draft Requests"
       placeholder: "No Title Specified"

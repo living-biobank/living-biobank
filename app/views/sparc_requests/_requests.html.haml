@@ -42,7 +42,8 @@
                 .row.line-item
                   .col-sm-4.col-12
                     %h5.mb-0<
-                      = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
+                      %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
+                        = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
                       = li.service.name
                   .col-sm-8.col-12
                     = render 'line_items/progress_bar', li: li

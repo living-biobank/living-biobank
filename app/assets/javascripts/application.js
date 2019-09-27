@@ -20,6 +20,8 @@
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min
 //= require bootstrap-select/dist/js/bootstrap-select.min
 //= require corejs-typeahead/dist/typeahead.bundle.min
+//= require chartkick
+//= require Chart.bundle
 //= require nested_form_fields
 //= require i18n/translations
 //= require_tree .
