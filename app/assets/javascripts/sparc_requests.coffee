@@ -19,11 +19,11 @@ $ ->
   ).on('shown.bs.popover', '.specimen-line-item', (e) ->
     lineItem = $(e.target)
 
-    if lineItem.data('one-yr') || lineItem.data('six-mo') || lineItem.data('one-mo')
+    if lineItem.data('one-yr') || lineItem.data('six-mo') || lineItem.data('three-mo')
       data = [
         [I18n.t('activerecord.attributes.line_item.one_year_accrual'), lineItem.data('one-yr')],
         [I18n.t('activerecord.attributes.line_item.six_month_accrual'), lineItem.data('six-mo')],
-        [I18n.t('activerecord.attributes.line_item.one_month_accrual'), lineItem.data('one-mo')]
+        [I18n.t('activerecord.attributes.line_item.three_month_accrual'), lineItem.data('three-mo')]
       ]
     else
       data = []
@@ -32,6 +32,30 @@ $ ->
         curve: false,
         messages: {
           empty: I18n.t('requests.table.specimens.chart.no_data')
+        },
+        library: {
+          layout: {
+            padding: {
+              right: 125
+            }
+          }
+          plugins: {
+            datalabels: {
+              anchor: 'end',
+              align: 'right',
+              formatter: (value, context) ->
+                if context.dataIndex == 0
+                  rate = value / 52 # 52 weeks/yr
+                else if context.dataIndex == 1
+                  rate = value / 26 # 4.33 weeks/mo * 6mo
+                else if context.dataIndex == 2
+                  rate = value / 13 # 4.33 weeks/mo * 3mo
+                console.log context.dataIndex
+                console.log value
+                console.log rate
+                return I18n.t('requests.table.specimens.chart.value', value: value, rate: rate.toFixed(2))
+            }
+          }
         }
       }
     )

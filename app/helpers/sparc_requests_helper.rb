@@ -66,7 +66,7 @@ module SparcRequestsHelper
       content_tag(:div, t('requests.table.specimens.chart.loading'), id: "chart-#{li.id}", class: 'rates-chart')
     end
 
-    link_to 'javascript:void(0)', class: 'specimen-line-item', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: chart, chart_id: "chart-#{li.id}", one_mo: li.one_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual } do
+    link_to 'javascript:void(0)', class: 'specimen-line-item', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual } do
       icon('fas', 'flask mr-2') + 
       if li.group.process_sample_size?
         t("requests.table.specimens.line_item_with_sample_size.#{text}", source: li.source.value, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size).html_safe
