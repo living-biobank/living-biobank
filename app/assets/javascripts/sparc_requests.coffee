@@ -5,6 +5,62 @@ $ ->
     if !$(this).val()
       resetProtocolFields()
 
+  $(document).on('mouseenter', '.specimen-line-item', ->
+    _this = this
+    $(this).popover('show')
+    $('.popover').on 'mouseleave', ->
+      $(_this).popover('hide')
+  ).on('mouseleave', '.specimen-line-item', ->
+    _this = this
+    setTimeout( (->
+      if !$('.popover:hover').length
+        $(_this).popover('hide')
+    ), 300)
+  ).on('shown.bs.popover', '.specimen-line-item', (e) ->
+    lineItem = $(e.target)
+
+    if lineItem.data('one-yr') || lineItem.data('six-mo') || lineItem.data('three-mo')
+      data = [
+        [I18n.t('activerecord.attributes.line_item.one_year_accrual'), lineItem.data('one-yr')],
+        [I18n.t('activerecord.attributes.line_item.six_month_accrual'), lineItem.data('six-mo')],
+        [I18n.t('activerecord.attributes.line_item.three_month_accrual'), lineItem.data('three-mo')]
+      ]
+    else
+      data = []
+    new Chartkick['BarChart'](lineItem.data('chart-id'), data,
+      {
+        curve: false,
+        messages: {
+          empty: I18n.t('requests.table.specimens.chart.no_data')
+        },
+        library: {
+          layout: {
+            padding: {
+              right: 125
+            }
+          }
+          plugins: {
+            datalabels: {
+              anchor: 'end',
+              align: 'right',
+              formatter: (value, context) ->
+                if context.dataIndex == 0
+                  rate = value / 52 # 52 weeks/yr
+                else if context.dataIndex == 1
+                  rate = value / 26 # 4.33 weeks/mo * 6mo
+                else if context.dataIndex == 2
+                  rate = value / 13 # 4.33 weeks/mo * 3mo
+                console.log context.dataIndex
+                console.log value
+                console.log rate
+                return I18n.t('requests.table.specimens.chart.value', value: value, rate: rate.toFixed(2))
+            }
+          }
+        }
+      }
+    )
+  )
+
   $(document).on('keyup', '#sparc_request_protocol_attributes_research_master_id:not([readonly=readonly])', ->
     clearTimeout(rmidTimer)
     if rmid = $(this).val()
