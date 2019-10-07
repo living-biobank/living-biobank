@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190927195444) do
+ActiveRecord::Schema.define(version: 20191003155010) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -123,8 +123,16 @@ ActiveRecord::Schema.define(version: 20190927195444) do
     t.bigint "user_id"
     t.string "status", default: "New"
     t.bigint "protocol_id"
+    t.text "note_text", limit: 4294967295
+    t.text "note_links", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "additional_variables"
+  end
+
+  create_table "sparc_requests_variables", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "sparc_request_id", null: false
+    t.bigint "variable_id", null: false
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
