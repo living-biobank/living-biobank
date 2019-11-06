@@ -84,7 +84,7 @@
               .form-row
                 .form-group.col
                   = ff_li.label :source_id, class: 'required'
-                  = ff_li.select :source_id, options_for_select(Source.includes(:group).all.map{ |s| [s.value, s.id, { data: { validates_sample_size: s.group.process_sample_size?.to_s } }] }, ff_li.object.source_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker source-select'
+                  = ff_li.select :source_id, options_for_select(Source.includes(:group).all.map{ |s| [s.value, s.id, { data: { validates_sample_size: s.group.process_sample_size?.to_s } }] }, ff_li.object.source_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker source-select', onchange: "updateVariables()"
                 .form-group.col
                   = ff_li.label :query_name, class: 'required'
                   = ff_li.select :query_name, options_from_collection_for_select(queries, 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
@@ -99,11 +99,12 @@
                   = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                     = icon('fas', 'trash')
             .form-group.col-3
-              = f.label :additional_variables?
-              = f.check_box :additional_variables?
-            .form-group.col-3
-              = f.label :variables
-              = f.select :variables, options_for_select(Variable.all.map {|v| [v.name, v.id] }), {}, class: 'selectpicker form-control', multiple: true
+              = f.label :additional_variables
+              = f.check_box :additional_variables
+            .form-group.col-3.variable_select
+              / = render partial: 'variables_select', locals: {f: f}
+              = f.label :variable_ids, "Variables"
+              = f.select :variable_ids, options_from_collection_for_select(@variables, 'id', 'name', f.object.variables.ids), {include_hidden: false}, class: 'selectpicker form-control variable_select', multiple: true
             .form-group
               = f.add_nested_fields_link :specimen_requests, class: 'btn btn-success' do
                 = succeed t(:requests)[:form][:add_specimen] do

@@ -62,10 +62,12 @@ class LineItem < ApplicationRecord
   private
 
   def update_sparc_records
-    ssr = self.sub_service_request
+    if self.sub_service_request
+      ssr = self.sub_service_request
 
-    self.sparc_line_item.destroy
+      self.sparc_line_item.destroy
 
-    ssr.destroy if ssr.line_items.none?
+      ssr.destroy if ssr.line_items.none?
+    end
   end
 end

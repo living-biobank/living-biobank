@@ -1,0 +1,2 @@
+= f.label :variable_ids, "Variables"
+= f.select :variable_ids, options_from_collection_for_select(@variables, 'id', 'name', f.object.variables.ids), {include_hidden: false}, class: 'selectpicker form-control', multiple: true

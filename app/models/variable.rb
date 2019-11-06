@@ -1,7 +1,8 @@
 class Variable < ApplicationRecord
   belongs_to :group
   belongs_to :service, class_name: "SPARC::Service"
-  belongs_to :sparc_request
+  has_many :sparc_requests_variables
+  has_and_belongs_to_many :sparc_requests
 
   validates_presence_of :name
 

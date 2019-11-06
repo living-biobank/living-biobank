@@ -10,7 +10,7 @@ class SparcRequest < ApplicationRecord
   has_many :sources, through: :line_items
   has_many :groups, through: :sources
   has_many :services, through: :groups, source: :services
-  has_many :variables
+  has_and_belongs_to_many :variables
 
   validates :specimen_requests, length: { minimum: 1 }
 

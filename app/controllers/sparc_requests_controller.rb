@@ -3,6 +3,8 @@ class SparcRequestsController < ApplicationController
   before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
   before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
 
+  before_action :get_valid_variables, only: [:new, :edit]
+
   def index
     respond_to do |format|
       format.html
@@ -15,6 +17,8 @@ class SparcRequestsController < ApplicationController
     @sparc_request.build_protocol(type: 'Project')
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.specimen_requests.build
+    @sparc_request.variables.build
+
 
     respond_to :js
   end
@@ -78,6 +82,23 @@ class SparcRequestsController < ApplicationController
     respond_to :js
   end
 
+  def get_valid_variables
+    @variables = Variable.all
+  end
+
+  def update_variables
+    respond_to do |format|
+      @sources = Source.where(id: params[:sources])
+
+      @variables = Variable.where(group_id: @sources.pluck(:group_id))
+
+      puts "Ajax was successful"
+      format.json {
+        render json: {variables: @variables}
+      }
+    end
+  end
+
   private
 
   def find_request
@@ -98,6 +119,8 @@ class SparcRequestsController < ApplicationController
     params.require(:sparc_request).permit(
       :protocol_id,
       :status,
+      :additional_variables,
+      variable_ids: [],
       protocol_attributes: [
         :id,
         :research_master_id,

@@ -50,9 +50,6 @@ $ ->
                   rate = value / 26 # 4.33 weeks/mo * 6mo
                 else if context.dataIndex == 2
                   rate = value / 13 # 4.33 weeks/mo * 3mo
-                console.log context.dataIndex
-                console.log value
-                console.log rate
                 return I18n.t('requests.table.specimens.chart.value', value: value, rate: rate.toFixed(2))
             }
           }
@@ -206,3 +203,20 @@ $ ->
       empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
   }).on 'typeahead:select', (event, suggestion) ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
+
+  @updateVariables = ->
+    source_ids = $(".source-select.selectpicker").map( ->
+      $(this).selectpicker("val")).get()
+    console.log source_ids
+    $.ajax(
+      url: "/update_valid_variables", 
+      data: {sources: source_ids},
+      success: showResponse = (data) ->
+        console.log data
+        options = ""
+
+        $.each data['variables'], (index, value) ->
+          options += "<option value='#{value['id']}'>#{value['name']}</option>"
+
+        $('#sparc_request_variable_ids').html(options).selectpicker('refresh')
+    );
