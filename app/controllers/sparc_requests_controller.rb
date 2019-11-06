@@ -94,8 +94,6 @@ class SparcRequestsController < ApplicationController
         current_user.sparc_requests
       end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).eager_load(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
 
-    @draft_requests
-    @requests       = (current_user.admin? ? SparcRequest.all : current_user.sparc_requests).filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).eager_load(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
     @draft_requests = current_user.sparc_requests.draft.eager_load(:protocol)
   end
 
