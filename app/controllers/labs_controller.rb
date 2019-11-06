@@ -2,7 +2,12 @@ class LabsController < ApplicationController
   before_action :verify_honest_broker
 
   def index
-    @labs = current_user.honest_broker.labs.includes(:patient, :populations, :line_item)
+    @labs =
+      if current_user.admin?
+        Lab.all.usable.order(status: :desc)
+      else
+        current_user.honest_broker.labs.usable.retrievable(current_user).order(status: :desc)
+      end.eager_load(:source, :patient, :line_item)
 
     respond_to :html
   end
