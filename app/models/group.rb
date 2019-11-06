@@ -4,8 +4,9 @@ class Group < ApplicationRecord
   has_many :services,   dependent: :destroy
   has_many :variables,  dependent: :destroy
 
-  has_many :labs,       through: :sources
-  has_many :line_items, through: :sources
+  has_many :labs,           through: :sources
+  has_many :line_items,     through: :sources
+  has_many :sparc_requests, through: :line_items
 
   validates_presence_of :name
   validates_uniqueness_of :name

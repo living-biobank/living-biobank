@@ -85,8 +85,18 @@ class SparcRequestsController < ApplicationController
   end
 
   def find_requests
+    @requests =
+      if current_user.admin?
+        SparcRequest.all
+      elsif current_user.honest_broker.present?
+        SparcRequest.where(id: current_user.honest_broker.sparc_requests.ids + current_user.sparc_requests.ids)
+      else
+        current_user.sparc_requests
+      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).eager_load(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
+
+    @draft_requests
     @requests       = (current_user.admin? ? SparcRequest.all : current_user.sparc_requests).filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).eager_load(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
-    @draft_requests = (current_user.admin? ? SparcRequest.draft : current_user.sparc_requests.draft).eager_load(:protocol)
+    @draft_requests = current_user.sparc_requests.draft.eager_load(:protocol)
   end
 
   def sparc_request_params
