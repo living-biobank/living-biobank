@@ -23,7 +23,7 @@
           .card-body
             %h4.card-title.font-weight-bold
               = t('requests.table.specimens.header')
-            - request.line_items.specimen_requests.each do |li|
+            - request.specimen_requests.each do |li|
               .row.line-item
                 .col-sm-4.col-12
                   %h5.d-flex.flex-column.mb-0<
@@ -34,11 +34,11 @@
                 .col-sm-8.col-12
                   - unless request.cancelled?
                     = render 'line_items/progress_bar', li: li
-          - if request.line_items.additional_services.any?
+          - if request.additional_services.any?
             .card-body.border-top
               %h4.card-title.font-weight-bold<
                 = t('requests.table.additional_services.header')
-              - request.line_items.additional_services.each do |li|
+              - request.additional_services.each do |li|
                 .row.line-item
                   .col-sm-4.col-12
                     %h5.mb-0<

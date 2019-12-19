@@ -1,4 +1,4 @@
-- labs.usable.retrievable(current_user).order(status: :desc).each do |lab|
+- labs.each do |lab|
   .card
     .card-header
       .row
@@ -15,7 +15,7 @@
             = lab_status_context(lab)
     .card-body
       - if lab.available?
-        - lab.line_items.each do |line_item|
+        - lab.line_items.eager_load(sparc_request: [:primary_pi, :protocol]).each do |line_item|
           .row.mb-3
             .col-10
               %h5.font-weight-bold.mb-0
@@ -38,7 +38,7 @@
         .row
           .col-10
             %h5.font-weight-bold.mb-0
-              =  request_title_display(lab.line_item.sparc_request)
+              = request_title_display(lab.line_item.sparc_request)
             .d-flex.pl-3
               = request_duration_display(lab.line_item.sparc_request)
           .col-2.text-right

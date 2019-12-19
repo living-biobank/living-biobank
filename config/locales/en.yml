@@ -179,7 +179,7 @@ en:
         chart:
           header: "%{source} Sample Accrual"
           loading: "Loading..."
-          no_data: "We haven't received any data yet for samples matching your request. Pleease try again later."
+          no_data: "Processing data for samples matching your request. Please try again later."
           value: "%{value} (%{rate}/week)"
         line_item_no_sample_size:
           singular: "%{source} - %{amount_requested} sample"

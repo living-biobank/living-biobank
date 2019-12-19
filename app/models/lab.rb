@@ -6,7 +6,7 @@ class Lab < ApplicationRecord
 
   has_many :populations, through: :patient
   has_many :line_items, -> (lab) { where(source: lab.source) }, through: :populations #This association is for matching specimen sources between labs and line items
-  
+
   delegate :identifier, to: :patient
   delegate :mrn, to: :patient
   delegate :dob, to: :patient
@@ -16,7 +16,7 @@ class Lab < ApplicationRecord
     where(status: [I18n.t(:labs)[:statuses][:available], I18n.t(:labs)[:statuses][:released]]) 
   }
 
-  scope :retrievable, lambda { |user|
+  scope :retrievable, -> (user) {
     if user.honest_broker.process_specimen_retrieval == false
       where(status: [I18n.t(:labs)[:statuses][:available]])
     end
