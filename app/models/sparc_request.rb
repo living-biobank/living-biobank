@@ -1,4 +1,5 @@
 class SparcRequest < ApplicationRecord
+  attr_accessor :irb
   belongs_to :user
   belongs_to :protocol, class_name: "SPARC::Protocol"
 
@@ -7,10 +8,11 @@ class SparcRequest < ApplicationRecord
   has_many :line_items, dependent: :destroy
   has_many :specimen_requests, -> { where.not(source_id: nil) }, class_name: "LineItem"
   has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem"
+  
   has_many :sources, through: :line_items
   has_many :groups, through: :sources
   has_many :services, through: :groups, source: :services
-  has_and_belongs_to_many :variables
+  has_many :variables, through: :groups
 
   validates :specimen_requests, length: { minimum: 1 }
 
@@ -19,9 +21,11 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :update_sparc_records, unless: :draft?
-
   after_update :add_additional_services, if: :in_process?
+  after_save :update_sparc_records, unless: :draft?
+  
+
+  
 
   scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
 
@@ -138,6 +142,11 @@ class SparcRequest < ApplicationRecord
     self.status == I18n.t(:requests)[:statuses][:cancelled]
   end
 
+  def irb
+    rmid = self.protocol.research_master_id
+    SPARC::Protocol.get_rmid(rmid)['eirb_validated'].present?
+  end
+
   private
 
   def update_sparc_records
@@ -155,9 +164,18 @@ class SparcRequest < ApplicationRecord
     # Find or create an Identity for the requester
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
+    # Add additional services based on services the Group provides
     self.services.each do |service|
       unless self.additional_services.exists?(service: service.sparc_service)
         line_item = self.additional_services.create(service: service.sparc_service)
+        create_sparc_line_item(line_item, sr, requester)
+      end
+    end
+
+    # Add additional services based on services the Variable requires
+    self.variables.each do |variable|
+      if self.instance_eval(variable.condition)
+        line_item = self.additional_services.create(service: variable.service_id)
         create_sparc_line_item(line_item, sr, requester)
       end
     end
@@ -184,4 +202,6 @@ class SparcRequest < ApplicationRecord
 
     line_item.update_attribute(:sparc_id, sparc_li.id)
   end
+
+
 end

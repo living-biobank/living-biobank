@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191003155010) do
+ActiveRecord::Schema.define(version: 20191217204324) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -127,7 +127,6 @@ ActiveRecord::Schema.define(version: 20191003155010) do
     t.text "note_links", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "additional_variables"
   end
 
   create_table "sparc_requests_variables", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -140,6 +139,7 @@ ActiveRecord::Schema.define(version: 20191003155010) do
     t.string "last_name"
     t.string "email", default: "", null: false
     t.string "net_id"
+    t.boolean "admin"
     t.bigint "honest_broker_id"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -161,6 +161,9 @@ ActiveRecord::Schema.define(version: 20191003155010) do
     t.bigint "group_id"
     t.integer "service_id"
     t.string "name"
+    t.string "alternative_text"
+    t.string "condition"
+    t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id", "name"], name: "index_variables_on_group_id_and_name", unique: true

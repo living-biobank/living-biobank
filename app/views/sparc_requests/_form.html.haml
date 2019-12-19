@@ -98,13 +98,6 @@
                   %label.w-100 &nbsp;
                   = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                     = icon('fas', 'trash')
-            .form-group.col-3
-              = f.label :additional_variables
-              = f.check_box :additional_variables
-            .form-group.col-3.variable_select
-              / = render partial: 'variables_select', locals: {f: f}
-              = f.label :variable_ids, "Variables"
-              = f.select :variable_ids, options_from_collection_for_select(@variables, 'id', 'name', f.object.variables.ids), {include_hidden: false}, class: 'selectpicker form-control variable_select', multiple: true
             .form-group
               = f.add_nested_fields_link :specimen_requests, class: 'btn btn-success' do
                 = succeed t(:requests)[:form][:add_specimen] do

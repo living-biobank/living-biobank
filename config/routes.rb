@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? request.env['warden'].user.honest_broker.present? : false } # we have an honest broker
   root to: 'sparc_requests#index', constraints: lambda { |request| request.env['warden'].user } # no honest broker but we are signed in
 
-  get '/update_valid_variables', to: 'sparc_requests#update_variables'
 
   devise_scope :user do
     root to: "devise/sessions#new"

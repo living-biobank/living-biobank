@@ -203,20 +203,3 @@ $ ->
       empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
   }).on 'typeahead:select', (event, suggestion) ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
-
-  @updateVariables = ->
-    source_ids = $(".source-select.selectpicker").map( ->
-      $(this).selectpicker("val")).get()
-    console.log source_ids
-    $.ajax(
-      url: "/update_valid_variables", 
-      data: {sources: source_ids},
-      success: showResponse = (data) ->
-        console.log data
-        options = ""
-
-        $.each data['variables'], (index, value) ->
-          options += "<option value='#{value['id']}'>#{value['name']}</option>"
-
-        $('#sparc_request_variable_ids').html(options).selectpicker('refresh')
-    );

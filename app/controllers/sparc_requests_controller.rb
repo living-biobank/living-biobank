@@ -3,7 +3,7 @@ class SparcRequestsController < ApplicationController
   before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
   before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
 
-  before_action :get_valid_variables, only: [:new, :edit]
+  # before_action :get_valid_variables, only: [:new, :edit]
 
   def index
     respond_to do |format|
@@ -17,7 +17,6 @@ class SparcRequestsController < ApplicationController
     @sparc_request.build_protocol(type: 'Project')
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.specimen_requests.build
-    @sparc_request.variables.build
 
 
     respond_to :js
@@ -82,22 +81,30 @@ class SparcRequestsController < ApplicationController
     respond_to :js
   end
 
-  def get_valid_variables
-    @variables = Variable.all
-  end
+  # def get_valid_variables
+  #   @variables = Variable.all
+  # end
 
-  def update_variables
-    respond_to do |format|
-      @sources = Source.where(id: params[:sources])
+  # def update_variables
+  #   respond_to do |format|
+  #     @sparc_request = current_user.sparc_requests.new(sparc_request_params)
+      
+      
+  #     @sources = Source.where(id: @sparc_request.specimen_requests.map {|x| x.source_id})
 
-      @variables = Variable.where(group_id: @sources.pluck(:group_id))
+  #     @request_variables = Variable.where(group_id: @sources.pluck(:group_id))
 
-      puts "Ajax was successful"
-      format.json {
-        render json: {variables: @variables}
-      }
-    end
-  end
+  #     if @request_variables.blank?
+  #       @additional_variables = false
+  #     else
+  #       @additional_variables = true
+  #     end
+
+  #     format.json {
+  #       render json: {additional_variables: @additional_variables}
+  #     }
+  #   end
+  # end
 
   private
 
@@ -119,8 +126,7 @@ class SparcRequestsController < ApplicationController
     params.require(:sparc_request).permit(
       :protocol_id,
       :status,
-      :additional_variables,
-      variable_ids: [],
+      :irb,
       protocol_attributes: [
         :id,
         :research_master_id,
