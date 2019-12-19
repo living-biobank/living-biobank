@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20191219154609) do
 
+
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false

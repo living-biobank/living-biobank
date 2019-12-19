@@ -23,14 +23,6 @@ class LineItem < ApplicationRecord
 
   before_destroy :update_sparc_records
 
-  scope :specimen_requests, -> {
-    where.not(source_id: nil)
-  }
-
-  scope :additional_services, -> {
-    where(source_id: nil)
-  }
-
   def specimen_request?
     self.source_id.present?
   end
@@ -48,11 +40,12 @@ class LineItem < ApplicationRecord
   end
 
   def progress
-    if self.specimen_request?
-      labs.where(status: I18n.t(:labs)[:statuses][:retrieved]).count
-    else
-      self.sub_service_request.complete? ? 1 : 0
-    end
+    @progress ||=
+      if self.specimen_request?
+        labs.where(status: I18n.t(:labs)[:statuses][:retrieved]).count
+      else
+        self.sub_service_request.complete? ? 1 : 0
+      end
   end
 
   def percent_progress
