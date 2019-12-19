@@ -171,8 +171,10 @@ class SparcRequest < ApplicationRecord
     # Add additional services based on services the Variable requires
     self.variables.each do |variable|
       if self.instance_eval(variable.condition)
-        line_item = self.additional_services.create(service: SPARC::Service.find(variable.service_id))
-        create_sparc_line_item(line_item, sr, requester)
+        unless self.additional_services.exists?(service: variable.service)
+          line_item = self.additional_services.create(service: variable.service)
+          create_sparc_line_item(line_item, sr, requester)
+        end
       end
     end
   end
