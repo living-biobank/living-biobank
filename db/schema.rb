@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190927195444) do
+ActiveRecord::Schema.define(version: 20191219154609) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -123,6 +123,8 @@ ActiveRecord::Schema.define(version: 20190927195444) do
     t.bigint "user_id"
     t.string "status", default: "New"
     t.bigint "protocol_id"
+    t.text "note_text", limit: 4294967295
+    t.text "note_links", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -132,6 +134,7 @@ ActiveRecord::Schema.define(version: 20190927195444) do
     t.string "last_name"
     t.string "email", default: "", null: false
     t.string "net_id"
+    t.boolean "admin"
     t.bigint "honest_broker_id"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -153,8 +156,10 @@ ActiveRecord::Schema.define(version: 20190927195444) do
     t.bigint "group_id"
     t.integer "service_id"
     t.string "name"
+    t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "condition"
     t.index ["group_id", "name"], name: "index_variables_on_group_id_and_name", unique: true
     t.index ["group_id"], name: "index_variables_on_group_id"
   end
