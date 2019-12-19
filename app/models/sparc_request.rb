@@ -10,6 +10,7 @@ class SparcRequest < ApplicationRecord
   has_many :sources, through: :line_items
   has_many :groups, through: :sources
   has_many :services, through: :groups, source: :services
+  has_many :variables, through: :groups
 
   validates :specimen_requests, length: { minimum: 1 }
 
@@ -137,6 +138,11 @@ class SparcRequest < ApplicationRecord
     self.status == I18n.t(:requests)[:statuses][:cancelled]
   end
 
+  def irb
+    rmid = self.protocol.research_master_id
+    SPARC::Protocol.get_rmid(rmid)['eirb_validated'].present?
+  end
+
   private
 
   def update_sparc_records
@@ -154,10 +160,21 @@ class SparcRequest < ApplicationRecord
     # Find or create an Identity for the requester
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
+    # Add additional services based on services the Group provides
     self.services.each do |service|
       unless self.additional_services.exists?(service: service.sparc_service)
         line_item = self.additional_services.create(service: service.sparc_service)
         create_sparc_line_item(line_item, sr, requester)
+      end
+    end
+
+    # Add additional services based on services the Variable requires
+    self.variables.each do |variable|
+      if self.instance_eval(variable.condition)
+        unless self.additional_services.exists?(service: variable.service)
+          line_item = self.additional_services.create(service: variable.service)
+          create_sparc_line_item(line_item, sr, requester)
+        end
       end
     end
   end

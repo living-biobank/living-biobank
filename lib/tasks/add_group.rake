@@ -175,8 +175,21 @@ namespace :data do
             end
           end
 
-          group.variables.create(name: variable_name, service_id: service_id)
-          puts "\nAdded Variable \"#{variable_name} / #{service_id} - #{service.name} (#{service.process_ssrs_organization.name})\" to #{group_name}.\n\n"
+          condition = nil
+          condition_valid = false
+          while !condition_valid
+            print "Please input a condition under which this variable\'s service should be added to the request: "
+            condition = STDIN.gets.chomp
+
+            if condition.blank? == true
+              puts "No condition input was detected"
+            else
+              condition_valid = true
+            end
+          end
+
+          group.variables.create(name: variable_name, service_id: service_id, condition: condition)
+          puts "\nAdded Variable \"#{variable_name} / #{service_id} - #{service.name} (#{service.process_ssrs_organization.name})\", with the condition \"#{condition}\" to #{group_name}.\n\n"
         elsif ['n', 'no'].include?(input)
           variables_done = true
         else

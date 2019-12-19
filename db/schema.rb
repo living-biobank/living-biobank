@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191105190352) do
+ActiveRecord::Schema.define(version: 20191219154609) do
+
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -156,6 +157,7 @@ ActiveRecord::Schema.define(version: 20191105190352) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "condition"
     t.index ["group_id", "name"], name: "index_variables_on_group_id_and_name", unique: true
     t.index ["group_id"], name: "index_variables_on_group_id"
   end
