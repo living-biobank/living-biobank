@@ -1,23 +1,58 @@
-.col-xl-3.col-lg-6.col-md-9.mx-auto.h-50#loginContainer
+.col-xl-9.col-lg-11.col-md-11.mx-auto.h-50#loginContainer
+  .display-1.text-center.bg-dark.text-white.p-3
+    = t(:site_name)
   .card
-    .card-header.bg-dark
-      %h1.text-center.text-white.m-0
-        = t(:site_name)
-    .card-body
-      %h2.card-title
-        = t(:login)[:header]
-      = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
-        - if flash[:alert]
-          .form-group
-            - flash.each do |k,v|
-              %span.form-text.form-error
-                = v
-        .form-group
-          = f.text_field :net_id, autofocus: true, class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:net_id]
-        .form-group
-          = f.password_field :password, autocomplete: 'off', class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:password]
-        - if devise_mapping.rememberable?
-          .form-group.form-check
-            = f.check_box :remember_me, class: 'form-check-input'
-            = f.label :remember_me, t(:login)[:remember_me], class: 'form-check-label'
-        = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-dark'
+    .card-body.p-0
+      .row.m-0
+        .col-6.bg-light.p-3.text-dark
+          %h2.text-center.mb-3
+            = t(:home)[:header]
+          %p
+            = t(:home)[:text1]
+          %p
+            = t(:home)[:text2]
+          %p
+            = t(:home)[:text3]
+          %p
+            = t(:home)[:text4]
+          .row.my-5.mx-auto.justify-content-right
+            .col-4.px-auto
+              .card.bg-light.border-0
+                .font-weight-bold
+                  = t(:home)[:links][:help1][:text]
+                %br
+                  = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/"
+            .col-4.px-auto
+              .card.bg-light.border-0
+                .font-weight-bold
+                  = t(:home)[:links][:help2][:text]
+                %br
+                  = link_to t(:home)[:links][:help2][:link], "https://act-shrine.musc.edu/shrine-api/shrine-webclient/"
+            .col-4.px-auto
+              .card.bg-light.border-0
+                .font-weight-bold
+                  = t(:home)[:links][:help3][:text]
+                %ul.pl-3
+                  %li
+                    = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en"
+                  %li
+                    = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs"
+        .col-6.mt-5.p-3
+          %h2.text-center
+            = t(:login)[:header]
+          %p
+            = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
+              - if flash[:alert]
+                .form-group
+                  - flash.each do |k,v|
+                    %span.form-text.form-error
+                      = v
+              .form-group
+                = f.text_field :net_id, autofocus: true, class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:net_id]
+              .form-group
+                = f.password_field :password, autocomplete: 'off', class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:password]
+              - if devise_mapping.rememberable?
+                .form-group.form-check
+                  = f.check_box :remember_me, class: 'form-check-input'
+                  = f.label :remember_me, t(:login)[:remember_me], class: 'form-check-label'
+              = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-dark'
