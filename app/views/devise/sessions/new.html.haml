@@ -15,28 +15,23 @@
             = t(:home)[:text3]
           %p
             = t(:home)[:text4]
-          .row.my-5.mx-auto.justify-content-right
-            .col-4.px-auto
-              .card.bg-light.border-0
-                .font-weight-bold
-                  = t(:home)[:links][:help1][:text]
-                %br
-                  = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/"
-            .col-4.px-auto
-              .card.bg-light.border-0
-                .font-weight-bold
-                  = t(:home)[:links][:help2][:text]
-                %br
-                  = link_to t(:home)[:links][:help2][:link], "https://act-shrine.musc.edu/shrine-api/shrine-webclient/"
-            .col-4.px-auto
-              .card.bg-light.border-0
-                .font-weight-bold
-                  = t(:home)[:links][:help3][:text]
-                %ul.pl-3
-                  %li
-                    = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en"
-                  %li
-                    = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs"
+          .row.my-5
+            .col-4.d-flex.flex-column
+              .font-weight-bold
+                = t(:home)[:links][:help1][:text]
+              = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/"
+            .col-4.d-flex.flex-column
+              .font-weight-bold
+                = t(:home)[:links][:help2][:text]
+              = link_to t(:home)[:links][:help2][:link], "https://act-shrine.musc.edu/shrine-api/shrine-webclient/"
+            .col-4.d-flex.flex-column
+              .font-weight-bold
+                = t(:home)[:links][:help3][:text]
+              %ul.pl-3
+                %li
+                  = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en"
+                %li
+                  = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs"
         .col-6.mt-5.p-3
           %h2.text-center
             = t(:login)[:header]
