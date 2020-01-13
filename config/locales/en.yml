@@ -105,6 +105,23 @@ en:
     password: "Password"
     remember_me: "Remember Me"
     submit: "Login"
+  home:
+    header: "Living Biobank enables access to clinical specimens and microbiome data"
+    text1: "Living Biobank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
+    text2: "Submissions of blood samples will result in blood specimens whereas those of microbiome will result in assay data."
+    text3: "Living Biobank is an end-to-end workflow that allows investigators to acquire specimens/data based on clinical criteria from the electronic health records, e-phenotype, in a de-identified manner."
+    text4: "Investigators interested in obtaining data through Living Biobank must create an electronic phenotype using i2b2."
+    links:
+      help1:
+        text: "MUSC investigators"
+        link: "login to MUSC i2b2"
+      help2: 
+        text: "ACT-SHRINE investigators"
+        link: "login to the ACT-SHRINE i2b2"
+      help3:
+        text: "i2b2 guide and FAQ"
+        link1: "i2b2 user guide"
+        link2: "i2b2 FAQ"
   requests:
     header: "Requests"
     create: "New Request"
