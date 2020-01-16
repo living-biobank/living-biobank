@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :users
+  if Rails.env.development? || Rails.env.test?
+    devise_for :users
+  else
+    devise_for :users,
+                 controllers: {
+                   omniauth_callbacks: 'users/omniauth_callbacks',
+                 }, path_names: { sign_in: 'auth/shibboleth' }
+  end
 
   resources :labs, only: [:index, :update]
 

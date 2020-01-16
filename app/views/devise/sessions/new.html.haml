@@ -1,53 +1,55 @@
-.col-xl-9.col-lg-11.col-md-11.mx-auto.h-50#loginContainer
-  .display-1.text-center.bg-dark.text-white.p-3
-    = t(:site_name)
+.col-xl-6.col-lg-8.col-md-11.mx-auto.mt-5#loginContainer
   .card
-    .card-body.p-0
-      .row.m-0
-        .col-6.bg-light.p-3.text-dark
-          %h2.text-center.mb-3
-            = t(:home)[:header]
-          %p
-            = t(:home)[:text1]
-          %p
-            = t(:home)[:text2]
-          %p
-            = t(:home)[:text3]
-          %p
-            = t(:home)[:text4]
-          .row.my-5
-            .col-4.d-flex.flex-column
-              .font-weight-bold
-                = t(:home)[:links][:help1][:text]
-              = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/"
-            .col-4.d-flex.flex-column
-              .font-weight-bold
-                = t(:home)[:links][:help2][:text]
-              = link_to t(:home)[:links][:help2][:link], "https://act-shrine.musc.edu/shrine-api/shrine-webclient/"
-            .col-4.d-flex.flex-column
-              .font-weight-bold
-                = t(:home)[:links][:help3][:text]
-              %ul.pl-3
-                %li
-                  = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en"
-                %li
-                  = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs"
-        .col-6.mt-5.p-3
-          %h2.text-center
-            = t(:login)[:header]
-          %p
-            = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
-              - if flash[:alert]
-                .form-group
-                  - flash.each do |k,v|
-                    %span.form-text.form-error
-                      = v
+    .card-header.bg-dark.text-white.text-center
+      .display-1
+        = t(:site_name)
+    .card-body.p-5
+      %h2.text-center.mb-3
+        = t(:home)[:header]
+      %p
+        = t(:home)[:text1]
+      %p
+        = t(:home)[:text2]
+      %p
+        = t(:home)[:text3]
+      %p
+        = t(:home)[:text4]
+      .d-flex.justify-content-between
+        .d-flex.flex-column
+          .font-weight-bold
+            = t(:home)[:links][:help1][:text]
+          = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/"
+        .d-flex.flex-column
+          .font-weight-bold
+            = t(:home)[:links][:help2][:text]
+          = link_to t(:home)[:links][:help2][:link], "https://act-shrine.musc.edu/shrine-api/shrine-webclient/"
+        .d-flex.flex-column
+          .font-weight-bold
+            = t(:home)[:links][:help3][:text]
+          %ul.pl-3
+            %li
+              = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en"
+            %li
+              = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs"
+      - if Rails.env.development? || Rails.env.test?
+        %h2.text-center
+          = t(:login)[:header]
+        %p
+          = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
+            - if flash[:alert]
               .form-group
-                = f.text_field :net_id, autofocus: true, class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:net_id]
-              .form-group
-                = f.password_field :password, autocomplete: 'off', class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:password]
-              - if devise_mapping.rememberable?
-                .form-group.form-check
-                  = f.check_box :remember_me, class: 'form-check-input'
-                  = f.label :remember_me, t(:login)[:remember_me], class: 'form-check-label'
-              = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-dark'
+                - flash.each do |k,v|
+                  %span.form-text.form-error
+                    = v
+            .form-group
+              = f.text_field :net_id, autofocus: true, class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:net_id]
+            .form-group
+              = f.password_field :password, autocomplete: 'off', class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:password]
+            - if devise_mapping.rememberable?
+              .form-group.form-check
+                = f.check_box :remember_me, class: 'form-check-input'
+                = f.label :remember_me, t(:login)[:remember_me], class: 'form-check-label'
+            = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-dark'
+      - else
+        .text-center
+          = link_to "Sign In With Shibboleth", user_session_path, method: :post, class: 'btn btn-primary'

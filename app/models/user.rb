@@ -4,8 +4,8 @@ class User < ApplicationRecord
   has_many :sparc_requests
 
   # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, authentication_keys: [:net_id]
+  # :confirmable, :lockable, :timeoutable
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, authentication_keys: [:net_id]
 
   scope :honest_brokers, -> {
     where(honest_broker: true)
@@ -18,6 +18,14 @@ class User < ApplicationRecord
     elsif conditions.has_key?(:email)
       where(conditions.to_hash).first
     end
+  end
+
+  def self.find_for_shibboleth_oauth(auth, signed_in_resource=nil)
+    unless user = User.where(net_id: auth.uid).first
+      email = auth.info.email.blank? ? auth.uid : auth.info.email # in case shibboleth doesn't return the required parameters
+      user = User.create(net_id: auth.uid, first_name: auth.info.first_name, last_name: auth.info.last_name, email: email, password: Devise.friendly_token[0,20], approved: true)
+    end
+    user
   end
 
   def full_name

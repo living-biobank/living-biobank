@@ -100,7 +100,7 @@ en:
       retrieve_specimen:  "Specimen Retrieved"
       discard_specimen:  "Specimen Discarded"
   login:
-    header: "Login"
+    header: "Developer Login"
     net_id: "NetID"
     password: "Password"
     remember_me: "Remember Me"
