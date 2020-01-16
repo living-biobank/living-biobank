@@ -92,9 +92,9 @@ class SparcRequestsController < ApplicationController
         SparcRequest.where(id: current_user.honest_broker.sparc_requests.ids + current_user.sparc_requests.ids)
       else
         current_user.sparc_requests
-      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).eager_load(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
+      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
 
-    @draft_requests = current_user.sparc_requests.draft.eager_load(:protocol)
+    @draft_requests = current_user.sparc_requests.draft.includes(:protocol)
   end
 
   def sparc_request_params
