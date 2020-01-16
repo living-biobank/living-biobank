@@ -1,10 +1,10 @@
 .col-xl-6.col-lg-8.col-md-11.mx-auto.mt-5#loginContainer
   .card
     .card-header.bg-dark.text-white.text-center
-      .display-1
+      .display-3
         = t(:site_name)
     .card-body.p-5
-      %h2.text-center.mb-3
+      %h3.text-center.mb-3
         = t(:home)[:header]
       %p
         = t(:home)[:text1]
@@ -18,22 +18,22 @@
         .d-flex.flex-column
           .font-weight-bold
             = t(:home)[:links][:help1][:text]
-          = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/"
+          = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
         .d-flex.flex-column
           .font-weight-bold
             = t(:home)[:links][:help2][:text]
-          = link_to t(:home)[:links][:help2][:link], "https://act-shrine.musc.edu/shrine-api/shrine-webclient/"
+          = link_to t(:home)[:links][:help2][:link], "https://act-shrine.musc.edu/shrine-api/shrine-webclient/", target: :_blank
         .d-flex.flex-column
           .font-weight-bold
             = t(:home)[:links][:help3][:text]
           %ul.pl-3
             %li
-              = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en"
+              = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
             %li
-              = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs"
-      - if Rails.env.development? || Rails.env.test?
-        %h2.text-center
-          = t(:login)[:header]
+              = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
+      - unless Rails.env.development? || Rails.env.test?
+        %h3.text-center
+          = t(:home)[:login][:header]
         %p
           = form_for resource, as: resource_name, url: session_path(resource_name) do |f|
             - if flash[:alert]
@@ -42,14 +42,14 @@
                   %span.form-text.form-error
                     = v
             .form-group
-              = f.text_field :net_id, autofocus: true, class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:net_id]
+              = f.text_field :net_id, autofocus: true, class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:home)[:login][:net_id]
             .form-group
-              = f.password_field :password, autocomplete: 'off', class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:login)[:password]
+              = f.password_field :password, autocomplete: 'off', class: ['form-control', flash[:alert] ? 'is-invalid' : ''], placeholder: t(:home)[:login][:password]
             - if devise_mapping.rememberable?
               .form-group.form-check
                 = f.check_box :remember_me, class: 'form-check-input'
-                = f.label :remember_me, t(:login)[:remember_me], class: 'form-check-label'
-            = f.submit t(:login)[:submit], class: 'btn btn-lg btn-block btn-dark'
+                = f.label :remember_me, t(:home)[:login][:remember_me], class: 'form-check-label'
+            = f.submit t(:home)[:login][:submit], class: 'btn btn-lg btn-block btn-primary'
       - else
         .text-center
-          = link_to "Sign In With Shibboleth", user_session_path, method: :post, class: 'btn btn-primary'
+          = link_to "Sign In With Shibboleth", user_session_path, method: :post, class: 'btn btn-lg btn-block btn-primary'
