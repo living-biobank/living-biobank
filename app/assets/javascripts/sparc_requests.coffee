@@ -5,18 +5,7 @@ $ ->
     if !$(this).val()
       resetProtocolFields()
 
-  $(document).on('mouseenter', '.specimen-line-item', ->
-    _this = this
-    $(this).popover('show')
-    $('.popover').on 'mouseleave', ->
-      $(_this).popover('hide')
-  ).on('mouseleave', '.specimen-line-item', ->
-    _this = this
-    setTimeout( (->
-      if !$('.popover:hover').length
-        $(_this).popover('hide')
-    ), 300)
-  ).on('shown.bs.popover', '.specimen-line-item', (e) ->
+  $(document).on('shown.bs.popover', '.specimen-line-item', (e) ->
     lineItem = $(e.target)
 
     if lineItem.data('one-yr') || lineItem.data('six-mo') || lineItem.data('three-mo')

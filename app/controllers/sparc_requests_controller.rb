@@ -40,7 +40,12 @@ class SparcRequestsController < ApplicationController
   end
 
   def edit
+    @is_draft             = @sparc_request.draft?
     @sparc_request.status = t(:requests)[:statuses][:pending]
+
+    if @sparc_request.specimen_requests.none?
+      @sparc_request.specimen_requests.build
+    end
 
     respond_to :js
   end

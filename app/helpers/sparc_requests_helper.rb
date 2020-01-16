@@ -25,8 +25,8 @@ module SparcRequestsHelper
     # of popovers on XS screens
     raw(
       sr.identifier.truncate(60) +
-      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-none d-md-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'click hover', content: render('sparc_requests/details_popover', request: sr) }) +
-      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-inline-block d-md-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click hover', content: render('sparc_requests/details_popover', request: sr) })
+      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-none d-md-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
+      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-inline-block d-md-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) })
     )
   end
 

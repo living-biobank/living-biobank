@@ -17,8 +17,8 @@ class LineItem < ApplicationRecord
   has_one :sub_service_request, through: :sparc_line_item, class_name: "SPARC::SubServiceRequest"
   has_one :group, through: :source
 
-  validates_presence_of :query_name, :number_of_specimens_requested
-  validates_numericality_of :number_of_specimens_requested, greater_than: 0
+  validates_presence_of :query_name, :number_of_specimens_requested, :source_id
+  validates_numericality_of :number_of_specimens_requested, greater_than: 0, if: Proc.new{ |record| record.number_of_specimens_requested.present? }
   validates_presence_of :minimum_sample_size, if: Proc.new{ |li| li.specimen_request? && li.group.process_sample_size? }
 
   before_destroy :update_sparc_records
