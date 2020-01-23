@@ -1,7 +1,7 @@
 class SparcRequestsController < ApplicationController
 
   before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
-  before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
+  before_action :find_requests, only: [:index]
 
   def index
     respond_to do |format|
@@ -36,6 +36,8 @@ class SparcRequestsController < ApplicationController
       @errors = @sparc_request.errors
     end
 
+    find_requests
+
     respond_to :js
   end
 
@@ -62,11 +64,15 @@ class SparcRequestsController < ApplicationController
       @errors = @sparc_request.errors
     end
 
+    find_requests
+
     respond_to :js
   end
 
   def destroy
     @sparc_request.destroy
+
+    find_requests
 
     respond_to :js
   end
@@ -79,6 +85,8 @@ class SparcRequestsController < ApplicationController
     else
       flash.now[:error] = t(:requests)[:failed]
     end
+
+    find_requests
 
     respond_to :js
   end
