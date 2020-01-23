@@ -36,7 +36,7 @@ class LineItem < ApplicationRecord
   end
 
   def progress_end
-    self.specimen_request? ? self.number_of_specimens_requested : 1
+    self.specimen_request? ? self.number_of_specimens_requested : 1 rescue 0
   end
 
   def progress
