@@ -102,7 +102,7 @@ module SparcRequestsHelper
   end
 
   def request_actions(sr)
-    content_tag :div do
+    content_tag :div, class: 'mb-1' do
       raw([
         complete_request_button(sr),
         finalize_request_button(sr),
