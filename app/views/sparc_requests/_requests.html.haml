@@ -4,21 +4,22 @@
       .card
         .card-header{ data: { toggle: 'collapse', target: ".request-#{request.id}-collapse" } }
           .row
-            .col-12.col-sm-10
-              %h3.d-flex.align-items-start.w-100.font-weight-bold.mb-1
+            .col-12.col-sm-10.d-flex.flex-column.justify-content-between
+              %h2.d-flex.align-items-center.w-100.font-weight-bold.mb-1
                 = icon('fas', 'caret-down mr-2 mt-1')
                 = request_title_display(request)
                 .d-none.d-sm-block
                   = request_status_context(request)
               %h4.mb-0
-                %small.d-flex.d-sm-block.text-muted<
+                %small.text-muted<
                   = requester_display(request)
-                  %span.ml-2<
-                    = request_duration_display(request)
-            .col-12.col-sm-2.d-flex.align-items-start.justify-content-between.justify-content-sm-end
+            .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end
               %h3.d-block.d-sm-none.mb-0
                 = request_status_context(request)
               = request_actions(request)
+              %h4.mb-0.mt-1
+                %small.text-muted<
+                  = request_duration_display(request)
         .collapse.show{ class: "request-#{request.id}-collapse" }
           .card-body
             %h4.card-title.font-weight-bold

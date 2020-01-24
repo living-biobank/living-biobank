@@ -66,13 +66,16 @@ en:
       id: "Job ID"
   labs:
     header: "Lab Specimens"
+    none: "There are no available specimens at this time"
     search:
       placeholder: "Verify Samples"
       found: "Specimens Found"
       not_found: "No Specimens found"
     filters:
       search: "Search"
+      status: "Filter by Status"
       sort_by: "Sort By"
+      sort_order: "Order"
     fields:
       id: "Lab ID"
       header: "Specimen #: %{accession_number} (%{source})"
@@ -111,7 +114,7 @@ en:
         link: "Log in to MUSC i2b2"
       help2: 
         text: "ACT-SHRINE Investigators"
-        link: "Log in to the ACT-SHRINE i2b2"
+        link: "Access your participating site's i2b2"
       help3:
         text: "i2b2 Guide and FAQ"
         link1: "i2b2 User Guide"
@@ -124,6 +127,7 @@ en:
       submit: "Login"
   requests:
     header: "Requests"
+    none: "There are no requests at this time"
     create: "New Request"
     create_confirm:
       title: "LIVING BIOBANK USE AGREEMENT"
@@ -142,18 +146,21 @@ en:
       cancelled: "Cancelled"
     filters:
       search: "Search"
+      status: "Filter by Status"
+      any_status: "Any Status"
       sort_by: "Sort By"
-      status: "Status"
+      sort_order: "Order"
     fields:
-      protocol_id: "Protocol ID"
-      title: "Title"
-      short_title: "Short Title"
-      time_remaining: "Time Remaining"
-      start_date: "Start Date"
+      created_at: "Date Requested"
       end_date: "End Date"
       primary_pi: "Primary PI"
+      protocol_id: "SRID"
       requester: "Requester"
+      short_title: "Short Title"
+      start_date: "Start Date"
       status: "Status"
+      time_remaining: "Time Remaining"
+      title: "Title"
     tooltips:
       time_estimate: "This request could take a long time to fulfill."
       complete: "Complete this request once all specimens have been received"
@@ -170,7 +177,7 @@ en:
       fields:
         protocol_search: "SPARCRequest Protocol"
       placeholders:
-        protocol_search: "Search for your Protocol by ID, title, or short title"
+        protocol_search: "Search for your Protocol by SRID, title, or short title"
         primary_pi: "e.g. Smith"
         minimum_sample: "e.g. 2mL"
       subtext:
@@ -186,8 +193,9 @@ en:
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
     table:
+      sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
-      requester: "Requested by %{name}"
+      requester: "Requested by %{name} %{time_elapsed} ago"
       duration:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"

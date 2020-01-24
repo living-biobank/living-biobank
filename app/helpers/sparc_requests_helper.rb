@@ -1,15 +1,17 @@
 module SparcRequestsHelper
   def request_sort_filter_options(sort_by)
+    sort_by ||= 'created_at'
     options_for_select(
-      [:protocol_id, :title, :short_title, :time_remaining, :primary_pi, :requester, :status].map do |k|
+      [:protocol_id, :title, :short_title, :time_remaining, :primary_pi, :requester, :status, :created_at].map do |k|
         [t(:requests)[:fields][k], k]
-      end, sort_by
+      end.sort, sort_by
     )
   end
 
   def request_status_filter_options(status)
     options_for_select(
       [
+        [t(:requests)[:filters][:any_status], '', selected: true],
         [t(:requests)[:statuses][:completed], class: 'text-success'],
         [t(:requests)[:statuses][:in_process], class: 'text-primary'],
         [t(:requests)[:statuses][:pending], class: 'text-warning'],
@@ -25,8 +27,8 @@ module SparcRequestsHelper
     # of popovers on XS screens
     raw(
       sr.identifier.truncate(60) +
-      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-none d-md-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
-      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', title: sr.identifier, class: 'd-inline-block d-md-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) })
+      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', class: 'd-none d-md-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
+      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', class: 'd-inline-block d-md-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) })
     )
   end
 
@@ -37,8 +39,10 @@ module SparcRequestsHelper
   end
 
   def requester_display(sr)
+    name = link_to sr.user.full_name, 'javascript:void(0)', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('sparc_requests/requester_popover', user: sr.user) }
+
     content_tag :span do
-      icon('fas', 'user mr-2') + t('requests.table.requester', name: sr.user.display_name)
+      icon('fas', 'user mr-2') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.created_at, DateTime.now.utc)).html_safe
     end
   end
 
@@ -47,7 +51,7 @@ module SparcRequestsHelper
       content_tag :span, class: 'text-danger' do
         icon('fas', 'hourglass-end mr-2') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, DateTime.now.utc).capitalize)
       end
-    elsif (sr.end_date - DateTime.now.utc).to_i <= 30
+    elsif ((sr.end_date - DateTime.now.utc).to_i / (60*60*24)) <= 30
       content_tag :span, class: 'text-warning' do
         icon('fas', 'hourglass-half mr-2') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
       end
@@ -62,7 +66,7 @@ module SparcRequestsHelper
     text = li.number_of_specimens_requested == 1 ? 'singular' : 'plural'
 
     chart = content_tag :div do
-      content_tag(:h5, t('requests.table.specimens.chart.header', source: li.source.value), class: 'mb-3') +
+      content_tag(:h5, t('requests.table.specimens.chart.header', source: li.source.value), class: 'mb-3 font-weight-bold') +
       content_tag(:div, t('requests.table.specimens.chart.loading'), id: "chart-#{li.id}", class: 'rates-chart')
     end
 

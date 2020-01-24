@@ -1,4 +1,6 @@
-.mb-2
+%h5.font-weight-bold
+  = request.identifier
+.mb-3
   .d-flex.w-100
     = primary_pi_display(request)
 
@@ -7,4 +9,6 @@
     .d-flex.w-100
       = request.protocol.brief_description
 
-= link_to "View in SPARCRequest", SPARC::Setting.get_value('root_url') + "/dashboard/protocols/#{request.protocol_id}", target: :_blank
+= link_to SPARC::Setting.get_value('root_url') + "/dashboard/protocols/#{request.protocol_id}", target: :_blank, class: 'd-flex align-items-center' do
+  = image_tag 'sparcrequest_icon.ico', width: 12, height: 12, class: 'mr-2'
+  = t('requests.table.sparc_link')

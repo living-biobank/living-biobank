@@ -2,5 +2,10 @@
 %main#content
   = render 'layouts/flash'
   = render 'sparc_requests/filters'
-  = render 'sparc_requests/requests', requests: @requests
-  = render 'sparc_requests/draft_requests', draft_requests: @draft_requests
+  - if @requests.any? || @draft_requests.any?
+    = render 'sparc_requests/requests', requests: @requests
+    = render 'sparc_requests/draft_requests', draft_requests: @draft_requests
+  - else
+    .alert.alert-warning
+      %h3.mb-0.text-center
+        = t('requests.none')

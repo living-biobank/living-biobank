@@ -1,0 +1,7 @@
+.d-flex
+  = icon('fas', 'user-circle fa-3x mr-2 pr-1')
+  %h5.d-flex.flex-column.mb-0<
+    %span.w-100.mb-1
+      = user.full_name
+    %small.w-100
+      = mail_to user.email
