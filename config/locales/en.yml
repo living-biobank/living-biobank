@@ -4,6 +4,19 @@ en:
     close: "Close"
     complete_request: "Complete Request"
     release: "Release"
+  errors:
+    not_found:
+      header: "Page not found"
+      text1: "This is not the page you're looking for."
+      home_link: "Go Home"
+    unacceptable:
+      header: "Oh no"
+      text1: "Your browser did something unexpected."
+      text2: "Please contact us if the problem persists."
+    internal_error:
+      header: "Server Error"
+      text1: "Looks like something went wrong!"
+      text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
   activerecord:
     attributes:
       line_item:

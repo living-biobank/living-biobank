@@ -1,6 +1,6 @@
-= render 'sparc_requests/header'
-%main#content
-  = render 'layouts/flash'
-  = render 'sparc_requests/filters'
-  = render 'sparc_requests/draft_requests', draft_requests: @draft_requests
-  = render 'sparc_requests/requests', requests: @requests
+- content_for :header do
+  = render 'sparc_requests/header'
+
+= render 'sparc_requests/filters'
+= render 'sparc_requests/draft_requests', draft_requests: @draft_requests
+= render 'sparc_requests/requests', requests: @requests

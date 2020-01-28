@@ -10,6 +10,9 @@
       = t(:site_name)
   %body
     = render 'layouts/navigation'
-    = yield
+    = content_for(:header)
+    %main#content
+      = render 'layouts/flash'
+      = yield
     = render 'layouts/modal'
     = render 'layouts/i18n_js'
