@@ -7,13 +7,16 @@
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
     %title
-      = t('site_name')
+      = "#{t("errors.#{action_name}.header")} - #{t('site_name')}"
   %body
-    .col-xl-6.col-lg-8.col-md-11.mx-auto.mt-5#loginContainer
+    .col-xl-6.col-lg-8.col-md-11.mx-auto.mt-5#errorContainer
       .card
         .card-header.bg-dark.text-white.text-center
           .display-3
             = t('site_name')
-        .card-body.p-5
+        .card-body.p-5.text-center
+          .alert.alert-danger.mb-5
+            .display-3.text-danger
+              = "#{t("errors.#{action_name}.header")} - #{response.status}"
           = yield
     = render 'layouts/i18n_js'

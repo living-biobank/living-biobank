@@ -111,6 +111,9 @@ GEM
       railties (>= 3.2, < 6.0)
     ed25519 (1.2.4)
     erubi (1.8.0)
+    exception_notification (4.4.0)
+      actionmailer (>= 4.0, < 7)
+      activesupport (>= 4.0, < 7)
     execjs (2.7.0)
     factory_bot (5.0.2)
       activesupport (>= 4.2.0)
@@ -331,6 +334,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   ed25519 (>= 1.2, < 2.0)
+  exception_notification
   factory_bot_rails
   faker
   font-awesome-sass

@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   def layout_by_resource
     if devise_controller?
       'home'
+    elsif errors_controller?
+      'error'
     else
       'application'
     end
@@ -24,5 +26,9 @@ class ApplicationController < ActionController::Base
 
   def sanitize_date(date)
     Date.strptime(date, "%m/%d/%Y") rescue date
+  end
+
+  def errors_controller?
+    helpers.errors_controller?
   end
 end
