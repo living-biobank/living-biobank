@@ -67,7 +67,6 @@ en:
       id: "Job ID"
   labs:
     header: "Lab Specimens"
-    none: "There are no available specimens at this time"
     search:
       placeholder: "Verify Samples"
       found: "Specimens Found"
@@ -128,7 +127,6 @@ en:
       submit: "Login"
   requests:
     header: "Requests"
-    none: "There are no requests at this time"
     create: "New Request"
     create_confirm:
       title: "LIVING BIOBANK USE AGREEMENT"
