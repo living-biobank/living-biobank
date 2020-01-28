@@ -148,7 +148,7 @@ en:
     filters:
       search: "Search"
       status: "Filter by Status"
-      any_status: "Any Status"
+      any_status: "Active Requests"
       sort_by: "Sort By"
       sort_order: "Order"
     fields:
