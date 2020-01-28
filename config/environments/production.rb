@@ -61,10 +61,19 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "sparc-biobank_#{Rails.env}"
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.default_url_options = { host: "biobank.musc.edu" }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix:         "[#{ENV['HOSTNAME']} Exception",
+      sender_address:       ENV["EXCEPTION_SENDER_ADDRESS"] || %{"Notifier" <no-reply@example.org>},
+      exception_recipients: ENV["EXCEPTION_RECIPIENTS"] || %w{admin@example.org}
+    }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
