@@ -25,6 +25,7 @@ $(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[<%
 <% end %>
 
 <% else %>
+$('#requestFilters').replaceWith("<%= j render 'sparc_requests/filters' %>")
 $('#requests').replaceWith("<%= j render 'sparc_requests/requests', requests: @requests %>")
 $('#draftRequests').replaceWith("<%= j render 'sparc_requests/draft_requests', draft_requests: @draft_requests %>")
 initializeSelectpickers()

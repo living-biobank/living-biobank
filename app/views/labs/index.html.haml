@@ -12,6 +12,7 @@
   - if @labs.any?
     = render 'labs/display', labs: @labs
   - else
-    .alert.alert-warning
-      %h3.mb-0.text-center
-        = t('labs.none')
+    .card
+      .card-body
+        %p.text-center.mb-0
+          = t(:constants)[:no_records]
