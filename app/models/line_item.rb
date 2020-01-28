@@ -44,7 +44,7 @@ class LineItem < ApplicationRecord
       if self.specimen_request?
         labs.where(status: I18n.t(:labs)[:statuses][:retrieved]).count
       else
-        self.sub_service_request.complete? ? 1 : 0
+        self.sub_service_request.try(:complete?) ? 1 : 0
       end
   end
 
