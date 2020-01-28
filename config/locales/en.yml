@@ -60,6 +60,7 @@ en:
   navigation:
     labs: "Specimens"
     requests: "Requests"
+    help: "Help Links"
     logout: "Logout"
   jobs:
     fields:

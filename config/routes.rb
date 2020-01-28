@@ -20,9 +20,13 @@ Rails.application.routes.draw do
 
   resource :protocol, only: [:show]
 
+  resource :pages, only: [] do
+    get :help
+  end
+
   get 'directory/index', to: 'directory#index'
 
-  root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? request.env['warden'].user.honest_broker.present? : false } # we have an honest broker
+  root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? (equest.env['warden'].user.admin? || request.env['warden'].user.honest_broker.present?) : false } # we have an honest broker
   root to: 'sparc_requests#index', constraints: lambda { |request| request.env['warden'].user } # no honest broker but we are signed in
 
   devise_scope :user do

@@ -1,4 +1,6 @@
 class SparcRequest < ApplicationRecord
+  self.per_page = 10
+
   belongs_to :user
   belongs_to :protocol, class_name: "SPARC::Protocol"
 
@@ -13,6 +15,8 @@ class SparcRequest < ApplicationRecord
   has_many :variables, through: :groups
 
   validates :specimen_requests, length: { minimum: 1 }
+
+  validates_associated :specimen_requests
 
   delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
 

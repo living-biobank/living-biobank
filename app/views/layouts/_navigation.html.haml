@@ -1,7 +1,7 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
   .navbar-header
     .navbar-brand.m-0
-      = t(:site_name)
+      = t('site_name')
   %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
     %span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarLinks
@@ -15,17 +15,22 @@
           = link_to labs_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''] do
             = icon('fas', 'flask')
             %span
-              = t(:navigation)[:labs]
+              = t('navigation.labs')
       .nav-item
         = link_to sparc_requests_path, class: ['nav-link btn btn-dark', controller_name == 'sparc_requests' ? 'active' : ''] do
           = icon('fas', 'file-invoice')
           %span
-            = t(:navigation)[:requests]
+            = t('navigation.requests')
+      .nav-item
+        = link_to help_pages_path, class: ['nav-link btn btn-dark', controller_name == 'pages' ? 'active' : ''] do
+          = icon('fas', 'question')
+          %span
+            = t('navigation.help')
       .nav-item.d-block.d-md-none.d-xl-block
         = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link btn btn-dark text-danger' do
           = icon('fas', 'sign-out-alt')
           %span
-            = t(:navigation)[:logout]
+            = t('navigation.logout')
       .nav-item.dropdown.d-none.d-md-block.d-xl-none
         = link_to 'javascript:void(0)', id: 'profileDropdown', class: 'nav-link dropdown-toggle btn btn-dark', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: 'true', expanded: 'false' } do
           = icon('fas', 'user-circle')
@@ -36,4 +41,4 @@
           = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'dropdown-item text-danger' do
             = icon('fas', 'sign-out-alt')
             %span
-              = t(:navigation)[:logout]
+              = t('navigation.logout')

@@ -23,8 +23,12 @@ $('#fundingSource').addClass('d-none')
 $('#potentialFundingSource').removeClass('d-none')
 <% end %>
 $('.input-daterange.date').prop('readonly', true)
+<% if @protocol.start_date %>
 $('#sparc_request_protocol_attributes_start_date').datepicker('update', "<%= @protocol.start_date.strftime('%m/%d/%Y') %>").prop('readonly', true)
+<% end %>
+<% if @protocol.end_date %>
 $('#sparc_request_protocol_attributes_end_date').datepicker('update', "<%= @protocol.end_date.strftime('%m/%d/%Y') %>").prop('readonly', true)
+<% end %>
 $('#sparc_request_protocol_attributes_end_date').datepicker('hide')
 $('#primary_pi_search').val("<%= @protocol.primary_pi.display_name %>").prop('readonly', true)
 $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val("<%= @protocol.primary_pi.id %>")
