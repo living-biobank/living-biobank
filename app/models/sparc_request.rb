@@ -40,11 +40,10 @@ class SparcRequest < ApplicationRecord
   }
 
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
-    where.not(status: I18n.t(:requests)[:statuses][:draft]).
-      search(term).
-      with_status(status).
-      ordered_by(sort_by, sort_order).
-      distinct
+    search(term).
+    with_status(status).
+    ordered_by(sort_by, sort_order).
+    distinct
   }
 
   scope :search, -> (term) {
