@@ -32,15 +32,18 @@ class SparcRequest < ApplicationRecord
   scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
 
   scope :with_status, -> (status) {
-    where(status: status) if status
+    if status
+      where(status: status)
+    else
+      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
+    end
   }
 
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
-    where.not(status: I18n.t(:requests)[:statuses][:draft]).
-      search(term).
-      with_status(status).
-      ordered_by(sort_by, sort_order).
-      distinct
+    search(term).
+    with_status(status).
+    ordered_by(sort_by, sort_order).
+    distinct
   }
 
   scope :search, -> (term) {
