@@ -9,11 +9,5 @@
     %title
       = t('site_name')
   %body
-    .col-xl-6.col-lg-8.col-md-11.mx-auto.mt-5#loginContainer
-      .card
-        .card-header.bg-dark.text-white.text-center
-          .display-3
-            = t('site_name')
-        .card-body.p-5
-          = yield
+    = yield
     = render 'layouts/i18n_js'

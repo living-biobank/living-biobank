@@ -27,13 +27,17 @@ class SparcRequestsController < ApplicationController
       @sparc_request.save(validate: false)
 
       flash.now[:success] = t(:requests)[:saved]
-    elsif @sparc_request.save
-      RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
-      RequestMailer.with(user: current_user, request: @sparc_request).submission_email.deliver_later
-
-      flash.now[:success] = t(:requests)[:created]
     else
-      @errors = @sparc_request.errors
+      @sparc_request.submitted_at = DateTime.now
+
+      if @sparc_request.save
+        RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
+        RequestMailer.with(user: current_user, request: @sparc_request).submission_email.deliver_later
+
+        flash.now[:success] = t(:requests)[:created]
+      else
+        @errors = @sparc_request.errors
+      end
     end
 
     find_requests
@@ -58,10 +62,14 @@ class SparcRequestsController < ApplicationController
       @sparc_request.save(validate: false)
 
       flash.now[:success] = t(:requests)[:saved]
-    elsif @sparc_request.update_attributes(sparc_request_params)
-      flash.now[:success] = t(:requests)[:updated]
     else
-      @errors = @sparc_request.errors
+      @sparc_request.submitted_at = DateTime.now if @sparc_request.draft?
+
+      if @sparc_request.update_attributes(sparc_request_params)
+        flash.now[:success] = t(:requests)[:updated]
+      else
+        @errors = @sparc_request.errors
+      end
     end
 
     find_requests
@@ -101,7 +109,7 @@ class SparcRequestsController < ApplicationController
     @requests =
       if current_user.admin?
         SparcRequest.all
-      elsif current_user.honest_broker.present?
+      elsif current_user.honest_broker?
         SparcRequest.where(id: current_user.honest_broker.sparc_requests.ids + current_user.sparc_requests.ids)
       else
         current_user.sparc_requests

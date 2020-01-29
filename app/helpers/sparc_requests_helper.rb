@@ -42,7 +42,7 @@ module SparcRequestsHelper
     name = link_to sr.user.full_name, 'javascript:void(0)', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('sparc_requests/requester_popover', user: sr.user) }
 
     content_tag :span do
-      icon('fas', 'user mr-2') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.created_at, DateTime.now.utc)).html_safe
+      icon('fas', 'user mr-2') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.submitted_at, DateTime.now.utc)).html_safe
     end
   end
 
@@ -113,13 +113,13 @@ module SparcRequestsHelper
   end
 
   def complete_request_button(sr)
-    if current_user.honest_broker.present? && sr.in_process?
+    if sr.in_process? && (current_user.honest_broker? || current_user.admin?)
       link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:completed] }), remote: true, method: :patch, class: 'btn btn-lg btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip' }
     end
   end
 
   def finalize_request_button(sr)
-    if sr.pending? && current_user.honest_broker.present?
+    if sr.pending? && (current_user.honest_broker? || current_user.admin?)
       link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:in_process] }), remote: true, method: :patch, class: 'btn btn-lg btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip' }
     end
   end
