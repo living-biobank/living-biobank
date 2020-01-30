@@ -52,4 +52,9 @@
             = f.submit t(:home)[:login][:submit], class: 'btn btn-lg btn-block btn-primary'
       - else
         .text-center
-          = link_to "Sign In With Shibboleth", user_session_path, method: :post, class: 'btn btn-lg btn-block btn-primary'
+          = link_to t(:home)[:login][:shibboleth], user_session_path, method: :post, class: 'btn btn-lg btn-block btn-primary'
+      .d-flex.justify-content-center.mt-3
+        .d-flex.flex-column.text-center
+          .font-weight-bold
+            = t(:home)[:links][:contact][:header]
+          = t(:home)[:links][:contact][:link].html_safe
