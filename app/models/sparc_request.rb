@@ -1,4 +1,6 @@
 class SparcRequest < ApplicationRecord
+  self.per_page = 10
+
   belongs_to :user
   belongs_to :protocol, class_name: "SPARC::Protocol"
 
@@ -14,6 +16,8 @@ class SparcRequest < ApplicationRecord
 
   validates :specimen_requests, length: { minimum: 1 }
 
+  validates_associated :specimen_requests
+
   delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
 
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
@@ -28,15 +32,18 @@ class SparcRequest < ApplicationRecord
   scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
 
   scope :with_status, -> (status) {
-    where(status: status) if status
+    if status
+      where(status: status)
+    else
+      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
+    end
   }
 
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
-    where.not(status: I18n.t(:requests)[:statuses][:draft]).
-      search(term).
-      with_status(status).
-      ordered_by(sort_by, sort_order).
-      distinct
+    search(term).
+    with_status(status).
+    ordered_by(sort_by, sort_order).
+    distinct
   }
 
   scope :search, -> (term) {

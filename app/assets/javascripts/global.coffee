@@ -15,6 +15,11 @@ $ ->
     fixNavbarPlacement()
     fixHeaderPlacement()
 
+  # Remove form validation contexts when changing fields
+  $(document).on 'keydown change change.datetimepicker', '.is-valid:not(.persist-validation), .is-invalid:not(.persist-validation)', ->
+    $(this).removeClass('is-valid is-invalid').find('.form-error').remove()
+
+  # Code to make nicer collapses with interactable interior content
   $(document).on 'show.bs.collapse hide.bs.collapse', 'div[data-toggle=collapse] + .collapse', (event) ->
     if event.delegateTarget.activeElement.tagName == 'A'
       event.preventDefault()
@@ -34,6 +39,26 @@ $ ->
       $(this).removeClass('active')
   )
 
+  # Slight modifications to popover functionality
+  $(document).on('mouseenter', '[data-toggle=popover]', ->
+    _this = this
+    $(this).popover('show')
+    $('.popover').on 'mouseleave', ->
+      $(_this).popover('hide')
+  ).on('mouseleave', '[data-toggle=popover]', ->
+    _this = this
+    setTimeout( (->
+      if !$('.popover:hover').length
+        $(_this).popover('hide')
+    ), 300)
+  )
+
+  $(document).on 'mouseup', (e) ->
+    target = $(e.target)
+    if target[0].className.indexOf('popover') == -1 && (target.data('toggle') != 'popover' || (target.data('toggle') == 'popover' && target.data('trigger').indexOf('click') == -1))
+      $('.popover').popover('hide')
+
+  # Send Ajax requests for data-url buttons and links
   $(document).on 'click', 'button[data-url]:not([data-confirm-swal]), a[href="javascript:void(0)"]:not([data-confirm-swal])', ->
     if $(this).data('url')
       $.ajax
@@ -43,12 +68,8 @@ $ ->
         data:
           authenticity_token: $('meta[name=csrf-token]').attr('content')
 
-  $(document).on 'change keydown changed.bs.select changeDate', '.is-valid, .is-invalid', ->
-    $(this).removeClass('is-valid is-invalid')
-    $(this).parents('.form-group').children('.form-error').remove()
-
+  # Update records when using search
   searchTimer = null
-
   $(document).on('keyup', '.table-search', ->
     term = $(this).val()
     clearTimeout(searchTimer)
@@ -74,6 +95,7 @@ $ ->
     clearTimeout(searchTimer)
   )
 
+  # Update records when using filters
   $(document).on 'changed.bs.select', '.table-filters select.filter-select', ->
     $container  = $(this).parents('.table-filters')
     data        = { term: $container.find('.table-search').val() }
@@ -91,11 +113,6 @@ $ ->
       dataType: 'script'
       url: $container.data('url')
       data: data
-
-  $(document).on 'mouseup', (e) ->
-    target = $(e.target)
-    if target[0].className.indexOf('popover') == -1 && (target.data('toggle') != 'popover' || (target.data('toggle') == 'popover' && target.data('trigger').indexOf('click') == -1))
-      $('.popover').popover('hide')
 
 (exports ? this).fixNavbarPlacement = () ->
   if $('html').width() > 1199

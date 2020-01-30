@@ -15,7 +15,7 @@ $('#primary_pi_search').parents('.form-group').removeClass('is-valid').addClass(
 <% end %>
 
 # Line Item Errors
-<% @sparc_request.line_items.each_with_index do |line_item, index| %>
+<% @sparc_request.specimen_requests.each_with_index do |line_item, index| %>
 <% line_item.errors.messages.each do |attr, messages| %>
 <% attr = :service_id if attr == :service %>
 <% messages.each do |message| %>
@@ -25,6 +25,7 @@ $(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[<%
 <% end %>
 
 <% else %>
+$('#requestFilters').replaceWith("<%= j render 'sparc_requests/filters' %>")
 $('#requests').replaceWith("<%= j render 'sparc_requests/requests', requests: @requests %>")
 $('#draftRequests').replaceWith("<%= j render 'sparc_requests/draft_requests', draft_requests: @draft_requests %>")
 initializeSelectpickers()

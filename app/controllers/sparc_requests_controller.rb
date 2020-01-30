@@ -1,7 +1,7 @@
 class SparcRequestsController < ApplicationController
 
   before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
-  before_action :find_requests, only: [:index, :create, :update, :destroy, :update_status]
+  before_action :find_requests, only: [:index]
 
   def index
     respond_to do |format|
@@ -27,20 +27,31 @@ class SparcRequestsController < ApplicationController
       @sparc_request.save(validate: false)
 
       flash.now[:success] = t(:requests)[:saved]
-    elsif @sparc_request.save
-      RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
-      RequestMailer.with(user: current_user, request: @sparc_request).submission_email.deliver_later
-
-      flash.now[:success] = t(:requests)[:created]
     else
-      @errors = @sparc_request.errors
+      @sparc_request.submitted_at = DateTime.now
+
+      if @sparc_request.save
+        RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
+        RequestMailer.with(user: current_user, request: @sparc_request).submission_email.deliver_later
+
+        flash.now[:success] = t(:requests)[:created]
+      else
+        @errors = @sparc_request.errors
+      end
     end
+
+    find_requests
 
     respond_to :js
   end
 
   def edit
+    @is_draft             = @sparc_request.draft?
     @sparc_request.status = t(:requests)[:statuses][:pending]
+
+    if @sparc_request.specimen_requests.none?
+      @sparc_request.specimen_requests.build
+    end
 
     respond_to :js
   end
@@ -51,17 +62,25 @@ class SparcRequestsController < ApplicationController
       @sparc_request.save(validate: false)
 
       flash.now[:success] = t(:requests)[:saved]
-    elsif @sparc_request.update_attributes(sparc_request_params)
-      flash.now[:success] = t(:requests)[:updated]
     else
-      @errors = @sparc_request.errors
+      @sparc_request.submitted_at = DateTime.now if @sparc_request.draft?
+
+      if @sparc_request.update_attributes(sparc_request_params)
+        flash.now[:success] = t(:requests)[:updated]
+      else
+        @errors = @sparc_request.errors
+      end
     end
+
+    find_requests
 
     respond_to :js
   end
 
   def destroy
     @sparc_request.destroy
+
+    find_requests
 
     respond_to :js
   end
@@ -74,6 +93,8 @@ class SparcRequestsController < ApplicationController
     else
       flash.now[:error] = t(:requests)[:failed]
     end
+
+    find_requests
 
     respond_to :js
   end
@@ -88,11 +109,11 @@ class SparcRequestsController < ApplicationController
     @requests =
       if current_user.admin?
         SparcRequest.all
-      elsif current_user.honest_broker.present?
+      elsif current_user.honest_broker?
         SparcRequest.where(id: current_user.honest_broker.sparc_requests.ids + current_user.sparc_requests.ids)
       else
         current_user.sparc_requests
-      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
+      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
 
     @draft_requests = current_user.sparc_requests.draft.includes(:protocol)
   end

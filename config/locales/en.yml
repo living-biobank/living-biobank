@@ -4,6 +4,19 @@ en:
     close: "Close"
     complete_request: "Complete Request"
     release: "Release"
+  errors:
+    not_found:
+      header: "Page not found"
+      text1: "This is not the page you're looking for."
+      home_link: "Go Home"
+    unacceptable:
+      header: "Oh no"
+      text1: "Your browser did something unexpected."
+      text2: "Please contact us if the problem persists."
+    internal_error:
+      header: "Server Error"
+      text1: "Looks like something went wrong!"
+      text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
   activerecord:
     attributes:
       line_item:
@@ -60,6 +73,7 @@ en:
   navigation:
     labs: "Specimens"
     requests: "Requests"
+    help: "Help Links"
     logout: "Logout"
   jobs:
     fields:
@@ -72,7 +86,9 @@ en:
       not_found: "No Specimens found"
     filters:
       search: "Search"
+      status: "Filter by Status"
       sort_by: "Sort By"
+      sort_order: "Order"
     fields:
       id: "Lab ID"
       header: "Specimen #: %{accession_number} (%{source})"
@@ -99,29 +115,29 @@ en:
       release_specimen: "Release Specimen"
       retrieve_specimen:  "Specimen Retrieved"
       discard_specimen:  "Specimen Discarded"
-  login:
-    header: "Developer Login"
-    net_id: "NetID"
-    password: "Password"
-    remember_me: "Remember Me"
-    submit: "Login"
   home:
-    header: "Living Biobank enables access to clinical specimens and microbiome data"
+    header: "Living Biobank enables access to Clinical Specimens and Microbiome Data"
     text1: "Living Biobank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
     text2: "Submissions of blood samples will result in blood specimens whereas those of microbiome will result in assay data."
     text3: "Living Biobank is an end-to-end workflow that allows investigators to acquire specimens/data based on clinical criteria from the electronic health records, e-phenotype, in a de-identified manner."
     text4: "Investigators interested in obtaining data through Living Biobank must create an electronic phenotype using i2b2."
     links:
       help1:
-        text: "MUSC investigators"
-        link: "login to MUSC i2b2"
+        text: "MUSC Investigators"
+        link: "Log in to MUSC i2b2"
       help2: 
-        text: "ACT-SHRINE investigators"
-        link: "login to the ACT-SHRINE i2b2"
+        text: "ACT-SHRINE Investigators"
+        link: "Access your participating site's i2b2"
       help3:
-        text: "i2b2 guide and FAQ"
-        link1: "i2b2 user guide"
+        text: "i2b2 Guide and FAQ"
+        link1: "i2b2 User Guide"
         link2: "i2b2 FAQ"
+    login:
+      header: "Developer Login"
+      net_id: "NetID"
+      password: "Password"
+      remember_me: "Remember Me"
+      submit: "Login"
   requests:
     header: "Requests"
     create: "New Request"
@@ -142,18 +158,21 @@ en:
       cancelled: "Cancelled"
     filters:
       search: "Search"
+      status: "Filter by Status"
+      any_status: "Active Requests"
       sort_by: "Sort By"
-      status: "Status"
+      sort_order: "Order"
     fields:
-      protocol_id: "Protocol ID"
-      title: "Title"
-      short_title: "Short Title"
-      time_remaining: "Time Remaining"
-      start_date: "Start Date"
+      created_at: "Date Requested"
       end_date: "End Date"
       primary_pi: "Primary PI"
+      protocol_id: "SRID"
       requester: "Requester"
+      short_title: "Short Title"
+      start_date: "Start Date"
       status: "Status"
+      time_remaining: "Time Remaining"
+      title: "Title"
     tooltips:
       time_estimate: "This request could take a long time to fulfill."
       complete: "Complete this request once all specimens have been received"
@@ -168,16 +187,16 @@ en:
         protocol_information: "Protocol Information"
         specimens: "Request Specimens"
       fields:
-        protocol_search: "Protocol"
+        protocol_search: "SPARCRequest Protocol"
       placeholders:
-        protocol_search: "Search for your Protocol by ID, title, or short title"
+        protocol_search: "Search for your Protocol by SRID, title, or short title"
         primary_pi: "e.g. Smith"
         minimum_sample: "e.g. 2mL"
       subtext:
-        rmid: "Please provide your <a href='https://rmid.musc.edu' target='blank'>Research Master ID</a> so that we can fill in information about your Protocol for you."
+        rmid: "Please provide your <a href='https://rmid.musc.edu' target='blank'>Research Master ID</a>"
         rmid_not_found: "Research Master ID not found"
         rmid_server_down: "The Research Master ID server is unavailable at this time. Please try again later."
-        protocol: "If you already have a Protocol in SPARCRequest, search for it so that we can fill in its information for you."
+        protocol: "Search for an existing Protocol in SPARCRequest"
         protocol_found: "Imported data from Protocol #%{id}"
         protocol_not_found: "Could not find a corresponding Protocol. Please fill in the information below to create a new Project"
         i2b2_query: "Information about creating an i2b2 Query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>"
@@ -186,8 +205,9 @@ en:
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
     table:
+      sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
-      requester: "Requested by %{name}"
+      requester: "Requested by %{name} %{time_elapsed} ago"
       duration:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"

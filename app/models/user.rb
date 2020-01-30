@@ -35,4 +35,8 @@ class User < ApplicationRecord
   def display_name
     "#{first_name.try(:humanize)} #{last_name.try(:humanize)} (#{email})".strip
   end
+
+  def honest_broker?
+    self.honest_broker_id.present?
+  end
 end

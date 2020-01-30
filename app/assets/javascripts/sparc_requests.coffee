@@ -1,22 +1,9 @@
 $ ->
-  rmidTimer = null
+  #####################
+  ### Requests Page ###
+  #####################
 
-  $(document).on 'keyup', '#protocol_search', ->
-    if !$(this).val()
-      resetProtocolFields()
-
-  $(document).on('mouseenter', '.specimen-line-item', ->
-    _this = this
-    $(this).popover('show')
-    $('.popover').on 'mouseleave', ->
-      $(_this).popover('hide')
-  ).on('mouseleave', '.specimen-line-item', ->
-    _this = this
-    setTimeout( (->
-      if !$('.popover:hover').length
-        $(_this).popover('hide')
-    ), 300)
-  ).on('shown.bs.popover', '.specimen-line-item', (e) ->
+  $(document).on('shown.bs.popover', '.specimen-line-item', (e) ->
     lineItem = $(e.target)
 
     if lineItem.data('one-yr') || lineItem.data('six-mo') || lineItem.data('three-mo')
@@ -61,6 +48,12 @@ $ ->
     )
   )
 
+  #####################
+  ### Requests Form 3##
+  #####################
+
+  rmidTimer = null
+
   $(document).on('keyup', '#sparc_request_protocol_attributes_research_master_id:not([readonly=readonly])', ->
     clearTimeout(rmidTimer)
     if rmid = $(this).val()
@@ -73,11 +66,24 @@ $ ->
             rmid: rmid
       ), 500)
     else
-      resetProtocolFields()
-      initializePrimaryPITypeahead()
+      $.ajax
+        type: 'GET'
+        dataType: 'script'
+        url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
+        success: ->
+          $('#sparc_request_protocol_attributes_research_master_id').focus()
   ).on('keydown', '#sparc_request_protocol_attributes_research_master_id', ->
     clearTimeout(rmidTimer)
   )
+
+  $(document).on 'keyup', '#protocol_search', ->
+    if !$(this).val()
+      $.ajax
+        type: 'GET'
+        dataType: 'script'
+        url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
+        success: ->
+          $('#sparc_request_protocol_attributes_research_master_id').focus()
 
   funding_source = null
   potential_funding_source = null
@@ -131,26 +137,6 @@ $ ->
     if $('.nested_sparc_request_specimen_requests:visible').length == 0
       $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', true)
     $('.tooltip').tooltip('hide')
-
-(exports ? this).resetProtocolFields = () ->
-  $("[id^='sparc_request_'], [id=primary_pi_search]").removeClass('is-valid is-invalid')
-  $('.form-error, .form-alert').remove()
-  $('#sparc_request_protocol_id').remove()
-  $('#sparc_request_protocol_attributes_id').remove()
-  $('#sparc_request_protocol_attributes_primary_pi_role_attributes_id').remove()
-  $('#sparc_request_protocol_attributes_type').prop('disabled', false)
-  $('#sparc_request_protocol_attributes_title').val('').prop('readonly', false)
-  $('#sparc_request_protocol_attributes_short_title').val('').prop('readonly', false)
-  $('#sparc_request_protocol_attributes_brief_description').val('').prop('readonly', false)
-  $('#sparc_request_protocol_attributes_funding_status').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
-  $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
-  $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', '').siblings('.dropdown-toggle').prop('disabled', false)
-  $('#fundingSource').removeClass('d-none')
-  $('#potentialFundingSource').addClass('d-none')
-  $('#sparc_request_protocol_attributes_start_date').datepicker('update', '').prop('readonly', false)
-  $('#sparc_request_protocol_attributes_end_date').datepicker('update', '').prop('readonly', false)
-  $('#primary_pi_search').val('').prop('readonly', false)
-  $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val('')
 
 (exports ? this).initializeProtocolTypeahead = () ->
   protocols = new Bloodhound(

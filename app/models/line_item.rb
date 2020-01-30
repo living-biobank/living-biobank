@@ -17,8 +17,8 @@ class LineItem < ApplicationRecord
   has_one :sub_service_request, through: :sparc_line_item, class_name: "SPARC::SubServiceRequest"
   has_one :group, through: :source
 
-  validates_presence_of :query_name, :number_of_specimens_requested
-  validates_numericality_of :number_of_specimens_requested, greater_than: 0
+  validates_presence_of :query_name, :number_of_specimens_requested, :source_id
+  validates_numericality_of :number_of_specimens_requested, greater_than: 0, if: Proc.new{ |record| record.number_of_specimens_requested.present? }
   validates_presence_of :minimum_sample_size, if: Proc.new{ |li| li.specimen_request? && li.group.process_sample_size? }
 
   before_destroy :update_sparc_records
@@ -44,7 +44,7 @@ class LineItem < ApplicationRecord
       if self.specimen_request?
         labs.where(status: I18n.t(:labs)[:statuses][:retrieved]).count
       else
-        self.sub_service_request.complete? ? 1 : 0
+        self.sub_service_request.try(:complete?) ? 1 : 0
       end
   end
 
@@ -55,10 +55,10 @@ class LineItem < ApplicationRecord
   private
 
   def update_sparc_records
-    ssr = self.sub_service_request
+    if ssr = self.sub_service_request
+      self.sparc_line_item.destroy
 
-    self.sparc_line_item.destroy
-
-    ssr.destroy if ssr.line_items.none?
+      ssr.destroy if ssr.line_items.none?
+    end
   end
 end

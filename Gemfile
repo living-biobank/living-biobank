@@ -7,6 +7,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'delayed_job_active_record'
 gem 'devise'
 gem 'dotenv-rails'
+gem 'exception_notification'
 gem 'font-awesome-sass'
 gem 'foreman', '~> 0.84.0'
 gem 'haml'
@@ -28,10 +29,15 @@ gem 'simple_hl7'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'whenever'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap4'
 
 # adding oracle for i2b2 access
 gem 'activerecord-oracle_enhanced-adapter', '~> 1.8.0'
 gem 'ruby-oci8'
+
+gem 'ed25519', '>= 1.2', '< 2.0'
+gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 
 group :development do
   gem 'web-console', '>= 3.3.0'

@@ -12,7 +12,7 @@
     "corejs-typeahead": "^1.2.1",
     "jquery": "^3.3.1",
     "nprogress": "^0.2.0",
-    "popper.js": "^1.14.4",
+    "popper.js": "^1.16.1",
     "sweetalert2": "^7.26.26"
   },
   "version": "1.0.0",

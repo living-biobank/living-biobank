@@ -1,8 +1,9 @@
 .modal-dialog#requestFormModal{ role: 'document' }
   .modal-content
     = form_for sparc_request, remote: true, method: sparc_request.persisted? ? :put : :post, html: { id: 'sparcRequestForm', autocomplete: 'off' } do |f|
+      = f.hidden_field :id
+      = f.hidden_field :protocol_id
       = f.hidden_field :status
-      - sparc_request.reload if sparc_request.persisted?
 
       - if params[:status]
         = hidden_field_tag :status, params[:status]
@@ -23,19 +24,22 @@
               = t(:requests)[:form][:headers][:protocol_information]
           .card-body
             = f.fields_for :protocol do |ff_p|
+              = ff_p.hidden_field :id
               = ff_p.hidden_field :type
+
               - if SPARC::Setting.get_value('research_master_enabled')
                 .form-group.mb-4.pb-4.border-bottom
-                  %p.form-text.text-muted
-                    = raw(t(:requests)[:form][:subtext][:rmid])
                   = ff_p.label :research_master_id, class: 'required'
                   = ff_p.text_field :research_master_id, class: 'form-control col-6', readonly: ff_p.object.persisted? && ff_p.object.research_master_id
+                  %small.form-text.text-muted
+                    = raw(t(:requests)[:form][:subtext][:rmid])
               - else
                 .form-group.mb-4.pb-4.border-bottom
-                  %p.form-text.text-muted
-                    = raw(t(:requests)[:form][:subtext][:protocol])
                   = label_tag :protocol_search, t(:requests)[:form][:fields][:protocol_search]
                   = text_field_tag :protocol_search, ff_p.object.persisted? ? sparc_request.identifier : '', class: 'form-control typeahead col-6', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: ff_p.object.persisted?
+                  %small.form-text.text-muted
+                    = raw(t(:requests)[:form][:subtext][:protocol])
+
               .form-row
                 .form-group.col-lg-6
                   = ff_p.label :title, class: 'required'
@@ -50,7 +54,7 @@
                 .form-group.col-6.col-lg-3
                   = ff_p.label :funding_status, class: 'required'
                   = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
-                .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? || ff_p.object.new_record? ? '' : 'd-none' }
+                .form-group.col-6.col-lg-3#fundingSource{ class: ff_p.object.funded? || ff_p.object.funding_source.blank? ? '' : 'd-none' }
                   = ff_p.label :funding_source, class: 'required'
                   = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
                 .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.pending_funding? ? '' : 'd-none' }
@@ -65,6 +69,8 @@
                         = t(:requests)[:form][:date_separator]
                     = ff_p.text_field :end_date, value: format_date(ff_p.object.end_date), class: 'form-control', placeholder: t(:requests)[:fields][:end_date], readonly: ff_p.object.persisted? && ff_p.object.valid?, data: { date_enable_on_readonly: 'false' }
               = ff_p.fields_for :primary_pi_role do |ff_ppi|
+                = ff_ppi.hidden_field :id
+
                 .form-row
                   .form-group.col-sm-6
                     = label_tag :primary_pi_search, t(:requests)[:fields][:primary_pi], class: 'required'
@@ -104,7 +110,7 @@
                   = icon('fas', 'plus mr-2')
       .modal-footer
         = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
-        - unless sparc_request.persisted? && sparc_request.pending?
+        - unless sparc_request.persisted? && !is_draft
           %button.btn.btn-warning#saveDraftRequestButton{ type: 'button' }
             = t(:requests)[:form][:save_as_draft]
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

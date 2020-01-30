@@ -1,4 +1,4 @@
-$('#modalContainer').html("<%= j render 'sparc_requests/form', sparc_request: @sparc_request %>")
+$('#modalContainer').html("<%= j render 'sparc_requests/form', sparc_request: @sparc_request, is_draft: @is_draft %>")
 setRequiredFields()
 initializeTooltips()
 initializeSelectpickers()
