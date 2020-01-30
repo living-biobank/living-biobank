@@ -31,12 +31,7 @@
               = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
             %li
               = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
-      .d-flex.justify-content-center
-        .d-flex.flex-column.text-center
-          .font-weight-bold
-            = "Living BioBank Support"
-          = "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu.</a>".html_safe
-      - unless Rails.env.development? || Rails.env.test?
+      - if Rails.env.development? || Rails.env.test?
         %h3.text-center
           = t(:home)[:login][:header]
         %p
@@ -57,4 +52,9 @@
             = f.submit t(:home)[:login][:submit], class: 'btn btn-lg btn-block btn-primary'
       - else
         .text-center
-          = link_to "Sign In With Shibboleth", user_session_path, method: :post, class: 'btn btn-lg btn-block btn-primary'
+          = link_to t(:home)[:login][:shibboleth], user_session_path, method: :post, class: 'btn btn-lg btn-block btn-primary'
+      .d-flex.justify-content-center.mt-3
+        .d-flex.flex-column.text-center
+          .font-weight-bold
+            = t(:home)[:links][:contact][:header]
+          = t(:home)[:links][:contact][:link].html_safe
