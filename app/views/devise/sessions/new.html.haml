@@ -31,7 +31,12 @@
               = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en"
             %li
               = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs"
-      - if Rails.env.development? || Rails.env.test?
+      .d-flex.justify-content-center
+        .d-flex.flex-column.text-center
+          .font-weight-bold
+            = "Living BioBank Support"
+          = "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu.</a>".html_safe
+      - unless Rails.env.development? || Rails.env.test?
         %h2.text-center
           = t(:login)[:header]
         %p
