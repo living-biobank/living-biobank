@@ -15,7 +15,7 @@
             = lab_status_context(lab)
     .card-body
       - if lab.available?
-        - lab.line_items.eager_load(sparc_request: [:primary_pi, :protocol]).each do |line_item|
+        - lab.line_items.each do |line_item|
           .row.mb-3
             .col-10
               %h5.font-weight-bold.mb-0

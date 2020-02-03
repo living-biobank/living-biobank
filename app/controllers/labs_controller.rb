@@ -7,7 +7,7 @@ class LabsController < ApplicationController
         Lab.all.usable.order(status: :desc)
       else
         current_user.honest_broker.labs.usable.retrievable(current_user).order(status: :desc)
-      end.eager_load(:source, :patient, :line_item)
+      end.includes(:source, :patient, line_item: { sparc_request: [:primary_pi, :protocol] })
 
     respond_to :html
   end
