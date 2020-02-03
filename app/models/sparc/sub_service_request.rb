@@ -12,7 +12,11 @@ module SPARC
     before_validation :default_values
 
     def complete?
-      SPARC::Setting.get_value('finished_statuses').include?(self.status)
+      SPARC::Setting.get_value('finished_statuses').include?(self.status) && process_ssrs_organization.has_editable_status?(self.status)
+    end
+
+    def process_ssrs_organization
+      self.organization.process_ssrs_parent
     end
 
     private

@@ -7,6 +7,8 @@ class Lab < ApplicationRecord
   has_many :populations, through: :patient
   has_many :line_items, -> (lab) { where(source: lab.source) }, through: :populations #This association is for matching specimen sources between labs and line items
 
+  has_one :group, through: :source
+
   delegate :identifier, to: :patient
   delegate :mrn, to: :patient
   delegate :dob, to: :patient

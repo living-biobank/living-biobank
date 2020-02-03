@@ -20,7 +20,6 @@ class RequestMailer < ApplicationMailer
   def completion_email
     @user     = params[:user]
     @request  = params[:request]
-    @protocol = params[:protocol]
 
     mail(to: User.honest_brokers.pluck(:email), subject: t(:mailers)[:request_mailer][:completion_email][:subject])
   end

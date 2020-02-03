@@ -7,7 +7,7 @@
             = t('labs.fields.header', accession_number: lab.accession_number, source: lab.source.key)
             %br
             %small.text-muted
-              - if current_user.honest_broker.display_patient_information?
+              - if lab.group.display_patient_information?
                 = t('labs.fields.sub_header_with_patient_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
               - else
                 = t('labs.fields.sub_header_without_patient_name', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))

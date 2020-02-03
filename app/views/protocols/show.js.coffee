@@ -1,5 +1,5 @@
 <% if @error %>
-$('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-invalid').after("<small class='form-text form-error'><%= @error %></small>")
+$('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'><%= @error %></small>")
 <% else %>
 $("[id^='sparc_request_'], [id=primary_pi_search]").removeClass('is-valid is-invalid')
 $('.form-error, .form-alert').remove()
@@ -53,7 +53,7 @@ $('#sparc_request_protocol_attributes_research_master_id').focus()
 $.ajax
   type: 'GET'
   dataType: 'script'
-  url: "/sparc_requests/#{$('#sparc_request_id').val()}/edit"
+  url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
   success: ->
     $('#sparc_request_protocol_attributes_research_master_id').val("<%= @rmid_record['id'] %>").parents('.form-group').addClass('is-valid').append("<span class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</span>")
     $('#sparc_request_protocol_attributes_research_master_id').focus()

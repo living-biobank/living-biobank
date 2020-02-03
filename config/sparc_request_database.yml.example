@@ -1,5 +1,7 @@
 default: &default
   adapter: mysql2
+  variables:
+    sql_mode: TRADITIONAL
 
 testing:
   <<: *default
