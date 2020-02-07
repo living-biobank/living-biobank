@@ -5,7 +5,7 @@
 %p
   = t('mailers.request_mailer.completion_email.completed_by', user: @user.full_name, date: format_date(Date.today))
 %h3{ style: 'margin-bottom: 0;' }
-  = t(:mailers)[:request_mailer][:services_header]
-- @request.line_items.includes(:service).each do |line_item|
+  = t('requests.table.specimens.header')
+- @request.specimen_requests.each do |line_item|
   %p{ style: 'margin-top: 0;' }
-    = raw t('mailers.request_mailer.completion_email.service', service: line_item.service.name, source: line_item.source.value, requested: line_item.number_of_specimens_requested, received: line_item.specimen_records.count, min_sample_size: line_item.minimum_sample_size)
+    = raw t('mailers.request_mailer.completion_email.specimen_request', source: line_item.source.value, requested: line_item.number_of_specimens_requested, received: line_item.progress, min_sample_size: line_item.minimum_sample_size)

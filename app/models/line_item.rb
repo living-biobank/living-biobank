@@ -6,13 +6,6 @@ class LineItem < ApplicationRecord
 
   has_many :populations
   has_many :labs
-  has_many :specimen_records, -> (line_item) {
-    unscope(:where).where(
-      protocol_id: line_item.sparc_request.protocol_id,
-      service_id: line_item.service_id,
-      source_id: line_item.source_id
-    )
-  }
 
   has_one :sub_service_request, through: :sparc_line_item, class_name: "SPARC::SubServiceRequest"
   has_one :group, through: :source
