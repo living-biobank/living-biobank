@@ -264,11 +264,11 @@ en:
       submission_email:
         subect: "Living Biobank Request Application"
         intro: "A new Living Biobank application was submitted by %{requester} on %{date}."
-        service: "<strong>%{service}</strong> - %{source} - %{requested} samples ≥ %{min_sample_size}"
+        specimen_request: "<strong>%{source}</strong> - %{requested} samples &geq; %{min_sample_size}"
       completion_email:
         subject: "Living Biobank Request Completed"
         completed_by: "Completed by %{user} on %{date}"
-        service: "<strong>%{service}</strong> - %{source} - %{received} / %{requested} samples ≥ %{min_sample_size}"
+        specimen_request: "<strong>%{source}</strong> - %{received} / %{requested} samples &geq; %{min_sample_size}"
     specimens_available_mailer:
       available_email: 
         subject: "Specimens Are Available"
