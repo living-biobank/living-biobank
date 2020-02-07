@@ -241,7 +241,11 @@ en:
     draft:
       header: "Draft Requests"
       placeholder: "No Title Specified"
-  site_name: "Living Biobank"
+  site_information:
+    name: "Living Biobank"
+    version: "%{site_name} Version %{version}"
+    copyright: "&copy; 2020 MUSC"
+  site_version:
   specimen_records:
     created: "Lab Specimen released successfully."
     form:

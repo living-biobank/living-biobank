@@ -1,10 +1,10 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
   .navbar-header
     .navbar-brand.m-0
-      = t('site_name')
+      = t('site_information.name')
   %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
     %span.navbar-toggler-icon
-  .collapse.navbar-collapse#navbarLinks
+  .collapse.navbar-collapse.flex-column#navbarLinks
     .navbar-nav
       .text-white.d-flex.d-md-none.d-xl-flex#userInformation
         = icon('fas', 'user-circle')
@@ -42,3 +42,8 @@
             = icon('fas', 'sign-out-alt')
             %span
               = t('navigation.logout')
+    .px-4
+      %p.text-light.text-center
+        = t('site_information.version', site_name: t('site_information.name'), version: ENV.fetch('VERSION'))
+      %p.text-light.text-center
+        = t('site_information.copyright').html_safe
