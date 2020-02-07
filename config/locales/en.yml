@@ -150,7 +150,7 @@ en:
     header: "Requests"
     create: "New Request"
     create_confirm:
-      title: "LIVING BIOBANK USE AGREEMENT"
+      title: "LIVING BIOBANK DATA USE AGREEMENT"
       html: "<h5 class='text-left font-weight-bold'>Before using the MUSC Living Biobank specimen request system, you must agree to the following Specimen Request System Agreement:</h5><p class='text-left'>The Specimen Request System Agreement is designed to provide principal investigators or study staff with access to de-identified specimens for the express purpose of MUSC IRB approved research.</p><p class='text-left'>Your acceptance of this assurance certifies that you understand and agree to all applicable terms contained herein.</p><p class='text-left'>I understand that only de-identified specimens will be provided.</p><p class='text-left'>I will make no attempt to learn the identity of any person or family who is the source of the specimen(s) and associated data, or attempt contact any individual or family member from whom the specimen or data were derived.</p><p class='text-left'>I understand that any effort to determine the identity of the source of the specimens, or to use the specimens provided for any purpose other than indicated above, is prohibited.</p><p class='text-left'>I understand that any violation of this assurance may result in a disciplinary action by my institution with the appropriate office(s) at my institution.</p><p class='text-left'>I agree to restrict my request for specimen(s) to those required for my MUSC IRB approved research study.</p><p class='text-left'>I declare that the requested specimens are necessary to accomplish the goals of the research.</p><p class='text-left'>I acknowledge the additional level of ethical sensitivity inherent in using the specimen(s) and agree to exercise exemplary ethical conduct in my use of the provided specimen(s).</p><p class='text-left'>I have completed the MUSC Code of Conduct training in MyQuest, Human Research Training (CITI) and other MUSC provided training, as required.</p>"
       confirm: "Accept"
       cancel: "Decline"
@@ -265,6 +265,7 @@ en:
         subect: "Living Biobank Request Application"
         intro: "A new Living Biobank application was submitted by %{requester} on %{date}."
         specimen_request: "<strong>%{source}</strong> - %{requested} samples &geq; %{min_sample_size}"
+        data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
       completion_email:
         subject: "Living Biobank Request Completed"
         completed_by: "Completed by %{user} on %{date}"
