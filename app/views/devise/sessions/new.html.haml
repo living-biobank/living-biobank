@@ -1,5 +1,5 @@
-.col-xl-6.col-lg-8.col-md-11.mx-auto.my-5#loginContainer
-  .card
+.d-flex.flex-column.col-xl-6.col-lg-8.col-md-11.mx-auto.mt-5#loginContainer
+  .card.mb-4
     .card-header.bg-dark.text-white.text-center
       .display-3
         = t('site_information.name')
@@ -59,3 +59,7 @@
           .font-weight-bold
             = t(:home)[:links][:contact][:header]
           = t(:home)[:links][:contact][:link].html_safe
+  %p.text-muted.text-center.mb-1
+    = t('site_information.version', site_name: t('site_information.name'), version: ENV.fetch('VERSION'))
+  %p.text-muted.text-center.mb-4
+    = t('site_information.copyright').html_safe
