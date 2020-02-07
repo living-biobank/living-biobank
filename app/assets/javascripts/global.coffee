@@ -114,7 +114,7 @@ $ ->
 
 (exports ? this).fixContentPlacement = () ->  
   if $('html').width() > 1199
-    $('#content').css('margin-top', $('header').outerHeight())
+    $('#content').css('padding-top', "calc(1.5rem + #{$('header').outerHeight()}px)")
     $('#content').css('margin-left', $('.navbar').outerWidth())
     $('.navbar, header').css('top', $('#environment').outerHeight())
     $('header').css('margin-left', $('.navbar').outerWidth())

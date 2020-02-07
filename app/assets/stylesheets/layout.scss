@@ -16,6 +16,7 @@ html {
 
     main#content {
       background: theme-color('light');
+      min-height: 100vh;
       padding-top: 1.5rem;
     }
   }
