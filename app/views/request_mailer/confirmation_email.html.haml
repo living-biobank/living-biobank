@@ -1,2 +1,6 @@
 %p
   = raw t(:mailers)[:request_mailer][:confirmation_email][:text]
+%h4
+  = t('mailers.request_mailer.submission_email.data_use_agreement')
+%blockquote{ style: "margin-left:0.5rem;padding-left:1rem;border-left:1px solid lightgray;"}
+  = t('requests.create_confirm.html').html_safe
