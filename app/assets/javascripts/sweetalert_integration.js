@@ -19,7 +19,7 @@
   // Display the confirmation dialog
   const showConfirmationDialog = element => {
     const title = element.getAttribute('data-title');
-    const html = element.getAttribute('data-html');
+    const text = element.getAttribute('data-text');
     const type = element.getAttribute('data-type');
     const confirmText = element.getAttribute('data-confirm-text');
     const cancelText = element.getAttribute('data-cancel-text');
@@ -27,7 +27,7 @@
 
     swal({
       title: title || I18n.t('confirm.title'),
-      html: html || I18n.t('confirm.text'),
+      text: text || I18n.t('confirm.text'),
       type: type === null ? 'warning' : type,
       showCancelButton: true,
       confirmButtonText: confirmText || I18n.t('confirm.confirm'),

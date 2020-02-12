@@ -1,2 +1,4 @@
-$('.lab-records').html("<%= j render 'labs/lab_records', labs: @labs %>")
-swal("Success", "Lab has been removed", "success")
+$('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
+$('#specimens').replaceWith("<%= j render 'labs/display', labs: @labs %>")
+
+$(document).trigger('ajax:complete') # rails-ujs element replacement bug fix

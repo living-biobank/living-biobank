@@ -8,10 +8,4 @@
 .mb-4#verifySpecimensContainer
   = text_field_tag 'verifySpecimens', '', class: 'form-control form-control-lg', placeholder: t(:labs)[:search][:placeholder], autofocus: true
   = icon('fas fa-2x', 'search')
-- if @labs.any?
-  = render 'labs/display', labs: @labs
-- else
-  .card
-    .card-body
-      %p.text-center.mb-0
-        = t(:constants)[:no_records]
+= render 'labs/display', labs: @labs

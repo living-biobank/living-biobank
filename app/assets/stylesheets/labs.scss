@@ -22,10 +22,10 @@
   }
 }
 
-.request-preview {
-  &:not(:last-child) {
-    @extend .mb-2;
-  }
+.specimen-line-item:not(:first-of-type) {
+  @extend .border-top;
+  margin-top: 1rem;
+  padding-top: 1rem;
 }
 
 @include media-breakpoint-down(md) {

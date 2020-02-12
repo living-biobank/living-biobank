@@ -1,5 +1,4 @@
 class SparcRequestsController < ApplicationController
-
   before_action :find_request,  only: [:edit, :update, :destroy, :update_status]
   before_action :find_requests, only: [:index]
 
