@@ -116,7 +116,7 @@ $ ->
 
 (exports ? this).fixNavbarPlacement = () ->
   if $('html').width() > 1199
-    $('#content').css('margin-top', $('header').outerHeight())
+    $('#content').css('padding-top', "calc(1.5rem + #{$('header').outerHeight()}px)")
     $('#content').css('margin-left', $('.navbar').outerWidth())
   else
     $('#content').css('margin-top', 0)

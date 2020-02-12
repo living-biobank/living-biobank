@@ -42,8 +42,3 @@
             = icon('fas', 'sign-out-alt')
             %span
               = t('navigation.logout')
-    .px-4
-      %p.text-light.text-center
-        = t('site_information.version', site_name: t('site_information.name'), version: ENV.fetch('VERSION'))
-      %p.text-light.text-center
-        = t('site_information.copyright').html_safe
