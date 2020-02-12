@@ -11,8 +11,9 @@ class LineItem < ApplicationRecord
   has_one :group, through: :source
 
   validates_presence_of :query_name, :number_of_specimens_requested, :source_id
-  validates_numericality_of :number_of_specimens_requested, greater_than: 0, if: Proc.new{ |record| record.number_of_specimens_requested.present? }
+  validates_numericality_of :number_of_specimens_requested, greater_than: 0, less_than: 10000000, allow_blank: true
   validates_presence_of :minimum_sample_size, if: Proc.new{ |li| li.specimen_request? && li.group.process_sample_size? }
+  validates_length_of :minimum_sample_size, maximum: 30, allow_blank: true
 
   before_destroy :update_sparc_records
 
