@@ -17,6 +17,8 @@ module SPARC
 
     validate :rmid_valid?, if: :rmid_enabled?
 
+    validates_associated :primary_pi_role
+
     accepts_nested_attributes_for :primary_pi_role
 
     before_validation :default_values
