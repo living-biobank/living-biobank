@@ -31,14 +31,6 @@ class SparcRequest < ApplicationRecord
 
   scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
 
-  scope :with_status, -> (status) {
-    if status
-      where(status: status)
-    else
-      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
-    end
-  }
-
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
     search(term).
     with_status(status).
@@ -103,6 +95,14 @@ class SparcRequest < ApplicationRecord
       )
     else
       joins(:protocol, line_items: :service).none
+    end
+  }
+
+  scope :with_status, -> (status) {
+    if status
+      where(status: status)
+    else
+      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
     end
   }
 

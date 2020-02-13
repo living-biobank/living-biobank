@@ -98,7 +98,10 @@ en:
       not_found: "No Specimens found"
     filters:
       search: "Search"
-      status: "Filter by Status"
+      any_status: "Active Specimens"
+      status: "Filter by Specimen Status"
+      any_source: "Any Source"
+      source: "Filter by Specimen Source"
       sort_by: "Sort By"
       sort_order: "Order"
     fields:
@@ -178,7 +181,7 @@ en:
       cancelled: "Cancelled"
     filters:
       search: "Search"
-      status: "Filter by Status"
+      status: "Filter by Request Status"
       any_status: "Active Requests"
       sort_by: "Sort By"
       sort_order: "Order"

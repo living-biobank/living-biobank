@@ -1,0 +1,7 @@
+.card.mb-4#specimenFilters
+  .card-header.border-bottom-0.table-filters{ data: { url: labs_path } }
+    = text_field_tag 'searchLabs', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:labs)[:filters][:search]
+    .tooltip-wrapper.d-flex{ title: t('labs.filters.status'), data: { toggle: 'tooltip' } }
+      = select_tag 'status', lab_status_filter_options(params[:status]), class: 'selectpicker filter-select', data: { field: 'status', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('labs.filters.status') }
+    .tooltip-wrapper.d-flex{ title: t('labs.filters.source'), data: { toggle: 'tooltip' } }
+      = select_tag 'source', lab_source_filter_options(params[:source]), class: 'selectpicker filter-select', data: { field: 'source', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('labs.filters.source') }

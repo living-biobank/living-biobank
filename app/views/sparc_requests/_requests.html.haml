@@ -37,7 +37,7 @@
                         = line_item_text(li)
                       %small.text-muted<
                         = query_display(li)
-                  .col-sm-8.col-12
+                  .col-sm-8.col-12.pl-0
                     - unless request.cancelled?
                       = render 'line_items/progress_bar', li: li
           - if request.additional_services.any?

@@ -9,16 +9,13 @@ module SparcRequestsHelper
   end
 
   def request_status_filter_options(status)
-    options_for_select(
-      [
-        [t(:requests)[:filters][:any_status], '', selected: true],
-        [t(:requests)[:statuses][:completed], class: 'text-success'],
-        [t(:requests)[:statuses][:in_process], class: 'text-primary'],
-        [t(:requests)[:statuses][:pending], class: 'text-warning'],
-        [t(:requests)[:statuses][:cancelled], class: 'text-secondary']
-      ],
-      status
-    )
+    options_for_select([
+      [t(:requests)[:filters][:any_status], '', selected: true],
+      [t(:requests)[:statuses][:completed], class: 'text-success'],
+      [t(:requests)[:statuses][:in_process], class: 'text-primary'],
+      [t(:requests)[:statuses][:pending], class: 'text-warning'],
+      [t(:requests)[:statuses][:cancelled], class: 'text-secondary']
+    ], status)
   end
 
   def request_title_display(sr)

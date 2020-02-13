@@ -4,7 +4,10 @@ class LabsController < ApplicationController
   before_action :find_labs, only: :index
 
   def index
-    respond_to :html
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def update
@@ -24,10 +27,10 @@ class LabsController < ApplicationController
   def find_labs
     @labs =
       if current_user.admin?
-        Lab.all.usable.order(status: :desc)
+        Lab.all.order(status: :desc)
       else
-        current_user.honest_broker.labs.usable.retrievable(current_user).order(status: :desc)
-      end.includes(:source, :patient, line_item: { sparc_request: [:primary_pi, :protocol] })
+        current_user.honest_broker.labs.retrievable(current_user).order(status: :desc)
+      end.filtered_for_index(params[:term], params[:status], params[:source], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:source, :patient, line_item: { sparc_request: [:primary_pi, :protocol] })
   end
 
   def lab_params

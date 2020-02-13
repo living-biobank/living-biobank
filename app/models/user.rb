@@ -3,6 +3,8 @@ class User < ApplicationRecord
 
   has_many :sparc_requests
 
+  has_many :labs
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, authentication_keys: [:net_id]

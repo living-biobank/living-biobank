@@ -2,7 +2,7 @@
   - if labs.any?
     - labs.each do |lab|
       .card
-        .card-header{ class: lab.received? || lab.discarded? ? 'collapsed' : '', data: { toggle: 'collapse', target: ".specimen-#{lab.id}-collapse" } }
+        .card-header{ class: lab.retrieved? || lab.discarded? ? 'collapsed' : '', data: { toggle: 'collapse', target: ".specimen-#{lab.id}-collapse" } }
           .row
             .col-12.col-sm-10.d-flex.flex-column.justify-content-between
               %h3.d-flex.align-items-center.w-100.font-weight-bold.mb-1
@@ -15,7 +15,7 @@
                 = lab_status_context(lab)
               - if lab.released?
                 = lab_actions(lab)
-        .collapse{ class: ["specimen-#{lab.id}-collapse", lab.received? || lab.discarded? ? '' : 'show'] }
+        .collapse{ class: ["specimen-#{lab.id}-collapse", lab.retrieved? || lab.discarded? ? '' : 'show'] }
           .card-body
             %h4
               %small.text-muted<
@@ -67,6 +67,7 @@
                         %p.mb-0
                           = request_duration_display(line_item.sparc_request)
                     = render 'line_items/progress_bar', li: lab.line_item
+    = will_paginate labs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
   - else
     .card
       .card-body
