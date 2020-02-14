@@ -224,9 +224,10 @@ ActiveRecord::Base.transaction do
   ######################
 
   request_1 = SparcRequest.create(
-    protocol: protocol_1,
-    user:     kayla,
-    status:   I18n.t(:requests)[:statuses][:pending],
+    protocol:     protocol_1,
+    user:         kayla,
+    status:       I18n.t(:requests)[:statuses][:pending],
+    submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
         service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
@@ -253,9 +254,10 @@ ActiveRecord::Base.transaction do
   request_1.update_attribute(:status, I18n.t(:requests)[:statuses][:in_process])
 
   request_2 = SparcRequest.create(
-    protocol: protocol_2,
-    user:     kayla,
-    status:   I18n.t(:requests)[:statuses][:pending],
+    protocol:     protocol_2,
+    user:         kayla,
+    status:       I18n.t(:requests)[:statuses][:pending],
+    submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
         service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
@@ -282,9 +284,10 @@ ActiveRecord::Base.transaction do
   request_2.update_attribute(:status, I18n.t(:requests)[:statuses][:in_process])
 
   request_3 = SparcRequest.create(
-    protocol: protocol_1,
-    user:     ito,
-    status:   I18n.t(:requests)[:statuses][:pending],
+    protocol:     protocol_1,
+    user:         ito,
+    status:       I18n.t(:requests)[:statuses][:pending],
+    submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
         service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
@@ -311,9 +314,10 @@ ActiveRecord::Base.transaction do
   request_3.update_attribute(:status, I18n.t(:requests)[:statuses][:in_process])
 
   request_4 = SparcRequest.create(
-    protocol: protocol_2,
-    user:     ito,
-    status:   I18n.t(:requests)[:statuses][:pending],
+    protocol:     protocol_2,
+    user:         ito,
+    status:       I18n.t(:requests)[:statuses][:pending],
+    submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
         service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
