@@ -23,7 +23,7 @@
               .d-flex.pl-3
                 %p.d-flex.align-items-center.mb-0.ml-2
                   = request_duration_display(line_item.sparc_request)
-              - if current_user.honest_broker.process_sample_size?
+              - if lab.group.process_sample_size?
                 .d-flex.pl-3
                   %p.mb-0.service-display<
                     = icon('fas', 'flask mr-2')
@@ -33,7 +33,7 @@
                 = icon('fas', 'dolly')
             .col-12
               .pl-3
-                = render 'line_items/progress_bar', li: lab.line_item
+                = render 'line_items/progress_bar', li: line_item
       - elsif lab.released?
         .row
           .col-10
