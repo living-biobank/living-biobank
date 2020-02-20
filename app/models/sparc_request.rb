@@ -199,9 +199,10 @@ class SparcRequest < ApplicationRecord
     end
 
     # Find or create a SPARC Line Item for the Line Item
-    sparc_li = ssr.line_items.first_or_create(
+    sparc_li = ssr.line_items.where(
+      service: service,
+    ).first_or_create(
       service_request:  sr,
-      service:          service,
       optional:         true
     )
 
