@@ -2,6 +2,7 @@ class User < ApplicationRecord
   belongs_to :honest_broker, class_name: "Group", foreign_key: :honest_broker_id, optional: true
 
   has_many :sparc_requests
+  has_many :i2b2_queries, class_name: "I2b2::QueryName", foreign_key: :user_id, primary_key: :net_id
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable

@@ -1,4 +1,4 @@
-VERSION=1.0.0
+APP_VERSION=1.1.0
 SERVICE_ID=nil
 NO_REPLY_EMAIL=noreply@musc.edu
 ADMIN_EMAIL=glickk@musc.edu,catesa@musc.edu,kirchoff@musc.edu, etai@musc.edu
