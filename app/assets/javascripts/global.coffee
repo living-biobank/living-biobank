@@ -1,8 +1,7 @@
 $.fn.datepicker.defaults.clearBtn = true
 
 $ ->
-  fixNavbarPlacement()
-  fixHeaderPlacement()
+  fixContentPlacement()
   initializeSelectpickers()
   initializeTooltips()
   initializePopovers()
@@ -14,8 +13,7 @@ $ ->
     initializePopovers()
 
   $(window).resize ->
-    fixNavbarPlacement()
-    fixHeaderPlacement()
+    fixContentPlacement()
 
   # Remove form validation contexts when changing fields
   $(document).on 'keydown change change.datetimepicker', '.is-valid:not(.persist-validation), .is-invalid:not(.persist-validation)', ->
@@ -117,19 +115,15 @@ $ ->
       url: $container.data('url')
       data: data
 
-(exports ? this).fixNavbarPlacement = () ->
+(exports ? this).fixContentPlacement = () ->  
   if $('html').width() > 1199
     $('#content').css('padding-top', "calc(1.5rem + #{$('header').outerHeight()}px)")
     $('#content').css('margin-left', $('.navbar').outerWidth())
+    $('.navbar, header').css('top', $('#environment').outerHeight())
+    $('header').css('margin-left', $('.navbar').outerWidth())
   else
     $('#content').css('margin-top', 0)
     $('#content').css('margin-left', 0)
-
-(exports ? this).fixHeaderPlacement = () ->
-  if $('html').width() > 1199
-    $('header').css('margin-top', 0)
-    $('header').css('margin-left', $('.navbar').outerWidth())
-  else
     $('header').css('margin-top', $('.navbar').outerHeight())
     $('header').css('margin-left', 0)
 

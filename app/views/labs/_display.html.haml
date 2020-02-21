@@ -52,7 +52,7 @@
                             %p.mb-0
                               = request_duration_display(line_item.sparc_request)
                         = render 'line_items/progress_bar', li: line_item
-            - elsif lab.released?
+            - else
               - line_item = lab.line_item
               %h4.card-title.font-weight-bold
                 = "Specimen Released To"

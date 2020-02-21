@@ -1,5 +1,5 @@
 APP_VERSION=1.1.0
 SERVICE_ID=nil
 NO_REPLY_EMAIL=noreply@musc.edu
-ADMIN_EMAIL=glickk@musc.edu,catesa@musc.edu,samuelsc@musc.edu,kirchoff@musc.edu,turnerbp@musc.edu
+ADMIN_EMAIL=glickk@musc.edu,catesa@musc.edu,kirchoff@musc.edu, iee@musc.edu
 CLOVERLEAF_BASE=127.0.0.1:5000

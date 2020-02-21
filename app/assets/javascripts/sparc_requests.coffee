@@ -138,6 +138,20 @@ $ ->
       $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', true)
     $('.tooltip').tooltip('hide')
 
+  nonCharacterKeys = [
+    8, 9, 16, 17, # delete, tab, shift, ctrl
+    37,38,39,40   # arrow keys
+  ]
+  numericalKeys = [
+    48, 49, 50, 51, 52, 53, 54, 55, 56, 57  # 0-9
+  ]
+  $(document).on 'keydown', '.specimens-requested', ->
+    val = $(this).val()
+    key = event.keyCode || event.charCode
+
+    if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key))
+      event.preventDefault()
+
 (exports ? this).initializeProtocolTypeahead = () ->
   protocols = new Bloodhound(
     datumTokenizer: Bloodhound.tokenizers.whitespace
