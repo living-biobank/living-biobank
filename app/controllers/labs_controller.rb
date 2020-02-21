@@ -27,16 +27,17 @@ class LabsController < ApplicationController
   def find_labs
     @labs =
       if current_user.admin?
-        Lab.all.order(status: :desc)
+        Lab.all
       else
-        current_user.honest_broker.labs.retrievable(current_user).order(status: :desc)
-      end.filtered_for_index(params[:term], params[:status], params[:source], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:source, :patient, line_item: { sparc_request: [:primary_pi, :protocol] })
+        current_user.honest_broker.labs.retrievable(current_user)
+      end.filtered_for_index(params[:term], params[:released_at_start], params[:released_at_end], params[:status], params[:source], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:source, :patient, line_item: { sparc_request: [:primary_pi, :protocol] })
   end
 
   def lab_params
     params.require(:lab).permit(
       :line_item_id,
-      :status
+      :status,
+      :released_by,
     )
   end
 end

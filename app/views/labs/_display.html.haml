@@ -7,7 +7,7 @@
             .col-12.col-sm-10.d-flex.flex-column.justify-content-between
               %h3.d-flex.align-items-center.w-100.font-weight-bold.mb-1
                 = icon('fas', 'caret-down mr-2 mt-1')
-                = t('labs.fields.header', id: lab.id, source: lab.source.value, accession_number: lab.accession_number)
+                = t('labs.table.header', id: lab.id, source: lab.source.value, accession_number: lab.accession_number)
                 .d-none.d-sm-block
                   = lab_status_context(lab)
             .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end
@@ -17,9 +17,16 @@
                 = lab_actions(lab)
         .collapse{ class: ["specimen-#{lab.id}-collapse", lab.retrieved? || lab.discarded? ? '' : 'show'] }
           .card-body
-            %h4
-              %small.text-muted<
-                = lab_patient_information(lab)
+            .d-flex
+              .w-50
+                %h4
+                  %small.text-muted<
+                    = lab_patient_information(lab)
+              .w-50
+                - if lab.released?
+                  %h4.text-right
+                    %small.text-muted<
+                      = lab_releaser_information(lab)
             - if lab.available?
               - if lab.line_items.any?
                 %h4.card-title.font-weight-bold
@@ -39,7 +46,7 @@
                       .d-flex.flex-column.flex-fill
                         .d-flex.justify-content-between
                           .w-50
-                            - if current_user.honest_broker.process_sample_size?
+                            - if lab.group.process_sample_size?
                               = lab_sample_size_display(line_item)
                           .w-50.d-flex.justify-content-end
                             %p.mb-0
@@ -61,7 +68,7 @@
                   .d-flex.flex-column.flex-fill
                     .d-flex.justify-content-between
                       .w-50
-                        - if current_user.honest_broker.process_sample_size?
+                        - if lab.group.process_sample_size?
                           = lab_sample_size_display(line_item)
                       .w-50.d-flex.justify-content-end
                         %p.mb-0

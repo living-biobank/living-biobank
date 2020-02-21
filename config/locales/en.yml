@@ -19,6 +19,11 @@ en:
       text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
   activerecord:
     attributes:
+      lab:
+        accession_number: "Accession Number"
+        id: "Specimen ID"
+        released_at: "Date Released"
+        specimen_source: "Specimen Source"
       line_item:
         source_id: "Specimen Source"
         query_name: "i2b2 Query"
@@ -27,6 +32,17 @@ en:
         three_month_accrual: "Past 3 Months"
         six_month_accrual: "Past 6 Months"
         one_year_accrual: "Past Year"
+      sparc_request:
+        created_at: "Date Requested"
+        end_date: "End Date"
+        primary_pi: "Primary PI"
+        protocol_id: "SRID"
+        requester: "Requester"
+        short_title: "Short Title"
+        start_date: "Start Date"
+        status: "Status"
+        time_remaining: "Time Remaining"
+        title: "Title"
       sparc/protocol:
         research_master_id: "Research Master ID"
         title: "Title"
@@ -98,28 +114,28 @@ en:
       not_found: "No Specimens found"
     filters:
       search: "Search"
+      date_released:
+        label: "Date Released"
+        start: "Start Date"
+        to: "to"
+        end: "End Date"
       any_status: "Active Specimens"
       status: "Filter by Specimen Status"
       any_source: "Any Source"
       source: "Filter by Specimen Source"
       sort_by: "Sort By"
       sort_order: "Order"
-    fields:
-      id: "Lab ID"
-      header: "[%{id}] %{source} (%{accession_number})"
-      sub_header_without_patient_name: "Patient ID: %{id} | MRN: %{mrn} | DOB: %{dob}"
-      sub_header_with_patient_name: "Patient ID: %{id} | MRN: %{mrn} | Name: %{lastname}, %{firstname} | DOB: %{dob}"
-      samples_available: "Potential Samples Available"
-      specimen_source: "Specimen Source"
-      protocols: "Eligible Requests"
-      release: "Release"
-      intended_recipient: "Intended Recipient: %{last_name}, %{first_name}"
-      samples_needed:
-        singular: "%{requested_number} Sample &geq; %{requested_size}"
-        plural: "%{requested_number} Samples &geq; %{requested_size}"
     table:
+      header: "[%{id}] %{source} (%{accession_number})"
+      patient_info:
+        with_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
+        without_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>DOB</strong> %{dob}"
+      release_info: "Released by %{name} on %{date}"
       requests:
         header: "Requests Matching this Specimen"
+        samples_needed:
+          singular: "%{requested_number} Sample &geq; %{requested_size}"
+          plural: "%{requested_number} Samples &geq; %{requested_size}"
     tooltips:
       release: "Release Specimens"
     requests:
@@ -185,17 +201,6 @@ en:
       any_status: "Active Requests"
       sort_by: "Sort By"
       sort_order: "Order"
-    fields:
-      created_at: "Date Requested"
-      end_date: "End Date"
-      primary_pi: "Primary PI"
-      protocol_id: "SRID"
-      requester: "Requester"
-      short_title: "Short Title"
-      start_date: "Start Date"
-      status: "Status"
-      time_remaining: "Time Remaining"
-      title: "Title"
     tooltips:
       time_estimate: "This request could take a long time to fulfill."
       complete: "Complete this request once all specimens have been received"

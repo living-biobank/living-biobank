@@ -5,8 +5,5 @@
       %span
         = t(:labs)[:header]
 
-.mb-4#verifySpecimensContainer
-  = text_field_tag 'verifySpecimens', '', class: 'form-control form-control-lg', placeholder: t(:labs)[:search][:placeholder], autofocus: true
-  = icon('fas fa-2x', 'search')
 = render 'labs/filters'
 = render 'labs/display', labs: @labs

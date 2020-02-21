@@ -31,6 +31,10 @@ class User < ApplicationRecord
     user
   end
 
+  def self.arel_full_name
+    User.arel_table[:first_name].concat(Arel::Nodes.build_quoted(' ')).concat(User.arel_table[:last_name])
+  end
+
   def full_name
     "#{self.first_name} #{self.last_name}".strip
   end

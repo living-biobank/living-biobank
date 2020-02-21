@@ -6,7 +6,7 @@ class Lab < ApplicationRecord
   belongs_to :recipient, class_name: "SPARC::Identity", optional: true
   belongs_to :source
 
-  belongs_to :releaser, source: :user, foreign_key: :released_by
+  belongs_to :releaser, foreign_key: :released_by, class_name: "User", optional: true
 
   has_many :populations, through: :patient
   has_many :line_items, -> (lab) { where(source: lab.source) }, through: :populations #This association is for matching specimen sources between labs and line items
@@ -24,26 +24,73 @@ class Lab < ApplicationRecord
     end
   }
 
-  scope :filtered_for_index, -> (term, status, source, sort_by, sort_order) {
+  scope :filtered_for_index, -> (term, released_at_start, released_at_end, status, source, sort_by, sort_order) {
+    by_released_date(released_at_start, released_at_end).
     with_status(status).
     with_source(source).
+    ordered_by(sort_by, sort_order).
     distinct
   }
 
   scope :search, -> (term) {
     return if term.blank?
 
-    labs = joins(:patient).where(Patient.arel_table[:mrn].matches("%#{term}%"))
-    request_labs = joins(patient: :sparc_requests).where(SparcRequest.arel_table[:protocol_id].matches(term))
+    joins(:releaser, :patient, :source).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    ).or(
+      joins(:releaser, :patient, :source).where(Lab.arel_table[:status].matches("%#{term}%"))
+    ).or(
+      joins(:releaser, :patient, :source).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
+    ).or( # Search by Releaser First Name
+      joins(:releaser, :patient, :source).where(User.arel_table[:first_name].matches("%#{term}%"))
+    ).or( # Search by Releaser Last Name
+      joins(:releaser, :patient, :source).where(User.arel_table[:last_name].matches("%#{term}%"))
+    ).or( # Search by Releaser Full Name 
+      joins(:releaser, :patient, :source).where(User.arel_full_name.matches("%#{term}%"))
+    ).or(
+      joins(:releaser, :patient, :source).where(Patient.arel_table[:lastname].matches("%#{term}%"))
+    ).or(
+      joins(:releaser, :patient, :source).where(Patient.arel_table[:firstname].matches("%#{term}%"))
+    ).or(
+      joins(:releaser, :patient, :source).where(Patient.arel_table[:mrn].matches("%#{term}%"))
+    ).or(
+      joins(:releaser, :patient, :source).where(Patient.arel_table[:identifier].matches("%#{term}%"))
+    ).or(
+      joins(:releaser, :patient, :source).where(Source.arel_table[:value].matches("%#{term}%"))
+    )
+  }
 
-    where(id: labs + request_labs)
+  scope :by_released_date, -> (start_date, end_date) {
+    return if start_date.blank? && end_date.blank?
+
+    start_date  = DateTime.strptime(start_date, '%m/%d/%Y').beginning_of_day rescue ''
+    end_date    = DateTime.strptime(end_date, '%m/%d/%Y').end_of_day rescue ''
+
+    # TODO
+    # Implement Between
+    if start_date && end_date
+      query = Lab.arel_table[:released_at].between(start_date..end_date)
+    elsif start_date
+      query = Lab.arel_table[:released_at].gteq(start_date)
+    else # end_date present, start_date blank
+      query = Lab.arel_table[:released_at].lteq(end_date)
+    end
+
+    where(query)
   }
 
   scope :with_status, -> (status) {
     if status
       where(status: status)
     else
-      where(status: [I18n.t(:labs)[:statuses][:available], I18n.t(:labs)[:statuses][:released]])
+      joins(:group).where(
+        status: I18n.t(:labs)[:statuses][:available],
+        groups: { process_specimen_retrieval: false }
+      ).or(
+        joins(:group).where(
+          status: [I18n.t(:labs)[:statuses][:available], I18n.t(:labs)[:statuses][:released]],
+          groups: { process_specimen_retrieval: true }
+        )
+      )
     end
   }
 
@@ -51,6 +98,19 @@ class Lab < ApplicationRecord
     return if source.blank?
 
     where(source_id: source)
+  }
+
+  scope :ordered_by, -> (sort_by, sort_order) {
+    sort_order = sort_order.present? ? sort_order : 'desc'
+
+    case sort_by
+    when 'accession_number'
+      joins(:patient).order(Patient.arel_table[:accession_number].send(sort_order), id: :desc)
+    when 'specimen_source'
+      joins(:source).order(Source.arel_table[:value].send(sort_order), id: :desc)
+    else # Includes status
+      order(status: sort_order, id: :desc)
+    end
   }
 
   def status=(status)

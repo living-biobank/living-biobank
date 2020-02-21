@@ -1,3 +1,5 @@
+$.fn.datepicker.defaults.clearBtn = true
+
 $ ->
   fixNavbarPlacement()
   fixHeaderPlacement()
@@ -96,11 +98,12 @@ $ ->
   )
 
   # Update records when using filters
-  $(document).on 'changed.bs.select', '.table-filters select.filter-select', ->
+  $(document).on 'changeDate.datepicker changed.bs.select', '.table-filters .filter-date, .table-filters select.filter-select', ->
     $container  = $(this).parents('.table-filters')
     data        = { term: $container.find('.table-search').val() }
 
-    $container.find('select.filter-select').each (index, element) ->
+    $container.find('.filter-date input, select.filter-select').each (index, element) ->
+      console.log element
       field = $(element).data('field')
       val   = $(element).val()
       if val != ""
