@@ -41,3 +41,17 @@ header {
     padding: 1.5rem;
   }
 }
+
+@media (min-width: 1200px) and (max-width: 1679.98px) {
+  header {
+    height: $header-height-lg;
+    margin-left: $navbar-width-lg;
+  }
+}
+
+@media (min-width: 1680px) {
+  header {
+    height: $header-height-xl;
+    margin-left: $navbar-width-xl;
+  }
+}
