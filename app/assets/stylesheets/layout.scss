@@ -80,8 +80,21 @@ a, .btn-link {
   }
 }
 
+@media (min-width: 1200px) and (max-width: 1679.98px) {
+  main#content {
+    margin-top: $header-height-lg;
+    margin-left: $navbar-width-lg;
+  }
+}
+
 @media (min-width: 1680px) and (max-width: 1919.98px) {
   html {
     font-size: 87.5%;
   }
+}
+@media (min-width: 1680px) {
+  main#content {
+    margin-top: $header-height-xl;
+    margin-left: $navbar-width-xl;
+  } 
 }

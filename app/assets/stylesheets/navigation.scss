@@ -10,6 +10,9 @@
       width: 100%;
       font-size: 2rem;
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
@@ -184,14 +187,28 @@
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1919.98px) {
+@media (min-width: 1200px) and (max-width: 1679.98px) {
   .navbar {
-    max-width: 250px;
+    max-width:  $navbar-width-lg;
+    width:      $navbar-width-lg;
+
+    .navbar-header {
+      .navbar-brand {
+        height: $header-height-lg;
+      }
+    }
   }
 }
 
-@media (min-width: 1920px) {
+@media (min-width: 1680px) {
   .navbar {
-    max-width: 275px;
+    max-width:  $navbar-width-xl;
+    width:      $navbar-width-xl;
+
+    .navbar-header {
+      .navbar-brand {
+        height: $header-height-xl;
+      }
+    }
   }
 }
