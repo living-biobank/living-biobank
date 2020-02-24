@@ -9,10 +9,10 @@
     %title
       = t('site_information.name')
   %body
-    = render 'layouts/environment'
     = render 'layouts/navigation'
     = content_for(:header)
     %main.d-flex.flex-column#content
+      = render 'layouts/environment'
       = render 'layouts/flash'
       = yield
       .flex-fill.d-flex.flex-column.justify-content-end
