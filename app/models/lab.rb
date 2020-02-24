@@ -12,11 +12,14 @@ class Lab < ApplicationRecord
   has_many :line_items, -> (lab) { where(source: lab.source) }, through: :populations #This association is for matching specimen sources between labs and line items
 
   has_one :group, through: :source
+  has_one :sparc_request, through: :line_item
 
   delegate :identifier, to: :patient
   delegate :mrn, to: :patient
   delegate :dob, to: :patient
   delegate :sparc_requests, to: :patient
+
+  after_update :send_emails
 
   scope :retrievable, -> (user) {
     if user.honest_broker.process_specimen_retrieval == false
@@ -25,6 +28,7 @@ class Lab < ApplicationRecord
   }
 
   scope :filtered_for_index, -> (term, released_at_start, released_at_end, status, source, sort_by, sort_order) {
+    search(term).
     by_released_date(released_at_start, released_at_end).
     with_status(status).
     with_source(source).
@@ -35,27 +39,27 @@ class Lab < ApplicationRecord
   scope :search, -> (term) {
     return if term.blank?
 
-    joins(:releaser, :patient, :source).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    includes(:releaser, :patient, source: :group).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%"
     ).or(
-      joins(:releaser, :patient, :source).where(Lab.arel_table[:status].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(Lab.arel_table[:status].matches("%#{term}%"))
     ).or(
-      joins(:releaser, :patient, :source).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
     ).or( # Search by Releaser First Name
-      joins(:releaser, :patient, :source).where(User.arel_table[:first_name].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or( # Search by Releaser Last Name
-      joins(:releaser, :patient, :source).where(User.arel_table[:last_name].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or( # Search by Releaser Full Name 
-      joins(:releaser, :patient, :source).where(User.arel_full_name.matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(User.arel_full_name.matches("%#{term}%"))
     ).or(
-      joins(:releaser, :patient, :source).where(Patient.arel_table[:lastname].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(Group.arel_table[:display_patient_information].eq(true).and(Patient.arel_table[:lastname].matches("%#{term}%")))
     ).or(
-      joins(:releaser, :patient, :source).where(Patient.arel_table[:firstname].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(Group.arel_table[:display_patient_information].eq(true).and(Patient.arel_table[:firstname].matches("%#{term}%")))
     ).or(
-      joins(:releaser, :patient, :source).where(Patient.arel_table[:mrn].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(Patient.arel_table[:mrn].matches("%#{term}%"))
     ).or(
-      joins(:releaser, :patient, :source).where(Patient.arel_table[:identifier].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(Patient.arel_table[:identifier].matches("%#{term}%"))
     ).or(
-      joins(:releaser, :patient, :source).where(Source.arel_table[:value].matches("%#{term}%"))
+      includes(:releaser, :patient, source: :group).where(Source.arel_table[:value].matches("%#{term}%"))
     )
   }
 
@@ -68,14 +72,12 @@ class Lab < ApplicationRecord
     # TODO
     # Implement Between
     if start_date && end_date
-      query = Lab.arel_table[:released_at].between(start_date..end_date)
+      where(Lab.arel_table[:released_at].between(start_date..end_date))
     elsif start_date
-      query = Lab.arel_table[:released_at].gteq(start_date)
+      where(Lab.arel_table[:released_at].gteq(start_date))
     else # end_date present, start_date blank
-      query = Lab.arel_table[:released_at].lteq(end_date)
+      where(Lab.arel_table[:released_at].lteq(end_date))
     end
-
-    where(query)
   }
 
   scope :with_status, -> (status) {
@@ -137,5 +139,15 @@ class Lab < ApplicationRecord
 
   def discarded?
     self.status == I18n.t(:labs)[:statuses][:discarded]
+  end
+
+  private
+
+  def send_emails
+    # Leaving this open to expansion for now because Bashir wants
+    # retrieval emails too in a future story
+    if self.released?
+      SpecimenMailer.release_email(self.sparc_request).deliver_now
+    end
   end
 end
