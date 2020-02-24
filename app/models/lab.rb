@@ -9,10 +9,12 @@ class Lab < ApplicationRecord
   belongs_to :releaser, foreign_key: :released_by, class_name: "User", optional: true
 
   has_many :populations, through: :patient
-  has_many :line_items, -> (lab) { where(source: lab.source) }, through: :populations #This association is for matching specimen sources between labs and line items
+  # This association is for matching specimen sources between labs and line items
+  has_many :line_items, -> (lab) { where(source: lab.source) }, through: :populations
 
   has_one :group, through: :source
   has_one :sparc_request, through: :line_item
+  has_one :protocol, through: :sparc_request
 
   delegate :identifier, to: :patient
   delegate :mrn, to: :patient
@@ -39,27 +41,37 @@ class Lab < ApplicationRecord
   scope :search, -> (term) {
     return if term.blank?
 
-    includes(:releaser, :patient, source: :group).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    joins(:protocol).includes(:releaser, :patient, source: :group).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%"
     ).or(
-      includes(:releaser, :patient, source: :group).where(Lab.arel_table[:status].matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(Lab.arel_table[:status].matches("%#{term}%"))
     ).or(
-      includes(:releaser, :patient, source: :group).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
     ).or( # Search by Releaser First Name
-      includes(:releaser, :patient, source: :group).where(User.arel_table[:first_name].matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or( # Search by Releaser Last Name
-      includes(:releaser, :patient, source: :group).where(User.arel_table[:last_name].matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or( # Search by Releaser Full Name 
-      includes(:releaser, :patient, source: :group).where(User.arel_full_name.matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(User.arel_full_name.matches("%#{term}%"))
     ).or(
-      includes(:releaser, :patient, source: :group).where(Group.arel_table[:display_patient_information].eq(true).and(Patient.arel_table[:lastname].matches("%#{term}%")))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(Patient.arel_table[:lastname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
     ).or(
-      includes(:releaser, :patient, source: :group).where(Group.arel_table[:display_patient_information].eq(true).and(Patient.arel_table[:firstname].matches("%#{term}%")))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(Patient.arel_table[:firstname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
     ).or(
-      includes(:releaser, :patient, source: :group).where(Patient.arel_table[:mrn].matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(Patient.arel_table[:mrn].matches("%#{term}%"))
     ).or(
-      includes(:releaser, :patient, source: :group).where(Patient.arel_table[:identifier].matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(Patient.arel_table[:identifier].matches("%#{term}%"))
     ).or(
-      includes(:releaser, :patient, source: :group).where(Source.arel_table[:value].matches("%#{term}%"))
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(Source.arel_table[:value].matches("%#{term}%"))
+    ).or(
+      joins(:protocol).includes(:releaser, :patient, source: :group).where("#{SPARC::Protocol.quoted_table_name}.`id` LIKE ?", "#{term}%")
+    ).or(
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
+    ).or(
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
+    ).or(
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
+    ).or(
+      joins(:protocol).includes(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
     )
   }
 
