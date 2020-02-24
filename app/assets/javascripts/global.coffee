@@ -1,5 +1,4 @@
 $ ->
-  fixContentPlacement()
   initializeSelectpickers()
   initializeTooltips()
   initializePopovers()
@@ -9,9 +8,6 @@ $ ->
     initializeSelectpickers()
     initializeTooltips()
     initializePopovers()
-
-  $(window).resize ->
-    fixContentPlacement()
 
   # Remove form validation contexts when changing fields
   $(document).on 'keydown change change.datetimepicker', '.is-valid:not(.persist-validation), .is-invalid:not(.persist-validation)', ->
@@ -111,18 +107,6 @@ $ ->
       dataType: 'script'
       url: $container.data('url')
       data: data
-
-(exports ? this).fixContentPlacement = () ->  
-  if $('html').width() > 1199
-    $('#content').css('padding-top', "calc(1.5rem + #{$('header').outerHeight()}px)")
-    $('#content').css('margin-left', $('.navbar').outerWidth())
-    $('.navbar, header').css('top', $('#environment').outerHeight())
-    $('header').css('margin-left', $('.navbar').outerWidth())
-  else
-    $('#content').css('margin-top', 0)
-    $('#content').css('margin-left', 0)
-    $('header').css('margin-top', $('.navbar').outerHeight())
-    $('header').css('margin-left', 0)
 
 (exports ? this).setRequiredFields = () ->
   $('.required:not(.has-indicator)').addClass('has-indicator').append('<span class="required-indicator">*</span>')

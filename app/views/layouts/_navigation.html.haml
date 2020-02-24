@@ -8,7 +8,7 @@
     .navbar-nav
       .text-white.d-flex.d-md-none.d-xl-flex#userInformation
         = icon('fas', 'user-circle')
-        %span
+        %span.text-break
           = current_user.full_name
       - if current_user.admin? || current_user.honest_broker?
         .nav-item
