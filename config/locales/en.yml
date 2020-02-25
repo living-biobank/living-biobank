@@ -19,6 +19,11 @@ en:
       text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
   activerecord:
     attributes:
+      lab:
+        accession_number: "Accession Number"
+        id: "Specimen ID"
+        released_at: "Date Released"
+        specimen_source: "Specimen Source"
       line_item:
         source_id: "Specimen Source"
         query_name: "i2b2 Query"
@@ -27,6 +32,17 @@ en:
         three_month_accrual: "Past 3 Months"
         six_month_accrual: "Past 6 Months"
         one_year_accrual: "Past Year"
+      sparc_request:
+        created_at: "Date Requested"
+        end_date: "End Date"
+        primary_pi: "Primary PI"
+        protocol_id: "SRID"
+        requester: "Requester"
+        short_title: "Short Title"
+        start_date: "Start Date"
+        status: "Status"
+        time_remaining: "Time Remaining"
+        title: "Title"
       sparc/protocol:
         research_master_id: "Research Master ID"
         title: "Title"
@@ -84,28 +100,42 @@ en:
       id: "Job ID"
   labs:
     header: "Lab Specimens"
+    release_confirm:
+      title: "Release this specimen to<br>%{request}?"
+    retrieve_confirm:
+      title: "Specimen received by the requester?"
+    cancel_confirm:
+      title: "Release this specimen to a different request?"
+    discard_confirm:
+      title: "Discard this specimen?"
     search:
       placeholder: "Verify Samples"
       found: "Specimens Found"
       not_found: "No Specimens found"
     filters:
       search: "Search"
-      status: "Filter by Status"
+      date_released:
+        label: "Date Released"
+        start: "Start Date"
+        to: "to"
+        end: "End Date"
+      any_status: "Active Specimens"
+      status: "Filter by Specimen Status"
+      any_source: "Any Source"
+      source: "Filter by Specimen Source"
       sort_by: "Sort By"
       sort_order: "Order"
-    fields:
-      id: "Lab ID"
-      header: "Specimen #: %{accession_number} (%{source})"
-      sub_header_without_patient_name: "Patient ID: %{id} | MRN: %{mrn} | DOB: %{dob}"
-      sub_header_with_patient_name: "Patient ID: %{id} | MRN: %{mrn} | Name: %{lastname}, %{firstname} | DOB: %{dob}"
-      samples_available: "Potential Samples Available"
-      specimen_source: "Specimen Source"
-      protocols: "Eligible Requests"
-      release: "Release"
-      intended_recipient: "Intended Recipient: %{last_name}, %{first_name}"
-      samples_needed:  "%{requested_number} Samples &geq; %{requested_size}"
-    form:
-      title: "Release Specimens"
+    table:
+      header: "[%{id}] %{source} (%{accession_number})"
+      patient_info:
+        with_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
+        without_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>DOB</strong> %{dob}"
+      release_info: "Released by %{name} on %{date}"
+      requests:
+        header: "Requests Matching this Specimen"
+        samples_needed:
+          singular: "%{requested_number} Sample &geq; %{requested_size}"
+          plural: "%{requested_number} Samples &geq; %{requested_size}"
     tooltips:
       release: "Release Specimens"
     requests:
@@ -118,6 +148,7 @@ en:
     actions:
       release_specimen: "Release Specimen"
       retrieve_specimen:  "Specimen Retrieved"
+      cancel_release: "Cancel Release"
       discard_specimen:  "Specimen Discarded"
   home:
     header: "Living Biobank enables access to Clinical Specimens and Microbiome Data"
@@ -166,21 +197,10 @@ en:
       cancelled: "Cancelled"
     filters:
       search: "Search"
-      status: "Filter by Status"
+      status: "Filter by Request Status"
       any_status: "Active Requests"
       sort_by: "Sort By"
       sort_order: "Order"
-    fields:
-      created_at: "Date Requested"
-      end_date: "End Date"
-      primary_pi: "Primary PI"
-      protocol_id: "SRID"
-      requester: "Requester"
-      short_title: "Short Title"
-      start_date: "Start Date"
-      status: "Status"
-      time_remaining: "Time Remaining"
-      title: "Title"
     tooltips:
       time_estimate: "This request could take a long time to fulfill."
       complete: "Complete this request once all specimens have been received"
@@ -279,10 +299,9 @@ en:
         subject: "Specimens Are Available"
         intro:  "Dear Honest Broker, "
         text: "A sample request has been made.  Please retrieve sample at your convenience and notify the researcher when the sample is ready for pick-up."
-    release_specimen_mailer:
+    specimen_mailer:
       release_email:
         subject: "Specimen Pickup for You"
         intro: "Dear Investigator, "
         text:  "A specimen you requested for the %{type} <em>%{study}</em> is ready for pick-up.  Your sample will be available for pick up on the 7th floor of the Basic Science Building in the Hollings Cancer Center Biorepository between the hours of 9AM and 5PM.  Your sample will be discarded by noon the following day should you fail to retrieve it.  Please email Dr. Ivey directly at <a href='mailto:turnerbp@musc.edu'>turnerbp@musc.edu</a> if you have any questions. <p> Thank you, "
         closing: "Brittany Ivey, Ph.D. <p> Operations Manager <br /> Biorepository & Tissue Analysis Shared Resource <br /> Medical University of South Carolina"
-

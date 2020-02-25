@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200129184548) do
+ActiveRecord::Schema.define(version: 20200212224441) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -52,10 +52,12 @@ ActiveRecord::Schema.define(version: 20200129184548) do
     t.bigint "line_item_id"
     t.bigint "recipient_id"
     t.datetime "released_at"
+    t.bigint "released_by"
     t.datetime "retrieved_at"
     t.datetime "discarded_at"
     t.index ["line_item_id"], name: "fk_rails_f32b2a1d2a"
     t.index ["patient_id"], name: "index_labs_on_patient_id"
+    t.index ["released_by"], name: "index_labs_on_released_by"
     t.index ["source_id"], name: "index_labs_on_source_id"
   end
 

@@ -5,13 +5,6 @@
       = f.hidden_field :protocol_id
       = f.hidden_field :status
 
-      - if params[:status]
-        = hidden_field_tag :status, params[:status]
-      - if params[:sort_by]
-        = hidden_field_tag :sort_by, params[:sort_by]
-      - if params[:sort_order]
-        = hidden_field_tag :sort_order, params[:sort_order]
-
       .modal-header
         %h4.modal-title
           = t(:requests)[:form][sparc_request.persisted? ? :edit_title : :new_title]
@@ -63,17 +56,17 @@
                 .form-group.col-6
                   = ff_p.label :start_date, class: 'required'
                   .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
-                    = ff_p.text_field :start_date, value: format_date(ff_p.object.start_date), class: 'form-control', placeholder: t(:requests)[:fields][:start_date], readonly: ff_p.object.persisted? && ff_p.object.valid?, data: { date_enable_on_readonly: 'false' }
+                    = ff_p.text_field :start_date, value: format_date(ff_p.object.start_date), class: 'form-control', placeholder: SparcRequest.human_attribute_name(:start_date), readonly: ff_p.object.persisted? && ff_p.object.valid?, data: { date_enable_on_readonly: 'false' }
                     .input-group-append.input-group-prepend
                       %label.input-group-text<
                         = t(:requests)[:form][:date_separator]
-                    = ff_p.text_field :end_date, value: format_date(ff_p.object.end_date), class: 'form-control', placeholder: t(:requests)[:fields][:end_date], readonly: ff_p.object.persisted? && ff_p.object.valid?, data: { date_enable_on_readonly: 'false' }
+                    = ff_p.text_field :end_date, value: format_date(ff_p.object.end_date), class: 'form-control', placeholder: SparcRequest.human_attribute_name(:end_date), readonly: ff_p.object.persisted? && ff_p.object.valid?, data: { date_enable_on_readonly: 'false' }
               = ff_p.fields_for :primary_pi_role do |ff_ppi|
                 = ff_ppi.hidden_field :id
 
                 .form-row
                   .form-group.col-sm-6
-                    = label_tag :primary_pi_search, t(:requests)[:fields][:primary_pi], class: 'required'
+                    = label_tag :primary_pi_search, SparcRequest.human_attribute_name(:primary_pi), class: 'required'
                     = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: ff_p.object.persisted? && ff_p.object.valid?
                     = ff_ppi.hidden_field :identity_id
         %section.card.mb-3

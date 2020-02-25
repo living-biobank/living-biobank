@@ -5,24 +5,27 @@
         .card-header{ class: request.cancelled? ? 'collapsed' : '', data: { toggle: 'collapse', target: ".request-#{request.id}-collapse" } }
           .row
             .col-12.col-sm-10.d-flex.flex-column.justify-content-between
-              %h2.d-flex.align-items-center.w-100.font-weight-bold.mb-1
+              %h3.d-flex.align-items-center.w-100.font-weight-bold.mb-1
                 = icon('fas', 'caret-down mr-2 mt-1')
                 = request_title_display(request)
                 .d-none.d-sm-block
                   = request_status_context(request)
-              %h4.mb-0
-                %small.text-muted<
-                  = requester_display(request)
             .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end
               %h3.d-block.d-sm-none.mb-0
                 = request_status_context(request)
               = request_actions(request)
-              - unless request.cancelled? || request.completed?
-                %h4.mb-0
-                  %small.text-muted<
-                    = request_duration_display(request)
         .collapse{ class: ["request-#{request.id}-collapse", request.cancelled? ? '' : 'show'] }
           .card-body
+            .d-flex
+              .w-50
+                %h4
+                  %small.text-muted<
+                    = requester_display(request)
+              .w-50.text-right
+                - unless request.cancelled? || request.completed?
+                  %h4
+                    %small.text-muted<
+                      = request_duration_display(request)
             - if request.specimen_requests.any?
               %h4.card-title.font-weight-bold
                 = t('requests.table.specimens.header')
@@ -34,7 +37,7 @@
                         = line_item_text(li)
                       %small.text-muted<
                         = query_display(li)
-                  .col-sm-8.col-12
+                  .col-sm-8.col-12.pl-0
                     - unless request.cancelled?
                       = render 'line_items/progress_bar', li: li
           - if request.additional_services.any?
