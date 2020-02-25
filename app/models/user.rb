@@ -24,7 +24,7 @@ class User < ApplicationRecord
   def self.find_for_shibboleth_oauth(auth, signed_in_resource=nil)
     unless user = User.where(net_id: auth.uid).first
       email = auth.info.email.blank? ? auth.uid : auth.info.email # in case shibboleth doesn't return the required parameters
-      user = User.create(net_id: auth.uid, first_name: auth.info.first_name, last_name: auth.info.last_name, email: email, password: Devise.friendly_token[0,20], approved: true)
+      user = User.create(net_id: auth.uid, first_name: auth.info.first_name, last_name: auth.info.last_name, email: email, password: Devise.friendly_token[0,20])
     end
     user
   end
