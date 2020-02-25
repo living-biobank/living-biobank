@@ -31,7 +31,7 @@
               - if lab.line_items.any?
                 %h4.card-title.font-weight-bold
                   = t('labs.table.requests.header')
-                - lab.line_items.each do |line_item|
+                - lab.line_items.eager_load(sparc_request: [:protocol, :primary_pi]).each do |line_item|
                   .row.specimen-line-item
                     .col-4.d-flex
                       .d-flex.align-items-start.mr-2
@@ -53,26 +53,25 @@
                               = request_duration_display(line_item.sparc_request)
                         = render 'line_items/progress_bar', li: line_item
             - else
-              - line_item = lab.line_item
               %h4.card-title.font-weight-bold
-                = "Specimen Released To"
+                = t('labs.table.released.header')
               .row.specimen-line-item
                 .col-4.d-flex
                   .d-flex.flex-column.mr-2
                     %h5.font-weight-bold.mb-0
-                      = request_title_display(line_item.sparc_request)
+                      = request_title_display(lab.sparc_request)
                     %h5.text-muted.mb-0
                       %small
-                        = requester_display(line_item.sparc_request)
+                        = requester_display(lab.sparc_request)
                 .col-8.pl-0
                   .d-flex.flex-column.flex-fill
                     .d-flex.justify-content-between
                       .w-50
                         - if lab.group.process_sample_size?
-                          = lab_sample_size_display(line_item)
+                          = lab_sample_size_display(lab.line_item)
                       .w-50.d-flex.justify-content-end
                         %p.mb-0
-                          = request_duration_display(line_item.sparc_request)
+                          = request_duration_display(lab.sparc_request)
                     = render 'line_items/progress_bar', li: lab.line_item
     = will_paginate labs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
   - else

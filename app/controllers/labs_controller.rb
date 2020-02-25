@@ -30,7 +30,7 @@ class LabsController < ApplicationController
         Lab.all
       else
         current_user.honest_broker.labs.retrievable(current_user)
-      end.filtered_for_index(params[:term], params[:released_at_start], params[:released_at_end], params[:status], params[:source], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:source, :patient, line_item: { sparc_request: [:primary_pi, :protocol] })
+      end.filtered_for_index(params[:term], params[:released_at_start], params[:released_at_end], params[:status], params[:source], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:source, :patient, :line_item)
   end
 
   def lab_params

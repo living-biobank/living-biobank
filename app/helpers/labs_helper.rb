@@ -36,7 +36,7 @@ module LabsHelper
     name = link_to lab.releaser.full_name, 'javascript:void(0)', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.releaser) }
 
     content_tag :span do
-      icon('fas', 'user mr-2') + t('labs.table.release_info', name: name, date: format_date(lab.released_at)).html_safe
+      icon('fas', 'user mr-2') + t('labs.table.released.releaser', name: name, date: format_date(lab.released_at)).html_safe
     end
   end
 
