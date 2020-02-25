@@ -257,7 +257,6 @@ form, .form {
   }
 
   .date input[type=text] {
-    width: 100px;
     padding: 0.5rem;
     margin-right: 0;
     border-radius: 0.3rem;
@@ -392,6 +391,22 @@ form, .form {
 
     .form-control, .custom-select {
       @extend .is-invalid;
+    }
+  }
+}
+
+@media (max-width: 1679.98px) {
+  .table-filters {
+    .date input[type=text] {
+      width: 100px;
+    }
+  }
+}
+
+@media (min-width: 1680px) {
+  .table-filters {
+    .date input[type=text] {
+      width: 110px;
     }
   }
 }
