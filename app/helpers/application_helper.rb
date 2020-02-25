@@ -10,19 +10,5 @@ module ApplicationHelper
   def format_date(date)
     date.strftime("%m/%d/%Y") if date
   end
-
-  def protocol_preview protocol
-    sr = protocol.sparc_request
-    title = "<div class='protocol-preview'>"
-    title += "<label>Title</label><br /> #{sr.title}"
-    title += "<br /><br />"
-    title += "<label>Description</label><br /> #{sr.description}"
-    title += "<br /><br />"
-    title += "<label># of Samples Requested</label><br /> #{sr.number_of_specimens_requested}"
-    title += "<br /><br />"
-    title += "<label>Minimum Sample Size</label><br /> #{sr.minimum_sample_size}"
-    title += "</div>"
-    content_tag :button, protocol.id, type: 'button', class: 'btn btn-secondary', data: { toggle: 'tooltip', title: title, html: true, placement: 'left' }
-  end
 end
 

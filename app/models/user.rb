@@ -4,6 +4,8 @@ class User < ApplicationRecord
   has_many :sparc_requests
   has_many :i2b2_queries, class_name: "I2b2::QueryName", foreign_key: :user_id, primary_key: :net_id
 
+  has_many :labs
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, authentication_keys: [:net_id]
@@ -27,6 +29,10 @@ class User < ApplicationRecord
       user = User.create(net_id: auth.uid, first_name: auth.info.first_name, last_name: auth.info.last_name, email: email, password: Devise.friendly_token[0,20], approved: true)
     end
     user
+  end
+
+  def self.arel_full_name
+    User.arel_table[:first_name].concat(Arel::Nodes.build_quoted(' ')).concat(User.arel_table[:last_name])
   end
 
   def full_name

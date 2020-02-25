@@ -9,7 +9,7 @@ class SparcRequest < ApplicationRecord
   has_many :line_items, dependent: :destroy
   has_many :specimen_requests, -> { where.not(source_id: nil) }, class_name: "LineItem"
   has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem"
-  has_many :sources, through: :line_items
+  has_many :sources, through: :specimen_requests
   has_many :groups, through: :sources
   has_many :services, through: :groups, source: :services
   has_many :variables, through: :groups
@@ -31,14 +31,6 @@ class SparcRequest < ApplicationRecord
 
   scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
 
-  scope :with_status, -> (status) {
-    if status
-      where(status: status)
-    else
-      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
-    end
-  }
-
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
     search(term).
     with_status(status).
@@ -49,35 +41,30 @@ class SparcRequest < ApplicationRecord
   scope :search, -> (term) {
     return if term.blank?
 
-    joins(:protocol, line_items: :service).where("#{SPARC::Protocol.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    joins(:protocol).includes(:user, specimen_requests: :source).where("#{SPARC::Protocol.quoted_table_name}.`id` LIKE ?", "#{term}%"
     ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
     ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
     ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
     ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
     ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:funding_status].matches("%#{term}%"))
-    ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:funding_source].matches("%#{term}%"))
-    ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:potential_funding_source].matches("%#{term}%"))
-    ).or(
-      joins(:protocol, line_items: :service).where(arel_table[:status].matches("%#{term}%"))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(SparcRequest.arel_table[:status].matches("%#{term}%"))
     ).or(
       by_date(term)
+    ).or( # Search by Releaser First Name
+      joins(:protocol).includes(:user, specimen_requests: :source).where(User.arel_table[:first_name].matches("%#{term}%"))
+    ).or( # Search by Releaser Last Name
+      joins(:protocol).includes(:user, specimen_requests: :source).where(User.arel_table[:last_name].matches("%#{term}%"))
+    ).or( # Search by Releaser Full Name 
+      joins(:protocol).includes(:user, specimen_requests: :source).where(User.arel_full_name.matches("%#{term}%"))
     ).or(
-      joins(:protocol, line_items: :service).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
-    ).or(
-      joins(:protocol, line_items: :service).where(LineItem.arel_table[:minimum_sample_size].matches("%#{term}%"))
-    ).or(
-      joins(:protocol, line_items: :service).where(LineItem.arel_table[:number_of_specimens_requested].matches(term))
-    ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Service.arel_table[:name].matches("%#{term}%"))
-    ).or(
-      joins(:protocol, line_items: :service).where(SPARC::Service.arel_table[:abbreviation].matches("%#{term}%"))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
+    )
+    .or(
+      joins(:protocol).includes(:user, specimen_requests: :source).where(Source.arel_table[:value].matches("%#{term}%"))
     )
   }
 
@@ -87,22 +74,30 @@ class SparcRequest < ApplicationRecord
     if parsed_date = Date.parse(date).strftime('%m%d%Y') rescue nil
       mdy = Date.strptime(parsed_date, '%m%d%Y') rescue nil
       dmy = Date.strptime(parsed_date, '%d%m%Y') rescue nil
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:start_date].matches(mdy)).or(
-        joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:end_date].matches(mdy))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:start_date].matches(mdy)).or(
+        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:end_date].matches(mdy))
       ).or(
-        joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:start_date].matches(dmy))
+        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:start_date].matches(dmy))
       ).or(
-        joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:end_date].matches(dmy))
+        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:end_date].matches(dmy))
       )
     elsif date =~ /\A\d+\Z/
       start = Date.parse("1-1-#{date}")
       last  = Date.parse("31-12-#{date}")
 
-      joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:start_date].gteq(start).and(SPARC::Protocol.arel_table[:start_date].lteq(last))).or(
-        joins(:protocol, line_items: :service).where(SPARC::Protocol.arel_table[:end_date].gteq(start).and(SPARC::Protocol.arel_table[:end_date].lteq(last)))
+      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:start_date].gteq(start).and(SPARC::Protocol.arel_table[:start_date].lteq(last))).or(
+        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:end_date].gteq(start).and(SPARC::Protocol.arel_table[:end_date].lteq(last)))
       )
     else
-      joins(:protocol, line_items: :service).none
+      joins(:protocol).includes(:user, specimen_requests: :source).none
+    end
+  }
+
+  scope :with_status, -> (status) {
+    if status
+      where(status: status)
+    else
+      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
     end
   }
 

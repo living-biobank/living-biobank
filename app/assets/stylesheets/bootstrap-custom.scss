@@ -242,10 +242,50 @@ form, .form {
   display: flex;
   flex-wrap: wrap;
 
-  .table-search {
+  input[type=text] {
     margin: 0.5rem 0.5rem;
     border: 0;
+  }
+
+  .filter {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+
+  .table-search {
     flex: 1 0;
+  }
+
+  .date input[type=text] {
+    width: 100px;
+    padding: 0.5rem;
+    margin-right: 0;
+    border-radius: 0.3rem;
+
+    &~ .input-group-append, &~ .input-group-prepend {
+      .input-group-text {
+        border: 0;
+        background: white;
+        padding: 0.5rem;
+      }
+    }
+
+    &~ input[type=text] {
+      margin-left: 0;
+    }
+  }
+
+  #sort_by + .filter {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      background: $border-color;
+      left: -1.5rem;
+    }
   }
 
   .dropdown.filter-select {
@@ -259,8 +299,6 @@ form, .form {
       padding-left: 0;
       padding-right: 0;
       border-radius: 0;
-      margin-left: 1.5rem;
-      margin-right: 1.5rem;
       display: flex;
       align-items: center;
       color: black;

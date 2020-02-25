@@ -1,48 +1,82 @@
-- labs.each do |lab|
-  .card
-    .card-header
-      .row
-        %h3.d-flex.w-100.font-weight-bold.m-0
-          .col-10
-            = t('labs.fields.header', accession_number: lab.accession_number, source: lab.source.key)
-            %br
-            %small.text-muted
-              - if lab.group.display_patient_information?
-                = t('labs.fields.sub_header_with_patient_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
-              - else
-                = t('labs.fields.sub_header_without_patient_name', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
-          .col-2.text-right
-            = lab_status_context(lab)
-    .card-body
-      - if lab.available?
-        - lab.line_items.each do |line_item|
-          .row.mb-3
-            .col-10
-              %h5.font-weight-bold.mb-0
-                = request_title_display(line_item.sparc_request)
-              .d-flex.pl-3
-                %p.d-flex.align-items-center.mb-0.ml-2
-                  = request_duration_display(line_item.sparc_request)
-              - if lab.group.process_sample_size?
-                .d-flex.pl-3
-                  %p.mb-0.service-display<
-                    = icon('fas', 'flask mr-2')
-                    = t('labs.fields.samples_needed', requested_number: line_item.number_of_specimens_requested, requested_size: line_item.minimum_sample_size).html_safe
-            .col-2.text-right
-              = link_to lab_path(lab, type: "release", line_item_id: line_item), remote: true, class: "btn btn-primary", title: t(:labs)[:actions][:release_specimen], data: {toggle: "tooltip"}, method: :patch do
-                = icon('fas', 'dolly')
-            .col-12
-              .pl-3
-                = render 'line_items/progress_bar', li: line_item
-      - elsif lab.released?
-        .row
-          .col-10
-            %h5.font-weight-bold.mb-0
-              = request_title_display(lab.line_item.sparc_request)
-            .d-flex.pl-3
-              = request_duration_display(lab.line_item.sparc_request)
-          .col-2.text-right
-            = link_to lab_path(lab, type: "retrieve"), remote: true, class: "btn btn-success mr-1", title: t(:labs)[:actions][:retrieve_specimen], data: {toggle: "tooltip"}, method: :patch do
-              = icon('fas', 'check-circle')
-            = link_to lab_path(lab, type: "discard"), remote: true, class: "btn btn-danger", title: t(:labs)[:actions][:discard_specimen], data: {toggle: "tooltip"}, method: :patch do
-              = icon('fas', 'trash-alt')
+#specimens
+  - if labs.any?
+    - labs.each do |lab|
+      .card
+        .card-header{ class: lab.retrieved? || lab.discarded? ? 'collapsed' : '', data: { toggle: 'collapse', target: ".specimen-#{lab.id}-collapse" } }
+          .row
+            .col-12.col-sm-10.d-flex.flex-column.justify-content-between
+              %h3.d-flex.align-items-center.w-100.font-weight-bold.mb-1
+                = icon('fas', 'caret-down mr-2 mt-1')
+                = t('labs.table.header', id: lab.id, source: lab.source.value, accession_number: lab.accession_number)
+                .d-none.d-sm-block
+                  = lab_status_context(lab)
+            .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end
+              %h3.d-block.d-sm-none.mb-0
+                = lab_status_context(lab)
+              - if lab.released?
+                = lab_actions(lab)
+        .collapse{ class: ["specimen-#{lab.id}-collapse", lab.retrieved? || lab.discarded? ? '' : 'show'] }
+          .card-body
+            .d-flex
+              .w-50
+                %h4
+                  %small.text-muted<
+                    = lab_patient_information(lab)
+              .w-50
+                - if lab.released?
+                  %h4.text-right
+                    %small.text-muted<
+                      = lab_releaser_information(lab)
+            - if lab.available?
+              - if lab.line_items.any?
+                %h4.card-title.font-weight-bold
+                  = t('labs.table.requests.header')
+                - lab.line_items.each do |line_item|
+                  .row.specimen-line-item
+                    .col-4.d-flex
+                      .d-flex.align-items-start.mr-2
+                        = release_lab_button(lab, line_item)
+                      .d-flex.flex-column.mr-2
+                        %h5.font-weight-bold.mb-0
+                          = request_title_display(line_item.sparc_request)
+                        %h5.text-muted.mb-0
+                          %small
+                            = requester_display(line_item.sparc_request)
+                    .col-8.pl-0
+                      .d-flex.flex-column.flex-fill
+                        .d-flex.justify-content-between
+                          .w-50
+                            - if lab.group.process_sample_size?
+                              = lab_sample_size_display(line_item)
+                          .w-50.d-flex.justify-content-end
+                            %p.mb-0
+                              = request_duration_display(line_item.sparc_request)
+                        = render 'line_items/progress_bar', li: line_item
+            - else
+              - line_item = lab.line_item
+              %h4.card-title.font-weight-bold
+                = "Specimen Released To"
+              .row.specimen-line-item
+                .col-4.d-flex
+                  .d-flex.flex-column.mr-2
+                    %h5.font-weight-bold.mb-0
+                      = request_title_display(line_item.sparc_request)
+                    %h5.text-muted.mb-0
+                      %small
+                        = requester_display(line_item.sparc_request)
+                .col-8.pl-0
+                  .d-flex.flex-column.flex-fill
+                    .d-flex.justify-content-between
+                      .w-50
+                        - if lab.group.process_sample_size?
+                          = lab_sample_size_display(line_item)
+                      .w-50.d-flex.justify-content-end
+                        %p.mb-0
+                          = request_duration_display(line_item.sparc_request)
+                    = render 'line_items/progress_bar', li: lab.line_item
+    = will_paginate labs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
+  - else
+    .card
+      .card-body
+        %p.text-center.mb-0
+          = t(:constants)[:no_records]
