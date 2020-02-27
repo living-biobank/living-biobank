@@ -47,7 +47,7 @@
               - request.additional_services.each do |li|
                 .row.line-item
                   .col-sm-4.col-12
-                    %h5.mb-0<
+                    %h5.d-flex.mb-0<
                       %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
                         = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
                       = li.service.name
