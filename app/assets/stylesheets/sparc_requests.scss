@@ -7,6 +7,13 @@
     @extend .mt-4;
     @extend .mt-sm-2;
   }
+
+  i {
+    display: flex;
+    justify-content: center;
+    max-width: 18px;
+    min-width: 18px;
+  }
 }
 
 #requestFormModal {

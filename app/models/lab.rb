@@ -130,6 +130,8 @@ class Lab < ApplicationRecord
     [:released, :retrieved, :discarded].each do |s|
       if status == I18n.t(:labs)[:statuses][s]
         self.send("#{s}_at=", DateTime.now)
+      else
+        self.send("#{s}_at=", nil)
       end
     end
 

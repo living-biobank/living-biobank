@@ -13,8 +13,7 @@
             .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end
               %h3.d-block.d-sm-none.mb-0
                 = lab_status_context(lab)
-              - if lab.released?
-                = lab_actions(lab)
+              = lab_actions(lab)
         .collapse{ class: ["specimen-#{lab.id}-collapse", lab.retrieved? || lab.discarded? ? '' : 'show'] }
           .card-body
             .d-flex
