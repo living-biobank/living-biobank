@@ -1,12 +1,18 @@
 .modal-dialog{ role: 'document' }
   .modal-content
-    = form_with scope: :user, url: "www.google.com", method: :patch do |f|
+    = form_for user, url: update_user_path(id: user), remote: true, method: :patch do |f|
 
       .modal-header
         %h4.modal-title
           = "Update Permissions for #{user.full_name}"
         %button.close{"data-dismiss" => "modal", type: "button"} &times;
       .modal-body
-        = "Stuff will go here."
+        .mb-3
+          .custom-control.custom-switch
+            = f.check_box :admin, class: "custom-control-input", id: "customSwitch1"
+            = f.label "Admin", class: "custom-control-label", for: "customSwitch1"
+        .mb-3
+          = f.label "Honest Broker for which group?"
+          = f.select :honest_broker_id, options_for_select(groups.collect{|g| [g.name, g.id]}, f.object.honest_broker_id)
       .modal-footer
-        = f.submit "Save Changes", class: 'btn btn-primary'
+        = f.submit "Save Changes", class: 'btn btn-primary', id: "submit_changes"

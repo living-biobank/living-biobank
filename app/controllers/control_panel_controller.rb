@@ -15,4 +15,17 @@ class ControlPanelController < ApplicationController
     respond_to :js
   end
 
+  def update_user
+    @user = User.find(params[:id])
+
+    @user.update_attributes(user_params)
+  end
+
+  private
+    def user_params
+      params.require(:user).permit(
+        :admin,
+        :honest_broker_id
+      )
+  end
 end
