@@ -1,0 +1,12 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_with scope: :user, url: "www.google.com", method: :patch do |f|
+
+      .modal-header
+        %h4.modal-title
+          = "Update Permissions for #{user.full_name}"
+        %button.close{"data-dismiss" => "modal", type: "button"} &times;
+      .modal-body
+        = "Stuff will go here."
+      .modal-footer
+        = f.submit "Save Changes", class: 'btn btn-primary'

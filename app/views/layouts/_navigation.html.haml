@@ -26,6 +26,12 @@
           = icon('fas', 'question')
           %span
             = t('navigation.help')
+      - if current_user.admin
+        .nav-item
+          = link_to control_panel_path, class: ['nav-link btn btn-dark', controller_name == 'control_panel' ? 'active' : ''] do
+            = icon('fas', 'cogs')
+            %span
+              = t('navigation.control_panel')
       .nav-item.d-block.d-md-none.d-xl-block
         = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link btn btn-dark text-danger' do
           = icon('fas', 'sign-out-alt')

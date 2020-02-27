@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   has_many :labs
 
+  before_destroy :check_for_admin
+  validate :admin_presence, on: [:update]
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, authentication_keys: [:net_id]
@@ -46,4 +49,20 @@ class User < ApplicationRecord
   def honest_broker?
     self.honest_broker_id.present?
   end
+
+  
+
+  private
+    def check_for_admin
+      unless User.where(admin: true).count > 1
+        errors.add(:user, "cannot be removed as it would leave no users with admin privileges.")
+        throw(:abort)
+      end
+    end
+
+    def admin_presence
+      if admin_changed?(from: true, to: false) && User.where(admin: true).count < 2
+        errors.add(:admin, "cannot be removed as it would leave no users with admin privileges.")
+      end
+    end
 end

@@ -90,6 +90,7 @@ en:
     labs: "Specimens"
     requests: "Requests"
     help: "Help Links"
+    control_panel: "Control Panel"
     logout: "Logout"
   help_links:
     headers:

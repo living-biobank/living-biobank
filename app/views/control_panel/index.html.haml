@@ -1,0 +1,41 @@
+- content_for :header do
+  = render 'control_panel/header'
+
+.h3.text-center
+  = "User Control"
+.card
+  .card-header
+    .row
+      .col-1
+      .col-2.h3
+        = "Name"
+      .col-3.h3
+        = "Email"
+      .col-2.h3
+        = "Honest Broker"  
+  .card-body
+    - @users.each do |user|
+      .row.mb-3
+        .col-1
+          - unless user.admin || user.honest_broker
+            .h4
+              = icon('fas', 'user')
+          - else
+            .row.h4
+              - if user.admin
+                .col-3.text-danger
+                  = icon('fas', 'user-cog')
+              - if user.honest_broker
+                .col-3.text-primary
+                  = icon('fas', 'user-check')
+        .col-2.h4
+          = user.full_name
+        .col-3.h4
+          = user.email
+        .col-2.h4
+          - if user.honest_broker
+            = user.honest_broker.name
+          - else
+            = " - "
+        .col-2
+          = link_to icon('fas', 'pencil-alt'), change_permissions_path(id: user), class: 'btn btn-warning', data: {toggle: "tooltip", title: "Edit User" }, remote: true
