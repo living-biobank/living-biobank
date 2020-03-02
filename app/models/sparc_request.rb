@@ -96,7 +96,7 @@ class SparcRequest < ApplicationRecord
   scope :with_status, -> (status) {
     if status.blank?
       where.not(status: I18n.t(:requests)[:statuses][:draft])
-    if status == 'active'
+    elsif status == 'active'
       where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
     else
       where(status: status)
