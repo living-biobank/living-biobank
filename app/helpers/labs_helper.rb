@@ -50,22 +50,25 @@ module LabsHelper
 
   def lab_status_context(lab)
     klass =
-      if lab.available?
-        'badge-warning'
-      else
+      if lab.retrieved?
+        'badge-success'
+      elsif lab.released?
         'badge-primary'
+      elsif lab.discarded?
+        'badge-secondary'
+      else
+        'badge-warning'
       end
 
     content_tag(:span, lab.status, class: ['badge p-2 ml-sm-2 mb-sm-0 lab-status', klass])
   end
 
   def lab_actions(lab)
-    actions = [cancel_lab_button(lab)]
+    actions = []
 
-    if lab.group.process_specimen_retrieval?
-      actions.unshift(retrieve_lab_button(lab))
-      actions.push(discard_lab_button(lab))
-    end
+    actions.push(retrieve_lab_button(lab)) if lab.released? && lab.group.process_specimen_retrieval?
+    actions.push(cancel_lab_button(lab))   unless lab.available?
+    actions.push(discard_lab_button(lab))  unless lab.retrieved? || lab.discarded?
 
     content_tag :div, class: 'mb-1' do
       raw(actions.join)
@@ -87,7 +90,7 @@ module LabsHelper
   end
 
   def cancel_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_at: nil, released_by: nil }), remote: true, method: :patch, class: "btn btn-warning mr-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title') } do
+    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil }), remote: true, method: :patch, class: "btn btn-warning mr-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
       icon('fas', 'redo')
     end
   end
