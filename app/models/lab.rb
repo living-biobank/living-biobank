@@ -22,12 +22,6 @@ class Lab < ApplicationRecord
 
   after_update :send_emails
 
-  scope :retrievable, -> (user) {
-    if user.honest_broker.process_specimen_retrieval == false
-      where(status: [I18n.t(:labs)[:statuses][:available]])
-    end
-  }
-
   scope :filtered_for_index, -> (term, released_at_start, released_at_end, status, source, sort_by, sort_order) {
     search(term).
     by_released_date(released_at_start, released_at_end).
@@ -92,9 +86,9 @@ class Lab < ApplicationRecord
   }
 
   scope :with_status, -> (status) {
-    if status
-      where(status: status)
-    else
+    return if status.blank?
+
+    if status == 'active'
       joins(:group).where(
         status: I18n.t(:labs)[:statuses][:available],
         groups: { process_specimen_retrieval: false }
@@ -104,6 +98,8 @@ class Lab < ApplicationRecord
           groups: { process_specimen_retrieval: true }
         )
       )
+    else
+      where(status: status)
     end
   }
 
@@ -130,8 +126,6 @@ class Lab < ApplicationRecord
     [:released, :retrieved, :discarded].each do |s|
       if status == I18n.t(:labs)[:statuses][s]
         self.send("#{s}_at=", DateTime.now)
-      else
-        self.send("#{s}_at=", nil)
       end
     end
 

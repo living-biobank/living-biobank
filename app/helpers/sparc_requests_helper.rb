@@ -10,11 +10,12 @@ module SparcRequestsHelper
 
   def request_status_filter_options(status)
     options_for_select([
-      [t(:requests)[:filters][:any_status], '', selected: true],
-      [t(:requests)[:statuses][:completed], class: 'text-success'],
-      [t(:requests)[:statuses][:in_process], class: 'text-primary'],
-      [t(:requests)[:statuses][:pending], class: 'text-warning'],
-      [t(:requests)[:statuses][:cancelled], class: 'text-secondary']
+      [t('requests.filters.all_status'), ''],
+      [t('requests.filters.active_status'), '', selected: true],
+      [t('requests.statuses.completed'), class: 'text-success'],
+      [t('requests.statuses.in_process'), class: 'text-primary'],
+      [t('requests.statuses.pending'), class: 'text-warning'],
+      [t('requests.statuses.cancelled'), class: 'text-secondary']
     ], status)
   end
 

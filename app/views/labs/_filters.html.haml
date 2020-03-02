@@ -2,9 +2,7 @@
   .card-header.border-bottom-0.table-filters{ data: { url: labs_path } }
     = text_field_tag 'searchLabs', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:labs)[:filters][:search]
     .d-flex.align-items-center.filter.mr-2
-      %h5.font-weight-normal.mb-0.text-nowrap
-        = t('labs.filters.date_released.label')
-      .input-group.input-daterange.date.filter-date{ data: { provide: 'datepicker', date_autoclose: 'true', date_today_highlight: 'true' } }
+      .input-group.input-daterange.date.filter-date{ title: t('labs.filters.date_released.label'), data: { provide: 'datepicker', date_autoclose: 'true', date_today_highlight: 'true', date_orientation: 'bottom', toggle: 'tooltip' } }
         = text_field_tag 'start_date', params[:released_at_start], class: 'form-control form-control-lg', placeholder: t('labs.filters.date_released.start'), data: { field: 'released_at_start' }
         .input-group-append.input-group-prepend
           %label.input-group-text<

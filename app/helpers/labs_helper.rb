@@ -9,13 +9,22 @@ module LabsHelper
   end
 
   def lab_status_filter_options(status)
-    options_for_select([
-      [t('labs.filters.any_status'), '', selected: true],
-      [t('labs.statuses.retrieved'), class: 'text-success'],
-      [t('labs.statuses.released'), class: 'text-primary'],
-      [t('labs.statuses.available'), class: 'text-warning'],
-      [t('labs.statuses.discarded'), class: 'text-secondary']
-    ], status)
+    if current_user.admin? || current_user.honest_broker.process_specimen_retrieval?
+      options_for_select([
+        [t('labs.filters.all_status'), ''],
+        [t('labs.filters.active_status'), 'active', selected: true],
+        [t('labs.statuses.retrieved'), class: 'text-success'],
+        [t('labs.statuses.released'), class: 'text-primary'],
+        [t('labs.statuses.available'), class: 'text-warning'],
+        [t('labs.statuses.discarded'), class: 'text-secondary']
+      ], status)
+    else
+      options_for_select([
+        [t('labs.filters.all_status'), '', selected: true],
+        [t('labs.statuses.released'), class: 'text-primary'],
+        [t('labs.statuses.discarded'), class: 'text-secondary']
+      ], status)
+    end
   end
 
   def lab_source_filter_options(source)
@@ -90,7 +99,7 @@ module LabsHelper
   end
 
   def cancel_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil }), remote: true, method: :patch, class: "btn btn-warning mr-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
+    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil }), remote: true, method: :patch, class: "btn btn-warning mr-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
       icon('fas', 'redo')
     end
   end

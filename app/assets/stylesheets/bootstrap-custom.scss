@@ -266,21 +266,22 @@ form, .form {
     flex: 1 0;
   }
 
-  .date input[type=text] {
-    padding: 0.5rem;
-    margin-right: 0;
-    border-radius: 0.3rem;
+  .date {
+    input[type=text] {
+      padding: 0.5rem;
+      margin-left: 0;
+      border-radius: 0.3rem;
 
-    &~ .input-group-append, &~ .input-group-prepend {
-      .input-group-text {
-        border: 0;
-        background: white;
-        padding: 0.5rem;
+      &:first-of-type {
+        margin-right: 0;
       }
     }
 
-    &~ input[type=text] {
-      margin-left: 0;
+    .input-group-prepend, .input-group-append {
+      .input-group-text {
+        border: 0;
+        background: white;
+      }
     }
   }
 
@@ -416,7 +417,7 @@ form, .form {
 @media (min-width: 1680px) {
   .table-filters {
     .date input[type=text] {
-      width: 110px;
+      width: 130px;
     }
   }
 }

@@ -10,6 +10,7 @@ html {
   }
 
   body {
+    display: flex;
     background: theme-color('light');
     opacity: 0;
     transition: 0.5s opacity ease-in-out;
@@ -18,6 +19,7 @@ html {
       background: theme-color('light');
       min-height: 100vh;
       padding-top: 1.5rem;
+      flex: 1;
     }
   }
 }

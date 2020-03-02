@@ -119,7 +119,8 @@ en:
         start: "Start Date"
         to: "to"
         end: "End Date"
-      any_status: "Active Specimens"
+      all_status: "Any Status"
+      active_status: "Active Specimens"
       status: "Filter by Specimen Status"
       any_source: "Any Source"
       source: "Filter by Specimen Source"
@@ -151,7 +152,7 @@ en:
       release_specimen: "Release Specimen"
       retrieve_specimen: "Specimen Retrieved"
       cancel_release: "Reset Specimen"
-      discard_specimen:  "Specimen Discarded"
+      discard_specimen:  "Discard Specimen"
   home:
     header: "Living Biobank enables access to Clinical Specimens and Microbiome Data"
     text1: "Living Biobank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
@@ -200,7 +201,8 @@ en:
     filters:
       search: "Search"
       status: "Filter by Request Status"
-      any_status: "Active Requests"
+      all_status: "Any Status"
+      active_status: "Active Requests"
       sort_by: "Sort By"
       sort_order: "Order"
     tooltips:
