@@ -11,7 +11,7 @@ class SparcRequestsController < ApplicationController
 
   def new
     @sparc_request = current_user.sparc_requests.new(status: t(:requests)[:statuses][:pending])
-    @sparc_request.build_protocol(type: 'Project')
+    @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.specimen_requests.build
 
@@ -112,7 +112,7 @@ class SparcRequestsController < ApplicationController
         SparcRequest.where(id: current_user.honest_broker.sparc_requests.ids + current_user.sparc_requests.ids)
       else
         current_user.sparc_requests
-      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
+      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:labs, :source, :group] })
 
     @draft_requests = current_user.sparc_requests.draft.includes(:protocol)
   end

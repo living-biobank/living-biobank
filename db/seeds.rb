@@ -184,36 +184,39 @@ ActiveRecord::Base.transaction do
   ).first_or_create
 
   protocol_1 = SPARC::Protocol.create(
-    title:                  Faker::Lorem.sentence,
-    short_title:            Faker::Lorem.sentence(word_count: 3),
-    funding_status:         'funded',
-    funding_source:         SPARC::PermissibleValue.get_hash('funding_source').keys.sample,
-    start_date:             Date.today,
-    end_date:               Date.today + 1.month,
+    type:           'Study',
+    title:          Faker::Lorem.sentence,
+    short_title:    Faker::Lorem.sentence(word_count: 3),
+    funding_status: 'funded',
+    funding_source: SPARC::PermissibleValue.get_hash('funding_source').keys.sample,
+    start_date:     Date.today,
+    end_date:       Date.today + 1.month,
     primary_pi_role_attributes:  {
       identity: pi
     }
   )
 
   protocol_2 = SPARC::Protocol.create(
-    title:                  Faker::Lorem.sentence,
-    short_title:            Faker::Lorem.sentence(word_count: 3),
-    funding_status:         'funded',
-    funding_source:         SPARC::PermissibleValue.get_hash('funding_source').keys.sample,
-    start_date:             Date.today,
-    end_date:               Date.today + 1.month,
+    type:           'Study',
+    title:          Faker::Lorem.sentence,
+    short_title:    Faker::Lorem.sentence(word_count: 3),
+    funding_status: 'funded',
+    funding_source: SPARC::PermissibleValue.get_hash('funding_source').keys.sample,
+    start_date:     Date.today,
+    end_date:       Date.today + 1.month,
     primary_pi_role_attributes:  {
       identity: pi
     }
   )
 
   protocol_3 = SPARC::Protocol.create(
-    title:                  Faker::Lorem.sentence,
-    short_title:            Faker::Lorem.sentence(word_count: 3),
-    funding_status:         'funded',
-    funding_source:         SPARC::PermissibleValue.get_hash('funding_source').keys.sample,
-    start_date:             Date.today,
-    end_date:               Date.today + 1.month,
+    type:           'Study',
+    title:          Faker::Lorem.sentence,
+    short_title:    Faker::Lorem.sentence(word_count: 3),
+    funding_status: 'funded',
+    funding_source: SPARC::PermissibleValue.get_hash('funding_source').keys.sample,
+    start_date:     Date.today,
+    end_date:       Date.today + 1.month,
     primary_pi_role_attributes:  {
       identity: pi
     }

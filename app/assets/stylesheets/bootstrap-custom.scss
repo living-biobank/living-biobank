@@ -329,6 +329,10 @@ form, .form {
   }
 }
 
+.twitter-typeahead {
+  flex: 1 0;
+}
+
 @include media-breakpoint-down(sm) {
   .table-filters {
     .dropdown.filter-select {

@@ -37,9 +37,6 @@ $ ->
                   rate = value / 26 # 4.33 weeks/mo * 6mo
                 else if context.dataIndex == 2
                   rate = value / 13 # 4.33 weeks/mo * 3mo
-                console.log context.dataIndex
-                console.log value
-                console.log rate
                 return I18n.t('requests.table.specimens.chart.value', value: value, rate: rate.toFixed(2))
             }
           }
@@ -143,7 +140,8 @@ $ ->
     37,38,39,40   # arrow keys
   ]
   numericalKeys = [
-    48, 49, 50, 51, 52, 53, 54, 55, 56, 57  # 0-9
+    48, 49, 50, 51, 52, 53, 54, 55, 56, 57,       # 0-9
+    96, 97, 98, 99, 100, 101, 102, 103, 104, 105  # 0-9 Num Pad
   ]
   $(document).on 'keydown', '.specimens-requested', ->
     val = $(this).val()

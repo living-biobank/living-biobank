@@ -47,10 +47,10 @@ en:
         research_master_id: "Research Master ID"
         title: "Title"
         short_title: "Short Title"
-        brief_description: "Brief Description"
         funding_status: "Funding Status"
         funding_source: "Funding Source"
         potential_funding_source: "Potential Funding Source"
+        sponsor_name: "Sponsor Name"
         start_date: "Timeline"
       sparc/project_role:
         identity: "Primary PI"
