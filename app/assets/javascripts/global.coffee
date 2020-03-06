@@ -97,7 +97,6 @@ $ ->
     data        = { term: $container.find('.table-search').val() }
 
     $container.find('.filter-date input, select.filter-select').each (index, element) ->
-      console.log element
       field = $(element).data('field')
       val   = $(element).val()
       if val != ""

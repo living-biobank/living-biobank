@@ -30,7 +30,7 @@
               - if lab.line_items.any?
                 %h4.card-title.font-weight-bold
                   = t('labs.table.requests.header')
-                - lab.line_items.eager_load(sparc_request: [:protocol, :primary_pi]).each do |line_item|
+                - lab.line_items.eager_load(:labs, sparc_request: [:protocol, :primary_pi]).each do |line_item|
                   .row.specimen-line-item
                     .col-4.d-flex
                       .d-flex.align-items-start.mr-2

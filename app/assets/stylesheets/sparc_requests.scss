@@ -17,8 +17,6 @@
 }
 
 #requestFormModal {
-  min-width: 90%;
-
   .nested_sparc_request_specimen_requests {
     @extend .border-bottom;
     @extend .mb-3;
@@ -64,11 +62,5 @@
     .swal2-content * {
       font-size: 1rem !important;
     }
-  }
-}
-
-@include media-breakpoint-up(xl) {
-  #requestFormModal {
-    min-width: 75%;
   }
 }

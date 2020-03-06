@@ -1,7 +1,7 @@
 <% if @error %>
 $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'><%= @error %></small>")
 <% else %>
-$("[id^='sparc_request_'], [id=primary_pi_search]").removeClass('is-valid is-invalid')
+$("[id^='sparc_request_'], [id=primary_pi_search]").parents('.form-group').removeClass('is-valid is-invalid')
 $('.form-error, .form-alert').remove()
 
 <% if @protocol %>
@@ -19,10 +19,10 @@ $('#sparc_request_protocol_attributes_short_title').val("<%= @protocol.short_tit
 # Pull remaining fields form SPARC
 $('#sparc_request_protocol_id').val("<%= @protocol.id %>")
 $('#sparc_request_protocol_attributes_id').val("<%= @protocol.id %>")
+$('#sparc_request_protocol_attributes_selected_for_epic').val("<%= @protocol.selected_for_epic? %>")
 $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('persist-validation is-valid').append("<span class='form-text text-success form-alert'>#{I18n.t('requests.form.subtext.protocol_found', {id: <%= @protocol.id %>})}</span>")
-$('#sparc_request_protocol_attributes_type').prop('disabled', true)
-$('#sparc_request_protocol_attributes_brief_description').val("<%= @protocol.brief_description %>").prop('readonly', true)
 $('#sparc_request_protocol_attributes_funding_status').selectpicker('val', "<%= @protocol.funding_status %>").siblings('.dropdown-toggle').prop('disabled', true)
+$('#sparc_request_protocol_attributes_sponsor_name').val("<%= @protocol.sponsor_name %>").prop('readonly', true)
 
 <% if @protocol.funded? %>
 $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', "<%= @protocol.funding_source %>").siblings('.dropdown-toggle').prop('disabled', true).parents('.form-group').removeClass('d-none')
