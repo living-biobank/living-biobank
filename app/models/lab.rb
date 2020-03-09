@@ -74,11 +74,9 @@ class Lab < ApplicationRecord
     start_date  = DateTime.strptime(start_date, '%m/%d/%Y').beginning_of_day rescue ''
     end_date    = DateTime.strptime(end_date, '%m/%d/%Y').end_of_day rescue ''
 
-    # TODO
-    # Implement Between
-    if start_date && end_date
+    if start_date.present? && end_date.present?
       where(Lab.arel_table[:released_at].between(start_date..end_date))
-    elsif start_date
+    elsif start_date.present?
       where(Lab.arel_table[:released_at].gteq(start_date))
     else # end_date present, start_date blank
       where(Lab.arel_table[:released_at].lteq(end_date))

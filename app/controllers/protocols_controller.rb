@@ -18,11 +18,13 @@ class ProtocolsController < ApplicationController
       @rmid_record = SPARC::Protocol.get_rmid(params[:rmid])
 
       if @rmid_record.nil?
-        @error = t(:requests)[:form][:subtext][:rmid_server_down]
+        render json: { error: t(:requests)[:form][:subtext][:rmid_server_down], status: 505 }, status: 503
       elsif @rmid_record['status'] == 404
-        @error = t(:requests)[:form][:subtext][:rmid_not_found]
+        render json: { error: t(:requests)[:form][:subtext][:rmid_not_found], status: 404 }, status: 404
       else
-        @protocol = SPARC::Protocol.find_by(research_master_id: params[:rmid])
+        unless @protocol = SPARC::Protocol.find_by(research_master_id: params[:rmid])
+          render json: { title: @rmid_record['long_title'], short_title: @rmid_record['short_title'], status: 202 }, status: 202
+        end
       end
     end
   end

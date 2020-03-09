@@ -24,9 +24,11 @@ module SparcRequestsHelper
     # so we need to use a second element to change the positioning
     # of popovers on XS screens
     raw(
-      sr.identifier.truncate(60) +
-      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', class: 'd-none d-md-inline-block', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
-      link_to(icon('fas', 'info-circle ml-2'), 'javascript:void(0)', class: 'd-inline-block d-md-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) })
+      content_tag(:span, sr.identifier.truncate(60), class: 'mt-0 mt-sm-1') +
+      content_tag(:span, class: 'mt-0 mt-sm-1') do
+        link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
+        link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-inline-block d-xl-none ml-2', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('sparc_requests/details_popover', request: sr) })
+      end
     )
   end
 
@@ -37,7 +39,9 @@ module SparcRequestsHelper
   end
 
   def requester_display(sr)
-    name = link_to sr.user.full_name, 'javascript:void(0)', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.user) }
+    name =
+      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.user) }) +
+      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.user) })
 
     content_tag :span do
       icon('fas', 'user mr-2') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.submitted_at, DateTime.now.utc)).html_safe
@@ -68,13 +72,16 @@ module SparcRequestsHelper
       content_tag(:div, t('requests.table.specimens.chart.loading'), id: "chart-#{li.id}", class: 'rates-chart')
     end
 
-    link_to 'javascript:void(0)', class: 'specimen-line-item d-inline-flex', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual } do
-      icon('fas', 'flask mr-2') + 
+    content = icon('fas', 'flask mr-2') + 
       if li.group.process_sample_size?
         t("requests.table.specimens.line_item_with_sample_size.#{text}", source: li.source.value, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size).html_safe
       else
         t("requests.table.specimens.line_item_no_sample_size.#{text}", source: li.source.value, amount_requested: li.number_of_specimens_requested).html_safe
       end
+
+    content_tag :span do
+      link_to(content, 'javascript:void(0)', class: 'specimen-line-item d-none d-xl-inline-flex', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual }) +
+      link_to(content, 'javascript:void(0)', class: 'specimen-line-item d-inline-flex d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual })
     end
   end
 
@@ -100,7 +107,7 @@ module SparcRequestsHelper
   end
 
   def request_actions(sr)
-    content_tag :div, class: 'mb-1' do
+    content_tag :div, class: 'd-inline-flex' do
       raw([
         complete_request_button(sr),
         finalize_request_button(sr),

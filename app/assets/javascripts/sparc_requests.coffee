@@ -55,12 +55,23 @@ $ ->
     clearTimeout(rmidTimer)
     if rmid = $(this).val()
       rmidTimer = setTimeout( (->
-        $.ajax
+        $.ajax(
           url: "/protocol"
           type: 'GET'
           dataType: 'script'
           data:
             rmid: rmid
+          success: (data, event, xhr) ->
+            if xhr.status == 202
+              data = $.parseJSON(data)
+              $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
+              $('#sparc_request_protocol_attributes_title').val(data.title).prop('readonly', true)
+              $('#sparc_request_protocol_attributes_short_title').val(data.short_title).prop('readonly', true)
+          error: (xhr) ->
+            message = $.parseJSON(xhr.responseText).error
+            $('.form-error, .form-alert').remove()
+            $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
+        )
       ), 500)
     else
       $.ajax
@@ -204,3 +215,9 @@ $ ->
       empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
   }).on 'typeahead:select', (event, suggestion) ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
+
+(exports ? this).loadI2B2Queries = () ->
+  $.ajax
+    meethod: 'GET'
+    dataType: 'script'
+    url: '/query_names'

@@ -1,11 +1,13 @@
-.d-flex.flex-column.col-xl-6.col-lg-8.col-md-11.mx-auto#loginContainer
-  .card.mt-auto
+.d-flex.flex-column.col-xl-6.col-lg-8.col-11.mx-auto#loginContainer
+  .card.my-auto
     .card-header.bg-dark.text-white.text-center
-      .display-3
+      .display-3.d-none.d-sm-block
         = t('site_information.name')
-    = render 'layouts/environment'
-    .card-body.p-5
-      %h3.text-center.mb-3
+      %h1.d-block.d-sm-none
+        = t('site_information.name')
+    .card-body.px-sm-5
+      = render 'layouts/environment'
+      %h4.font-weight-bold.text-center.mb-3
         = t(:home)[:header]
       %p
         = t(:home)[:text1]
@@ -15,12 +17,12 @@
         = t(:home)[:text3]
       %p
         = t(:home)[:text4]
-      .d-flex.justify-content-between
-        .d-flex.flex-column
+      .d-flex.justify-content-between.flex-wrap
+        .d-flex.flex-column.mb-3.mb-sm-0
           %h5.font-weight-bold
             = t(:home)[:links][:help1][:text]
           = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
-        .d-flex.flex-column
+        .d-flex.flex-column.mb-3.mb-sm-0
           %h5.font-weight-bold
             = t(:home)[:links][:help2][:text]
           = link_to t(:home)[:links][:help2][:link], "https://www.actnetwork.us/national/act-local-landing-pages-46EU-1434P4.html", target: :_blank

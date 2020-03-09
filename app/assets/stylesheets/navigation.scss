@@ -3,17 +3,18 @@
   top: 0;
   padding: 0;
   border-bottom: 2px solid theme-color-level('dark', 5);
-  z-index: 200;
+  z-index: 1;
 
-  .navbar-header {
-    .navbar-brand {
-      width: 100%;
-      font-size: 2rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  .navbar-brand {
+    font-size: 2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar-toggler {
+    border: 0;
   }
 
   #navbarLinks {
@@ -36,13 +37,12 @@
 
 @include media-breakpoint-down(lg) {
   .navbar {
+    position: relative;
     width: 100%;
-    align-items: stretch;
+    border: 0;
 
-    .navbar-header {
-      .navbar-brand {
-        padding: 1rem 1.5rem;
-      }
+    .navbar-brand {
+      padding: 1rem 1.5rem;
     }
 
     #navbarLinks {
@@ -66,7 +66,17 @@
 
 @include media-breakpoint-down(sm) {
   .navbar {
+    height: $navbar-height-mobile;
+
+    .navbar-brand {
+      padding: 0.5rem 0.75rem;
+    }
+
     #navbarLinks {
+      position: absolute;
+      width: 100%;
+      top: $navbar-height-mobile;
+
       .navbar-nav {
         .nav-link, #userInformation {
           i {
@@ -82,20 +92,6 @@
   }
 }
 
-@include media-breakpoint-down(sm) {
-  .navbar {
-    .navbar-header {
-      .navbar-brand {
-        padding: 0.5rem 0.75rem;
-      }
-    }
-
-    .navbar-toggler {
-      margin: 0 0.75rem;
-    }
-  }
-}
-
 @include media-breakpoint-up(xl) {
   .navbar {
     position: fixed;
@@ -104,13 +100,10 @@
     border-bottom: none;
     flex-flow: column;
 
-    .navbar-header {
+    .navbar-brand {
       width: 100%;
-
-      .navbar-brand {
-        padding: 1.5rem;
-        border-bottom: 2px solid theme-color-level('dark', 5);
-      }
+      padding: 1.5rem;
+      border-bottom: 2px solid theme-color-level('dark', 5);
     }
 
     #navbarLinks {
@@ -157,6 +150,12 @@
   }
 }
 
+@include media-breakpoint-between(md, lg) {
+  .navbar {
+    align-items: stretch;
+  }
+}
+
 @include media-breakpoint-only(md) {
   .navbar {
     #navbarLinks {
@@ -192,10 +191,8 @@
     max-width:  $navbar-width-lg;
     width:      $navbar-width-lg;
 
-    .navbar-header {
-      .navbar-brand {
-        height: $header-height-lg;
-      }
+    .navbar-brand {
+      height: $header-height-lg;
     }
   }
 }
@@ -205,10 +202,8 @@
     max-width:  $navbar-width-xl;
     width:      $navbar-width-xl;
 
-    .navbar-header {
-      .navbar-brand {
-        height: $header-height-xl;
-      }
+    .navbar-brand {
+      height: $header-height-xl;
     }
   }
 }
