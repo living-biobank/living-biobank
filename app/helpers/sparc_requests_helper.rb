@@ -80,8 +80,8 @@ module SparcRequestsHelper
       end
 
     content_tag :span do
-      link_to content, 'javascript:void(0)', class: 'specimen-line-item d-none d-xl-inline-flex', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual }
-      link_to content, 'javascript:void(0)', class: 'specimen-line-item d-inline-flex d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual }
+      link_to(content, 'javascript:void(0)', class: 'specimen-line-item d-none d-xl-inline-flex', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual }) +
+      link_to(content, 'javascript:void(0)', class: 'specimen-line-item d-inline-flex d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: chart, chart_id: "chart-#{li.id}", three_mo: li.three_month_accrual, six_mo: li.six_month_accrual, one_yr: li.one_year_accrual })
     end
   end
 
