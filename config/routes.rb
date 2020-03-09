@@ -17,8 +17,9 @@ Rails.application.routes.draw do
   end
 
   resources :protocols, only: [:index]
-
   resource :protocol, only: [:show]
+
+  resources :query_names, only: [:index]
 
   get 'directory/index', to: 'directory#index'
 

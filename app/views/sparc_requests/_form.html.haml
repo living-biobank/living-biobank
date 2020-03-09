@@ -85,7 +85,6 @@
             .form-group
               %p.form-text.text-muted.m-0
                 = raw(t(:requests)[:form][:subtext][:i2b2_query])
-            - queries = I2b2::QueryName.where(user_id: current_user.net_id).order(create_date: :desc)
             = f.nested_fields_for :specimen_requests do |ff_li|
               = ff_li.hidden_field :service_id, value: ENV.fetch('SERVICE_ID')
               .form-row
@@ -94,7 +93,7 @@
                   = ff_li.select :source_id, options_for_select(Source.includes(:group).all.map{ |s| [s.value, s.id, { data: { validates_sample_size: s.group.process_sample_size?.to_s } }] }, ff_li.object.source_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker source-select'
                 .form-group.col-6.col-sm
                   = ff_li.label :query_name, class: 'required'
-                  = ff_li.select :query_name, options_from_collection_for_select(queries, 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
+                  = ff_li.select :query_name, [], { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true', query_name: ff_li.object.query_name }
                 .form-group.col-6.col-sm
                   = ff_li.label :number_of_specimens_requested, class: 'required'
                   = ff_li.text_field :number_of_specimens_requested, class: 'form-control specimens-requested', min: 1, maxlength: 7

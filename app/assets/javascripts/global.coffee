@@ -6,7 +6,7 @@ $ ->
   initializePopovers()
   $('html').addClass('ready')
 
-  $(document).on 'ajax:complete', ->
+  $(document).on 'ajaxComplete ajax:complete', ->
     initializeSelectpickers()
     initializeTooltips()
     initializePopovers()
