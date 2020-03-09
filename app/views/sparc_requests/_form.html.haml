@@ -27,7 +27,7 @@
                   .input-group
                     .input-group-prepend
                       = label_tag :research_master_id, icon('fas', 'search'), class: 'input-group-text'
-                    = ff_p.text_field :research_master_id, class: 'form-control col-6', readonly: ff_p.object.persisted? && ff_p.object.research_master_id
+                    = ff_p.text_field :research_master_id, class: 'form-control col-lg-6 col-12', readonly: ff_p.object.persisted? && ff_p.object.research_master_id
                   %small.form-text.text-muted
                     = raw(t(:requests)[:form][:subtext][:rmid])
               - else
@@ -36,7 +36,7 @@
                   .input-group
                     .input-group-prepend
                       = label_tag :protocol_search, icon('fas', 'search'), class: 'input-group-text'
-                    = text_field_tag :protocol_search, ff_p.object.persisted? ? sparc_request.identifier : '', class: 'form-control typeahead col-6', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: ff_p.object.persisted?
+                    = text_field_tag :protocol_search, ff_p.object.persisted? ? sparc_request.identifier : '', class: 'form-control typeahead col-lg-6 col-12', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: ff_p.object.persisted?
                   %small.form-text.text-muted
                     = raw(t(:requests)[:form][:subtext][:protocol])
 
@@ -66,7 +66,7 @@
                 .form-group.col-6.col-lg-3#potentialFundingSource{ class: ff_p.object.pending_funding? ? '' : 'd-none' }
                   = ff_p.label :potential_funding_source, class: 'required'
                   = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: ff_p.object.persisted? && ff_p.object.valid? ? 'btn-light disabled' : 'btn-light' }
-                .form-group.col-6
+                .form-group.col-12.col-lg-6
                   = ff_p.label :start_date, class: 'required'
                   .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
                     = ff_p.text_field :start_date, value: format_date(ff_p.object.start_date), class: 'form-control', placeholder: SparcRequest.human_attribute_name(:start_date), readonly: ff_p.object.persisted? && ff_p.object.valid?, data: { date_enable_on_readonly: 'false' }
@@ -89,19 +89,23 @@
             = f.nested_fields_for :specimen_requests do |ff_li|
               = ff_li.hidden_field :service_id, value: ENV.fetch('SERVICE_ID')
               .form-row
-                .form-group.col
+                .form-group.col-6.col-sm
                   = ff_li.label :source_id, class: 'required'
                   = ff_li.select :source_id, options_for_select(Source.includes(:group).all.map{ |s| [s.value, s.id, { data: { validates_sample_size: s.group.process_sample_size?.to_s } }] }, ff_li.object.source_id), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker source-select'
-                .form-group.col
+                .form-group.col-6.col-sm
                   = ff_li.label :query_name, class: 'required'
                   = ff_li.select :query_name, options_from_collection_for_select(queries, 'name', 'name', ff_li.object.query_name), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
-                .form-group.col
+                .form-group.col-6.col-sm
                   = ff_li.label :number_of_specimens_requested, class: 'required'
                   = ff_li.text_field :number_of_specimens_requested, class: 'form-control specimens-requested', min: 1, maxlength: 7
-                .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
+                .form-group.col-6.col-sm.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
                   = ff_li.label :minimum_sample_size, class: 'required'
                   = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample], maxlength: 30
-                .form-group.d-flex.flex-column.px-1.mx-1
+                .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
+                  %label.w-100 &nbsp;
+                  = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
+                    = icon('fas', 'trash')
+                .form-group.d-block.d-sm-none.col-6.col-sm
                   %label.w-100 &nbsp;
                   = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                     = icon('fas', 'trash')
