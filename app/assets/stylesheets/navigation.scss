@@ -78,11 +78,6 @@
       top: $navbar-height-mobile;
 
       .navbar-nav {
-        #userInformation {
-          border-top: 2px solid theme-color-level('dark', 5);
-          border-bottom: 2px solid theme-color-level('dark', 5);
-        }
-
         .nav-link, #userInformation {
           i {
             flex: 10%;
@@ -108,6 +103,7 @@
     .navbar-brand {
       width: 100%;
       padding: 1.5rem;
+      border-bottom: 2px solid theme-color-level('dark', 5);
     }
 
     #navbarLinks {

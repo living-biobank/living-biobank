@@ -108,6 +108,14 @@ div[data-toggle=collapse] {
   }
 }
 
+///////////////////
+/// FONTAWESOME ///
+///////////////////
+
+.fa, .fas, .far, .fal, .fab {
+  line-height: 1.2;
+}
+
 /////////////
 /// FORMS ///
 /////////////
@@ -155,7 +163,13 @@ form, .form {
 ///////////////
 
 .popover {
-  max-width: initial;
+  max-width: 50vw;
+}
+
+@include media-breakpoint-only(xs) {
+  .popover {
+    max-width: 80vw;
+  }
 }
 
 ////////////////

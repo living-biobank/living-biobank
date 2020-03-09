@@ -36,7 +36,7 @@ $ ->
   )
 
   # Slight modifications to popover functionality
-  $(document).on('mouseenter', '[data-toggle=popover]', ->
+  $(document).on('mouseenter', '[data-toggle=popover][data-trigger=manual]', ->
     _this = this
     $(this).popover('show')
     $('.popover').on 'mouseleave', ->

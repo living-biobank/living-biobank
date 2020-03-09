@@ -37,23 +37,11 @@ a, .btn-link {
   }
 }
 
-.table-overflow {
-  overflow-x: scroll;
-}
-
 @include media-breakpoint-down(sm) {
   html {
     body {
       main#content {
         padding: 0.75rem;
-
-        .card {
-          .card-body {
-            .card-title {
-              text-align: center;
-            }
-          }
-        }
       }
     }
   }
