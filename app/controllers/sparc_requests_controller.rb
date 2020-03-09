@@ -138,6 +138,7 @@ class SparcRequestsController < ApplicationController
         :potential_funding_source,
         :start_date,
         :end_date,
+        :sponsor_name,
         primary_pi_role_attributes: [
           :id,
           :identity_id
