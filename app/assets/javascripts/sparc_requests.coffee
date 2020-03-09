@@ -70,7 +70,13 @@ $ ->
           error: (xhr) ->
             message = $.parseJSON(xhr.responseText).error
             $('.form-error, .form-alert').remove()
-            $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
+            $.ajax
+              type: 'GET'
+              dataType: 'script'
+              url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
+              success: ->
+                $('#sparc_request_protocol_attributes_research_master_id').focus()
+                $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
         )
       ), 500)
     else
