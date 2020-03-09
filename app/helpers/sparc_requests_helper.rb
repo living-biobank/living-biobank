@@ -39,7 +39,9 @@ module SparcRequestsHelper
   end
 
   def requester_display(sr)
-    name = link_to sr.user.full_name, 'javascript:void(0)', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.user) }
+    name =
+      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.user) }) +
+      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.user) })
 
     content_tag :span do
       icon('fas', 'user mr-2') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.submitted_at, DateTime.now.utc)).html_safe
