@@ -18,7 +18,7 @@ html {
     main#content {
       background: theme-color('light');
       min-height: 100vh;
-      padding-top: 1.5rem;
+      padding: 1.5rem;
       flex: 1;
     }
   }
@@ -41,37 +41,19 @@ a, .btn-link {
   overflow-x: scroll;
 }
 
-@include media-breakpoint-down(md) {
-  main {
-    .card {
-      border-radius: 0;
-      border-left: 0;
-      border-right: 0;
-    }
-  }
-
-  .alert {
-    border-radius: 0;
-  }
-}
-
 @include media-breakpoint-down(sm) {
-  main {
-    .card {
-      .card-body {
-        .card-title {
-          text-align: center;
-        }
-      }
-    }
-  }
-}
-
-@include media-breakpoint-up(lg) {
   html {
     body {
       main#content {
-        padding: 1.5rem;
+        padding: 0.75rem;
+
+        .card {
+          .card-body {
+            .card-title {
+              text-align: center;
+            }
+          }
+        }
       }
     }
   }
@@ -83,9 +65,14 @@ a, .btn-link {
   }
 }
 
+@media (max-width: 1199.98px) {
+  body {
+    flex-flow: column;
+  }
+}
+
 @media (min-width: 1200px) and (max-width: 1679.98px) {
-  main#content {
-    margin-top: $header-height-lg;
+  #contentContainer {
     margin-left: $navbar-width-lg;
   }
 }
@@ -96,8 +83,7 @@ a, .btn-link {
   }
 }
 @media (min-width: 1680px) {
-  main#content {
-    margin-top: $header-height-xl;
+  #contentContainer {
     margin-left: $navbar-width-xl;
-  } 
+  }
 }

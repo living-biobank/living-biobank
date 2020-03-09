@@ -266,21 +266,20 @@ form, .form {
     flex: 1 0;
   }
 
-  .date {
-    input[type=text] {
-      padding: 0.5rem;
-      margin-left: 0;
-      border-radius: 0.3rem;
+  .filter-date {
+    margin: 0 1rem;
 
-      &:first-of-type {
-        margin-right: 0;
+    .date {
+      input[type=text] {
+        padding: 0.5rem;
+        border-radius: 0.3rem;
       }
-    }
 
-    .input-group-prepend, .input-group-append {
-      .input-group-text {
-        border: 0;
-        background: white;
+      .input-group-prepend, .input-group-append {
+        .input-group-text {
+          border: 0;
+          background: white;
+        }
       }
     }
   }
@@ -301,7 +300,6 @@ form, .form {
   .dropdown.filter-select {
     display: flex;
     align-items: center;
-    width: initial !important;
 
     .filter {
       position: initial;
@@ -329,51 +327,81 @@ form, .form {
   }
 }
 
-.twitter-typeahead {
-  flex: 1 0;
-}
-
 @include media-breakpoint-down(sm) {
   .table-filters {
+    .filter {
+      margin-left: 0.75rem;
+      margin-right: 0.75rem;
+    }
+
+    #sort_by + .filter::before {
+      left: -0.75rem;
+    }
+
     .dropdown.filter-select {
       justify-content: center;
-
-      .filter {
-        margin-left: 0.75rem;
-        margin-right: 0.75rem;
-      }
     }
   }
 }
 
 @include media-breakpoint-down(xs) {
   .table-filters {
+    &> * {
+      flex: 50%;
+    }
+
     .table-search {
       padding: 0.75rem;
       border: none;
       border-bottom: $table-border-width solid $table-border-color !important;
       border-radius: 0;
       margin: 0;
+      flex: 100%;
+    }
+
+    .filter {
+      margin: 0;
+    }
+
+    .filter-date {
+      flex: 100%;
     }
 
     .dropdown.filter-select {
-      display: flex;
-      flex: 50%;
-
-      &:not(:nth-child(2)):not(:last-child) {
-        margin: auto;
-      }
-
-      &:nth-child(n+4) {
-        border-top: $table-border-width solid $table-border-color !important;
-      }
-
       .filter {
-        padding: 0.375rem;
-        margin: 0;
+        width: 100%;
+        padding: 0.5rem;
       }
     }
+
+    #sort_by + .filter::before {
+      display: none;
+    }
   }
+}
+
+@media (max-width: 1679.98px) {
+  .table-filters {
+    .date input[type=text] {
+      width: 100px;
+    }
+  }
+}
+
+@media (min-width: 1680px) {
+  .table-filters {
+    .date input[type=text] {
+      width: 130px;
+    }
+  }
+}
+
+/////////////////
+/// Typeahead ///
+/////////////////
+
+.twitter-typeahead {
+  flex: 1 0;
 }
 
 /////////////////////
@@ -406,22 +434,6 @@ form, .form {
 
     .form-control, .custom-select {
       @extend .is-invalid;
-    }
-  }
-}
-
-@media (max-width: 1679.98px) {
-  .table-filters {
-    .date input[type=text] {
-      width: 100px;
-    }
-  }
-}
-
-@media (min-width: 1680px) {
-  .table-filters {
-    .date input[type=text] {
-      width: 130px;
     }
   }
 }
