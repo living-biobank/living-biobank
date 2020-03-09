@@ -15,11 +15,14 @@ html {
     opacity: 0;
     transition: 0.5s opacity ease-in-out;
 
-    main#content {
-      background: theme-color('light');
+    #contentContainer {
       min-height: 100vh;
-      padding: 1.5rem;
-      flex: 1;
+
+      main#content {
+        background: theme-color('light');
+        padding: 1.5rem;
+        flex: 1;
+      }
     }
   }
 }
@@ -37,11 +40,23 @@ a, .btn-link {
   }
 }
 
+@include media-breakpoint-down(xl) {
+  html {
+    body {
+      #contentContainer {
+        min-height: calc(100vh - #{$navbar-height-mobile});
+      }
+    }
+  }
+}
+
 @include media-breakpoint-down(sm) {
   html {
     body {
-      main#content {
-        padding: 0.75rem;
+      #contentContainer {
+        main#content {
+          padding: 0.75rem;
+        }
       }
     }
   }
@@ -60,8 +75,12 @@ a, .btn-link {
 }
 
 @media (min-width: 1200px) and (max-width: 1679.98px) {
-  #contentContainer {
-    margin-left: $navbar-width-lg;
+  html {
+    body {
+      #contentContainer {
+        margin-left: $navbar-width-lg;
+      }
+    }
   }
 }
 
@@ -71,7 +90,11 @@ a, .btn-link {
   }
 }
 @media (min-width: 1680px) {
-  #contentContainer {
-    margin-left: $navbar-width-xl;
+  html {
+    body {
+      #contentContainer {
+        margin-left: $navbar-width-xl;
+      }
+    }
   }
 }
