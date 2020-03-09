@@ -1,5 +1,5 @@
 .card.mb-4#requestFilters
-  .card-header.border-bottom-0.table-filters{ data: { url: sparc_requests_path } }
+  .card-body.justify-content-end.border-bottom-0.table-filters{ data: { url: sparc_requests_path } }
     = text_field_tag 'searchRequests', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:requests)[:filters][:search]
     .tooltip-wrapper.d-flex.order-1{ title: t(:requests)[:filters][:status], data: { toggle: 'tooltip' } }
       = select_tag 'status', request_status_filter_options(params[:status]), class: 'selectpicker filter-select form-control', data: { field: 'status', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:requests)[:filters][:status] }
