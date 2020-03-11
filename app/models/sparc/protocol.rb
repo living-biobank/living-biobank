@@ -2,6 +2,7 @@ module SPARC
   class Protocol < SPARC::Base
     has_one :primary_pi_role, -> { where(role: 'primary-pi', project_rights: 'approve') }, class_name: "ProjectRole"
     has_one :primary_pi, through: :primary_pi_role, source: :identity
+    has_one :research_types_info
 
     has_many :sparc_requests
     has_many :specimen_records
@@ -21,6 +22,7 @@ module SPARC
     validates_associated :primary_pi_role
 
     accepts_nested_attributes_for :primary_pi_role
+    accepts_nested_attributes_for :research_types_info
 
     before_validation :default_values
 

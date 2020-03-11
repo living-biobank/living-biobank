@@ -64,6 +64,7 @@ $ ->
           success: (data, event, xhr) ->
             if xhr.status == 202
               data = $.parseJSON(data)
+              $('.form-error, .form-alert').remove()
               $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
               $('#sparc_request_protocol_attributes_title').val(data.title).prop('readonly', true)
               $('#sparc_request_protocol_attributes_short_title').val(data.short_title).prop('readonly', true)

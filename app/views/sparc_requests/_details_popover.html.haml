@@ -10,5 +10,5 @@
       = request.protocol.brief_description
 
 = link_to "#{ENV.fetch('SPARC_HOST')}/dashboard/protocols/#{request.protocol_id}", target: :_blank, class: 'd-flex align-items-center' do
-  = image_tag 'sparcrequest_icon.ico', width: 12, height: 12, class: 'mr-2'
+  = image_tag 'sparcrequest_icon.ico', width: 12, height: 12, class: 'mr-1'
   = t('requests.table.sparc_link')

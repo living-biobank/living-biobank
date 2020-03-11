@@ -12,6 +12,7 @@ $('#sparc_request_protocol_attributes_selected_for_epic').val("<%= @protocol.sel
 $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('persist-validation is-valid').append("<small class='form-text text-success form-alert'>#{I18n.t('requests.form.subtext.protocol_found', {id: <%= @protocol.id %>})}</small>")
 $('#sparc_request_protocol_attributes_funding_status').selectpicker('val', "<%= @protocol.funding_status %>").siblings('.dropdown-toggle').prop('disabled', true)
 $('#sparc_request_protocol_attributes_sponsor_name').val("<%= @protocol.sponsor_name %>").prop('readonly', true)
+$('#sparc_request_protocol_attributes_research_types_info_attributes_id').val("<%= @protocol.research_types_info.id %>").prop('readonly', true)
 
 <% if @protocol.funded? %>
 $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', "<%= @protocol.funding_source %>").siblings('.dropdown-toggle').prop('disabled', true).parents('.form-group').removeClass('d-none')

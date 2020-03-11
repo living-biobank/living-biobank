@@ -187,7 +187,9 @@ class SparcRequest < ApplicationRecord
     service = line_item.service
 
     # Find or create a Sub Service Request for the SPARC Line Item
-    unless ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).detect{ |ssr| !ssr.complete? }
+    if ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).detect{ |ssr| !ssr.complete? }
+      ssr.update_attribute(:status, 'draft')
+    else
       ssr = sr.sub_service_requests.create(
         protocol:           self.protocol,
         organization:       service.process_ssrs_organization,

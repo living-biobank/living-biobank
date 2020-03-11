@@ -13,6 +13,7 @@ class SparcRequestsController < ApplicationController
     @sparc_request = current_user.sparc_requests.new(status: t(:requests)[:statuses][:pending])
     @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
+    @sparc_request.protocol.build_research_types_info
     @sparc_request.specimen_requests.build
 
     respond_to :js
@@ -124,12 +125,14 @@ class SparcRequestsController < ApplicationController
     end
 
     params.require(:sparc_request).permit(
+      :id,
       :protocol_id,
       :status,
       protocol_attributes: [
         :id,
         :research_master_id,
         :type,
+        :selected_for_epic,
         :short_title,
         :title,
         :brief_description,
@@ -142,6 +145,9 @@ class SparcRequestsController < ApplicationController
         primary_pi_role_attributes: [
           :id,
           :identity_id
+        ],
+        research_types_info_attributes: [
+          :id
         ]
       ],
       specimen_requests_attributes: [
