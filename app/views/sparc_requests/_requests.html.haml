@@ -36,22 +36,32 @@
                         = line_item_text(li)
                       %small.text-muted<
                         = query_display(li)
-                  .col-sm-8.col-12.pl-sm-0
+                  .col-sm-8.col-12
                     - unless request.cancelled?
                       = render 'line_items/progress_bar', li: li
-          - if request.additional_services.any?
-            .card-body.border-top
-              %h4.card-title.font-weight-bold<
-                = t('requests.table.additional_services.header')
-              - request.additional_services.each do |li|
-                .row.line-item
-                  .col-sm-4.col-12
-                    %h5.d-flex.mb-0<
-                      %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
-                        = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
-                      = li.service.name
-                  .col-sm-8.col-12
-                    = render 'line_items/progress_bar', li: li
+          .card-body.border-top
+            %h4.card-title.font-weight-bold<
+              = t('requests.table.additional_services.header')
+            - request.specimen_requests.group(:service_id).each do |li|
+              - li = li.dup
+              - li.assign_attributes(source_id: nil)
+              .row.line-item
+                .col-sm-4.col-12
+                  %h5.d-flex.mb-0<
+                    %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
+                      = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
+                    = li.service.name
+                .col-sm-8.col-12
+                  = render 'line_items/progress_bar', li: li
+            - request.additional_services.each do |li|
+              .row.line-item
+                .col-sm-4.col-12
+                  %h5.d-flex.mb-0<
+                    %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
+                      = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
+                    = li.service.name
+                .col-sm-8.col-12
+                  = render 'line_items/progress_bar', li: li
     = will_paginate requests, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
   - else
     .card

@@ -90,6 +90,20 @@ ActiveRecord::Base.transaction do
 
   Variable.where(
     name:       "QI",
+    group:      blood_group,
+    service:    SPARC::Service.find(37778),
+    condition:  "irb.blank?"
+  ).first_or_create
+
+  Variable.where(
+    name:       "IRB Approved Research",
+    group:      blood_group,
+    service:    SPARC::Service.find(8253),
+    condition:  "irb.present?"
+  ).first_or_create
+
+  Variable.where(
+    name:       "QI",
     group:      microbiome_group,
     service:    SPARC::Service.find(37778),
     condition:  "irb.blank?"

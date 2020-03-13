@@ -23,6 +23,7 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
+  after_save :update_variables, if: :pending?
   after_save :update_sparc_records, unless: :draft?
 
   after_update :add_additional_services, if: :in_process?
@@ -142,12 +143,35 @@ class SparcRequest < ApplicationRecord
     self.status == I18n.t(:requests)[:statuses][:cancelled]
   end
 
-  def irb
+  # Friendly named for Variables
+
+  def irb_approved
     rmid = self.protocol.research_master_id
     SPARC::Protocol.get_rmid(rmid)['eirb_validated'].present?
   end
 
+  def irb_not_approved
+    !irb_approved
+  end
+
   private
+
+  def update_variables
+    # Find or create a Service Request
+    sr = self.protocol.service_requests.first_or_create
+    # Find or create an Identity for the requester
+    requester = SPARC::Directory.find_or_create(self.user.net_id)
+
+    # Add additional services based on services the Variable requires
+    self.variables.each do |variable|
+      if self.instance_eval(variable.condition)
+        unless self.additional_services.exists?(service: variable.service)
+          line_item = self.additional_services.create(service: variable.service)
+          create_sparc_line_item(line_item, sr, requester)
+        end
+      end
+    end
+  end
 
   def update_sparc_records
     # Find or create a Service Request
@@ -169,16 +193,6 @@ class SparcRequest < ApplicationRecord
       unless self.additional_services.exists?(service: service.sparc_service)
         line_item = self.additional_services.create(service: service.sparc_service)
         create_sparc_line_item(line_item, sr, requester)
-      end
-    end
-
-    # Add additional services based on services the Variable requires
-    self.variables.each do |variable|
-      if self.instance_eval(variable.condition)
-        unless self.additional_services.exists?(service: variable.service)
-          line_item = self.additional_services.create(service: variable.service)
-          create_sparc_line_item(line_item, sr, requester)
-        end
       end
     end
   end

@@ -258,7 +258,7 @@ en:
           plural: "%{source} - %{amount_requested} samples &geq; %{min_sample_size}"
         progress: "Specimens Collected: %{received} / %{total}"
       additional_services:
-        header: "Additional Services"
+        header: "Services"
         progress: "Progress: %{current} / %{end}"
         complete: "This service has been completed"
         incomplete: "This service has not yet been completed"
