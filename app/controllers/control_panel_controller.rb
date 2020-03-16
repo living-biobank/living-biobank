@@ -5,7 +5,7 @@ class ControlPanelController < ApplicationController
       format.js
     end
 
-    @users = User.all
+    find_users
   end
 
   def edit_user
@@ -17,15 +17,28 @@ class ControlPanelController < ApplicationController
 
   def update_user
     @user = User.find(params[:id])
+    
+    if @user.update_attributes(user_params)
+      flash.now[:success] = t(:control_panel)[:flash_messages][:save_successful]
+    else
+      flash.now[:error] = @user.errors.full_messages.map(&:inspect).join(', ').delete! '"'
+    end
 
-    @user.update_attributes(user_params)
+    find_users
+
+    respond_to :js
   end
 
   private
+    def find_users
+      @users = User.all
+    end
+
     def user_params
       params.require(:user).permit(
         :admin,
-        :honest_broker_id
+        :data_honest_broker,
+        group_ids: []
       )
   end
 end

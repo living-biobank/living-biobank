@@ -1,0 +1,31 @@
+%p
+  = t('mailers.user_permissions_mailer.permissions_changed_email.greeting', user_name: @user.full_name)
+%p
+  = t(:mailers)[:user_permissions_mailer][:permissions_changed_email][:text1]
+%ul
+  - unless @admin_change == nil
+    %li
+      = @admin_change
+  - unless @data_honest_broker_change == nil
+    %li
+      = @data_honest_broker_change
+  - unless @lab_honest_broker_added == nil
+    %li
+      = t('mailers.user_permissions_mailer.lab_honest_broker_granted')
+      %ul
+        - @lab_honest_broker_added.each do |group|
+          %li
+            = group
+
+  - unless @lab_honest_broker_removed == nil
+    %li
+      = t('mailers.user_permissions_mailer.lab_honest_broker_removed')
+      %ul
+        - @lab_honest_broker_removed.each do |group|
+          %li
+            = group
+%p
+  = t(:mailers)[:user_permissions_mailer][:permissions_changed_email][:text2]
+%p
+  = t(:mailers)[:user_permissions_mailer][:permissions_changed_email][:closing]
+

@@ -5,11 +5,13 @@ $ ->
   initializeTooltips()
   initializePopovers()
   $('html').addClass('ready')
+  $('input[type="checkbox"].toggle').bootstrapToggle();
 
   $(document).on 'ajax:complete', ->
     initializeSelectpickers()
     initializeTooltips()
     initializePopovers()
+    $('input[type="checkbox"].toggle').bootstrapToggle();
 
   # Remove form validation contexts when changing fields
   $(document).on 'keydown change change.datetimepicker', '.is-valid:not(.persist-validation), .is-invalid:not(.persist-validation)', ->

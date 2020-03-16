@@ -4,15 +4,19 @@
 
       .modal-header
         %h4.modal-title
-          = "Update Permissions for #{user.full_name}"
+          = t('control_panel.user_management.change_permissions.title', user_name: user.full_name)
         %button.close{"data-dismiss" => "modal", type: "button"} &times;
       .modal-body
-        .mb-3
-          .custom-control.custom-switch
-            = f.check_box :admin, class: "custom-control-input", id: "customSwitch1"
-            = f.label "Admin", class: "custom-control-label", for: "customSwitch1"
-        .mb-3
-          = f.label "Honest Broker for which group?"
-          = f.select :honest_broker_id, options_for_select(groups.collect{|g| [g.name, g.id]}, f.object.honest_broker_id)
+        .mb-3.h5.text-capitalize
+          = f.label t(:control_panel)[:user_management][:change_permissions][:admin], for: "adminSwitch"
+          = f.check_box :admin, id: "adminSwitch", data: {toggle: "toggle", on: t(:control_panel)[:user_management][:change_permissions][:enabled], off: t(:control_panel)[:user_management][:change_permissions][:disabled], offstyle: "secondary", width: 100}, class: "toggle"
+        .mb-3.h5.text-capitalize
+          = f.label t(:control_panel)[:user_management][:change_permissions][:data_honest_broker], for: "dataHbSwitch"
+          = f.check_box :data_honest_broker, id: "dataHbSwitch", data: {toggle: "toggle", on: t(:control_panel)[:user_management][:change_permissions][:enabled], off: t(:control_panel)[:user_management][:change_permissions][:disabled], offstyle: "secondary", width: 100}, class: "toggle"
+        .mb-3.h5
+          = f.label t(:control_panel)[:user_management][:change_permissions][:lab_honest_broker]
+          = f.select :group_ids, options_for_select(groups.collect{|g| [g.name, g.id]}, selected: f.object.groups.ids), {}, class: 'selectpicker', multiple: true
       .modal-footer
-        = f.submit "Save Changes", class: 'btn btn-primary', id: "submit_changes"
+        = f.submit t(:control_panel)[:user_management][:change_permissions][:save], class: 'btn btn-primary', id: "submit_changes"
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:control_panel)[:user_management][:change_permissions][:close]

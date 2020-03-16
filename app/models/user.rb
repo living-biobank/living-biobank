@@ -1,5 +1,9 @@
 class User < ApplicationRecord
-  belongs_to :honest_broker, class_name: "Group", foreign_key: :honest_broker_id, optional: true
+  include DirtyAssociations
+  has_many :lab_honest_brokers
+  has_many :groups, through: :lab_honest_brokers,
+    after_add: :dirty_create,
+    after_remove: :dirty_delete
 
   has_many :sparc_requests
   has_many :i2b2_queries, class_name: "I2b2::QueryName", foreign_key: :user_id, primary_key: :net_id
@@ -8,6 +12,7 @@ class User < ApplicationRecord
 
   before_destroy :check_for_admin
   validate :admin_presence, on: [:update]
+  after_update :send_permissions_email
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
@@ -55,14 +60,20 @@ class User < ApplicationRecord
   private
     def check_for_admin
       unless User.where(admin: true).count > 1
-        errors.add(:user, "cannot be removed as it would leave no users with admin privileges.")
+        errors.add(:user, I18n.t(:errors)[:user][:user_delete])
         throw(:abort)
       end
     end
 
     def admin_presence
       if admin_changed?(from: true, to: false) && User.where(admin: true).count < 2
-        errors.add(:admin, "cannot be removed as it would leave no users with admin privileges.")
+        errors.add(:admin, I18n.t(:errors)[:user][:admin_change])
+      end
+    end
+
+    def send_permissions_email
+      if self.saved_changes[:admin].present? || self.saved_changes[:data_honest_broker].present? || self.saved_changes[:group].present?
+        UserPermissionsMailer.permissions_changed(self.id, self.saved_changes).deliver_now
       end
     end
 end

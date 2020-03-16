@@ -1,0 +1,44 @@
+#user_management
+  .h3.text-center
+    = t(:control_panel)[:user_management][:title]
+  %table.table.table-hover
+    %thead
+      %tr
+        %th
+        %th
+          = t(:control_panel)[:user_management][:headings][:name]
+        %th
+          = t(:control_panel)[:user_management][:headings][:email]
+        %th
+          = t(:control_panel)[:user_management][:headings][:honest_broker]
+        %th
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td
+            - unless user.admin || user.groups.present? || user.data_honest_broker
+              .h4
+                = icon('fas', 'user', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:user]})
+            - else
+              .row.h4
+                - if user.admin
+                  .col-2.text-danger
+                    = icon('fas', 'user-cog', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:admin]})
+                - if user.groups.present?
+                  .col-2.text-primary
+                    = icon('fas', 'user-tag', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:data_honest_broker]})
+                - if user.data_honest_broker
+                  .col-2.text-success
+                    = icon('fas', 'user-check', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:lab_honest_broker]})
+          %td.text-center
+            = user.full_name
+          %td.text-center
+            = user.email
+          %td.text-center
+            - if user.groups.present?
+              - user.groups.each do |group|
+                = "#{group.name} </br>".html_safe
+            - else
+              = " - "
+          %td
+            = link_to icon('fas', 'pencil-alt'), change_permissions_path(id: user), class: 'btn btn-warning', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:edit_user] }, remote: true
