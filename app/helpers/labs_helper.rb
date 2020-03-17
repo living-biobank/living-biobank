@@ -21,6 +21,7 @@ module LabsHelper
     else
       options_for_select([
         [t('labs.filters.all_status'), '', selected: true],
+        [t('labs.statuses.available'), class: 'text-warning'],
         [t('labs.statuses.released'), class: 'text-primary'],
         [t('labs.statuses.discarded'), class: 'text-secondary']
       ], status)
