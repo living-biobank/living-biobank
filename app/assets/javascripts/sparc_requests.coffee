@@ -37,9 +37,6 @@ $ ->
                   rate = value / 26 # 4.33 weeks/mo * 6mo
                 else if context.dataIndex == 2
                   rate = value / 13 # 4.33 weeks/mo * 3mo
-                console.log context.dataIndex
-                console.log value
-                console.log rate
                 return I18n.t('requests.table.specimens.chart.value', value: value, rate: rate.toFixed(2))
             }
           }
@@ -58,12 +55,30 @@ $ ->
     clearTimeout(rmidTimer)
     if rmid = $(this).val()
       rmidTimer = setTimeout( (->
-        $.ajax
+        $.ajax(
           url: "/protocol"
           type: 'GET'
           dataType: 'script'
           data:
             rmid: rmid
+          success: (data, event, xhr) ->
+            if xhr.status == 202
+              data = $.parseJSON(data)
+              $('.form-error, .form-alert').remove()
+              $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
+              $('#sparc_request_protocol_attributes_title').val(data.title).prop('readonly', true)
+              $('#sparc_request_protocol_attributes_short_title').val(data.short_title).prop('readonly', true)
+          error: (xhr) ->
+            message = $.parseJSON(xhr.responseText).error
+            $('.form-error, .form-alert').remove()
+            $.ajax
+              type: 'GET'
+              dataType: 'script'
+              url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
+              success: ->
+                $('#sparc_request_protocol_attributes_research_master_id').focus()
+                $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
+        )
       ), 500)
     else
       $.ajax
@@ -143,7 +158,8 @@ $ ->
     37,38,39,40   # arrow keys
   ]
   numericalKeys = [
-    48, 49, 50, 51, 52, 53, 54, 55, 56, 57  # 0-9
+    48, 49, 50, 51, 52, 53, 54, 55, 56, 57,       # 0-9
+    96, 97, 98, 99, 100, 101, 102, 103, 104, 105  # 0-9 Num Pad
   ]
   $(document).on 'keydown', '.specimens-requested', ->
     val = $(this).val()
@@ -206,3 +222,9 @@ $ ->
       empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
   }).on 'typeahead:select', (event, suggestion) ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
+
+(exports ? this).loadI2B2Queries = () ->
+  $.ajax
+    meethod: 'GET'
+    dataType: 'script'
+    url: '/query_names'

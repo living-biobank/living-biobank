@@ -6,6 +6,6 @@
   = raw t('mailers.request_mailer.primary_pi', pi_name: @request.primary_pi.display_name)
 %h4{ style: 'margin-bottom: 0;' }
   = t('requests.table.specimens.header')
-- @request.line_items.each do |line_item|
+- @request.specimen_requests.each do |line_item|
   %p{ style: 'margin-top: 0;' }
     = raw t('mailers.request_mailer.submission_email.specimen_request', source: line_item.source.value, requested: line_item.number_of_specimens_requested, min_sample_size: line_item.minimum_sample_size)

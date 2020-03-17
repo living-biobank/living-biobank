@@ -7,11 +7,16 @@
     @extend .mt-4;
     @extend .mt-sm-2;
   }
+
+  i {
+    display: flex;
+    justify-content: center;
+    max-width: 18px;
+    min-width: 18px;
+  }
 }
 
 #requestFormModal {
-  min-width: 90%;
-
   .nested_sparc_request_specimen_requests {
     @extend .border-bottom;
     @extend .mb-3;
@@ -55,13 +60,8 @@
     }
 
     .swal2-content * {
+      margin-bottom: 0.5rem;
       font-size: 1rem !important;
     }
-  }
-}
-
-@include media-breakpoint-up(xl) {
-  #requestFormModal {
-    min-width: 75%;
   }
 }

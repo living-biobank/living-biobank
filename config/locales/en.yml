@@ -50,10 +50,10 @@ en:
         research_master_id: "Research Master ID"
         title: "Title"
         short_title: "Short Title"
-        brief_description: "Brief Description"
         funding_status: "Funding Status"
         funding_source: "Funding Source"
         potential_funding_source: "Potential Funding Source"
+        sponsor_name: "Sponsor Name"
         start_date: "Timeline"
       sparc/project_role:
         identity: "Primary PI"
@@ -133,9 +133,9 @@ en:
     release_confirm:
       title: "Release this specimen to<br>%{request}?"
     retrieve_confirm:
-      title: "Specimen received by the requester?"
+      title: "Specimen retrieved by requester?"
     cancel_confirm:
-      title: "Release this specimen to a different request?"
+      title: "Change this specimen to <span class='text-warning'>%{available}</span>?"
     discard_confirm:
       title: "Discard this specimen?"
     search:
@@ -149,7 +149,8 @@ en:
         start: "Start Date"
         to: "to"
         end: "End Date"
-      any_status: "Active Specimens"
+      all_status: "Any Status"
+      active_status: "Active Specimens"
       status: "Filter by Specimen Status"
       any_source: "Any Source"
       source: "Filter by Specimen Source"
@@ -160,12 +161,14 @@ en:
       patient_info:
         with_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
         without_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>DOB</strong> %{dob}"
-      release_info: "Released by %{name} on %{date}"
       requests:
         header: "Requests Matching this Specimen"
         samples_needed:
           singular: "%{requested_number} Sample &geq; %{requested_size}"
           plural: "%{requested_number} Samples &geq; %{requested_size}"
+      released:
+        header: "Specimen Released To"
+        releaser: "Released by %{name} on %{date}"
     tooltips:
       release: "Release Specimens"
     requests:
@@ -177,9 +180,9 @@ en:
       discarded: "Discarded"
     actions:
       release_specimen: "Release Specimen"
-      retrieve_specimen:  "Specimen Retrieved"
-      cancel_release: "Cancel Release"
-      discard_specimen:  "Specimen Discarded"
+      retrieve_specimen: "Specimen Retrieved"
+      cancel_release: "Reset Specimen"
+      discard_specimen:  "Discard Specimen"
   home:
     header: "Living Biobank enables access to Clinical Specimens and Microbiome Data"
     text1: "Living Biobank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
@@ -199,7 +202,7 @@ en:
         link2: "i2b2 FAQ"
       contact:
         header: "Living BioBank Support"
-        link: "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu.</a>"
+        link: "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
     login:
       header: "Developer Login"
       net_id: "NetID"
@@ -228,7 +231,8 @@ en:
     filters:
       search: "Search"
       status: "Filter by Request Status"
-      any_status: "Active Requests"
+      all_status: "Any Status"
+      active_status: "Active Requests"
       sort_by: "Sort By"
       sort_order: "Order"
     tooltips:
@@ -255,8 +259,8 @@ en:
         rmid_not_found: "Research Master ID not found"
         rmid_server_down: "The Research Master ID server is unavailable at this time. Please try again later."
         protocol: "Search for an existing Protocol in SPARCRequest"
-        protocol_found: "Imported data from Protocol #%{id}"
-        protocol_not_found: "Could not find a corresponding Protocol. Please fill in the information below to create a new Project"
+        protocol_found: "Imported data from Study #%{id}"
+        protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
         i2b2_query: "Information about creating an i2b2 Query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>"
       add_specimen: "Add Specimen"
       delete_specimen: "Delete Specimen"
@@ -284,7 +288,7 @@ en:
           plural: "%{source} - %{amount_requested} samples &geq; %{min_sample_size}"
         progress: "Specimens Collected: %{received} / %{total}"
       additional_services:
-        header: "Additional Services"
+        header: "Services"
         progress: "Progress: %{current} / %{end}"
         complete: "This service has been completed"
         incomplete: "This service has not yet been completed"

@@ -8,7 +8,7 @@ $ ->
   $('html').addClass('ready')
   
 
-  $(document).on 'ajax:complete', ->
+  $(document).on 'ajaxComplete ajax:complete', ->
     initializeSelectpickers()
     initializeTooltips()
     initializePopovers()
@@ -39,7 +39,7 @@ $ ->
   )
 
   # Slight modifications to popover functionality
-  $(document).on('mouseenter', '[data-toggle=popover]', ->
+  $(document).on('mouseenter', '[data-toggle=popover][data-trigger=manual]', ->
     _this = this
     $(this).popover('show')
     $('.popover').on 'mouseleave', ->
@@ -100,7 +100,6 @@ $ ->
     data        = { term: $container.find('.table-search').val() }
 
     $container.find('.filter-date input, select.filter-select').each (index, element) ->
-      console.log element
       field = $(element).data('field')
       val   = $(element).val()
       if val != ""

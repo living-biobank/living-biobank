@@ -11,8 +11,9 @@ class SparcRequestsController < ApplicationController
 
   def new
     @sparc_request = current_user.sparc_requests.new(status: t(:requests)[:statuses][:pending])
-    @sparc_request.build_protocol(type: 'Project')
+    @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
+    @sparc_request.protocol.build_research_types_info
     @sparc_request.specimen_requests.build
 
     respond_to :js
@@ -112,7 +113,7 @@ class SparcRequestsController < ApplicationController
         SparcRequest.where(id: current_user.honest_broker.sparc_requests.ids + current_user.sparc_requests.ids)
       else
         current_user.sparc_requests
-      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:source, :group] })
+      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:labs, :source, :group] })
 
     @draft_requests = current_user.sparc_requests.draft.includes(:protocol)
   end
@@ -124,12 +125,14 @@ class SparcRequestsController < ApplicationController
     end
 
     params.require(:sparc_request).permit(
+      :id,
       :protocol_id,
       :status,
       protocol_attributes: [
         :id,
         :research_master_id,
         :type,
+        :selected_for_epic,
         :short_title,
         :title,
         :brief_description,
@@ -138,9 +141,13 @@ class SparcRequestsController < ApplicationController
         :potential_funding_source,
         :start_date,
         :end_date,
+        :sponsor_name,
         primary_pi_role_attributes: [
           :id,
           :identity_id
+        ],
+        research_types_info_attributes: [
+          :id
         ]
       ],
       specimen_requests_attributes: [

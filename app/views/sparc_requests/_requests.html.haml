@@ -1,31 +1,30 @@
 #requests
   - if requests.any?
     - requests.each do |request|
-      .card
+      .card.request
         .card-header{ class: request.cancelled? ? 'collapsed' : '', data: { toggle: 'collapse', target: ".request-#{request.id}-collapse" } }
           .row
-            .col-12.col-sm-10.d-flex.flex-column.justify-content-between
-              %h3.d-flex.align-items-center.w-100.font-weight-bold.mb-1
-                = icon('fas', 'caret-down mr-2 mt-1')
+            .col-12.col-sm-10.d-flex.align-items-center
+              %h4.d-flex.w-100.font-weight-bold.mb-2.mb-sm-0
+                %span
+                  = icon('fas', 'caret-down mr-2 mt-0 mt-sm-1')
                 = request_title_display(request)
-                .d-none.d-sm-block
+                .d-none.d-sm-inline-block
                   = request_status_context(request)
             .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end
-              %h3.d-block.d-sm-none.mb-0
+              %h4.d-block.d-sm-none.mb-0
                 = request_status_context(request)
               = request_actions(request)
         .collapse{ class: ["request-#{request.id}-collapse", request.cancelled? ? '' : 'show'] }
           .card-body
-            .d-flex
-              .w-50
+            .d-flex.flex-wrap.justify-content-between
+              %h4
+                %small.text-muted<
+                  = requester_display(request)
+              - unless request.cancelled? || request.completed?
                 %h4
                   %small.text-muted<
-                    = requester_display(request)
-              .w-50.text-right
-                - unless request.cancelled? || request.completed?
-                  %h4
-                    %small.text-muted<
-                      = request_duration_display(request)
+                    = request_duration_display(request)
             - if request.specimen_requests.any?
               %h4.card-title.font-weight-bold
                 = t('requests.table.specimens.header')
@@ -37,22 +36,32 @@
                         = line_item_text(li)
                       %small.text-muted<
                         = query_display(li)
-                  .col-sm-8.col-12.pl-0
+                  .col-sm-8.col-12
                     - unless request.cancelled?
                       = render 'line_items/progress_bar', li: li
-          - if request.additional_services.any?
-            .card-body.border-top
-              %h4.card-title.font-weight-bold<
-                = t('requests.table.additional_services.header')
-              - request.additional_services.each do |li|
-                .row.line-item
-                  .col-sm-4.col-12
-                    %h5.mb-0<
-                      %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
-                        = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
-                      = li.service.name
-                  .col-sm-8.col-12
-                    = render 'line_items/progress_bar', li: li
+          .card-body.border-top
+            %h4.card-title.font-weight-bold<
+              = t('requests.table.additional_services.header')
+            - request.specimen_requests.group(:service_id).each do |li|
+              - li = li.dup
+              - li.assign_attributes(source_id: nil)
+              .row.line-item
+                .col-sm-4.col-12
+                  %h5.d-flex.mb-0<
+                    %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
+                      = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
+                    = li.service.name
+                .col-sm-8.col-12
+                  = render 'line_items/progress_bar', li: li
+            - request.additional_services.each do |li|
+              .row.line-item
+                .col-sm-4.col-12
+                  %h5.d-flex.mb-0<
+                    %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
+                      = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
+                    = li.service.name
+                .col-sm-8.col-12
+                  = render 'line_items/progress_bar', li: li
     = will_paginate requests, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
   - else
     .card

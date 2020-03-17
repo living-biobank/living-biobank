@@ -5,12 +5,12 @@
   .card-body.p-4
     .h3.border-bottom
       = t(:help_links)[:headers][:header1]
-    .d-flex.justify-content-between
-      .d-flex.flex-column
+    .d-flex.justify-content-between.flex-wrap
+      .d-flex.flex-column.mb-3.mb-sm-0
         %h5.font-weight-bold
           = t(:home)[:links][:help1][:text]
         = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
-      .d-flex.flex-column
+      .d-flex.flex-column.mb-3.mb-sm-0
         %h5.font-weight-bold
           = t(:home)[:links][:help2][:text]
         = link_to t(:home)[:links][:help2][:link], "https://www.actnetwork.us/national/act-local-landing-pages-46EU-1434P4.html", target: :_blank
@@ -28,4 +28,5 @@
       .d-flex.flex-column
         %h5.font-weight-bold
           = t(:home)[:links][:contact][:header]
-        = t(:home)[:links][:contact][:link].html_safe
+        %p
+          = t(:home)[:links][:contact][:link].html_safe

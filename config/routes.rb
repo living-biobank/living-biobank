@@ -17,10 +17,11 @@ Rails.application.routes.draw do
   end
 
   resources :protocols, only: [:index]
-
   resource :protocol, only: [:show]
   resources :control_panel, only: [:index]
   resources :permissions, only: [:edit, :update]
+
+  resources :query_names, only: [:index]
 
   get 'directory/index', to: 'directory#index'
 
