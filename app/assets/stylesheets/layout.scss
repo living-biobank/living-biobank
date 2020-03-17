@@ -2,6 +2,7 @@ html {
   min-height: 100%;
   position: relative;
   background: theme-color('light');
+  font-size: 75%;
 
   &.ready {
     body {
@@ -62,12 +63,6 @@ a, .btn-link {
   }
 }
 
-@media (max-width: 1679.98px) {
-  html {
-    font-size: 75%;
-  }
-}
-
 @media (max-width: 1199.98px) {
   body {
     flex-flow: column;
@@ -84,11 +79,6 @@ a, .btn-link {
   }
 }
 
-@media (min-width: 1680px) and (max-width: 1919.98px) {
-  html {
-    font-size: 87.5%;
-  }
-}
 @media (min-width: 1680px) {
   html {
     body {
