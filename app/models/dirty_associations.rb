@@ -39,6 +39,7 @@ module DirtyAssociations
     @changes_hash["#{record.class.name.downcase}".to_sym].merge!(current_hash)
 
     self.define_singleton_method("#{record.class.name.downcase}_records_changed".to_sym) do 
+      puts @changes_hash
       return @changes_hash
     end
   end

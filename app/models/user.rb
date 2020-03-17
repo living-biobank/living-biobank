@@ -67,13 +67,14 @@ class User < ApplicationRecord
 
     def admin_presence
       if admin_changed?(from: true, to: false) && User.where(admin: true).count < 2
+        self.clear_changes_information
         errors.add(:admin, I18n.t(:errors)[:user][:admin_change])
       end
     end
 
     def send_permissions_email
       if self.saved_changes[:admin].present? || self.saved_changes[:data_honest_broker].present? || self.saved_changes[:group].present?
-        UserPermissionsMailer.permissions_changed(self.id, self.saved_changes).deliver_now
+        UserPermissionsMailer.permissions_changed(self, self.saved_changes).deliver_now
       end
     end
 end

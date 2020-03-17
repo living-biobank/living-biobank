@@ -1,9 +1,9 @@
 class UserPermissionsMailer < ApplicationMailer
   default from: ENV.fetch('NO_REPLY_EMAIL')
 
-  def permissions_changed(user_id, changes)
+  def permissions_changed(user, changes)
 
-    @user = User.find(user_id)
+    @user = user
 
     @admin_change =
       if changes[:admin].present?
@@ -28,7 +28,7 @@ class UserPermissionsMailer < ApplicationMailer
       end
 
     @lab_honest_broker_added =
-      if changes[:group][:added].present?
+      if changes.dig(:group, :added).present?
         changes[:group][:added].map do |group|
           record = Group.find(group)
           record.name
@@ -38,7 +38,7 @@ class UserPermissionsMailer < ApplicationMailer
       end
 
     @lab_honest_broker_removed =
-      if changes[:group][:removed].present?
+      if changes.dig(:group, :removed).present?
         changes[:group][:removed].map do |group|
           record = Group.find(group)
           record.name

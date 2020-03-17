@@ -1,6 +1,6 @@
 .modal-dialog{ role: 'document' }
   .modal-content
-    = form_for user, url: update_user_path(id: user), remote: true, method: :patch do |f|
+    = form_for user, url: permission_path(id: user), remote: true, method: :patch do |f|
 
       .modal-header
         %h4.modal-title

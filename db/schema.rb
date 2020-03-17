@@ -132,8 +132,6 @@ ActiveRecord::Schema.define(version: 20200310191750) do
     t.bigint "user_id"
     t.string "status", default: "New"
     t.bigint "protocol_id"
-    t.text "note_text", limit: 4294967295
-    t.text "note_links", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "submitted_at"

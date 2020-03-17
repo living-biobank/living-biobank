@@ -19,13 +19,12 @@ Rails.application.routes.draw do
   resources :protocols, only: [:index]
 
   resource :protocol, only: [:show]
+  resources :control_panel, only: [:index]
+  resources :permissions, only: [:edit, :update]
 
   get 'directory/index', to: 'directory#index'
 
   get '/help', to: 'help#index'
-  get '/control_panel', to: 'control_panel#index'
-  get '/change_permissions', to: 'control_panel#edit_user'
-  patch '/update_user', to: 'control_panel#update_user'
   get '/404', to: 'errors#not_found'
   get '/422', to: 'errors#unacceptable'
   get '/500', to: 'errors#internal_error'
