@@ -111,8 +111,6 @@ class Lab < ApplicationRecord
     sort_order = sort_order.present? ? sort_order : 'desc'
 
     case sort_by
-    when 'accession_number'
-      joins(:patient).order(Patient.arel_table[:accession_number].send(sort_order), id: :desc)
     when 'specimen_source'
       joins(:source).order(Source.arel_table[:value].send(sort_order), id: :desc)
     else # Includes status
