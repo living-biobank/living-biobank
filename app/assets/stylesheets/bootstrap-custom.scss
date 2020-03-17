@@ -272,8 +272,8 @@ form, .form {
   }
 
   .filter {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 
   .table-search {
@@ -307,7 +307,7 @@ form, .form {
       width: 1px;
       height: 100%;
       background: $border-color;
-      left: -1.5rem;
+      left: -1rem;
     }
   }
 
@@ -325,6 +325,7 @@ form, .form {
       align-items: center;
       color: black;
       outline: none !important;
+      width: 125px;
 
       .filter-option {
         position: initial;
