@@ -64,10 +64,16 @@ $ ->
           success: (data, event, xhr) ->
             if xhr.status == 202
               data = $.parseJSON(data)
-              $('.form-error, .form-alert').remove()
-              $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
-              $('#sparc_request_protocol_attributes_title').val(data.title).prop('readonly', true)
-              $('#sparc_request_protocol_attributes_short_title').val(data.short_title).prop('readonly', true)
+              $.ajax
+                type: 'GET'
+                dataType: 'script'
+                url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
+                success: ->
+                  $('.form-error, .form-alert').remove()
+                  $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
+                  $('#sparc_request_protocol_attributes_research_master_id').focus()
+                  $('#sparc_request_protocol_attributes_title').val(data.title).prop('readonly', true)
+                  $('#sparc_request_protocol_attributes_short_title').val(data.short_title).prop('readonly', true)
           error: (xhr) ->
             message = $.parseJSON(xhr.responseText).error
             $('.form-error, .form-alert').remove()
