@@ -69,21 +69,11 @@ a, .btn-link {
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1679.98px) {
+@media (min-width: 1200px) {
   html {
     body {
       #contentContainer {
         margin-left: $navbar-width-lg;
-      }
-    }
-  }
-}
-
-@media (min-width: 1680px) {
-  html {
-    body {
-      #contentContainer {
-        margin-left: $navbar-width-xl;
       }
     }
   }

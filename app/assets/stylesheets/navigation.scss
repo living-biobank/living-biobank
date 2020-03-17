@@ -186,24 +186,13 @@
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1679.98px) {
+@media (min-width: 1200px) {
   .navbar {
     max-width:  $navbar-width-lg;
     width:      $navbar-width-lg;
 
     .navbar-brand {
       height: $header-height-lg;
-    }
-  }
-}
-
-@media (min-width: 1680px) {
-  .navbar {
-    max-width:  $navbar-width-xl;
-    width:      $navbar-width-xl;
-
-    .navbar-brand {
-      height: $header-height-xl;
     }
   }
 }
