@@ -1,10 +1,9 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
-  .navbar-header
-    .navbar-brand.m-0
-      = t('site_information.name')
-  %button.navbar-toggler.align-self-center{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
-    %span.navbar-toggler-icon
-  .collapse.navbar-collapse.flex-column#navbarLinks
+  .navbar-brand.m-0
+    = t('site_information.name')
+  %button.navbar-toggler.align-self-center.text-white{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
+    = icon('fas', 'bars fa-2x')
+  .collapse.navbar-collapse.flex-column.bg-dark#navbarLinks
     .navbar-nav
       .text-white.d-flex.d-md-none.d-xl-flex#userInformation
         = icon('fas', 'user-circle')

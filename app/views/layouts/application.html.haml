@@ -10,15 +10,16 @@
       = t('site_information.name')
   %body
     = render 'layouts/navigation'
-    = content_for(:header)
-    %main.d-flex.flex-column#content
-      = render 'layouts/environment'
-      = render 'layouts/flash'
-      = yield
-      .flex-fill.d-flex.flex-column.justify-content-end
-        %p.text-muted.text-center.mb-1.mt-3
-          = t('site_information.version', site_name: t('site_information.name'), version: ENV.fetch('APP_VERSION'))
-        %p.text-muted.text-center.mb-0
-          = t('site_information.copyright').html_safe
+    .d-flex.flex-column.flex-fill#contentContainer
+      = content_for(:header)
+      %main.d-flex.flex-column#content
+        = render 'layouts/environment'
+        = render 'layouts/flash'
+        = yield
+        .flex-fill.d-flex.flex-column.justify-content-end
+          %p.text-muted.text-center.mb-1.mt-3
+            = t('site_information.version', site_name: t('site_information.name'), version: ENV.fetch('APP_VERSION'))
+          %p.text-muted.text-center.mb-0
+            = t('site_information.copyright').html_safe
     = render 'layouts/modal'
     = render 'layouts/i18n_js'

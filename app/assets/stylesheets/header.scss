@@ -1,10 +1,5 @@
 header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
   padding: 1rem 1.5rem;
-  z-index: 100;
   background: white;
   display: flex;
   flex-wrap: wrap;
@@ -22,7 +17,7 @@ header {
   }
 }
 
-header, #environment {
+header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
@@ -33,28 +28,19 @@ header, #environment {
 }
 
 @include media-breakpoint-up(lg) {
-  header, #environment {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-  }
-}
-
-@include media-breakpoint-up(xl) {
   header {
-    position: fixed;
-    padding: 1.5rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   }
 }
 
 @media (min-width: 1200px) and (max-width: 1679.98px) {
   header {
     height: $header-height-lg;
-    margin-left: $navbar-width-lg;
   }
 }
 
 @media (min-width: 1680px) {
   header {
     height: $header-height-xl;
-    margin-left: $navbar-width-xl;
   }
 }
