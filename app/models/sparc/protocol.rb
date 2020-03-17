@@ -17,6 +17,8 @@ module SPARC
     validates_presence_of :potential_funding_source, if: Proc.new{ |p| !p.funded? }
     validates_presence_of :sponsor_name
 
+    validates_uniqueness_of :research_master_id, if: :rmid_enabled?
+
     validate :rmid_valid?, if: :rmid_enabled?
 
     validates_associated :primary_pi_role

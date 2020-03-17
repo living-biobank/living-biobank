@@ -122,6 +122,12 @@ class SparcRequestsController < ApplicationController
     if params[:sparc_request][:protocol_attributes]
       params[:sparc_request][:protocol_attributes][:start_date] = sanitize_date(params[:sparc_request][:protocol_attributes][:start_date]) if params[:sparc_request][:protocol_attributes][:start_date]
       params[:sparc_request][:protocol_attributes][:end_date]   = sanitize_date(params[:sparc_request][:protocol_attributes][:end_date]) if params[:sparc_request][:protocol_attributes][:end_date]
+
+      # Prvent the user from creating multiple new protocols by setting the Protocol ID on subsequent submits
+      if (rmid = params[:sparc_request][:protocol_attributes][:research_master_id]) && !params[:sparc_request][:protocol_id] && (protocol = SPARC::Protocol.find_by(research_master_id: rmid))
+        params[:sparc_request][:protocol_id]              = protocol.id
+        params[:sparc_request][:protocol_attributes][:id] = protocol.id
+      end
     end
 
     params.require(:sparc_request).permit(
