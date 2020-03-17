@@ -48,4 +48,6 @@ module Devise
   end
 end
 
-Warden::Strategies.add(:ldap_authenticatable, Devise::Strategies::LdapAuthenticatable)
+unless Rails.env.development? || Rails.env.test?
+  Warden::Strategies.add(:ldap_authenticatable, Devise::Strategies::LdapAuthenticatable)
+end
