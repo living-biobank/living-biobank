@@ -1,0 +1,22 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for user, url: permission_path(id: user), remote: true, method: :patch do |f|
+
+      .modal-header
+        %h4.modal-title
+          = t('control_panel.user_management.change_permissions.title', user_name: user.full_name)
+        %button.close{"data-dismiss" => "modal", type: "button"} &times;
+      .modal-body
+        .mb-3.h5.text-capitalize
+          = f.label t(:control_panel)[:user_management][:change_permissions][:admin], for: "adminSwitch"
+          = f.check_box :admin, id: "adminSwitch", data: {toggle: "toggle", on: t(:control_panel)[:user_management][:change_permissions][:enabled], off: t(:control_panel)[:user_management][:change_permissions][:disabled], offstyle: "secondary", width: 100}, class: "toggle"
+        .mb-3.h5.text-capitalize
+          = f.label t(:control_panel)[:user_management][:change_permissions][:data_honest_broker], for: "dataHbSwitch"
+          = f.check_box :data_honest_broker, id: "dataHbSwitch", data: {toggle: "toggle", on: t(:control_panel)[:user_management][:change_permissions][:enabled], off: t(:control_panel)[:user_management][:change_permissions][:disabled], offstyle: "secondary", width: 100}, class: "toggle"
+        .mb-3.h5
+          = f.label t(:control_panel)[:user_management][:change_permissions][:lab_honest_broker]
+          = f.select :group_ids, options_for_select(groups.collect{|g| [g.name, g.id]}, selected: f.object.groups.ids), {}, class: 'selectpicker', multiple: true
+      .modal-footer
+        = f.submit t(:control_panel)[:user_management][:change_permissions][:save], class: 'btn btn-primary', id: "submit_changes"
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:control_panel)[:user_management][:change_permissions][:close]

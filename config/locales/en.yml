@@ -17,6 +17,9 @@ en:
       header: "Server Error"
       text1: "Looks like something went wrong!"
       text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
+    user:
+      admin_change: "cannot be removed as it would leave no users with admin privileges."
+      user_delete: "cannot be removed as it would leave no users with admin privileges."
   activerecord:
     attributes:
       lab:
@@ -90,6 +93,7 @@ en:
     labs: "Specimens"
     requests: "Requests"
     help: "Help Links"
+    control_panel: "Control Panel"
     logout: "Logout"
   help_links:
     headers:
@@ -98,6 +102,32 @@ en:
   jobs:
     fields:
       id: "Job ID"
+  control_panel:
+    flash_messages:
+      save_successful: "Permissions update successfully saved."
+    user_management:
+      title: "User Control"
+      headings:
+        name: "Name"
+        email: "Email"
+        honest_broker: "Honest Broker"
+      tooltips:
+        edit_user: "Edit User"
+        admin: "Admin"
+        lab_honest_broker: "Lab Honest Broker"
+        user: "User"
+        data_honest_broker:  "Data Honest Broker"
+      change_permissions:
+        title: "Update Permissions for %{user_name}"
+        admin: "Admin Privileges"
+        data_honest_broker: "Data Honest Broker Privileges"
+        lab_honest_broker: "Lab Honest Broker for which group?"
+        no_group: "No Group Selected"
+        enabled: "Enabled"
+        disabled: "Disabled"
+        save: "Save Changes"
+        close: "Close"
+
   labs:
     header: "Lab Specimens"
     release_confirm:
@@ -309,3 +339,16 @@ en:
         intro: "Dear Investigator, "
         text:  "A specimen you requested for the %{type} <em>%{study}</em> is ready for pick-up.  Your sample will be available for pick up on the 7th floor of the Basic Science Building in the Hollings Cancer Center Biorepository between the hours of 9AM and 5PM.  Your sample will be discarded by noon the following day should you fail to retrieve it.  Please email Dr. Ivey directly at <a href='mailto:turnerbp@musc.edu'>turnerbp@musc.edu</a> if you have any questions. <p> Thank you, "
         closing: "Brittany Ivey, Ph.D. <p> Operations Manager <br /> Biorepository & Tissue Analysis Shared Resource <br /> Medical University of South Carolina"
+    user_permissions_mailer:
+      admin_granted: "You have been granted admin privileges"
+      admin_removed: "Your admin privileges have been removed"
+      data_honest_broker_granted: "You were granted data honest broker privileges"
+      data_honest_broker_removed: "Your data honest broker privileges were removed"
+      lab_honest_broker_granted: "You were made an honest broker for the following groups:"
+      lab_honest_broker_removed: "Your honest broker privileges were removed for the following groups:"
+      subject: "Biobank User Privileges Change"
+      permissions_changed_email:
+        greeting: "Hello %{user_name}"
+        text1: "You are receiving this email because the following changes have been made to your user privileges within Living Biobank: "
+        text2: "If you have any questions, please contact one of the system administrators."
+        closing: "Thank you"
