@@ -163,7 +163,6 @@ ActiveRecord::Schema.define(version: 20200310191750) do
     t.bigint "group_id"
     t.integer "service_id"
     t.string "name"
-    t.boolean "default"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "condition"
