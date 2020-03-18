@@ -18,6 +18,7 @@
 //= require popper.js/dist/umd/popper.min
 //= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min
+//= require bootstrap-toggle
 //= require bootstrap-select/dist/js/bootstrap-select.min
 //= require corejs-typeahead/dist/typeahead.bundle.min
 //= require chartkick/dist/chartkick.min

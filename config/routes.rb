@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   resources :protocols, only: [:index]
   resource :protocol, only: [:show]
+  resources :control_panel, only: [:index]
+  resources :permissions, only: [:edit, :update]
 
   resources :query_names, only: [:index]
 

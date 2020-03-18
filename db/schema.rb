@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200212224441) do
+ActiveRecord::Schema.define(version: 20200310191750) do
 
   create_table "delayed_jobs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "priority", default: 0, null: false
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20200212224441) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_groups_on_name", unique: true
+  end
+
+  create_table "lab_honest_brokers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_lab_honest_brokers_on_group_id"
+    t.index ["user_id"], name: "index_lab_honest_brokers_on_user_id"
   end
 
   create_table "labs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -136,7 +143,7 @@ ActiveRecord::Schema.define(version: 20200212224441) do
     t.string "email", default: "", null: false
     t.string "net_id"
     t.boolean "admin"
-    t.bigint "honest_broker_id"
+    t.boolean "data_honest_broker", default: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -149,7 +156,6 @@ ActiveRecord::Schema.define(version: 20200212224441) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["honest_broker_id"], name: "index_users_on_honest_broker_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -164,9 +170,10 @@ ActiveRecord::Schema.define(version: 20200212224441) do
     t.index ["group_id"], name: "index_variables_on_group_id"
   end
 
+  add_foreign_key "lab_honest_brokers", "groups"
+  add_foreign_key "lab_honest_brokers", "users"
   add_foreign_key "labs", "line_items"
   add_foreign_key "labs", "patients"
   add_foreign_key "populations", "line_items"
   add_foreign_key "populations", "patients"
-  add_foreign_key "users", "groups", column: "honest_broker_id"
 end
