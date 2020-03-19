@@ -204,7 +204,7 @@ en:
         link2: "i2b2 FAQ"
       contact:
         header: "Living BioBank Support"
-        link: "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
+        link: "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>"
     login:
       header: "Developer Login"
       net_id: "NetID"
