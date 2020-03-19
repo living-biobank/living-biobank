@@ -118,13 +118,13 @@ module SparcRequestsHelper
   end
 
   def complete_request_button(sr)
-    if sr.in_process? && (current_user.honest_broker? || current_user.admin?)
+    if sr.in_process? && (current_user.data_honest_broker? || current_user.admin?)
       link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:completed] }), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip' }
     end
   end
 
   def finalize_request_button(sr)
-    if sr.pending? && (current_user.honest_broker? || current_user.admin?)
+    if sr.pending? && (current_user.data_honest_broker? || current_user.admin?)
       link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, status: params[:status], sort_by: params[:sort_by], sort_order: params[:sort_order], sparc_request: { status: t(:requests)[:statuses][:in_process] }), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip' }
     end
   end

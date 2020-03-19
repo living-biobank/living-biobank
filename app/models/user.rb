@@ -1,9 +1,13 @@
 class User < ApplicationRecord
   include DirtyAssociations
-  has_many :lab_honest_brokers
-  has_many :groups, through: :lab_honest_brokers,
+  has_and_belongs_to_many :groups, join_table: :lab_honest_brokers,
     after_add: :dirty_create,
     after_remove: :dirty_delete
+
+  has_many :honest_broker_labs, through: :groups, source: :labs
+  has_many :honest_broker_requests, through: :groups, source: :sparc_requests
+
+  has_many :sources, through: :groups
 
   has_many :sparc_requests
   has_many :i2b2_queries, class_name: "I2b2::QueryName", foreign_key: :user_id, primary_key: :net_id
@@ -17,10 +21,6 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, authentication_keys: [:net_id]
-
-  scope :honest_brokers, -> {
-    where(honest_broker: true)
-  }
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
@@ -51,11 +51,9 @@ class User < ApplicationRecord
     "#{first_name.try(:humanize)} #{last_name.try(:humanize)} (#{email})".strip
   end
 
-  def honest_broker?
-    self.honest_broker_id.present?
-  end
-
-  
+  def lab_honest_broker?
+    self.groups.any?
+  end  
 
   private
     def check_for_admin

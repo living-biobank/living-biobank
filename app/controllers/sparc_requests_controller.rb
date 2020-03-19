@@ -107,10 +107,10 @@ class SparcRequestsController < ApplicationController
 
   def find_requests
     @requests =
-      if current_user.admin?
+      if current_user.admin? || current_user.data_honest_broker?
         SparcRequest.all
-      elsif current_user.honest_broker?
-        SparcRequest.where(id: current_user.honest_broker.sparc_requests.ids + current_user.sparc_requests.ids)
+      elsif current_user.lab_honest_broker?
+        current_user.sparc_requests.merge(current_user.honest_broker_requests)
       else
         current_user.sparc_requests
       end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).includes(:user, :protocol, :primary_pi, { additional_services: [:service, :sub_service_request] }, { specimen_requests: [:labs, :source, :group] })

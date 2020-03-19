@@ -9,7 +9,7 @@
         = icon('fas', 'user-circle')
         %span.text-break
           = current_user.full_name
-      - if current_user.admin? || current_user.honest_broker?
+      - if current_user.admin? || current_user.lab_honest_broker?
         .nav-item
           = link_to labs_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''] do
             = icon('fas', 'flask')

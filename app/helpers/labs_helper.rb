@@ -9,7 +9,7 @@ module LabsHelper
   end
 
   def lab_status_filter_options(status)
-    if current_user.admin? || current_user.honest_broker.process_specimen_retrieval?
+    if current_user.admin? || current_user.groups.any?(&:process_specimen_retrieval?)
       options_for_select([
         [t('labs.filters.all_status'), ''],
         [t('labs.filters.active_status'), 'active', selected: true],
@@ -31,7 +31,7 @@ module LabsHelper
   def lab_source_filter_options(source)
     options_for_select(
       ([[t('labs.filters.any_source'), '', selected: true]] +
-      (current_user.admin? ? Source.all : current_user.honest_broker.sources).map{ |source| [source.value, source.id] }), source)
+      (current_user.admin? ? Source.all : current_user.sources).map{ |source| [source.value, source.id] }), source)
   end
 
   def lab_patient_information(lab)

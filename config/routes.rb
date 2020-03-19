@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get '/422', to: 'errors#unacceptable'
   get '/500', to: 'errors#internal_error'
 
-  root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? (request.env['warden'].user.admin? || request.env['warden'].user.honest_broker.present?) : false } # we have an honest broker
+  root to: 'labs#index', constraints: lambda { |request| request.env['warden'].user ? (request.env['warden'].user.admin? || request.env['warden'].user.lab_honest_broker?) : false } # we have an honest broker
   root to: 'sparc_requests#index', constraints: lambda { |request| request.env['warden'].user } # no honest broker but we are signed in
 
   devise_scope :user do

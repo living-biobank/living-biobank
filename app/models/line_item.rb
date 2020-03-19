@@ -17,6 +17,9 @@ class LineItem < ApplicationRecord
 
   before_destroy :update_sparc_records
 
+  scope :specimen_reqeuests, -> () {
+    where.not(source_id: nil)
+  }
   def specimen_request?
     self.source_id.present?
   end
