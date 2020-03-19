@@ -4,7 +4,7 @@ $ ->
   initializeSelectpickers()
   initializeTooltips()
   initializePopovers()
-  initializeBootstrapToggle()
+  initializeToggles()
   $('html').addClass('ready')
   
 
@@ -12,7 +12,7 @@ $ ->
     initializeSelectpickers()
     initializeTooltips()
     initializePopovers()
-    initializeBootstrapToggle()
+    initializeToggles()
 
   # Remove form validation contexts when changing fields
   $(document).on 'keydown change change.datetimepicker', '.is-valid:not(.persist-validation), .is-invalid:not(.persist-validation)', ->
@@ -126,6 +126,9 @@ $ ->
 (exports ? this).initializePopovers = () ->
   $('[data-toggle=popover]').popover()
 
+(exports ? this).initializeToggles = () ->
+  $('[data-toggle=toggle]').bootstrapToggle()
+
 (exports ? this).replaceUrl = (data) ->
   query_string = "?" + Object.keys(data).map((k) ->
     if data[k]
@@ -133,6 +136,3 @@ $ ->
   ).filter((q) -> q).join("&")
 
   window.history.pushState({}, null, window.location.origin + window.location.pathname + query_string)
-
-initializeBootstrapToggle = ->
-  $('input[type="checkbox"].toggle').bootstrapToggle();

@@ -31,7 +31,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'whenever'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
-gem 'bootstrap-toggle-rails'
 
 # adding oracle for i2b2 access
 gem 'activerecord-oracle_enhanced-adapter', '~> 1.8.0'

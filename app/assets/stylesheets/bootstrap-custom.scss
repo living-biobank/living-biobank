@@ -231,12 +231,6 @@ form, .form {
 //////////////
 
 .table {
-  border: 0;
-
-  th {
-    text-align: center;
-  }
-
   th, td {
     vertical-align: middle !important;
 
@@ -411,6 +405,22 @@ form, .form {
   }
 }
 
+/////////////////////////////////
+/// Toggle (Bootstrap Toggle) ///
+/////////////////////////////////
+
+.toggle {
+  &.btn-block {
+    width: 100% !important;
+  }
+
+  .toggle-on, .toggle-off {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 /////////////////
 /// Typeahead ///
 /////////////////
@@ -451,13 +461,4 @@ form, .form {
       @extend .is-invalid;
     }
   }
-}
-
-////////////////////////////
-/// Bootstrap Toggle ///////
-////////////////////////////
-
-.toggle-handle {
-  background-color: white;
-  border: thin rgba(0, 0, 0, .25) solid;
 }

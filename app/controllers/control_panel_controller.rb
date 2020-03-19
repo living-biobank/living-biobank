@@ -8,10 +8,9 @@ class ControlPanelController < ApplicationController
     find_users
   end
 
-  
-
   private
-    def find_users
-      @users = User.all
-    end
+
+  def find_users
+    @users = User.all
+  end
 end

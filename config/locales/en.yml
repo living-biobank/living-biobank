@@ -106,22 +106,24 @@ en:
     flash_messages:
       save_successful: "Permissions update successfully saved."
     user_management:
-      title: "User Control"
+      title: "Manage User Privileges"
       headings:
+        privileges: "Privileges"
         name: "Name"
         email: "Email"
-        honest_broker: "Honest Broker"
+        honest_broker: "Labs"
+        manage: "Manage"
       tooltips:
         edit_user: "Edit User"
         admin: "Admin"
         lab_honest_broker: "Lab Honest Broker"
         user: "User"
-        data_honest_broker:  "Data Honest Broker"
+        data_honest_broker: "Data Honest Broker"
       change_permissions:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
         data_honest_broker: "Data Honest Broker Privileges"
-        lab_honest_broker: "Lab Honest Broker for which group?"
+        lab_honest_broker: "Lab Honest Broker Privileges"
         no_group: "No Group Selected"
         enabled: "Enabled"
         disabled: "Disabled"

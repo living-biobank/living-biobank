@@ -56,23 +56,24 @@ class User < ApplicationRecord
   end  
 
   private
-    def check_for_admin
-      unless User.where(admin: true).count > 1
-        errors.add(:user, I18n.t(:errors)[:user][:user_delete])
-        throw(:abort)
-      end
-    end
 
-    def admin_presence
-      if admin_changed?(from: true, to: false) && User.where(admin: true).count < 2
-        self.clear_changes_information
-        errors.add(:admin, I18n.t(:errors)[:user][:admin_change])
-      end
+  def check_for_admin
+    unless User.where(admin: true).count > 1
+      errors.add(:user, I18n.t(:errors)[:user][:user_delete])
+      throw(:abort)
     end
+  end
 
-    def send_permissions_email
-      if self.saved_changes[:admin].present? || self.saved_changes[:data_honest_broker].present? || self.saved_changes[:group].present?
-        UserPermissionsMailer.permissions_changed(self, self.saved_changes).deliver_now
-      end
+  def admin_presence
+    if admin_changed?(from: true, to: false) && User.where(admin: true).count < 2
+      self.clear_changes_information
+      errors.add(:admin, I18n.t(:errors)[:user][:admin_change])
     end
+  end
+
+  def send_permissions_email
+    if self.saved_changes[:admin].present? || self.saved_changes[:data_honest_broker].present? || self.saved_changes[:group].present?
+      UserPermissionsMailer.permissions_changed(self, self.saved_changes).deliver_now
+    end
+  end
 end

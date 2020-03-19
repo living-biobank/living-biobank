@@ -1,44 +1,42 @@
-#user_management
-  .h3.text-center
-    = t(:control_panel)[:user_management][:title]
-  %table.table.table-hover
+.card#user_management
+  .card-header
+    %h4.card-title.text-center.mb-0
+      = t(:control_panel)[:user_management][:title]
+  %table.table.table-bordered.table-hover.mb-0.border-0
     %thead
       %tr
-        %th
-        %th
+        %th.border-top-0.border-bottom-0.col-3
           = t(:control_panel)[:user_management][:headings][:name]
-        %th
+        %th.border-top-0.border-bottom-0.col-3
           = t(:control_panel)[:user_management][:headings][:email]
-        %th
+        %th.border-top-0.border-bottom-0.col-2
+          = t(:control_panel)[:user_management][:headings][:privileges]
+        %th.border-top-0.border-bottom-0.col-2
           = t(:control_panel)[:user_management][:headings][:honest_broker]
-        %th
+        %th.text-center.border-top-0.border-bottom-0.col-2
+          = t(:control_panel)[:user_management][:headings][:manage]
     %tbody
       - @users.each do |user|
         %tr
           %td
-            - unless user.admin || user.groups.present? || user.data_honest_broker
-              .h4
-                = icon('fas', 'user', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:user]})
-            - else
-              .row.h4
-                - if user.admin
-                  .col-2.text-danger
-                    = icon('fas', 'user-cog', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:admin]})
-                - if user.groups.present?
-                  .col-2.text-primary
-                    = icon('fas', 'user-tag', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:data_honest_broker]})
-                - if user.data_honest_broker
-                  .col-2.text-success
-                    = icon('fas', 'user-check', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:lab_honest_broker]})
-          %td.text-center
             = user.full_name
-          %td.text-center
+          %td
             = user.email
-          %td.text-center
+          %td
+            - if user.admin || user.lab_honest_broker? || user.data_honest_broker?
+              %span.d-inline-flex.text-danger.mr-1{ title: user.admin? ? t(:control_panel)[:user_management][:tooltips][:admin] : '', data: { toggle: "tooltip" } }
+                = icon('fas', 'user-cog fa-lg', class: user.admin? ? '' : 'invisible')
+              %span.d-inline-flex.text-primary.mr-1{ title: user.lab_honest_broker? ? t(:control_panel)[:user_management][:tooltips][:lab_honest_broker] : '', data: { toggle: "tooltip" } }
+                = icon('fas', 'user-tag fa-lg', class: user.lab_honest_broker? ? '' : 'invisible')
+              %span.d-inline-flex.text-success{ title: user.data_honest_broker? ? t(:control_panel)[:user_management][:tooltips][:data_honest_broker] : '', data: { toggle: "tooltip" } }
+                = icon('fas', 'user-check fa-lg', class: user.data_honest_broker? ? '' : 'invisible')
+            - else
+              %span.d-inline-flex{ title: t(:control_panel)[:user_management][:tooltips][:user], data: { toggle: "tooltip" } }
+                = icon('fas', 'user fa-lg')
+          %td
             - if user.groups.present?
-              - user.groups.each do |group|
-                = "#{group.name} </br>".html_safe
+              = user.groups.map(&:name).join('<br>').html_safe
             - else
               = " - "
-          %td
+          %td.text-center
             = link_to icon('fas', 'pencil-alt'), edit_permission_path(id: user), class: 'btn btn-warning', data: {toggle: "tooltip", title: t(:control_panel)[:user_management][:tooltips][:edit_user] }, remote: true

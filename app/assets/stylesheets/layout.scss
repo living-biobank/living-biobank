@@ -41,7 +41,7 @@ a, .btn-link {
   }
 }
 
-@include media-breakpoint-down(xl) {
+@include media-breakpoint-down(lg) {
   html {
     body {
       #contentContainer {
