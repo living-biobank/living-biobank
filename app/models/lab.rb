@@ -116,9 +116,9 @@ class Lab < ApplicationRecord
   }
 
   scope :with_status, -> (status) {
-    return if status.blank?
+    return if status == 'any'
 
-    if status == 'active'
+    if status.blank?
       joins(:group).where(
         status: I18n.t(:labs)[:statuses][:available],
         groups: { process_specimen_retrieval: false }

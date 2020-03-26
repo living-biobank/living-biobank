@@ -42,63 +42,41 @@ class SparcRequest < ApplicationRecord
   scope :search, -> (term) {
     return if term.blank?
 
-    joins(:protocol).includes(:user, specimen_requests: :source).where("#{SPARC::Protocol.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    queried_protocol_ids = SPARC::Protocol.where(SPARC::Protocol.arel_table[:id].matches("#{term}%")
     ).or(
-      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
     ).or(
-      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
     ).or(
-      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
     ).or(
-      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
     ).or(
-      joins(:protocol).includes(:user, specimen_requests: :source).where(SparcRequest.arel_table[:status].matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+    ).ids
+
+    eager_load(:user, specimen_requests: :source).where(protocol_id: queried_protocol_ids
     ).or(
-      by_date(term)
+      eager_load(:user, specimen_requests: :source).where(SparcRequest.arel_table[:status].matches("%#{term}%"))
     ).or( # Search by Releaser First Name
-      joins(:protocol).includes(:user, specimen_requests: :source).where(User.arel_table[:first_name].matches("%#{term}%"))
+      eager_load(:user, specimen_requests: :source).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or( # Search by Releaser Last Name
-      joins(:protocol).includes(:user, specimen_requests: :source).where(User.arel_table[:last_name].matches("%#{term}%"))
+      eager_load(:user, specimen_requests: :source).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or( # Search by Releaser Full Name 
-      joins(:protocol).includes(:user, specimen_requests: :source).where(User.arel_full_name.matches("%#{term}%"))
+      eager_load(:user, specimen_requests: :source).where(User.arel_full_name.matches("%#{term}%"))
     ).or(
-      joins(:protocol).includes(:user, specimen_requests: :source).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
+      eager_load(:user, specimen_requests: :source).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
     )
     .or(
-      joins(:protocol).includes(:user, specimen_requests: :source).where(Source.arel_table[:value].matches("%#{term}%"))
+      eager_load(:user, specimen_requests: :source).where(Source.arel_table[:value].matches("%#{term}%"))
     )
-  }
-
-  scope :by_date, -> (date) {
-    return none if date.blank?
-
-    if parsed_date = Date.parse(date).strftime('%m%d%Y') rescue nil
-      mdy = Date.strptime(parsed_date, '%m%d%Y') rescue nil
-      dmy = Date.strptime(parsed_date, '%d%m%Y') rescue nil
-      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:start_date].matches(mdy)).or(
-        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:end_date].matches(mdy))
-      ).or(
-        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:start_date].matches(dmy))
-      ).or(
-        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:end_date].matches(dmy))
-      )
-    elsif date =~ /\A\d+\Z/
-      start = Date.parse("1-1-#{date}")
-      last  = Date.parse("31-12-#{date}")
-
-      joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:start_date].gteq(start).and(SPARC::Protocol.arel_table[:start_date].lteq(last))).or(
-        joins(:protocol).includes(:user, specimen_requests: :source).where(SPARC::Protocol.arel_table[:end_date].gteq(start).and(SPARC::Protocol.arel_table[:end_date].lteq(last)))
-      )
-    else
-      joins(:protocol).includes(:user, specimen_requests: :source).none
-    end
   }
 
   scope :with_status, -> (status) {
     if status.blank?
-      where.not(status: I18n.t(:requests)[:statuses][:draft])
-    elsif status == 'active'
       where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
+    elsif status == 'any'
+      where.not(status: I18n.t(:requests)[:statuses][:draft])
     else
       where(status: status)
     end
@@ -109,13 +87,16 @@ class SparcRequest < ApplicationRecord
 
     case sort_by
     when 'title', 'short_title'
-      joins(:protocol).order(SPARC::Protocol.arel_table[sort_by].send(sort_order), created_at: :desc)
+      protocol_ids = SPARC::Protocol.where(id: pluck(:protocol_id)).order(SPARC::Protocol.arel_table[sort_by].send(sort_order), created_at: :desc).ids
+      order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
     when 'protocol_id'
-      joins(:protocol).order(SPARC::Protocol.arel_table[:id].send(sort_order), created_at: :desc)
+      order(protocol_id: sort_order)
     when 'time_remaining'
-      joins(:protocol).order(SPARC::Protocol.arel_table[:end_date].send(sort_order), created_at: :desc)
+      protocol_ids = SPARC::Protocol.where(id: pluck(:protocol_id)).order(SPARC::Protocol.arel_table[:end_date].send(sort_order), created_at: :desc).ids
+      order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
     when 'primary_pi'
-      joins(protocol: :primary_pi).order(SPARC::Identity.arel_table[:last_name].send(sort_order), created_at: :desc)
+      protocol_ids = SPARC::Protocol.joins(:primary_pi).where(id: pluck(:protocol_id)).order(SPARC::Identity.arel_table[:last_name].send(sort_order), created_at: :desc).ids
+      order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
     when 'requester'
       joins(:user).order(User.arel_table[:last_name].send(sort_order), created_at: :desc)
     else # Includes status

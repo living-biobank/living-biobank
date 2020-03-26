@@ -10,7 +10,7 @@ module SparcRequestsHelper
 
   def request_status_filter_options(status)
     options_for_select([
-      [t('requests.filters.all_status'), ''],
+      [t('requests.filters.all_status'), 'any'],
       [t('requests.filters.active_status'), '', selected: true],
       [t('requests.statuses.completed'), class: 'text-success'],
       [t('requests.statuses.in_process'), class: 'text-primary'],

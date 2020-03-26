@@ -11,8 +11,8 @@ module LabsHelper
   def lab_status_filter_options(status)
     if current_user.admin? || current_user.groups.any?(&:process_specimen_retrieval?)
       options_for_select([
-        [t('labs.filters.all_status'), ''],
-        [t('labs.filters.active_status'), 'active', selected: true],
+        [t('labs.filters.all_status'), 'any'],
+        [t('labs.filters.active_status'), '', selected: true],
         [t('labs.statuses.retrieved'), class: 'text-success'],
         [t('labs.statuses.released'), class: 'text-primary'],
         [t('labs.statuses.available'), class: 'text-warning'],
