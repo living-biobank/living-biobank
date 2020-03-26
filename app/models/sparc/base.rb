@@ -9,6 +9,11 @@ module SPARC
       super
     end
 
+    def self.inherited(child)
+      child.establish_connection(SPARC_REQUEST_DB)
+      super
+    end
+
     def self.table_name_prefix
       SPARC_REQUEST_DB['database'] + '.'
     end
