@@ -154,10 +154,26 @@ class SparcRequest < ApplicationRecord
   def update_sparc_records
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
+
     # Find or create an Identity for the requester
     requester = SPARC::Directory.find_or_create(self.user.net_id)
 
+    # Add requests
     self.specimen_requests.includes(:service).each{ |li| create_sparc_line_item(li, sr, requester) }
+
+    # Add Data Honest Brokers
+    User.data_honest_brokers.each do |dhb|
+      identity = SPARC::Directory.find_or_create(dhb.net_id)
+
+      unless self.protocol.project_roles.exists?(identity: identity)
+        self.protocol.project_roles.create(
+          identity: identity,
+          project_rights: 'approve',
+          role:           'other',
+          role_other:     'LBB Data Honest Broker'
+        )
+      end
+    end
   end
 
   def add_additional_services

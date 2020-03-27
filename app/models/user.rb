@@ -22,6 +22,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, authentication_keys: [:net_id]
 
+  scope :data_honest_brokers, -> { where(data_honest_broker: true) }
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if net_id = conditions.delete(:net_id)
