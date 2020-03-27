@@ -3,9 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .line-item {
-  & + .line-item {
-    @extend .mt-4;
-    @extend .mt-sm-2;
+  @extend .py-2;
+  transition: $transition-base;
+
+  &:hover {
+    background: theme-color('light');
+    color: $table-hover-color;
+    background: $table-hover-bg;
   }
 
   i {
@@ -13,6 +17,21 @@
     justify-content: center;
     max-width: 18px;
     min-width: 18px;
+  }
+
+  small {
+    i {
+      max-width: 14px;
+      min-width: 14px;   
+    }
+  }
+
+  .btn {
+    i {
+      display: inline-block;
+      max-width: unset;
+      min-width: unset;
+    }
   }
 }
 

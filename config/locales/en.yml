@@ -109,6 +109,7 @@ en:
       title: "Manage User Privileges"
       headings:
         privileges: "Privileges"
+        user: "User"
         name: "Name"
         email: "Email"
         honest_broker: "Labs"

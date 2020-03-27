@@ -40,25 +40,25 @@ module SparcRequestsHelper
 
   def requester_display(sr)
     name =
-      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.user) }) +
-      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.user) })
+      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block mx-1', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.user) }) +
+      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none mx-1', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.user) })
 
-    content_tag :span do
+    content_tag :span, class: 'd-inline-flex align-items-center' do
       icon('fas', 'user mr-2') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.submitted_at, DateTime.now.utc)).html_safe
     end
   end
 
   def request_duration_display(sr)
     if sr.end_date < DateTime.now.utc
-      content_tag :span, class: 'text-danger' do
+      content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
         icon('fas', 'hourglass-end mr-2') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, DateTime.now.utc).capitalize)
       end
     elsif ((sr.end_date - DateTime.now.utc).to_i / (60*60*24)) <= 30
-      content_tag :span, class: 'text-warning' do
+      content_tag :span, class: 'd-inline-flex align-items-center text-warning' do
         icon('fas', 'hourglass-half mr-2') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
       end
     else
-      content_tag :span do
+      content_tag :span, class: 'd-inline-flex align-items-center' do
         icon('fas', 'hourglass-half mr-2') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
       end
     end
