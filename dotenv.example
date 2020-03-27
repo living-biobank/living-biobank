@@ -1,4 +1,5 @@
 APP_VERSION=1.1.0
+ROOT_URL=http://localhost:3000
 SPARC_HOST=http://localhost:4000
 NO_REPLY_EMAIL=noreply@musc.edu
 ADMIN_EMAIL=glickk@musc.edu,catesa@musc.edu,kirchoff@musc.edu, iee@musc.edu

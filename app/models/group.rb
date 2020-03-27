@@ -1,5 +1,5 @@
 class Group < ApplicationRecord
-  has_and_belongs_to_many :users, join_table: :lab_honest_brokers
+  has_and_belongs_to_many :lab_honest_brokers, join_table: :lab_honest_brokers, class_name: "User"
 
   has_many :sources,    dependent: :destroy
   has_many :services,   dependent: :destroy

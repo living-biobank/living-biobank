@@ -1,0 +1,8 @@
+%p
+  = t('mailers.footer.text1')
+
+%p{ style: 'margin-bottom: 0' }
+  %strong
+    = t('mailers.footer.text2')
+
+= link_to ENV.fetch('ROOT_URL'), ENV.fetch('ROOT_URL')

@@ -310,6 +310,9 @@ en:
     form:
       header: "Specimen Release"
   mailers:
+    footer:
+      text1: "Sincerely,"
+      text2: "The Living Biobank Team"
     cloverleaf_mailer:
       job_error:
         subject: "Cloverleaf Message Job Error"
@@ -335,9 +338,9 @@ en:
         specimen_request: "<strong>%{source}</strong> - %{received} / %{requested} samples &geq; %{min_sample_size}"
     specimens_available_mailer:
       available_email: 
-        subject: "Specimens Are Available"
-        intro:  "Dear Honest Broker, "
-        text: "A sample request has been made.  Please retrieve sample at your convenience and notify the researcher when the sample is ready for pick-up."
+        subject: "%{group} Specimens Are Available"
+        intro:  "Dear %{name},"
+        text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
     specimen_mailer:
       release_email:
         subject: "Specimen Pickup for You"
