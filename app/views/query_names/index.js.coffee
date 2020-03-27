@@ -1,4 +1,5 @@
 fillQueries = ->
+  <% if @queries.any? %>
   options = []
   $("select[name*=query_name]").each ->
     if $(this).children().length == 1
@@ -9,6 +10,9 @@ fillQueries = ->
       <% end %>
 
     $(this).selectpicker('refresh')
+  <% else %>
+  $("select[name*=query_name]").parents('.dropdown').attr('data-toggle', 'tooltip').prop('title', I18n.t('requests.form.tooltips.no_i2b2_queries'))
+  <% end %>
 
 fillQueries()
 
