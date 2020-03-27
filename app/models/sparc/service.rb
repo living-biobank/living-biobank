@@ -3,7 +3,7 @@ module SPARC
     belongs_to :organization
 
     has_many :line_items, class_name: "::LineItem"
-    has_many :sparc_line_items, class_name: "SPARC::LineItem"
+    has_many :sparc_line_items, class_name: "SPARC::LineItem", dependent: :destroy
 
     def process_ssrs_organization
       org = self.organization

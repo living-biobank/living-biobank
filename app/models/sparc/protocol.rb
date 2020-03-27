@@ -2,14 +2,14 @@ module SPARC
   class Protocol < SPARC::Base
     has_one :primary_pi_role, -> { where(role: 'primary-pi', project_rights: 'approve') }, class_name: "ProjectRole"
     has_one :primary_pi, through: :primary_pi_role, source: :identity
-    has_one :research_types_info
+    has_one :research_types_info, dependent: :destroy
 
     has_many :sparc_requests
     has_many :specimen_records
 
-    has_many :project_roles
-    has_many :service_requests
-    has_many :sub_service_requests
+    has_many :project_roles, dependent: :destroy
+    has_many :service_requests, dependent: :destroy
+    has_many :sub_service_requests, dependent: :destroy
 
     validates_presence_of :research_master_id, if: :rmid_enabled?
     validates_presence_of :short_title, :title, :funding_status, :start_date, :end_date, :next_ssr_id

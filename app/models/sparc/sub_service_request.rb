@@ -5,11 +5,11 @@ module SPARC
     belongs_to :service_request
     belongs_to :service_requester, class_name: "SPARC::Identity"
 
-    has_many :line_items
+    has_many :line_items, dependent: :destroy
 
     validates_presence_of :ssr_id, :status, :org_tree_display
 
-    before_validation :default_values
+    before_validation :default_values, on: :create
 
     def complete?
       SPARC::Setting.get_value('finished_statuses').include?(self.status) && process_ssrs_organization.has_editable_status?(self.status)

@@ -2,8 +2,8 @@ module SPARC
   class ServiceRequest < SPARC::Base
     belongs_to :protocol
 
-    has_many :sub_service_requests
-    has_many :line_items
+    has_many :sub_service_requests, dependent: :destroy
+    has_many :line_items, dependent: :destroy
 
     validates_presence_of :status
 
