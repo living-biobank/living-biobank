@@ -113,9 +113,9 @@ class SparcRequestsController < ApplicationController
         current_user.sparc_requests.merge(current_user.honest_broker_requests)
       else
         current_user.sparc_requests
-      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).eager_load(:user, :additional_services, { specimen_requests: [:labs, :source, :group] })
+      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page]).eager_load(:user, specimen_requests: [:labs, :source, :group]).preload(:protocol, :primary_pi, additional_services: [:service, :sub_service_request])
 
-    @draft_requests = current_user.sparc_requests.draft
+    @draft_requests = current_user.sparc_requests.draft.preload(:protocol)
   end
 
   def sparc_request_params

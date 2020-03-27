@@ -33,60 +33,60 @@ class Lab < ApplicationRecord
   scope :search, -> (term) {
     return if term.blank?
 
+    queried_protocol_ids = SPARC::Protocol.where(SPARC::Protocol.arel_table[:id].matches("#{term}%")
+    ).or(
+      SPARC::Protocol.where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
+    ).or(
+      SPARC::Protocol.where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
+    ).or(
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
+    ).or(
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+    ).or(
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+    ).ids
+
     # Because we have to join on sparc_request: :protocol, these are released labs
-    queried_released_labs = joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    queried_released_labs = joins(:releaser, sparc_request: :user).where(SparcRequest.arel_table[:protocol_id].in(queried_protocol_ids)
     ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(Lab.arel_table[:status].matches("%#{term}%"))
+      joins(:releaser, sparc_request: :user).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
-    ).or( # Search by Releaser First Name
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(User.arel_table[:first_name].matches("%#{term}%"))
-    ).or( # Search by Releaser Last Name
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(User.arel_table[:last_name].matches("%#{term}%"))
-    ).or( # Search by Releaser Full Name 
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(User.arel_full_name.matches("%#{term}%"))
+      joins(:releaser, sparc_request: :user).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(Patient.arel_table[:lastname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(Patient.arel_table[:firstname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(Patient.arel_table[:mrn].matches("%#{term}%"))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(Patient.arel_table[:identifier].matches("%#{term}%"))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(Source.arel_table[:value].matches("%#{term}%"))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where("#{SPARC::Protocol.quoted_table_name}.`id` LIKE ?", "#{term}%")
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
-    ).or(
-      joins(sparc_request: :protocol).eager_load(:releaser, :patient, source: :group).where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+      joins(:releaser, sparc_request: :user).where(User.arel_full_name.matches("%#{term}%"))
     )
 
     # Now try to brute force find available labs matching the query by loading associations and using Ruby code
     # Note: We can't eager_load the :line_items associations because it's instance-dependent, so we have to use
     # Ruby to avoid n+1 queries to the database
     labs_from_scope   = includes(populations: :line_item).select{ |lab| lab.line_item_id.nil? }
-    eligible_requests = SparcRequest.joins(:protocol).where(
+    eligible_requests = SparcRequest.where(
       id: labs_from_scope.map do |lab|
         pops = lab.populations.select{ |pop| pop.line_item.source_id == lab.source_id }
         pops.map(&:line_item).map(&:sparc_request_id)
       end.flatten.uniq
     )
 
-    queried_eligible_request_ids = eligible_requests.where("#{SPARC::Protocol.quoted_table_name}.`id` LIKE ?", "#{term}%"
+    queried_eligible_protocol_ids = SPARC::Protocol.where(SPARC::Protocol.arel_table[:id].matches("#{term}%")
     ).or(
-      eligible_requests.where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_table[:short_title].matches("%#{term}%"))
     ).or(
-      eligible_requests.where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_table[:title].matches("%#{term}%"))
     ).or(
-      eligible_requests.where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:short_title).matches("%#{term}%"))
     ).or(
-      eligible_requests.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+    ).or(
+      SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
+    ).ids
+
+    queried_eligible_request_ids = eligible_requests.joins(:user).where(SparcRequest.arel_table[:protocol_id].in(queried_eligible_protocol_ids)
+    ).or(
+      joins(:user).where(User.arel_table[:first_name].matches("%#{term}%"))
+    ).or(
+      joins(:user).where(User.arel_table[:last_name].matches("%#{term}%"))
+    ).or(
+      joins(:user).where(User.arel_full_name.matches("%#{term}%"))
     ).ids
 
     queried_available_labs = where(
@@ -97,7 +97,24 @@ class Lab < ApplicationRecord
     )
 
     # Now combine all of the labs together and that's our result
-    where(id: queried_released_labs.ids + queried_available_labs.ids)
+    joins(:patient, source: :group).where(id: queried_released_labs.ids + queried_available_labs.ids
+    ).or(
+      joins(:patient, source: :group).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%")
+    ).or(
+      joins(:patient, source: :group).where(Lab.arel_table[:status].matches("%#{term}%"))
+    ).or(
+      joins(:patient, source: :group).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
+    ).or(
+      joins(:patient, source: :group).where(Patient.arel_table[:lastname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
+    ).or(
+      joins(:patient, source: :group).where(Patient.arel_table[:firstname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
+    ).or(
+      joins(:patient, source: :group).where(Patient.arel_table[:mrn].matches("%#{term}%"))
+    ).or(
+      joins(:patient, source: :group).where(Patient.arel_table[:identifier].matches("%#{term}%"))
+    ).or(
+      joins(:patient, source: :group).where(Source.arel_table[:value].matches("%#{term}%"))
+    )
   }
 
   scope :by_released_date, -> (start_date, end_date) {
