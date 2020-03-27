@@ -134,8 +134,6 @@ class SparcRequest < ApplicationRecord
     !irb_approved
   end
 
-  private
-
   def update_variables
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
@@ -176,6 +174,8 @@ class SparcRequest < ApplicationRecord
       end
     end
   end
+
+  private
 
   def create_sparc_line_item(line_item, sr, requester)
     service = line_item.service

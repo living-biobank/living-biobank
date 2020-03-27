@@ -84,6 +84,11 @@ ActiveRecord::Base.transaction do
     sparc_service:  SPARC::Service.find(10)
   ).first_or_create
 
+  Service.where(
+    group:          microbiome_group,
+    sparc_service:  SPARC::Service.find(492)
+  ).first_or_create
+
   ########################
   ### Create Variables ###
   ########################
@@ -247,20 +252,17 @@ ActiveRecord::Base.transaction do
     submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         blood,
         query_name:                     kayla.i2b2_queries.first.name,
         minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       1 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         nasal,
         query_name:                     kayla.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       2 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         perianal,
         query_name:                     kayla.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)
@@ -277,20 +279,17 @@ ActiveRecord::Base.transaction do
     submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         blood,
         query_name:                     kayla.i2b2_queries.first.name,
         minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       1 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         nasal,
         query_name:                     kayla.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       2 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         perianal,
         query_name:                     kayla.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)
@@ -307,20 +306,17 @@ ActiveRecord::Base.transaction do
     submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         blood,
         query_name:                     ito.i2b2_queries.first.name,
         minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       1 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         nasal,
         query_name:                     ito.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       2 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         perianal,
         query_name:                     ito.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)
@@ -337,20 +333,17 @@ ActiveRecord::Base.transaction do
     submitted_at: DateTime.now
     specimen_requests_attributes: {
       0 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         blood,
         query_name:                     ito.i2b2_queries.first.name,
         minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       1 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         nasal,
         query_name:                     ito.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)
       },
       2 => {
-        service:                        SPARC::Service.find(ENV.fetch('SERVICE_ID')),
         source:                         perianal,
         query_name:                     ito.i2b2_queries.first.name,
         number_of_specimens_requested:  Faker::Number.within(1..9)

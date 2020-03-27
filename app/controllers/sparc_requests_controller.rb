@@ -158,7 +158,6 @@ class SparcRequestsController < ApplicationController
       ],
       specimen_requests_attributes: [
         :id,
-        :service_id,
         :source_id,
         :query_name,
         :number_of_specimens_requested,

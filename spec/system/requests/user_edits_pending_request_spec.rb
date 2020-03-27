@@ -6,10 +6,6 @@ RSpec.describe 'User edits a pending request', js: true do
 
   let!(:request) { create(:sparc_request, :pending, user: user, line_item_count: 1) }
 
-  before :each do
-    ENV['SERVICE_ID'] = SPARC::Service.all.ids.join(',')
-  end
-
   it 'should update the request' do
     visit sparc_requests_path
 

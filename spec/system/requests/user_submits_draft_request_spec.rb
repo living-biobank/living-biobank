@@ -8,10 +8,6 @@ RSpec.describe 'User submits a draft request', js: true do
   let!(:service) { create(:sparc_service) }
   let!(:request) { create(:sparc_request, :draft, user: user, line_item_count: 1) }
 
-  before :each do
-    ENV['SERVICE_ID'] = SPARC::Service.all.ids.join(',')
-  end
-
   it 'should update the request' do
     visit sparc_requests_path
 

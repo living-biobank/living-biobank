@@ -6,10 +6,6 @@ RSpec.describe 'User begins a new request', js: true do
   let!(:primary_pi) { create(:sparc_identity) }
   let!(:service)    { create(:sparc_service) }
 
-  before :each do
-    ENV['SERVICE_ID'] = SPARC::Service.all.ids.join(',')
-  end
-
   # Enabled by default (See `spec/support/rmid.rb`)
   context 'with Research Master ID enabled' do
     context 'and with an existing RMID' do

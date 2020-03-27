@@ -1,8 +1,8 @@
 class LineItem < ApplicationRecord
   belongs_to :sparc_request, optional: true
-  belongs_to :service, class_name: "SPARC::Service"
+  belongs_to :service, class_name: "SPARC::Service", optional: true
   belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional: true
-  belongs_to :source
+  belongs_to :source, optional: true
 
   has_many :populations
   has_many :labs
