@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'babel-transpiler'
+gem 'bootsnap'
 gem 'coffee-rails', '~> 4.2'
 gem 'delayed_job_active_record'
 gem 'devise'
@@ -22,7 +23,7 @@ gem 'omniauth'
 gem 'omniauth-shibboleth'
 gem 'omniauth-rails_csrf_protection'
 gem 'puma', '~> 3.7'
-gem 'rails', '~> 5.1.3'
+gem 'rails', '~> 5.2'
 gem 'request_store'
 gem 'sassc-rails'
 gem 'simple_hl7'
@@ -33,7 +34,7 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
 
 # adding oracle for i2b2 access
-gem 'activerecord-oracle_enhanced-adapter', '~> 1.8.0'
+gem 'activerecord-oracle_enhanced-adapter', '~> 5.2.0'
 gem 'ruby-oci8'
 
 gem 'ed25519', '>= 1.2', '< 2.0'
