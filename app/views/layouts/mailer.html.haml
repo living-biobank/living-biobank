@@ -10,5 +10,5 @@
           border: 1px solid black;
         }
   %body
+    = render 'layouts/mailer/greeting' if @user
     = yield
-    = render 'layouts/mailer/footer'

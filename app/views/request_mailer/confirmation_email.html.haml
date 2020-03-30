@@ -1,6 +1,16 @@
 %p
-  = raw t(:mailers)[:request_mailer][:confirmation_email][:text]
+  = t('mailers.request_mailer.confirmation_email.text1')
+%p
+  = t('mailers.request_mailer.confirmation_email.text2')
+%p
+  = t('mailers.request_mailer.confirmation_email.text3').html_safe
+%p
+  = t('mailers.request_mailer.confirmation_email.text4')
+
+= render 'layouts/mailer/footer'
+
 %h4
-  = t('mailers.request_mailer.submission_email.data_use_agreement')
-%blockquote{ style: "margin-left:0.5rem;padding-left:1rem;border-left:1px solid lightgray;"}
+  = t('mailers.request_mailer.confirmation_email.data_use_agreement')
+
+%blockquote{ style: "margin-left:0;padding-left:1rem;border-left:1px solid lightgray;"}
   = t('requests.create_confirm.html').html_safe

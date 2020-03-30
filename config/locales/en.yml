@@ -310,6 +310,7 @@ en:
     form:
       header: "Specimen Release"
   mailers:
+    greeting: "Dear %{name},"
     footer:
       text1: "Sincerely,"
       text2: "The Living Biobank Team"
@@ -326,20 +327,24 @@ en:
       services_header: "Services Requested"
       confirmation_email:
         subject: "Living Biobank Request Confirmation"
-        text: "We have received your SPARC Living Biobank request. Your application will be processed within 3 business days. The initial fee for processing your request is <strong>$x</strong>. The average cost is <strong>$x</strong>. Your application will be reviewed and a cost estimate will be determined based on the work required to complete the process. You will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARC to arrange payment."
+        text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
+        text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
+        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
+        text4: "We look forward to working with you."
+        data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
       submission_email:
         subect: "Living Biobank Request Application"
         intro: "A new Living Biobank application was submitted by %{requester} on %{date}."
-        specimen_request: "<strong>%{source}</strong> - %{requested} samples &geq; %{min_sample_size}"
-        data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
+        specimen_request_with_sample_size: "<strong>%{source}</strong> - %{requested} samples &geq; %{min_sample_size}"
+        specimen_request_no_sample_size: "<strong>%{source}</strong> - %{requested} samples"
       completion_email:
         subject: "Living Biobank Request Completed"
         completed_by: "Completed by %{user} on %{date}"
-        specimen_request: "<strong>%{source}</strong> - %{received} / %{requested} samples &geq; %{min_sample_size}"
+        specimen_request_with_sample_size: "<strong>%{source}</strong> - %{received} / %{requested} samples &geq; %{min_sample_size}"
+        specimen_request_no_sample_size: "<strong>%{source}</strong> - %{received} / %{requested} samples"
     specimens_available_mailer:
       available_email: 
         subject: "%{group} Specimens Are Available"
-        intro:  "Dear %{name},"
         text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
     specimen_mailer:
       release_email:
