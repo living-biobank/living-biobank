@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include DirtyAssociations
+
   has_and_belongs_to_many :groups, join_table: :lab_honest_brokers,
     after_add: :dirty_create,
     after_remove: :dirty_delete

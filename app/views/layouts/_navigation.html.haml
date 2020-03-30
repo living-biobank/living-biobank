@@ -22,7 +22,7 @@
             = t('navigation.requests')
       - if current_user.admin?
         .nav-item
-          = link_to control_panel_index_path, class: ['nav-link btn btn-dark', controller_name == 'control_panel' ? 'active' : ''] do
+          = link_to control_panel_root_path, class: ['nav-link btn btn-dark', ['users', 'groups'].include?(controller_name) ? 'active' : ''] do
             = icon('fas', 'cogs')
             %span
               = t('navigation.control_panel')

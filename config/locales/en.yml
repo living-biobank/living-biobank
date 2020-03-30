@@ -4,6 +4,7 @@ en:
     close: "Close"
     complete_request: "Complete Request"
     release: "Release"
+    save: "Save"
   errors:
     not_found:
       header: "Page not found"
@@ -106,8 +107,9 @@ en:
     flash_messages:
       save_successful: "Permissions update successfully saved."
     user_management:
+      link: "Manage Users"
       title: "Manage User Privileges"
-      headings:
+      headers:
         privileges: "Privileges"
         user: "User"
         name: "Name"
@@ -118,9 +120,9 @@ en:
         edit_user: "Edit User"
         admin: "Admin"
         lab_honest_broker: "Lab Honest Broker"
-        user: "User"
+        user: "General User"
         data_honest_broker: "Data Honest Broker"
-      change_permissions:
+      form:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
         data_honest_broker: "Data Honest Broker Privileges"
@@ -128,8 +130,15 @@ en:
         no_group: "No Group Selected"
         enabled: "Enabled"
         disabled: "Disabled"
-        save: "Save Changes"
-        close: "Close"
+    group_management:
+      link: "Manage Labs"
+      title: "Manage Lab Information"
+      headers:
+        name: "Name"
+        sources: "Specimen Sources"
+        manage: "Manage"
+      tooltips:
+        edit_group: "Edit Lab"
 
   labs:
     header: "Lab Specimens"

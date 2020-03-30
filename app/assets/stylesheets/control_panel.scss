@@ -1,0 +1,15 @@
+// Place all the styles related to the ControlPanel controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.control-panel-nav {
+  .control-panel-link {
+    @extend .h4;
+    @extend .mb-0;
+  }
+}
+
+.control-panel {
+  border-top-left-radius: 0;
+  border-top: 0;
+}

@@ -158,6 +158,20 @@ form, .form {
   color: theme-color('danger');
 }
 
+///////////
+/// NAV ///
+///////////
+
+.nav {
+  .nav-link:not(.active) {
+    border-color: $nav-tabs-link-hover-border-color;;
+
+    &:hover {
+      background: theme-color-level('light', 1);
+    }
+  }
+}
+
 ///////////////
 /// POPOVER ///
 ///////////////
@@ -229,6 +243,17 @@ form, .form {
 //////////////
 /// TABLES ///
 //////////////
+
+.card {
+  .table {
+    thead {
+      th, td {
+        border-top: 0;
+        border-bottom: 0;
+      }
+    }
+  }
+}
 
 .table {
   th, td {

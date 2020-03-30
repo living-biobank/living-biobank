@@ -1,6 +1,4 @@
 class Lab < ApplicationRecord
-  self.per_page = 10
-
   belongs_to :patient
   belongs_to :line_item, optional: true #This association is for releasing a speciment to a line item
   belongs_to :releaser, foreign_key: :released_by, class_name: "User", optional: true

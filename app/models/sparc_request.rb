@@ -1,6 +1,4 @@
 class SparcRequest < ApplicationRecord
-  self.per_page = 10
-
   belongs_to :user
   belongs_to :protocol, class_name: "SPARC::Protocol"
 
