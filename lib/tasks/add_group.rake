@@ -86,7 +86,7 @@ namespace :data do
       group = Group.create(
         name: group_name,
         process_specimen_retrieval:         process_specimen_retrieval,
-        notify_when_all_specimens_released: notify_when_all_specimens_released
+        notify_when_all_specimens_released: notify_when_all_specimens_released,
         process_sample_size:                process_sample_size,
         display_patient_information:        display_patient_information
       )
