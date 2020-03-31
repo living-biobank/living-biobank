@@ -34,8 +34,7 @@
                     %h5.d-flex.flex-column.mb-0<
                       .mb-1
                         = line_item_text(li)
-                      %small.text-muted<
-                        = query_display(li)
+                      = query_display(li)
                   .col-sm-8.col-12
                     - unless request.cancelled?
                       = render 'line_items/progress_bar', li: li
