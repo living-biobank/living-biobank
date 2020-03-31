@@ -27,3 +27,4 @@
 //= require nested_form_fields
 //= require i18n/translations
 //= require_tree .
+

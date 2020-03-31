@@ -11,7 +11,13 @@ class PermissionsController < ControlPanelController
     @user = User.find(params[:id])
     
     if @user.update_attributes(user_params)
-      flash.now[:success] = t(:control_panel)[:flash_messages][:save_successful]
+      current_user.reload
+      if current_user.admin
+        flash.now[:success] = t(:control_panel)[:flash_messages][:save_successful]
+      else
+        flash[:error] = t(:control_panel)[:flash_messages][:self_admin_removed]
+        ajax_redirect_to(sparc_requests_path)
+      end
     else
       flash.now[:error] = @user.errors.full_messages.map(&:inspect).join(', ').delete! '"'
     end

@@ -31,4 +31,8 @@ class ApplicationController < ActionController::Base
   def errors_controller?
     helpers.errors_controller?
   end
+
+  def ajax_redirect_to(url)
+    render js: "window.location.assign('#{url}')"
+  end
 end
