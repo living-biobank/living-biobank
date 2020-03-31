@@ -11,7 +11,7 @@ class PermissionsController < ControlPanelController
     @user = User.find(params[:id])
     
     if @user.update_attributes(user_params)
-      current_user.reload
+      current_user.reload  #necessary to check if current user is still an admin
       if current_user.admin
         flash.now[:success] = t(:control_panel)[:flash_messages][:save_successful]
       else
