@@ -13,6 +13,10 @@ class LabsController < ApplicationController
   def update
     @lab.update_attributes(lab_params)
 
+    if @lab.released? && (!@lab.group.notify_when_all_specimens_released? || @lab.line_item.complete?)
+      SpecimenMailer.with(group: @lab.group, request: @lab.sparc_request).release_email.deliver_later if @lab.released?
+    end
+
     find_labs
 
     respond_to :js

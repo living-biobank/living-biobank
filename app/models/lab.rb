@@ -17,8 +17,6 @@ class Lab < ApplicationRecord
   delegate :dob, to: :patient
   delegate :sparc_requests, to: :patient
 
-  after_update :send_emails
-
   scope :filtered_for_index, -> (term, released_at_start, released_at_end, status, source, sort_by, sort_order) {
     search(term).
     by_released_date(released_at_start, released_at_end).
@@ -189,15 +187,5 @@ class Lab < ApplicationRecord
 
   def discarded?
     self.status == I18n.t(:labs)[:statuses][:discarded]
-  end
-
-  private
-
-  def send_emails
-    # Leaving this open to expansion for now because Bashir wants
-    # retrieval emails too in a future story
-    if self.released?
-      SpecimenMailer.release_email(self.sparc_request).deliver_now
-    end
   end
 end

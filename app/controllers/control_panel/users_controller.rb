@@ -19,12 +19,12 @@ class ControlPanel::UsersController < ApplicationController
     @user = User.find(params[:id])
     
     if @user.update_attributes(user_params)
-      flash.now[:success] = t(:control_panel)[:flash_messages][:save_successful]
+      flash.now[:success] = t('control_panel.users.flash.saved')
+
+      find_users
     else
       flash.now[:error] = @user.errors.full_messages.map(&:inspect).join(', ').delete! '"'
     end
-
-    find_users
   end
 
   private

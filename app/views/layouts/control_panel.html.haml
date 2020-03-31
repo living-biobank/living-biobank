@@ -2,10 +2,6 @@
   = render 'control_panel/header'
 
 - content_for :content do
-  %ul.nav.nav-tabs.control-panel-nav
-    %li.nav-item
-      = link_to t('control_panel.user_management.link'), control_panel_users_path, class: ['nav-link control-panel-link', controller_name == 'users' ? 'active' : '']
-    %li.nav-item
-      = link_to t('control_panel.group_management.link'), control_panel_groups_path, class: ['nav-link control-panel-link', controller_name == 'groups' ? 'active' : '']
+  = render 'control_panel/nav_links'
 
 = render template: 'layouts/application'

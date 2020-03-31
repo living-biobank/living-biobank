@@ -40,9 +40,9 @@ class LineItem < ApplicationRecord
     @progress ||=
       if self.specimen_request?
         if self.labs.loaded?
-          labs.select{ |lab| lab.status == I18n.t(:labs)[:statuses][:retrieved] }.length
+          labs.select{ |lab| self.group.process_specimen_retrieval? ? lab.retrieved? : lab.released? }.length
         else
-          labs.where(status: I18n.t(:labs)[:statuses][:retrieved]).count
+          labs.where(status: self.group.process_specimen_retrieval? ? I18n.t(:labs)[:statuses][:retrieved] : I18n.t(:labs)[:statuses][:released]).count
         end
       else
         self.sub_service_request.try(:complete?) ? 1 : 0

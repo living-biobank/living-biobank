@@ -1,56 +1,57 @@
-.card.control-panel#groupManagement
-  .card-header
-    %h4.card-title.text-center.mb-0
-      = t('control_panel.group_management.title')
-  %table.table.table-bordered.table-hover.mb-0.border-0
-    %thead
-      %tr
-        %th
-          = t('control_panel.group_management.headers.name')
-        %th
-          = t('control_panel.group_management.headers.sources')
-        %th
-          = t('control_panel.group_management.headers.services')
-        %th.text-center.col-1
-          = t('control_panel.group_management.headers.manage')
-    %tbody
-      - if groups.any?
-        - groups.each do |group|
-          %tr
-            %td
-              = group.name
-            %td
-              - group.sources.each do |source|
-                .d-flex
-                  %span.mr-1<
-                    = "-"
-                  %span<
-                    = "#{source.value} (#{source.key})"
-            %td
-              - if group.variables.any?
-                %h6.font-weight-bold.mb-0
-                  = "Pending Variable Services"
-                - group.variables.each do |variable|
-                  .d-flex
-                    %span.mr-1<
-                      = "-"
-                    %span<
-                      = "#{variable.name} - #{variable.service.name}"
-              - if group.services.any?
-                %h6.font-weight-bold.mb-0
-                  = "In Process Additional Services"
-                - group.services.each do |service|
-                  .d-flex
-                    %span.mr-1<
-                      = "-"
-                    %span<
-                      = "#{service.sparc_service.name}"
-            %td.col-1.text-center
-              = edit_group_button(group)
-      - else
+.control-panel-container#groupManagement
+  .card.control-panel
+    .card-header
+      %h4.card-title.text-center.mb-0
+        = t('control_panel.groups.title')
+    %table.table.table-bordered.table-hover.mb-0.border-0
+      %thead
         %tr
-          %td{ colspan: 5 }
-            %p.text-center.mb-0
-              = t(:constants)[:no_records]
+          %th
+            = t('control_panel.groups.headers.name')
+          %th
+            = t('control_panel.groups.headers.sources')
+          %th
+            = t('control_panel.groups.headers.services')
+          %th.text-center.col-1
+            = t('control_panel.groups.headers.manage')
+      %tbody
+        - if groups.any?
+          - groups.each do |group|
+            %tr
+              %td
+                = group.name
+              %td
+                - group.sources.each do |source|
+                  .d-flex
+                    %span.mr-1<
+                      = "-"
+                    %span<
+                      = "#{source.value} (#{source.key})"
+              %td
+                - if group.variables.any?
+                  %h6.font-weight-bold.mb-0
+                    = "Pending Variable Services"
+                  - group.variables.each do |variable|
+                    .d-flex
+                      %span.mr-1<
+                        = "-"
+                      %span<
+                        = "#{variable.name} - #{variable.service.name}"
+                - if group.services.any?
+                  %h6.font-weight-bold.mb-0
+                    = "In Process Additional Services"
+                  - group.services.each do |service|
+                    .d-flex
+                      %span.mr-1<
+                        = "-"
+                      %span<
+                        = "#{service.sparc_service.name}"
+              %td.col-1.text-center
+                = edit_group_button(group)
+        - else
+          %tr
+            %td{ colspan: 5 }
+              %p.text-center.mb-0
+                = t(:constants)[:no_records]
 
-= will_paginate groups, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
+  = will_paginate groups, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)

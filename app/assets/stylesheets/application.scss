@@ -11,6 +11,9 @@
  * It is generally better to create a new file per style scope.
  *
 */
+@import 'actiontext';
+@import 'trix/dist/trix';
+
 @import 'bootstrap-variables-custom';
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap4-toggle/css/bootstrap4-toggle.min';

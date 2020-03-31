@@ -1,2 +1,4 @@
+= render 'layouts/mailer/greeting' if @user
 = yield
 = render 'layouts/mailer/footer'
+= yield(:ps) if content_for(:ps)

@@ -54,6 +54,9 @@ en:
       user_delete: "cannot be removed as it would leave no users with admin privileges."
   activerecord:
     attributes:
+      group:
+        notify_when_all_specimens_released: "When to send the Specimen Release Email"
+        release_email: "Specimen Release Email"
       lab:
         accession_number: "Accession Number"
         id: "Specimen ID"
@@ -135,9 +138,7 @@ en:
     fields:
       id: "Job ID"
   control_panel:
-    flash_messages:
-      save_successful: "Permissions update successfully saved."
-    user_management:
+    users:
       link: "Manage Users"
       title: "Manage User Privileges"
       headers:
@@ -147,12 +148,6 @@ en:
         email: "Email"
         honest_broker: "Labs"
         manage: "Manage"
-      tooltips:
-        edit_user: "Edit User"
-        admin: "Admin"
-        lab_honest_broker: "Lab Honest Broker"
-        user: "General User"
-        data_honest_broker: "Data Honest Broker"
       form:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
@@ -161,15 +156,28 @@ en:
         no_group: "No Group Selected"
         enabled: "Enabled"
         disabled: "Disabled"
-    group_management:
+      tooltips:
+        edit_user: "Edit User"
+        admin: "Admin"
+        lab_honest_broker: "Lab Honest Broker"
+        user: "General User"
+        data_honest_broker: "Data Honest Broker"
+      flash:
+        saved: "Permissions updated successfully!"
+    groups:
       link: "Manage Labs"
       title: "Manage Lab Information"
       headers:
         name: "Name"
         sources: "Specimen Sources"
         manage: "Manage"
+      form:
+        header: "Manage %{name} Lab"
+        release_email_info: "Note: A greeting and signature will be added automatically."
       tooltips:
         edit_group: "Edit Lab"
+      flash:
+        saved: "Group updated successfully!"
 
   labs:
     header: "Lab Specimens"
@@ -388,10 +396,7 @@ en:
         text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
     specimen_mailer:
       release_email:
-        subject: "Specimen Pickup for You"
-        intro: "Dear Investigator, "
-        text:  "A specimen you requested for the %{type} <em>%{study}</em> is ready for pick-up.  Your sample will be available for pick up on the 7th floor of the Basic Science Building in the Hollings Cancer Center Biorepository between the hours of 9AM and 5PM.  Your sample will be discarded by noon the following day should you fail to retrieve it.  Please email Dr. Ivey directly at <a href='mailto:turnerbp@musc.edu'>turnerbp@musc.edu</a> if you have any questions. <p> Thank you, "
-        closing: "Brittany Ivey, Ph.D. <p> Operations Manager <br /> Biorepository & Tissue Analysis Shared Resource <br /> Medical University of South Carolina"
+        subject: "Specimen Pick-up Request"
     user_permissions_mailer:
       admin_granted: "You have been granted admin privileges"
       admin_removed: "Your admin privileges have been removed"

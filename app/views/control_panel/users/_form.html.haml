@@ -4,20 +4,20 @@
 
       .modal-header
         %h4.modal-title
-          = t('control_panel.user_management.form.title', user_name: user.full_name)
+          = t('control_panel.users.form.title', user_name: user.full_name)
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
         .form-group.row
-          = f.label :admin, t(:control_panel)[:user_management][:form][:admin], class: 'col-form-label col-6'
+          = f.label :admin, t(:control_panel)[:users][:form][:admin], class: 'col-form-label col-6'
           .col-6
-            = f.check_box :admin, data: { toggle: "toggle", on: t(:control_panel)[:user_management][:form][:enabled], off: t(:control_panel)[:user_management][:form][:disabled], style: 'btn-block' }
+            = f.check_box :admin, data: { toggle: "toggle", on: t(:control_panel)[:users][:form][:enabled], off: t(:control_panel)[:users][:form][:disabled], style: 'btn-block' }
         .form-group.row
-          = f.label :data_honest_broker, t(:control_panel)[:user_management][:form][:data_honest_broker], class: 'col-form-label col-6'
+          = f.label :data_honest_broker, t(:control_panel)[:users][:form][:data_honest_broker], class: 'col-form-label col-6'
           .col-6
-            = f.check_box :data_honest_broker, data: { toggle: "toggle", on: t(:control_panel)[:user_management][:form][:enabled], off: t(:control_panel)[:user_management][:form][:disabled], style: 'btn-block' }
+            = f.check_box :data_honest_broker, data: { toggle: "toggle", on: t(:control_panel)[:users][:form][:enabled], off: t(:control_panel)[:users][:form][:disabled], style: 'btn-block' }
         .form-group.row
-          = f.label :group_ids, t(:control_panel)[:user_management][:form][:lab_honest_broker], class: 'col-form-label col-6'
+          = f.label :group_ids, t(:control_panel)[:users][:form][:lab_honest_broker], class: 'col-form-label col-6'
           .col-6
             = f.select :group_ids, options_from_collection_for_select(Group.all, :id, :name, f.object.groups.ids), {}, class: 'form-control selectpicker', multiple: true
       .modal-footer

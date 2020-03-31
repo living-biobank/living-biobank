@@ -7,10 +7,9 @@
 %p
   = t('mailers.request_mailer.confirmation_email.text4')
 
-= render 'layouts/mailer/footer'
+- content_for :ps do
+  %h4
+    = t('mailers.request_mailer.confirmation_email.data_use_agreement')
 
-%h4
-  = t('mailers.request_mailer.confirmation_email.data_use_agreement')
-
-%blockquote{ style: "margin-left:0;padding-left:1rem;border-left:1px solid lightgray;"}
-  = t('requests.create_confirm.html').html_safe
+  %blockquote{ style: "margin-left:0;padding-left:1rem;border-left:1px solid lightgray;"}
+    = t('requests.create_confirm.html').html_safe
