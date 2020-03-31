@@ -105,6 +105,8 @@ en:
   control_panel:
     flash_messages:
       save_successful: "Permissions update successfully saved."
+      self_admin_removed: "Your admin privileges were successfully removed.  You have been redirected to the requests page."
+      access_denied: "ACCESS DENIED: Control Panel can only be accessed by users with admin privileges."
     user_management:
       title: "Manage User Privileges"
       headings:
@@ -123,6 +125,7 @@ en:
       change_permissions:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
+        admin_warning: "Changing this status will remove your admin privileges and access to the control panel."
         data_honest_broker: "Data Honest Broker Privileges"
         lab_honest_broker: "Lab Honest Broker Privileges"
         no_group: "No Group Selected"
