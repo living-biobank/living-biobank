@@ -1,6 +1,7 @@
 APP_VERSION=1.1.0
 ROOT_URL=http://localhost:3000
 SPARC_HOST=http://localhost:4000
+SPARC_MANAGERS=bah29@musc.edu,trf201@musc.edu
 REPLY_EMAIL=livingbiobank@musc.edu
 NO_REPLY_EMAIL=noreply@musc.edu
 ADMIN_EMAIL=glickk@musc.edu,catesa@musc.edu,kirchoff@musc.edu, iee@musc.edu

@@ -5,5 +5,7 @@
   %strong
     = t('mailers.footer.text2')
 
-= link_to ENV.fetch('REPLY_EMAIL'), "mailto:#{ENV.fetch('REPLY_EMAIL')}"
-= link_to ENV.fetch('ROOT_URL'), ENV.fetch('ROOT_URL')
+%p{ style: 'margin:0' }
+  = link_to ENV.fetch('REPLY_EMAIL'), "mailto:#{ENV.fetch('REPLY_EMAIL')}"
+%p{ style: 'margin:0' }
+  = link_to ENV.fetch('ROOT_URL'), ENV.fetch('ROOT_URL')
