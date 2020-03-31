@@ -362,8 +362,7 @@ en:
   mailers:
     greeting: "Dear %{name},"
     footer:
-      text1: "Sincerely,"
-      text2: "The Living Biobank Team"
+      text: "The Living Biobank Team"
     cloverleaf_mailer:
       job_error:
         subject: "Cloverleaf Message Job Error"
@@ -408,7 +407,5 @@ en:
       lab_honest_broker_removed: "Your honest broker privileges were removed for the following groups:"
       subject: "Biobank User Privileges Change"
       permissions_changed_email:
-        greeting: "Hello %{user_name}"
         text1: "You are receiving this email because the following changes have been made to your user privileges within Living Biobank: "
         text2: "If you have any questions, please contact one of the system administrators."
-        closing: "Thank you"

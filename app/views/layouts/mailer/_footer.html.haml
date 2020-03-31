@@ -1,9 +1,6 @@
-%p
-  = t('mailers.footer.text1')
-
 %p{ style: 'margin-bottom: 0' }
   %strong
-    = t('mailers.footer.text2')
+    = t('mailers.footer.text')
 
 %p{ style: 'margin:0' }
   = link_to ENV.fetch('REPLY_EMAIL'), "mailto:#{ENV.fetch('REPLY_EMAIL')}"

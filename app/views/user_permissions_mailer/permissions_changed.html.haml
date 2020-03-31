@@ -1,6 +1,4 @@
 %p
-  = t('mailers.user_permissions_mailer.permissions_changed_email.greeting', user_name: @user.full_name)
-%p
   = t(:mailers)[:user_permissions_mailer][:permissions_changed_email][:text1]
 %ul
   - unless @admin_change == nil
@@ -26,6 +24,3 @@
             = group
 %p
   = t(:mailers)[:user_permissions_mailer][:permissions_changed_email][:text2]
-%p
-  = t(:mailers)[:user_permissions_mailer][:permissions_changed_email][:closing]
-

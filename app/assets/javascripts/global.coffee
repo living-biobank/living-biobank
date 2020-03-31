@@ -128,7 +128,10 @@ $ ->
   $('[data-toggle=popover]').popover()
 
 (exports ? this).initializeToggles = () ->
-  $('[data-toggle=toggle]').bootstrapToggle()
+  $('input[data-toggle=toggle]').each ->
+    console.log $(this)
+    if !$(this).data('bs.toggle')
+      $(this).bootstrapToggle()
 
 (exports ? this).replaceUrl = (data) ->
   query_string = "?" + Object.keys(data).map((k) ->

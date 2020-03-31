@@ -76,7 +76,7 @@ class User < ApplicationRecord
 
   def send_permissions_email
     if self.saved_changes[:admin].present? || self.saved_changes[:data_honest_broker].present? || self.saved_changes[:group].present?
-      UserPermissionsMailer.permissions_changed(self, self.saved_changes).deliver_later
+      UserPermissionsMailer.permissions_changed(self, self.saved_changes).deliver_now
     end
   end
 end
