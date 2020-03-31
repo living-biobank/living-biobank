@@ -24,6 +24,10 @@ class ApplicationController < ActionController::Base
     redirect_to root_path unless current_user.admin? || current_user.lab_honest_broker?
   end
 
+  def verify_admin
+    redirect_to root_path unless current_user.admin?
+  end
+
   def sanitize_date(date)
     Date.strptime(date, "%m/%d/%Y") rescue date
   end

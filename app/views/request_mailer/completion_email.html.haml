@@ -1,11 +1,18 @@
+%p
+  = t('mailers.request_mailer.completion_email.completed_by', user: @completer.full_name, date: format_date(Date.today))
+
 %h3{ style: 'margin-bottom: 0;' }
   = @request.identifier
+
 %p{ style: 'margin-top: 0;' }
-  = raw t('mailers.request_mailer.primary_pi', pi_name: @request.primary_pi.display_name)
-%p
-  = t('mailers.request_mailer.completion_email.completed_by', user: @user.full_name, date: format_date(Date.today))
+  = t('mailers.request_mailer.primary_pi', pi_name: @request.primary_pi.display_name).html_safe
+
 %h3{ style: 'margin-bottom: 0;' }
   = t('requests.table.specimens.header')
+
 - @request.specimen_requests.each do |line_item|
   %p{ style: 'margin-top: 0;' }
-    = raw t('mailers.request_mailer.completion_email.specimen_request', source: line_item.source.value, requested: line_item.number_of_specimens_requested, received: line_item.progress, min_sample_size: line_item.minimum_sample_size)
+    - if line_item.group.process_sample_size?
+      = t('mailers.request_mailer.completion_email.specimen_request_with_sample_size', source: line_item.source.value, requested: line_item.number_of_specimens_requested, received: line_item.progress, min_sample_size: line_item.minimum_sample_size).html_safe
+    - else
+      = t('mailers.request_mailer.completion_email.specimen_request_no_sample_size', source: line_item.source.value, requested: line_item.number_of_specimens_requested, received: line_item.progress).html_safe

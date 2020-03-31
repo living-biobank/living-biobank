@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
   if Rails.env.development? || Rails.env.test?
     devise_for :users
   else
@@ -18,8 +20,13 @@ Rails.application.routes.draw do
 
   resources :protocols, only: [:index]
   resource :protocol, only: [:show]
-  resources :control_panel, only: [:index]
-  resources :permissions, only: [:edit, :update]
+
+  namespace :control_panel do
+    resources :users, only: [:index, :edit, :update]
+    resources :groups, only: [:index, :edit, :update]
+
+    root to: 'users#index'
+  end
 
   resources :query_names, only: [:index]
 

@@ -9,6 +9,7 @@ $ ->
   
 
   $(document).on 'ajaxComplete ajax:complete', ->
+    setRequiredFields()
     initializeSelectpickers()
     initializeTooltips()
     initializePopovers()

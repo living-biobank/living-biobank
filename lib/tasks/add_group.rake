@@ -32,6 +32,23 @@ namespace :data do
         end
       end
 
+      notify_when_all_specimens_released  = nil
+      notify_all_specimens_valid          = false
+      while !notify_all_specimens_valid
+        print "Should #{group_name} notify users when each individual sample is released? [y/n]: "
+        notify_when_all_specimens_released_input = STDIN.gets.chomp.downcase.strip
+
+        if ['y', 'yes'].include?(notify_when_all_specimens_released_input)
+          notify_all_specimens_valid = true
+          notify_when_all_specimens_released = false
+        elsif ['n', 'no'].include?(notify_when_all_specimens_released_input)
+          notify_all_specimens_valid = true
+          notify_when_all_specimens_released = true
+        else
+          puts "The value you entered was invalid. Accepted values are [y/n].\n\n"
+        end
+      end
+
       process_sample_size  = nil
       process_sample_valid = false
       while !process_sample_valid
@@ -66,7 +83,13 @@ namespace :data do
         end
       end
 
-      group = Group.create(name: group_name, process_specimen_retrieval: process_specimen_retrieval, process_sample_size: process_sample_size, display_patient_information: display_patient_information)
+      group = Group.create(
+        name: group_name,
+        process_specimen_retrieval:         process_specimen_retrieval,
+        notify_when_all_specimens_released: notify_when_all_specimens_released
+        process_sample_size:                process_sample_size,
+        display_patient_information:        display_patient_information
+      )
 
       puts "\nNow you will be asked to enter Specimen Sources that will be handled by #{group_name}."
       sources_done = false

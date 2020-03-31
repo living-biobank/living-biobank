@@ -32,7 +32,7 @@ class SparcRequestsController < ApplicationController
 
       if @sparc_request.save
         RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
-        RequestMailer.with(user: current_user, request: @sparc_request).submission_email.deliver_later
+        RequestMailer.with(requester: current_user, request: @sparc_request).submission_email.deliver_later
 
         flash.now[:success] = t(:requests)[:created]
       else
@@ -87,7 +87,7 @@ class SparcRequestsController < ApplicationController
 
   def update_status
     if @sparc_request.update_attribute(:status, sparc_request_params[:status])
-      RequestMailer.with(user: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
+      RequestMailer.with(completer: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
 
       flash.now[:success] = t(:requests)[:updated]
     else

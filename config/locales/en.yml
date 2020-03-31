@@ -1,9 +1,41 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
 en:
   actions:
     cancel: "Cancel"
     close: "Close"
     complete_request: "Complete Request"
     release: "Release"
+    save: "Save"
   errors:
     not_found:
       header: "Page not found"
@@ -22,6 +54,9 @@ en:
       user_delete: "cannot be removed as it would leave no users with admin privileges."
   activerecord:
     attributes:
+      group:
+        notify_when_all_specimens_released: "When to send the Specimen Release Email"
+        release_email: "Specimen Release Email"
       lab:
         accession_number: "Accession Number"
         id: "Specimen ID"
@@ -103,26 +138,17 @@ en:
     fields:
       id: "Job ID"
   control_panel:
-    flash_messages:
-      save_successful: "Permissions update successfully saved."
-      self_admin_removed: "Your admin privileges were successfully removed.  You have been redirected to the requests page."
-      access_denied: "ACCESS DENIED: Control Panel can only be accessed by users with admin privileges."
-    user_management:
+    users:
+      link: "Manage Users"
       title: "Manage User Privileges"
-      headings:
+      headers:
         privileges: "Privileges"
         user: "User"
         name: "Name"
         email: "Email"
         honest_broker: "Labs"
         manage: "Manage"
-      tooltips:
-        edit_user: "Edit User"
-        admin: "Admin"
-        lab_honest_broker: "Lab Honest Broker"
-        user: "User"
-        data_honest_broker: "Data Honest Broker"
-      change_permissions:
+      form:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
         admin_warning: "Changing this status will remove your admin privileges and access to the control panel."
@@ -131,8 +157,29 @@ en:
         no_group: "No Group Selected"
         enabled: "Enabled"
         disabled: "Disabled"
-        save: "Save Changes"
-        close: "Close"
+      tooltips:
+        edit_user: "Edit User"
+        admin: "Admin"
+        lab_honest_broker: "Lab Honest Broker"
+        user: "General User"
+        data_honest_broker: "Data Honest Broker"
+      flash:
+        saved: "Permissions updated successfully!"
+        admin_removed: "Your admin privileges were successfully removed. You have been redirected to the requests page."
+    groups:
+      link: "Manage Labs"
+      title: "Manage Lab Information"
+      headers:
+        name: "Name"
+        sources: "Specimen Sources"
+        manage: "Manage"
+      form:
+        header: "Manage %{name} Lab"
+        release_email_info: "Note: A greeting and signature will be added automatically."
+      tooltips:
+        edit_group: "Edit Lab"
+      flash:
+        saved: "Group updated successfully!"
 
   labs:
     header: "Lab Specimens"
@@ -313,6 +360,7 @@ en:
     form:
       header: "Specimen Release"
   mailers:
+    greeting: "Dear %{name},"
     footer:
       text1: "Sincerely,"
       text2: "The Living Biobank Team"
@@ -329,27 +377,28 @@ en:
       services_header: "Services Requested"
       confirmation_email:
         subject: "Living Biobank Request Confirmation"
-        text: "We have received your SPARC Living Biobank request. Your application will be processed within 3 business days. The initial fee for processing your request is <strong>$x</strong>. The average cost is <strong>$x</strong>. Your application will be reviewed and a cost estimate will be determined based on the work required to complete the process. You will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARC to arrange payment."
+        text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
+        text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
+        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
+        text4: "We look forward to working with you."
+        data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
       submission_email:
         subect: "Living Biobank Request Application"
         intro: "A new Living Biobank application was submitted by %{requester} on %{date}."
-        specimen_request: "<strong>%{source}</strong> - %{requested} samples &geq; %{min_sample_size}"
-        data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
+        specimen_request_with_sample_size: "<strong>%{source}</strong> - %{requested} samples &geq; %{min_sample_size}"
+        specimen_request_no_sample_size: "<strong>%{source}</strong> - %{requested} samples"
       completion_email:
         subject: "Living Biobank Request Completed"
         completed_by: "Completed by %{user} on %{date}"
-        specimen_request: "<strong>%{source}</strong> - %{received} / %{requested} samples &geq; %{min_sample_size}"
+        specimen_request_with_sample_size: "<strong>%{source}</strong> - %{received} / %{requested} samples &geq; %{min_sample_size}"
+        specimen_request_no_sample_size: "<strong>%{source}</strong> - %{received} / %{requested} samples"
     specimens_available_mailer:
       available_email: 
         subject: "%{group} Specimens Are Available"
-        intro:  "Dear %{name},"
         text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
     specimen_mailer:
       release_email:
-        subject: "Specimen Pickup for You"
-        intro: "Dear Investigator, "
-        text:  "A specimen you requested for the %{type} <em>%{study}</em> is ready for pick-up.  Your sample will be available for pick up on the 7th floor of the Basic Science Building in the Hollings Cancer Center Biorepository between the hours of 9AM and 5PM.  Your sample will be discarded by noon the following day should you fail to retrieve it.  Please email Dr. Ivey directly at <a href='mailto:turnerbp@musc.edu'>turnerbp@musc.edu</a> if you have any questions. <p> Thank you, "
-        closing: "Brittany Ivey, Ph.D. <p> Operations Manager <br /> Biorepository & Tissue Analysis Shared Resource <br /> Medical University of South Carolina"
+        subject: "Specimen Pick-up Request"
     user_permissions_mailer:
       admin_granted: "You have been granted admin privileges"
       admin_removed: "Your admin privileges have been removed"

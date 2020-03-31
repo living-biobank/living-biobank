@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   include DirtyAssociations
+
   has_and_belongs_to_many :groups, join_table: :lab_honest_brokers,
     after_add: :dirty_create,
     after_remove: :dirty_delete
@@ -75,7 +76,7 @@ class User < ApplicationRecord
 
   def send_permissions_email
     if self.saved_changes[:admin].present? || self.saved_changes[:data_honest_broker].present? || self.saved_changes[:group].present?
-      UserPermissionsMailer.permissions_changed(self, self.saved_changes).deliver_now
+      UserPermissionsMailer.permissions_changed(self, self.saved_changes).deliver_later
     end
   end
 end

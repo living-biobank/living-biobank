@@ -5,16 +5,18 @@
     %meta{ charset: 'utf8' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
     = stylesheet_link_tag 'application', media: 'all'
+    = javascript_pack_tag 'application'
     = javascript_include_tag 'application'
     %title
       = t('site_information.name')
   %body
     = render 'layouts/navigation'
     .d-flex.flex-column.flex-fill#contentContainer
-      = content_for(:header)
+      = yield(:header) if content_for(:header)
       %main.d-flex.flex-column#content
         = render 'layouts/environment'
         = render 'layouts/flash'
+        = yield(:content) if content_for(:content)
         = yield
         .flex-fill.d-flex.flex-column.justify-content-end
           %p.text-muted.text-center.mb-1.mt-3
