@@ -6,7 +6,7 @@ class SpecimenMailer < ApplicationMailer
   def release_email
     @group    = params[:group]
     @request  = params[:request]
-    @user     = @request.reqeuster
+    @user     = @request.requester
 
     mail(to: @user.email, subject: t(:mailers)[:specimen_mailer][:release_email][:subject])
   end
