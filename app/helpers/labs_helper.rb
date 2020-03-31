@@ -55,7 +55,7 @@ module LabsHelper
   def lab_sample_size_display(line_item)
     text = line_item.number_of_specimens_requested == 1 ? 'singular' : 'plural'
 
-    content_tag :p, class: 'mb-0 text-muted' do
+    content_tag :p, class: 'mb-0 text-muted d-inline-flex' do
       icon('fas', 'flask mr-2') + t("labs.table.requests.samples_needed.#{text}", requested_number: line_item.number_of_specimens_requested, requested_size: line_item.minimum_sample_size).html_safe
     end
   end
