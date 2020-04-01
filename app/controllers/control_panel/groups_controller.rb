@@ -28,7 +28,7 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   private
 
   def find_groups
-    @groups = current_user.groups.paginate(page: params[:page]).preload(:sources, services: :sparc_service, variables: :service)
+    @groups = Group.all.paginate(page: params[:page]).preload(:sources, services: :sparc_service, variables: :service)
   end
 
   def group_params
