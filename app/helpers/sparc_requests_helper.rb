@@ -40,8 +40,8 @@ module SparcRequestsHelper
 
   def requester_display(sr)
     name =
-      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block mx-1', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.user) }) +
-      link_to(sr.user.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none mx-1', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.user) })
+      link_to(sr.requester.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block mx-1', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.requester) }) +
+      link_to(sr.requester.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none mx-1', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.requester) })
 
     content_tag :span, class: 'd-inline-flex align-items-center' do
       icon('fas', 'user mr-1') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.submitted_at, DateTime.now.utc)).html_safe

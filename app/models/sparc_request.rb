@@ -1,5 +1,5 @@
 class SparcRequest < ApplicationRecord
-  belongs_to :user
+  belongs_to :requester, class_name: "User", foreign_key: :user_id
   belongs_to :protocol, class_name: "SPARC::Protocol"
 
   has_one :primary_pi, through: :protocol, class_name: "SPARC::Identity"
@@ -136,7 +136,7 @@ class SparcRequest < ApplicationRecord
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
     # Find or create an Identity for the requester
-    requester = SPARC::Directory.find_or_create(self.user.net_id)
+    requester = SPARC::Directory.find_or_create(self.requester.net_id)
 
     # Add additional services based on services the Variable requires
     self.variables.each do |variable|
@@ -169,7 +169,7 @@ class SparcRequest < ApplicationRecord
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
     # Find or create an Identity for the requester
-    requester = SPARC::Directory.find_or_create(self.user.net_id)
+    requester = SPARC::Directory.find_or_create(self.requester.net_id)
 
     # Add additional services based on services the Group provides
     self.services.each do |service|
