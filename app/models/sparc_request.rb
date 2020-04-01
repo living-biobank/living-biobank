@@ -53,19 +53,19 @@ class SparcRequest < ApplicationRecord
       SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
     ).ids
 
-    eager_load(:user, specimen_requests: :source).where(protocol_id: queried_protocol_ids).
+    eager_load(:requester, specimen_requests: :source).where(protocol_id: queried_protocol_ids).
     where(SparcRequest.arel_table[:status].matches("%#{term}%")
     ).or( # Search by Releaser First Name
-      eager_load(:user, specimen_requests: :source).where(User.arel_table[:first_name].matches("%#{term}%"))
+      eager_load(:requester, specimen_requests: :source).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or( # Search by Releaser Last Name
-      eager_load(:user, specimen_requests: :source).where(User.arel_table[:last_name].matches("%#{term}%"))
+      eager_load(:requester, specimen_requests: :source).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or( # Search by Releaser Full Name 
-      eager_load(:user, specimen_requests: :source).where(User.arel_full_name.matches("%#{term}%"))
+      eager_load(:requester, specimen_requests: :source).where(User.arel_full_name.matches("%#{term}%"))
     ).or(
-      eager_load(:user, specimen_requests: :source).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
+      eager_load(:requester, specimen_requests: :source).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
     )
     .or(
-      eager_load(:user, specimen_requests: :source).where(Source.arel_table[:value].matches("%#{term}%"))
+      eager_load(:requester, specimen_requests: :source).where(Source.arel_table[:value].matches("%#{term}%"))
     )
   }
 
@@ -95,7 +95,7 @@ class SparcRequest < ApplicationRecord
       protocol_ids = SPARC::Protocol.joins(:primary_pi).where(id: pluck(:protocol_id)).order(SPARC::Identity.arel_table[:last_name].send(sort_order), created_at: :desc).ids
       order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
     when 'requester'
-      joins(:user).order(User.arel_table[:last_name].send(sort_order), created_at: :desc)
+      joins(:requester).order(User.arel_table[:last_name].send(sort_order), created_at: :desc)
     else # Includes status
       order(status: sort_order, created_at: :desc)
     end

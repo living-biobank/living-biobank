@@ -43,13 +43,13 @@ class Lab < ApplicationRecord
     ).ids
 
     # Because we have to join on sparc_request: :protocol, these are released labs
-    queried_released_labs = joins(:releaser, sparc_request: :user).where(SparcRequest.arel_table[:protocol_id].in(queried_protocol_ids)
+    queried_released_labs = joins(:releaser, sparc_request: :requester).where(SparcRequest.arel_table[:protocol_id].in(queried_protocol_ids)
     ).or(
-      joins(:releaser, sparc_request: :user).where(User.arel_table[:first_name].matches("%#{term}%"))
+      joins(:releaser, sparc_request: :requester).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or(
-      joins(:releaser, sparc_request: :user).where(User.arel_table[:last_name].matches("%#{term}%"))
+      joins(:releaser, sparc_request: :requester).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or(
-      joins(:releaser, sparc_request: :user).where(User.arel_full_name.matches("%#{term}%"))
+      joins(:releaser, sparc_request: :requester).where(User.arel_full_name.matches("%#{term}%"))
     )
 
     # Now try to brute force find available labs matching the query by loading associations and using Ruby code
@@ -76,13 +76,13 @@ class Lab < ApplicationRecord
       SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
     ).ids
 
-    queried_eligible_request_ids = eligible_requests.joins(:user).where(SparcRequest.arel_table[:protocol_id].in(queried_eligible_protocol_ids)
+    queried_eligible_request_ids = eligible_requests.joins(:requester).where(SparcRequest.arel_table[:protocol_id].in(queried_eligible_protocol_ids)
     ).or(
-      joins(:user).where(User.arel_table[:first_name].matches("%#{term}%"))
+      joins(:requester).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or(
-      joins(:user).where(User.arel_table[:last_name].matches("%#{term}%"))
+      joins(:requester).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or(
-      joins(:user).where(User.arel_full_name.matches("%#{term}%"))
+      joins(:requester).where(User.arel_full_name.matches("%#{term}%"))
     ).ids
 
     queried_available_labs = where(
