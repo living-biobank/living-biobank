@@ -12,6 +12,8 @@ class Lab < ApplicationRecord
   has_one :group, through: :source
   has_one :sparc_request, through: :line_item
 
+  after_update :send_emails
+
   delegate :identifier, to: :patient
   delegate :mrn, to: :patient
   delegate :dob, to: :patient
@@ -187,5 +189,19 @@ class Lab < ApplicationRecord
 
   def discarded?
     self.status == I18n.t(:labs)[:statuses][:discarded]
+  end
+
+  def retrieval_failed?
+    self.saved_changes[:status] == [I18n.t(:labs)[:statuses][:released], I18n.t(:labs)[:statuses][:discarded]]
+  end
+
+  def send_emails
+    if self.released? && (!self.group.notify_when_all_specimens_released? || self.line_item.complete?)
+      SpecimenMailer.with(group: self.group, request: self.sparc_request).release_email.deliver_later
+    end
+
+    if self.retrieval_failed? && self.group.process_specimen_retrieval
+      SpecimenMailer.with(group: self.group, request: self.sparc_request).discard_email.deliver_later
+    end
   end
 end

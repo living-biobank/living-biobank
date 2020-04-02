@@ -57,6 +57,7 @@ en:
       group:
         notify_when_all_specimens_released: "When to send the Specimen Release Email"
         release_email: "Specimen Release Email"
+        discard_email: "Specimen Discard Email"
       lab:
         accession_number: "Accession Number"
         id: "Specimen ID"
@@ -174,10 +175,12 @@ en:
         sources: "Specimen Sources"
         manage: "Manage"
       form:
-        header: "Manage %{name} Lab"
+        release_header: "Edit Release Email for %{name} Lab"
+        discard_header: "Edit Discard Email for %{name} Lab"
         release_email_info: "Note: A greeting and signature will be added automatically."
       tooltips:
-        edit_group: "Edit Lab"
+        edit_release_email: "Edit Release Email"
+        edit_discard_email: "Edit Discard Email"
       flash:
         saved: "Group updated successfully!"
 
@@ -398,6 +401,8 @@ en:
     specimen_mailer:
       release_email:
         subject: "Specimen Pick-up Request"
+      discard_email:
+        subject: "Specimen Discard Notification"
     user_permissions_mailer:
       admin_granted: "You have been granted admin privileges"
       admin_removed: "Your admin privileges have been removed"

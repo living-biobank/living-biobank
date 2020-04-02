@@ -5,10 +5,16 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
     find_groups
   end
 
-  def edit
+  def edit_release_email
     respond_to :js
 
-    @group = Group.find(params[:id])
+    find_group
+  end
+
+  def edit_discard_email
+    respond_to :js
+
+    find_group
   end
 
   def update
@@ -26,6 +32,9 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   end
 
   private
+  def find_group
+    @group = Group.find(params[:id])
+  end
 
   def find_groups
     @groups = Group.all.paginate(page: params[:page]).preload(:sources, services: :sparc_service, variables: :service)
@@ -35,7 +44,8 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
     params.require(:group).permit(
       :name,
       :notify_when_all_specimens_released,
-      :release_email
+      :release_email,
+      :discard_email
     )
   end
 end

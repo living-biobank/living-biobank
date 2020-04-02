@@ -10,11 +10,13 @@ class Group < ApplicationRecord
   has_many :sparc_requests, through: :line_items
 
   has_rich_text :release_email
+  has_rich_text :discard_email
 
   validates_presence_of :name
   validates_uniqueness_of :name
 
   validates_presence_of :release_email
+  validates_presence_of :discard_email
 
   validates_inclusion_of :process_specimen_retrieval,         in: [true, false]
   validates_inclusion_of :notify_when_all_specimens_released, in: [true, false]

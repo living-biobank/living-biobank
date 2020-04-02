@@ -1,0 +1,22 @@
+.modal-dialog.modal-lg{ role: 'document' }
+  .modal-content
+    = form_for [:control_panel, group], remote: true do |f|
+
+      .modal-header
+        %h4.modal-title
+          = t('control_panel.groups.form.discard_header', name: group.name)
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        .form-group
+          = f.label :name, class: 'required'
+          = f.text_field :name, class: 'form-control'
+        .form-group
+          = f.label :discard_email, class: 'required'
+          = f.rich_text_area :discard_email, class: 'form-control'
+          %small.form-text.text-muted
+            = t('control_panel.groups.form.release_email_info')
+      .modal-footer
+        = f.submit t('actions.save'), class: 'btn btn-primary'
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t('actions.close')

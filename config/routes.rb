@@ -23,7 +23,12 @@ Rails.application.routes.draw do
 
   namespace :control_panel do
     resources :users, only: [:index, :edit, :update]
-    resources :groups, only: [:index, :edit, :update]
+    resources :groups, only: [:index, :edit, :update] do
+      member do
+        get :edit_release_email
+        get :edit_discard_email
+      end
+    end
 
     root to: 'users#index'
   end
