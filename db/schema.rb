@@ -66,8 +66,6 @@ ActiveRecord::Schema.define(version: 2020_04_02_131725) do
     t.boolean "display_patient_information"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "release_email"
-    t.text "discard_email"
     t.index ["name"], name: "index_groups_on_name", unique: true
   end
 

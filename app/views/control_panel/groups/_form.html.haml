@@ -8,17 +8,17 @@
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
+        .form-group
+          = f.label :name, class: 'required'
+          = f.text_field :name, class: 'form-control'
         .accordion#edit_specimen_accordion
           .card.border-bottom
             .card-header#edit_release_email
-              %button.btn.btn-link{"data-toggle" => "collapse", "data-target" => "#release_email_section", "aria-expanded" => "true", "aria-controls" => "release_email_section", type: "button"}
+              %button.btn.btn-link.stretched-link{"data-toggle" => "collapse", "data-target" => "#release_email_section", "aria-expanded" => "true", "aria-controls" => "release_email_section", type: "button"}
                 .h5.mb-0
-                  = "Edit Release Email"
+                  = t(:control_panel)[:groups][:headers][:edit_release_email]
             .collapse#release_email_section{"aria-labelledby" => "edit_release_email", "data-parent" => "#edit_specimen_accordion"}
               .card-body.mb-0
-                .form-group
-                  = f.label :name, class: 'required'
-                  = f.text_field :name, class: 'form-control'
                 .form-group
                   = f.label :release_email, class: 'required'
                   = f.rich_text_area :release_email, class: 'form-control'
@@ -31,14 +31,11 @@
           - if group.process_specimen_retrieval
             .card
               .card-header#edit_discard_email
-                %button.btn.btn-link{"data-toggle" => "collapse", "data-target" => "#discard_email_section", "aria-expanded" => "false", "aria-controls" => "discard_email_section", type: "button"}
+                %button.btn.btn-link.stretched-link{"data-toggle" => "collapse", "data-target" => "#discard_email_section", "aria-expanded" => "false", "aria-controls" => "discard_email_section", type: "button"}
                   .h5.mb-0
-                    = "Edit Discard Email"
+                    = t(:control_panel)[:groups][:headers][:edit_discard_email]
               .collapse#discard_email_section{"aria-labelledby" => "edit_discard_email", "data-parent" => "#edit_specimen_accordion"}
                 .card-body
-                  .form-group
-                    = f.label :name, class: 'required'
-                    = f.text_field :name, class: 'form-control'
                   .form-group
                     = f.label :discard_email, class: 'required'
                     = f.rich_text_area :discard_email, class: 'form-control'
