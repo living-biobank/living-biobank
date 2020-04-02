@@ -47,9 +47,7 @@
                       %span<
                         = "#{service.sparc_service.name}"
               %td.col-1.text-center
-                = edit_release_email_button(group)
-                - if group.process_specimen_retrieval
-                  = edit_discard_email_button(group)
+                = edit_button(group)
         - else
           %tr
             %td{ colspan: 5 }

@@ -175,12 +175,10 @@ en:
         sources: "Specimen Sources"
         manage: "Manage"
       form:
-        release_header: "Edit Release Email for %{name} Lab"
-        discard_header: "Edit Discard Email for %{name} Lab"
+        header: "Manage %{name} Lab"
         release_email_info: "Note: A greeting and signature will be added automatically."
       tooltips:
-        edit_release_email: "Edit Release Email"
-        edit_discard_email: "Edit Discard Email"
+        edit: "Edit Lab"
       flash:
         saved: "Group updated successfully!"
 

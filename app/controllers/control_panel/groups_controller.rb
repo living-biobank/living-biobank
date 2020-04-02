@@ -5,13 +5,7 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
     find_groups
   end
 
-  def edit_release_email
-    respond_to :js
-
-    find_group
-  end
-
-  def edit_discard_email
+  def edit
     respond_to :js
 
     find_group
