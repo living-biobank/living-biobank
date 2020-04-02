@@ -11,15 +11,34 @@
         .form-group
           = f.label :name, class: 'required'
           = f.text_field :name, class: 'form-control'
-        .form-group
-          = f.label :release_email, class: 'required'
-          = f.rich_text_area :release_email, class: 'form-control'
-          %small.form-text.text-muted
-            = t('control_panel.groups.form.release_email_info')
-        .form-group.row
-          = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
-          .col-4.offset-2
-            = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: 'After All Samples Released', off: 'After Each Sample Released', style: 'btn-block' }
+        .accordion#edit_specimen_accordion
+          .card.border-bottom
+            .card-header#edit_release_email{"data-toggle" => "collapse", "data-target" => "#release_email_section", "aria-expanded" => "true", "aria-controls" => "release_email_section", type: "button"}
+              .h5.mb-0
+                = t(:control_panel)[:groups][:headers][:edit_release_email]
+            .collapse#release_email_section{"aria-labelledby" => "edit_release_email", "data-parent" => "#edit_specimen_accordion"}
+              .card-body.mb-0
+                .form-group
+                  = f.label :release_email, class: 'required'
+                  = f.rich_text_area :release_email, class: 'form-control'
+                  %small.form-text.text-muted
+                    = t('control_panel.groups.form.release_email_info')
+                .form-group.row
+                  = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
+                  .col-4.offset-2
+                    = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: 'After All Samples Released', off: 'After Each Sample Released', style: 'btn-block' }
+          - if group.process_specimen_retrieval
+            .card
+              .card-header#edit_discard_email{"data-toggle" => "collapse", "data-target" => "#discard_email_section", "aria-expanded" => "false", "aria-controls" => "discard_email_section", type: "button"}
+                .h5.mb-0
+                  = t(:control_panel)[:groups][:headers][:edit_discard_email]
+              .collapse#discard_email_section{"aria-labelledby" => "edit_discard_email", "data-parent" => "#edit_specimen_accordion"}
+                .card-body
+                  .form-group
+                    = f.label :discard_email, class: 'required'
+                    = f.rich_text_area :discard_email, class: 'form-control'
+                    %small.form-text.text-muted
+                      = t('control_panel.groups.form.release_email_info')
       .modal-footer
         = f.submit t('actions.save'), class: 'btn btn-primary'
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
