@@ -41,7 +41,7 @@
           .card-body.border-top
             %h4.card-title.font-weight-bold<
               = t('requests.table.additional_services.header')
-            - request.additional_services.sort_by{ |as| as.service.name }.each do |li|
+            - request.additional_services.each do |li|
               .row.line-item
                 .col-sm-4.col-12
                   %h5.d-flex.mb-0<

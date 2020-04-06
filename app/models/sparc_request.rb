@@ -159,7 +159,7 @@ class SparcRequest < ApplicationRecord
           identity: identity,
           project_rights: 'approve',
           role:           'other',
-          role_other:     'LBB Data Honest Broker'
+          role_other:     'Living Biobank Manager'
         )
       end
     end
