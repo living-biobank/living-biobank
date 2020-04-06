@@ -191,16 +191,12 @@ class Lab < ApplicationRecord
     self.status == I18n.t(:labs)[:statuses][:discarded]
   end
 
-  def retrieval_failed?
-    self.saved_changes[:status] == [I18n.t(:labs)[:statuses][:released], I18n.t(:labs)[:statuses][:discarded]]
-  end
-
   def send_emails
     if self.released? && (!self.group.notify_when_all_specimens_released? || self.line_item.complete?)
       SpecimenMailer.with(group: self.group, request: self.sparc_request).release_email.deliver_later
     end
 
-    if self.retrieval_failed? && self.group.process_specimen_retrieval
+    if self.discarded?
       SpecimenMailer.with(group: self.group, request: self.sparc_request).discard_email.deliver_later
     end
   end

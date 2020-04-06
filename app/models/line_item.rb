@@ -20,6 +20,11 @@ class LineItem < ApplicationRecord
   scope :specimen_reqeuests, -> () {
     where.not(source_id: nil)
   }
+
+  scope :additional_services, -> () {
+    where(source_id: nil)
+  }
+
   def specimen_request?
     self.source_id.present?
   end
