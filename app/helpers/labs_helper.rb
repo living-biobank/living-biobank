@@ -10,17 +10,19 @@ module LabsHelper
 
   def lab_status_filter_options(status)
     if current_user.admin? || current_user.groups.any?(&:process_specimen_retrieval?)
+      status ||= 'active'
       options_for_select([
         [t('labs.filters.all_status'), 'any'],
-        [t('labs.filters.active_status'), '', selected: true],
+        [t('labs.filters.active_status'), 'active'],
         [t('labs.statuses.retrieved'), class: 'text-success'],
         [t('labs.statuses.released'), class: 'text-primary'],
         [t('labs.statuses.available'), class: 'text-warning'],
         [t('labs.statuses.discarded'), class: 'text-secondary']
       ], status)
     else
+      status ||= 'any'
       options_for_select([
-        [t('labs.filters.all_status'), '', selected: true],
+        [t('labs.filters.all_status'), 'any'],
         [t('labs.statuses.available'), class: 'text-warning'],
         [t('labs.statuses.released'), class: 'text-primary'],
         [t('labs.statuses.discarded'), class: 'text-secondary']
@@ -29,9 +31,10 @@ module LabsHelper
   end
 
   def lab_source_filter_options(source)
+    source ||= 'any'
     options_for_select(
-      ([[t('labs.filters.any_source'), '', selected: true]] +
-      (current_user.admin? ? Source.all : current_user.sources).map{ |source| [source.value, source.id] }), source)
+      [[t('labs.filters.any_source'), 'any']] + (current_user.admin? ? Source.all : current_user.sources).map{ |source| [source.value, source.id] },
+      source)
   end
 
   def lab_patient_information(lab)
@@ -89,27 +92,42 @@ module LabsHelper
 
   def release_lab_button(lab, line_item)
     content_tag :div, class: 'tooltip-wrapper', title: t(:labs)[:actions][:release_specimen], data: { toggle: 'tooltip' } do
-      link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:released], line_item_id: line_item.id, released_by: current_user.id }), remote: true, method: :patch, class: "btn btn-primary", data: { confirm_swal: 'true', title: t('labs.release_confirm.title', request: line_item.sparc_request.identifier), html: ' ' } do
+      link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:released], line_item_id: line_item.id, released_by: current_user.id })), remote: true, method: :patch, class: "btn btn-primary", data: { confirm_swal: 'true', title: t('labs.release_confirm.title', request: line_item.sparc_request.identifier), html: ' ' } do
         icon('fas', 'dolly')
       end
     end
   end
 
   def retrieve_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:retrieved] }), remote: true, method: :patch, class: "btn btn-success ml-1", title: t(:labs)[:actions][:retrieve_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.retrieve_confirm.title') } do
+    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:retrieved] })), remote: true, method: :patch, class: "btn btn-success ml-1", title: t(:labs)[:actions][:retrieve_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.retrieve_confirm.title') } do
       icon('fas', 'check-circle')
     end
   end
 
   def cancel_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil }), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
+    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil })), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
       icon('fas', 'redo')
     end
   end
 
   def discard_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:discarded] }), remote: true, method: :patch, class: "btn btn-danger ml-1", title: t(:labs)[:actions][:discard_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.discard_confirm.title') } do
+    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:discarded] })), remote: true, method: :patch, class: "btn btn-danger ml-1", title: t(:labs)[:actions][:discard_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.discard_confirm.title') } do
       icon('fas', 'trash-alt')
     end
+  end
+
+  private
+
+  def lab_filter_params
+    {
+      term: params[:term],
+      released_at_start: params[:released_at_start],
+      released_at_end: params[:released_at_end],
+      status: params[:status],
+      source: params[:source],
+      sort_by: params[:sort_by],
+      sort_order: params[:sort_order],
+      page: params[:page]
+    }
   end
 end

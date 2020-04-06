@@ -73,7 +73,7 @@
                           %p.mb-0
                             = request_duration_display(lab.sparc_request)
                       = render 'line_items/progress_bar', li: lab.line_item
-    = will_paginate labs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
+    = will_paginate labs, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0), params: lab_filter_params.merge({ controller: 'labs', action: 'index' })
   - else
     .card
       .card-body

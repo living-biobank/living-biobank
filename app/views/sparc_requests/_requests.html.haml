@@ -50,7 +50,7 @@
                     = li.service.name
                 .col-sm-8.col-12
                   = render 'line_items/progress_bar', li: li
-    = will_paginate requests, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0)
+    = will_paginate requests, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0), params: request_filter_params.merge({ controller: 'sparc_requests', action: 'index' })
   - else
     .card
       .card-body
