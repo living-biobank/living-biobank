@@ -5,8 +5,15 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'actiontext', github: 'kobaltz/actiontext', branch: 'archive', require: 'action_text'
 gem 'babel-transpiler'
 gem 'bootsnap'
+gem 'capistrano', '~> 3.12'
+gem 'capistrano-bundler', require: false
+gem 'capistrano-rvm', require: false
+gem 'capistrano-rails', require: false
+gem 'capistrano-passenger', require: false
+gem 'capistrano3-delayed-job', '~> 1.7'
 gem 'coffee-rails', '~> 4.2'
 gem 'delayed_job_active_record'
+gem 'delayed_job'
 gem 'devise'
 gem 'dotenv-rails'
 gem 'exception_notification'
@@ -48,10 +55,6 @@ group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'capistrano', '=3.11.0'
-  gem 'capistrano-rvm'
-  gem 'capistrano-rails'
-  gem 'capistrano-passenger'
 end
 
 group :development, :test do
