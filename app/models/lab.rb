@@ -196,7 +196,7 @@ class Lab < ApplicationRecord
       SpecimenMailer.with(group: self.group, request: self.sparc_request).release_email.deliver_later
     end
 
-    if self.discarded?
+    if self.discarded? && self.sparc_request
       SpecimenMailer.with(group: self.group, request: self.sparc_request).discard_email.deliver_later
     end
   end

@@ -96,19 +96,19 @@ module LabsHelper
   end
 
   def retrieve_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:retrieved] }), remote: true, method: :patch, class: "btn btn-success mr-1", title: t(:labs)[:actions][:retrieve_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.retrieve_confirm.title') } do
+    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:retrieved] }), remote: true, method: :patch, class: "btn btn-success ml-1", title: t(:labs)[:actions][:retrieve_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.retrieve_confirm.title') } do
       icon('fas', 'check-circle')
     end
   end
 
   def cancel_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil }), remote: true, method: :patch, class: "btn btn-warning mr-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
+    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil }), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
       icon('fas', 'redo')
     end
   end
 
   def discard_lab_button(lab)
-    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:discarded] }), remote: true, method: :patch, class: "btn btn-danger", title: t(:labs)[:actions][:discard_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.discard_confirm.title') } do
+    link_to lab_path(lab, status: params[:status], source: params[:source], sort_by: params[:sort_by], sort_order: params[:sort_order], lab: { status: I18n.t(:labs)[:statuses][:discarded] }), remote: true, method: :patch, class: "btn btn-danger ml-1", title: t(:labs)[:actions][:discard_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.discard_confirm.title') } do
       icon('fas', 'trash-alt')
     end
   end

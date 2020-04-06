@@ -16,7 +16,7 @@ class Group < ApplicationRecord
   validates_uniqueness_of :name
 
   validates_presence_of :release_email
-  validates_presence_of :discard_email
+  validates_presence_of :discard_email, if: :process_specimen_retrieval?
 
   validates_inclusion_of :process_specimen_retrieval,         in: [true, false]
   validates_inclusion_of :notify_when_all_specimens_released, in: [true, false]
