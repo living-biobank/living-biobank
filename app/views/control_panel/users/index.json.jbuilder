@@ -1,4 +1,3 @@
-# json.total @protocol_count
 json.rows (@users) do |user|
   json.user         mobile_user_display(user)
   json.name         user.full_name

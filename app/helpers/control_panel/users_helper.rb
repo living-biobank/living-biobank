@@ -40,13 +40,9 @@ module ControlPanel::UsersHelper
   end
 
   def user_groups_display(user)
-    if user.lab_honest_broker?
-      user.groups.map do |group|
-        content_tag(:div, class: 'd-flex') do
-          content_tag(:span, "- #{group.name}")
-        end
-      end.join('')
-    end
+    user.groups.map do |group|
+      content_tag(:span, "- #{group.name}", class: 'd-flex')
+    end.join('')
   end
 
   def edit_user_button(user)

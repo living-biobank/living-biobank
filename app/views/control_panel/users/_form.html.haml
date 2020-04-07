@@ -17,7 +17,9 @@
         .form-group.row
           = f.label :admin, t(:control_panel)[:users][:form][:admin], class: 'col-form-label col-6'
           .col-6
-            = f.check_box :admin, data: { toggle: "toggle", on: t(:control_panel)[:users][:form][:enabled], off: t(:control_panel)[:users][:form][:disabled], style: 'btn-block' }
+            - last_admin = user.admin? && User.admins.length == 1
+            .tooltip-wrapper{ title: last_admin ? t('control_panel.users.form.last_admin') : "", data: { toggle: 'tooltip' } }
+              = f.check_box :admin, disabled: last_admin, data: { toggle: "toggle", on: t(:control_panel)[:users][:form][:enabled], off: t(:control_panel)[:users][:form][:disabled], style: 'btn-block' }
         .form-group.row
           = f.label :data_honest_broker, t(:control_panel)[:users][:form][:data_honest_broker], class: 'col-form-label col-6'
           .col-6

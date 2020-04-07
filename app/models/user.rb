@@ -16,7 +16,6 @@ class User < ApplicationRecord
   has_many :labs
 
   before_destroy :check_for_admin
-  validate :admin_presence, on: [:update]
   after_update :send_permissions_email
 
   # Include default devise modules. Others available are:
@@ -120,13 +119,6 @@ class User < ApplicationRecord
     unless User.where(admin: true).count > 1
       errors.add(:user, I18n.t(:errors)[:user][:user_delete])
       throw(:abort)
-    end
-  end
-
-  def admin_presence
-    if admin_changed?(from: true, to: false) && User.where(admin: true).count < 2
-      self.clear_changes_information
-      errors.add(:admin, I18n.t(:errors)[:user][:admin_change])
     end
   end
 

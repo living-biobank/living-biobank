@@ -453,6 +453,13 @@ form, .form {
     justify-content: center;
     color: unset !important;
   }
+
+  &.disabled {
+    .toggle-on, .toggle-off {
+      @extend .disabled;
+      pointer-events: 'none';
+    }
+  }
 }
 
 /////////////////
