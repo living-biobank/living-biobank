@@ -142,12 +142,18 @@ en:
     users:
       link: "Manage Users"
       title: "Manage User Privileges"
+      filters:
+        search: "Search"
+        privileges: "Fiilter by Privileges"
+        any_privileges: "Any Privileges"
+        groups: "Filter by Group"
+        any_group: "Any Group"
       headers:
         privileges: "Privileges"
         user: "User"
         name: "Name"
         email: "Email"
-        honest_broker: "Labs"
+        groups: "Groups"
         manage: "Manage"
       form:
         title: "Update Permissions for %{user_name}"

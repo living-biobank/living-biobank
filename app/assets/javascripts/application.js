@@ -20,6 +20,7 @@
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min
 //= require bootstrap4-toggle/js/bootstrap4-toggle.min
 //= require bootstrap-select/dist/js/bootstrap-select.min
+//= require bootstrap-table/dist/bootstrap-table.min
 //= require corejs-typeahead/dist/typeahead.bundle.min
 //= require chartkick/dist/chartkick.min
 //= require chart.js/dist/Chart.min

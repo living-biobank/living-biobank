@@ -22,4 +22,19 @@ class Group < ApplicationRecord
   validates_inclusion_of :notify_when_all_specimens_released, in: [true, false]
   validates_inclusion_of :process_sample_size,                in: [true, false]
   validates_inclusion_of :display_patient_information,        in: [true, false]
+
+  scope :filtered_for_index, -> (term, sort_by, sort_order) {
+    search(term).
+    ordered_by(sort_by, sort_order).
+    distinct
+  }
+
+  scope :search, -> (term) {
+    return if term.blank?
+  }
+
+  scope :ordered_by, -> (sort_by, sort_order) {
+    sort_order = sort_order.present? ? sort_order : 'desc'
+    return
+  }
 end

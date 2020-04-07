@@ -120,14 +120,14 @@ module LabsHelper
 
   def lab_filter_params
     {
-      term: params[:term],
-      released_at_start: params[:released_at_start],
-      released_at_end: params[:released_at_end],
-      status: params[:status],
-      source: params[:source],
-      sort_by: params[:sort_by],
-      sort_order: params[:sort_order],
-      page: params[:page]
+      term:               params[:term],
+      released_at_start:  params[:released_at_start],
+      released_at_end:    params[:released_at_end],
+      status:             params[:status],
+      source:             params[:source],
+      sort_by:            params[:sort_by],
+      sort_order:         params[:sort_order],
+      page:               params[:page]
     }
   end
 end

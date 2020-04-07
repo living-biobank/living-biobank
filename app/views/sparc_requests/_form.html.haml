@@ -1,6 +1,11 @@
 .modal-dialog.modal-xl#requestFormModal{ role: 'document' }
   .modal-content
     = form_for sparc_request, remote: true, method: sparc_request.persisted? ? :put : :post, html: { id: 'sparcRequestForm', autocomplete: 'off' } do |f|
+      = hidden_field_tag :term,       params[:term]
+      = hidden_field_tag :status,     params[:status]
+      = hidden_field_tag :sort_by,    params[:sort_by]
+      = hidden_field_tag :sort_order, params[:sort_order]
+      = hidden_field_tag :page,       params[:page]
       = f.hidden_field :id
       = f.hidden_field :protocol_id
       = f.hidden_field :status

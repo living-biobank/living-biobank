@@ -23,7 +23,63 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable
   devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, authentication_keys: [:net_id]
 
+  scope :admins, -> { where(admin: true) }
   scope :data_honest_brokers, -> { where(data_honest_broker: true) }
+
+  scope :filtered_for_index, -> (term, privileges, groups, sort_by, sort_order) {
+    search(term).
+    with_privileges(privileges).
+    with_groups(groups).
+    ordered_by(sort_by, sort_order).
+    distinct
+  }
+
+  scope :search, -> (term) {
+    return if term.blank?
+
+    where(User.arel_table[:first_name].matches("%#{term}%")
+    ).or(
+      where(User.arel_table[:last_name].matches("%#{term}%"))
+    ).or(
+      where(User.arel_full_name.matches("%#{term}%"))
+    ).or(
+      where(User.arel_full_name.matches("%#{term}%"))
+    )
+  }
+
+  scope :with_privileges, -> (privileges) {
+    privileges ||= 'any'
+    return if privileges == 'any'
+
+    case privileges
+    when 'user'
+      left_outer_joins(:groups).where(groups: { id: nil }).where.not(admin: true, data_honest_broker: true)
+    when 'admin'
+      admins
+    when 'lhb'
+      joins(:groups)
+    when 'dhb'
+      data_honest_brokers
+    end
+  }
+
+  scope :with_groups, -> (groups) {
+    groups ||= 'any'
+    return if groups == 'any'
+
+    joins(:groups).where(Group.arel_table[:name].eq(groups))
+  }
+
+  scope :ordered_by, -> (sort_by, sort_order) {
+    sort_order = sort_order.present? ? sort_order : 'desc'
+
+    case sort_by
+    when 'user'
+      order(arel_full_name => sort_order, 'email' => sort_order)
+    when 'name', 'email'
+      order(sort_by, sort_order)
+    end
+  }
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
