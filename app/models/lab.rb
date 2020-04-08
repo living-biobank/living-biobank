@@ -157,13 +157,16 @@ class Lab < ApplicationRecord
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
-    sort_order = sort_order.present? ? sort_order : 'desc'
+    sort_by     ||= 'id'
+    sort_order  ||= 'desc'
 
     case sort_by
     when 'specimen_source'
       joins(:source).order(Source.arel_table[:value].send(sort_order), id: :desc)
-    else # Includes status
+    when 'status' # Includes status
       order(status: sort_order, id: :desc)
+    else
+      order(sort_by => sort_order)
     end
   }
 

@@ -70,13 +70,14 @@ class User < ApplicationRecord
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
-    sort_order = sort_order.present? ? sort_order : 'desc'
+    sort_by     ||= 'name'
+    sort_order  ||= 'desc'
 
     case sort_by
-    when 'user'
-      order(arel_full_name => sort_order, 'email' => sort_order)
-    when 'name', 'email'
-      order(sort_by, sort_order)
+    when 'user', 'name'
+      order('first_name' => sort_order, 'last_name' => sort_order, 'email' => sort_order)
+    else
+      order(sort_by => sort_order)
     end
   }
 

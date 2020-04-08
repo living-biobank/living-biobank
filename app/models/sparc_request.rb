@@ -82,7 +82,8 @@ class SparcRequest < ApplicationRecord
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
-    sort_order = sort_order.present? ? sort_order : 'desc'
+    sort_by     ||= 'created_at'
+    sort_order  ||=  'desc'
 
     case sort_by
     when 'title', 'short_title'
@@ -93,13 +94,12 @@ class SparcRequest < ApplicationRecord
     when 'time_remaining'
       protocol_ids = SPARC::Protocol.where(id: pluck(:protocol_id)).order(SPARC::Protocol.arel_table[:end_date].send(sort_order), created_at: :desc).ids
       order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
-    when 'primary_pi'
-      protocol_ids = SPARC::Protocol.joins(:primary_pi).where(id: pluck(:protocol_id)).order(SPARC::Identity.arel_table[:last_name].send(sort_order), created_at: :desc).ids
-      order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
     when 'requester'
       joins(:requester).order(User.arel_table[:last_name].send(sort_order), created_at: :desc)
-    else # Includes status
+    when 'status'
       order(status: sort_order, created_at: :desc)
+    else
+      order(sort_by => sort_order)
     end
   }
 
