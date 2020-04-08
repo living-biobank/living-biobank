@@ -2,7 +2,7 @@ module SparcRequestsHelper
   def request_sort_filter_options(sort_by)
     sort_by ||= 'created_at'
     options_for_select(
-      [:protocol_id, :title, :short_title, :time_remaining, :primary_pi, :requester, :status, :created_at].map do |k|
+      [:protocol_id, :title, :short_title, :time_remaining, :requester, :status, :created_at].map do |k|
         [SparcRequest.human_attribute_name(k), k]
       end.sort, sort_by
     )

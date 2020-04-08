@@ -182,6 +182,9 @@ en:
         manage: "Manage"
         edit_release_email: "Edit Release Email"
         edit_discard_email: "Edit Discard Email"
+      table:
+        variables: "Pending Variable Services"
+        services: "In Process Additional Services"
       form:
         header: "Manage %{name} Lab"
         release_email_info: "Note: A greeting and signature will be added automatically."

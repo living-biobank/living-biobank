@@ -2,7 +2,7 @@ module LabsHelper
   def lab_sort_filter_options(sort_by)
     sort_by ||= 'id'
     options_for_select(
-      [:id, :specimen_source, :released_at, :accession_number].map do |k|
+      [:id, :specimen_source, :released_at, :accession_number, :status].map do |k|
         [Lab.human_attribute_name(k), k]
       end.sort, sort_by
     )

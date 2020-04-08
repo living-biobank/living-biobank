@@ -73,10 +73,11 @@ $ ->
   # Update records when using search
   searchTimer = null
   $(document).on('keyup', '.table-search', ->
+    $this = $(this)
     term = $(this).val()
     clearTimeout(searchTimer)
     searchTimer = setTimeout( (->
-      $container  = $(this).parents('.table-filters')
+      $container  = $this.parents('.table-filters')
       data        = { term: term }
 
       $container.find('select.filter-select').each (index, element) ->

@@ -8,7 +8,7 @@ $("#group_<%= attr.to_s %>").parents('.form-group').removeClass('is-valid').addC
 <% end %>
 <% end %>
 <% else %>
-$('#groupManagement').replaceWith("<%= j render 'control_panel/groups/groups_panel', groups: @groups %>")
+$('#groupsTable').bootstrapTable('refresh')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 $('#modalContainer').modal('hide')
 <% end %>
