@@ -4,19 +4,5 @@
       %h4.card-title.text-center.mb-0
         = t('control_panel.users.title')
     = render 'control_panel/users/filters'
-    %table.table.table-bordered.table-hover.mb-0.border-0{ data: { toggle: 'table', url: control_panel_users_path(user_filter_params), side_pagination: 'server' } }
-      %thead
-        %tr
-          %th.col-3.d-table-cell.d-md-none{ data: { field: 'user', sortable: 'true' } }
-            = t('control_panel.users.headers.user')
-          %th.col-3.d-none.d-md-table-cell.border-left-0{ data: { field: 'name', sortable: 'true' } }
-            = t('control_panel.users.headers.name')
-          %th.col-3.d-none.d-md-table-cell{ data: { field: 'email', sortable: 'true' } }
-            = t('control_panel.users.headers.email')
-          %th.col-3{ data: { field: 'privileges' } }
-            = t('control_panel.users.headers.privileges')
-          %th.col-2{ data: { field: 'groups' } }
-            = t('control_panel.users.headers.groups')
-          %th.text-center.col-1{ data: { field: 'actions' } }
-            = t('control_panel.users.headers.manage')
-  = will_paginate users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0), params: user_filter_params.merge({ controller: 'users', action: 'index' })
+    = render 'control_panel/users/table'
+  = render 'control_panel/users/pagination', users: @users

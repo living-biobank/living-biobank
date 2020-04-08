@@ -31,10 +31,27 @@ class Group < ApplicationRecord
 
   scope :search, -> (term) {
     return if term.blank?
+
+    queried_service_ids = SPARC::Service.where(SPARC::Service.arel_table[:name].matches("%#{term}%")).ids
+
+    joins(:sources, :variables, :services).where(Group.arel_table[:name].matches("%#{term}%")
+    ).or(
+      joins(:sources, :variables, :services).where(Source.arel_table[:key].matches("%#{term}%"))
+    ).or(
+      joins(:sources, :variables, :services).where(Source.arel_table[:value].matches("%#{term}%"))
+    ).or(
+      joins(:sources, :variables, :services).where(Variable.arel_table[:service_id].in(queried_service_ids))
+    ).or(
+      joins(:sources, :variables, :services).where(Service.arel_table[:sparc_id].in(queried_service_ids))
+    )
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
     sort_order = sort_order.present? ? sort_order : 'desc'
-    return
+    
+    case sort_by
+    when 'name'
+      order(sort_by => sort_order)
+    end
   }
 end

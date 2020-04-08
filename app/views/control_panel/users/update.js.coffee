@@ -1,3 +1,3 @@
-$('#userManagement').replaceWith("<%= j render 'control_panel/users/users_panel', users: @users %>")
+$('#usersTable').bootstrapTable('refresh')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 $('#modalContainer').modal('hide')
