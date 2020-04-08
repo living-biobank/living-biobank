@@ -1,6 +1,12 @@
 .modal-dialog{ role: 'document' }
   .modal-content
     = form_for user, url: control_panel_user_path(user), remote: true do |f|
+      = hidden_field_tag :term,       params[:term]
+      = hidden_field_tag :privileges, params[:privileges]
+      = hidden_field_tag :labs,       params[:labs]
+      = hidden_field_tag :sort_by,    params[:sort_by]
+      = hidden_field_tag :sort_order, params[:sort_order]
+      = hidden_field_tag :page,       params[:page]
 
       .modal-header
         %h4.modal-title
@@ -11,7 +17,9 @@
         .form-group.row
           = f.label :admin, t(:control_panel)[:users][:form][:admin], class: 'col-form-label col-6'
           .col-6
-            = f.check_box :admin, data: { toggle: "toggle", on: t(:control_panel)[:users][:form][:enabled], off: t(:control_panel)[:users][:form][:disabled], style: 'btn-block' }
+            - last_admin = user.admin? && User.admins.length == 1
+            .tooltip-wrapper{ title: last_admin ? t('control_panel.users.form.last_admin') : "", data: { toggle: 'tooltip' } }
+              = f.check_box :admin, disabled: last_admin, data: { toggle: "toggle", on: t(:control_panel)[:users][:form][:enabled], off: t(:control_panel)[:users][:form][:disabled], style: 'btn-block' }
         .form-group.row
           = f.label :data_honest_broker, t(:control_panel)[:users][:form][:data_honest_broker], class: 'col-form-label col-6'
           .col-6

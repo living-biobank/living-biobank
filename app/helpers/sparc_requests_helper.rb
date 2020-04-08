@@ -144,11 +144,11 @@ module SparcRequestsHelper
 
   def request_filter_params
     {
-      term: params[:term],
-      status: params[:status],
-      sort_by: params[:sort_by],
+      term:       params[:term],
+      status:     params[:status],
+      sort_by:    params[:sort_by],
       sort_order: params[:sort_order],
-      page: params[:page]
+      page:       params[:page]
     }
   end
 end

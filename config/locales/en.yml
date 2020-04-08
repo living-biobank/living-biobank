@@ -50,7 +50,6 @@ en:
       text1: "Looks like something went wrong!"
       text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
     user:
-      admin_change: "cannot be removed as it would leave no users with admin privileges."
       user_delete: "cannot be removed as it would leave no users with admin privileges."
   activerecord:
     attributes:
@@ -142,17 +141,24 @@ en:
     users:
       link: "Manage Users"
       title: "Manage User Privileges"
+      filters:
+        search: "Search"
+        privileges: "Fiilter by Privileges"
+        any_privileges: "Any Privileges"
+        groups: "Filter by Group"
+        any_group: "Any Group"
       headers:
         privileges: "Privileges"
         user: "User"
         name: "Name"
         email: "Email"
-        honest_broker: "Labs"
+        groups: "Groups"
         manage: "Manage"
       form:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
         admin_warning: "Changing this status will remove your admin privileges and access to the control panel."
+        last_admin: "You must assign another admin before removing your admin privileges"
         data_honest_broker: "Data Honest Broker Privileges"
         lab_honest_broker: "Lab Honest Broker Privileges"
         no_group: "No Group Selected"

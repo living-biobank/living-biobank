@@ -2,6 +2,7 @@ $.fn.datepicker.defaults.clearBtn = true
 
 $ ->
   initializeSelectpickers()
+  initializeTables()
   initializeTooltips()
   initializePopovers()
   initializeToggles()
@@ -11,6 +12,7 @@ $ ->
   $(document).on 'ajaxComplete ajax:complete', ->
     setRequiredFields()
     initializeSelectpickers()
+    initializeTables()
     initializeTooltips()
     initializePopovers()
     initializeToggles()
@@ -120,6 +122,9 @@ $ ->
 (exports ? this).initializeSelectpickers = () ->
   $('.selectpicker').selectpicker()
 
+(exports ? this).initializeTables = () ->
+  $('[data-toggle=table]').bootstrapTable()
+
 (exports ? this).initializeTooltips = () ->
   $('.tooltip').tooltip('hide')
   $('[data-toggle=tooltip]').tooltip()
@@ -129,7 +134,6 @@ $ ->
 
 (exports ? this).initializeToggles = () ->
   $('input[data-toggle=toggle]').each ->
-    console.log $(this)
     if !$(this).data('bs.toggle')
       $(this).bootstrapToggle()
 

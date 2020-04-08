@@ -1,6 +1,6 @@
 class ControlPanel::GroupsController < ControlPanel::BaseController
   def index
-    respond_to :html, :js
+    respond_to :html, :js, :json
 
     find_groups
   end
@@ -26,12 +26,13 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   end
 
   private
+
   def find_group
     @group = Group.find(params[:id])
   end
 
   def find_groups
-    @groups = Group.all.paginate(page: params[:page]).preload(:sources, services: :sparc_service, variables: :service)
+    @groups = Group.all.filtered_for_index(params[:term], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).preload(:sources, services: :sparc_service, variables: :service)
   end
 
   def group_params

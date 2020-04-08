@@ -227,6 +227,14 @@ form, .form {
         margin-left: 1rem;
       }
     }
+
+    .selected.active {
+      @each $color, $theme in $theme-colors {
+        .text-#{$color} {
+          color: white !important;
+        }
+      }
+    }
   }
 }
 
@@ -444,6 +452,13 @@ form, .form {
     align-items: center;
     justify-content: center;
     color: unset !important;
+  }
+
+  &.disabled {
+    .toggle-on, .toggle-off {
+      @extend .disabled;
+      pointer-events: 'none';
+    }
   }
 }
 
