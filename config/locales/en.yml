@@ -224,7 +224,7 @@ en:
       sort_by: "Sort By"
       sort_order: "Order"
     table:
-      header: "Specimen %{id} - %{source} (%{accession_number})"
+      header: "Specimen %{id}"
       patient_info:
         with_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
         without_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>DOB</strong> %{dob}"

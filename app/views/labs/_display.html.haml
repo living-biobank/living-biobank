@@ -9,7 +9,7 @@
                 %span
                   = icon('fas', 'caret-down mr-2 mt-0 mt-sm-1')
                 %span.mt-0.mt-sm-1
-                  = t('labs.table.header', id: lab.identifier, source: lab.source.value, accession_number: lab.accession_number)
+                  = lab_header_display(lab)
                 .d-none.d-sm-inline-block
                   = lab_status_context(lab)
             .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end

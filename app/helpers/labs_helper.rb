@@ -45,6 +45,11 @@ module LabsHelper
       source)
   end
 
+  def lab_header_display(lab)
+    content_tag(:span, t('labs.table.header', id: lab.identifier), class: 'mt-0 mt-sm-1 mr-2') +
+    content_tag(:small, "#{lab.source.value} (#{lab.accession_number})", class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1')
+  end
+
   def lab_patient_information(lab)
     if lab.group.display_patient_information?
       t('labs.table.patient_info.with_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
@@ -100,7 +105,7 @@ module LabsHelper
 
   def release_lab_button(lab, line_item)
     content_tag :div, class: 'tooltip-wrapper', title: t(:labs)[:actions][:release_specimen], data: { toggle: 'tooltip' } do
-      link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:released], line_item_id: line_item.id, released_by: current_user.id })), remote: true, method: :patch, class: "btn btn-primary", data: { confirm_swal: 'true', title: t('labs.release_confirm.title', request: line_item.sparc_request.identifier), html: ' ' } do
+      link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:released], line_item_id: line_item.id, released_by: current_user.id })), remote: true, method: :patch, class: "btn btn-primary", data: { confirm_swal: 'true', title: t('labs.release_confirm.title', request: t('requests.table.header', id: line_item.sparc_request.identifier)), html: ' ' } do
         icon('fas', 'dolly')
       end
     end
