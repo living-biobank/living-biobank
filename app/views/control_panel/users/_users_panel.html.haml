@@ -5,4 +5,4 @@
         = t('control_panel.users.title')
     = render 'control_panel/users/filters'
     = render 'control_panel/users/table'
-  = render 'control_panel/users/pagination', users: @users
+  = render 'layouts/pagination', records: users, filter_params: user_filter_params.merge({ controller: 'users', action: 'index' })

@@ -519,3 +519,16 @@ form, .form {
     }
   }
 }
+
+/////////////////////
+/// Will Paginate ///
+/////////////////////
+
+div.pagination {
+  justify-content: space-between;
+  margin-top: 0.5rem;
+
+  ul.pagination {
+    margin: 0;
+  }
+}

@@ -1,6 +1,6 @@
 if $('#userManagement').length # Filtering
   $('#usersTable').replaceWith("<%= j render 'control_panel/users/table' %>")
-  $('.pagination').replaceWith("<%= j render 'control_panel/users/pagination', users: @users %>")
+  $('.pagination').replaceWith("<%= j render 'layouts/pagination', records: @users, filter_params: user_filter_params.merge({ controller: 'users', action: 'index' }) %>")
 else # Changing tab
   $('.control-panel-nav').replaceWith("<%= j render 'control_panel/nav_links' %>")
   $('.control-panel-container').replaceWith("<%= j render 'control_panel/users/users_panel', users: @users %>")

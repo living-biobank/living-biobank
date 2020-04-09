@@ -1,0 +1,4 @@
+.pagination
+  %span
+    = page_entries_info records
+  = will_paginate records, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, params: filter_params

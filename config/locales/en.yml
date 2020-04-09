@@ -97,6 +97,27 @@ en:
       specimen_record:
         release_date: "Release Date"
         release_to: "Release To"
+    models:
+      group:
+        zero: "Groups"
+        one: "Group"
+        few: "Groups"
+        other: "Groups"
+      lab:
+        zero: "Specimens"
+        one: "Specimen"
+        few: "Specimens"
+        other: "Specimens"
+      sparc_request:
+        zero: "Requests"
+        one: "Request"
+        few: "Requests"
+        other: "Requests"
+      user:
+        zero: "Users"
+        one: "User"
+        few: "Users"
+        other: "Users"
     errors:
       models:
         line_item:

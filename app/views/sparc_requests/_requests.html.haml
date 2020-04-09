@@ -2,7 +2,7 @@
   - if requests.any?
     - requests.each do |request|
       = render 'sparc_requests/request', request: request
-    = will_paginate requests, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-end mb-0), params: request_filter_params.merge({ controller: 'sparc_requests', action: 'index' })
+    = render 'layouts/pagination', records: requests, filter_params: request_filter_params.merge({ controller: 'sparc_requests', action: 'index' })
   - else
     .card
       .card-body
