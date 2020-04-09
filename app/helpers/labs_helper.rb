@@ -51,15 +51,15 @@ module LabsHelper
       link_to(lab.releaser.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.releaser) })
 
     content_tag :span do
-      icon('fas', 'user mr-2') + t('labs.table.released.releaser', name: name, date: format_date(lab.released_at)).html_safe
+      icon('fas', 'user mr-1') + t('labs.table.released.releaser', name: name, date: format_date(lab.released_at)).html_safe
     end
   end
 
   def lab_sample_size_display(line_item)
     text = line_item.number_of_specimens_requested == 1 ? 'singular' : 'plural'
 
-    content_tag :p, class: 'mb-0 text-muted d-inline-flex' do
-      icon('fas', 'flask mr-1') + t("labs.table.requests.samples_needed.#{text}", requested_number: line_item.number_of_specimens_requested, requested_size: line_item.minimum_sample_size).html_safe
+    content_tag :p, class: 'mb-0 text-muted d-inline-flex align-items-center' do
+      icon('fas', 'flask mr-1') + t("labs.table.requests.samples_needed.#{text}", requested_number: line_item.number_of_specimens_requested, requested_size: line_item.group.process_sample_size ? " &geq; #{line_item.minimum_sample_size}" : "").html_safe
     end
   end
 

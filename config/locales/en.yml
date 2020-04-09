@@ -229,8 +229,8 @@ en:
       requests:
         header: "Requests Matching this Specimen"
         samples_needed:
-          singular: "%{requested_number} Sample &geq; %{requested_size}"
-          plural: "%{requested_number} Samples &geq; %{requested_size}"
+          singular: "%{requested_number} Sample %{requested_size}"
+          plural: "%{requested_number} Samples %{requested_size}"
       released:
         header: "Specimen Released To"
         releaser: "Released by %{name} on %{date}"

@@ -45,8 +45,7 @@
                       .d-flex.flex-column.flex-fill
                         .d-flex.justify-content-between.order-last.order-sm-first
                           .w-50
-                            - if lab.group.process_sample_size?
-                              = lab_sample_size_display(line_item)
+                            = lab_sample_size_display(line_item)
                           .w-50.d-flex.justify-content-end
                             %p.mb-0
                               = request_duration_display(line_item.sparc_request)
