@@ -70,7 +70,7 @@ class SparcRequest < ApplicationRecord
   }
 
   scope :with_status, -> (status) {
-    status ||= 'any'
+    status = status.blank? ? 'active' : status
 
     if status == 'any'
       where.not(status: I18n.t(:requests)[:statuses][:draft])
@@ -121,6 +121,10 @@ class SparcRequest < ApplicationRecord
 
   def cancelled?
     self.status == I18n.t(:requests)[:statuses][:cancelled]
+  end
+
+  def identifier
+    self.id ? "%04d" % self.id : ""
   end
 
   # Friendly named for Variables

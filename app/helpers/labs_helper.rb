@@ -1,6 +1,6 @@
 module LabsHelper
   def lab_sort_filter_options(sort_by)
-    sort_by ||= 'id'
+    sort_by = sort_by.blank? ? 'id' : sort_by
     options_for_select(
       [:id, :specimen_source, :released_at, :accession_number, :status].map do |k|
         [Lab.human_attribute_name(k), k]
@@ -8,9 +8,17 @@ module LabsHelper
     )
   end
 
+  def lab_sort_order_options(sort_order)
+    sort_order = sort_order.blank? ? 'desc' : params[:sort_order]
+    options_for_select(
+      t(:constants)[:order].invert,
+      sort_order
+    )
+  end
+
   def lab_status_filter_options(status)
     if current_user.admin? || current_user.groups.any?(&:process_specimen_retrieval?)
-      status ||= 'active'
+      status = status.blank? ? 'active' : status
       options_for_select([
         [t('labs.filters.all_status'), 'any'],
         [t('labs.filters.active_status'), 'active'],
@@ -20,7 +28,7 @@ module LabsHelper
         [t('labs.statuses.discarded'), class: 'text-secondary']
       ], status)
     else
-      status ||= 'any'
+      status = status.blank? ? 'any' : status
       options_for_select([
         [t('labs.filters.all_status'), 'any'],
         [t('labs.statuses.available'), class: 'text-warning'],
@@ -31,7 +39,7 @@ module LabsHelper
   end
 
   def lab_source_filter_options(source)
-    source ||= 'any'
+    source = source.blank? ? 'any' : source
     options_for_select(
       [[t('labs.filters.any_source'), 'any']] + (current_user.admin? ? Source.all : current_user.sources).map{ |source| [source.value, source.id] },
       source)

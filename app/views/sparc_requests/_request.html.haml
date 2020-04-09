@@ -5,7 +5,7 @@
         %h4.d-flex.w-100.font-weight-bold.mb-2.mb-sm-0
           %span
             = icon('fas', 'caret-down mr-2 mt-0 mt-sm-1')
-          = request_title_display(request)
+          = request_title_display(request, popover: true)
           .d-none.d-sm-inline-block
             = request_status_context(request)
       .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end

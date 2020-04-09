@@ -47,7 +47,7 @@ class User < ApplicationRecord
   }
 
   scope :with_privileges, -> (privileges) {
-    privileges ||= 'any'
+    privileges = privileges.blank? ? 'any' : privileges
     return if privileges == 'any'
 
     case privileges
@@ -63,7 +63,7 @@ class User < ApplicationRecord
   }
 
   scope :with_groups, -> (groups) {
-    groups ||= 'any'
+    groups = groups.blank? ? 'any' : groups
     return if groups == 'any'
 
     joins(:groups).where(Group.arel_table[:name].eq(groups))

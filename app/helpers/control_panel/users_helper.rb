@@ -1,6 +1,6 @@
 module ControlPanel::UsersHelper
   def user_privileges_filter_options(privileges)
-    privileges ||= 'any'
+    privileges = privileges.blank? ? 'any' : privileges
     options_for_select([
       [t('control_panel.users.filters.any_privileges'),       'any',    data: { content: content_tag(:span, icon('fas', 'user mr-1 invisible') + t('control_panel.users.filters.any_privileges')) }],
       [t('control_panel.users.tooltips.user'),                'user',   data: { content: content_tag(:span, icon('fas', 'user mr-1') + t('control_panel.users.tooltips.user')) }],
@@ -11,7 +11,7 @@ module ControlPanel::UsersHelper
   end
 
   def user_groups_filter_options(groups)
-    groups ||= 'any'
+    groups = groups.blank? ? 'any' : groups
     options_for_select([[t('control_panel.users.filters.any_group'), 'any']], groups) +
     options_from_collection_for_select(Group.all, :name, :name, groups)
   end

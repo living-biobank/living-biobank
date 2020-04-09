@@ -352,7 +352,6 @@ form, .form {
       align-items: center;
       color: black;
       outline: none !important;
-      width: 125px;
 
       .filter-option {
         position: initial;
@@ -424,6 +423,12 @@ form, .form {
 
 @media (max-width: 1679.98px) {
   .table-filters {
+    .dropdown.filter-select {
+      .filter {
+        width: 125px;
+      }
+    }
+
     .date input[type=text] {
       width: 100px;
     }
@@ -432,6 +437,12 @@ form, .form {
 
 @media (min-width: 1680px) {
   .table-filters {
+    .dropdown.filter-select {
+      .filter {
+        width: 150px;
+      }
+    }
+
     .date input[type=text] {
       width: 130px;
     }

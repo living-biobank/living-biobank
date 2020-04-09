@@ -131,7 +131,7 @@ class Lab < ApplicationRecord
   }
 
   scope :with_status, -> (status) {
-    status ||= 'active'
+    status = status.blank? ? 'active' : status
     return if status == 'any'
 
     if status == 'active'
@@ -150,7 +150,7 @@ class Lab < ApplicationRecord
   }
 
   scope :with_source, -> (source) {
-    source ||= 'any'
+    source = source.blank? ? 'any' : source
     return if source == 'any'
 
     where(source_id: source)

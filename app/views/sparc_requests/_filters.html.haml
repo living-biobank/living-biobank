@@ -6,5 +6,5 @@
     .tooltip-wrapper.d-flex.order-3.order-sm-2{ title: t(:requests)[:filters][:sort_by], data: { toggle: 'tooltip' } }
       = select_tag 'sort_by', request_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select form-control', title: t(:requests)[:filters][:sort_by], data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:requests)[:filters][:sort_by] }
     .tooltip-wrapper.d-flex.order-4.order-sm-3{ title: t(:requests)[:filters][:sort_order], data: { toggle: 'tooltip' } }
-      = select_tag 'sort_order', options_for_select(t(:constants)[:order].invert, params[:sort_order] || :desc), class: 'selectpicker filter-select form-control', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:requests)[:filters][:sort_order] }
+      = select_tag 'sort_order', request_sort_order_options(params[:sort_order]), class: 'selectpicker filter-select form-control', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:requests)[:filters][:sort_order] }
     .placeholder.invisible.order-2.order-sm-4

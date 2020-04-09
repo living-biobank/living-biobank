@@ -1,5 +1,6 @@
-%h5.font-weight-bold
-  = request.identifier
+%h5.d-flex.align-items-center.font-weight-bold
+  = request_title_display(request)
+%hr.mt-0.mb-2
 .mb-3
   .d-flex.w-100
     = primary_pi_display(request)

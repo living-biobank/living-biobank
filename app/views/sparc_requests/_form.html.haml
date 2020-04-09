@@ -12,7 +12,7 @@
 
       .modal-header
         %h4.modal-title
-          = t(:requests)[:form][sparc_request.persisted? ? :edit_title : :new_title]
+          = t("requests.form.#{sparc_request.persisted? ? 'edit_title' : 'new_title'}", id: sparc_request.identifier)
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body

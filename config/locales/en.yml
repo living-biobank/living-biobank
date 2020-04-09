@@ -1,4 +1,5 @@
 # Files in the config/locales directory are used for internationalization
+
 # and are automatically loaded by Rails. If you want to use locales other
 # than English, add the necessary files in this directory.
 #
@@ -71,10 +72,11 @@ en:
         six_month_accrual: "Past 6 Months"
         one_year_accrual: "Past Year"
       sparc_request:
+        id: "Request ID"
         created_at: "Date Requested"
         end_date: "End Date"
         primary_pi: "Primary PI"
-        protocol_id: "SRID"
+        protocol_id: "SPARC Study ID"
         requester: "Requester"
         short_title: "Short Title"
         start_date: "Start Date"
@@ -309,7 +311,7 @@ en:
       cancel: "Cancel Request"
     form:
       new_title: "New Specimen Request"
-      edit_title: "Edit Specimen Request"
+      edit_title: "Edit Specimen Request %{id}"
       date_separator: "to"
       headers:
         protocol_information: "Protocol Information"
@@ -335,6 +337,7 @@ en:
       submit: "Submit for Inquiry"
       save_as_draft: "Save as Draft"
     table:
+      header: "Request %{id}"
       sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
       requester: "Requested by %{name} %{time_elapsed} ago"
@@ -375,6 +378,7 @@ en:
   mailers:
     greeting: "Dear %{name},"
     request_link: "<a href='%{direct_link}' target='_blank'>View Request</a>"
+    specimens_link: "<a href='%{specimens_link'} target='_blank'>View Specimens</a>"
     footer:
       text: "The Living Biobank Team"
     cloverleaf_mailer:

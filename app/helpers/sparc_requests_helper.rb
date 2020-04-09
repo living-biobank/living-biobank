@@ -1,15 +1,23 @@
 module SparcRequestsHelper
   def request_sort_filter_options(sort_by)
-    sort_by ||= 'created_at'
+    sort_by = sort_by.blank? ? 'created_at' : sort_by
     options_for_select(
-      [:protocol_id, :title, :short_title, :time_remaining, :requester, :status, :created_at].map do |k|
+      [:id, :protocol_id, :title, :short_title, :time_remaining, :requester, :status, :created_at].map do |k|
         [SparcRequest.human_attribute_name(k), k]
       end.sort, sort_by
     )
   end
 
+  def request_sort_order_options(sort_order)
+    sort_order = sort_order.blank? ? 'desc' : params[:sort_order]
+    options_for_select(
+      t(:constants)[:order].invert,
+      sort_order
+    )
+  end
+
   def request_status_filter_options(status)
-    status ||= 'active'
+    status = status.blank? ? 'active' : status
     options_for_select([
       [t('requests.filters.all_status'), 'any'],
       [t('requests.filters.active_status'), 'active'],
@@ -20,15 +28,20 @@ module SparcRequestsHelper
     ], status)
   end
 
-  def request_title_display(sr)
+  def request_title_display(sr, opts={})
     # Bootstrap 4 Popover's fallbackPlacement attribute is broken
     # so we need to use a second element to change the positioning
     # of popovers on XS screens
     raw(
-      content_tag(:span, sr.identifier.truncate(60), class: 'mt-0 mt-sm-1') +
-      content_tag(:span, class: 'mt-0 mt-sm-1') do
-        link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
-        link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-inline-block d-xl-none ml-2', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('sparc_requests/details_popover', request: sr) })
+      content_tag(:span, t('requests.table.header', id: sr.identifier), class: 'mt-0 mt-sm-1 mr-2') +
+      content_tag(:small, sr.protocol.identifier.truncate(60), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
+      if opts[:popover]
+        content_tag(:span, class: 'mt-0 mt-sm-1') do
+          link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
+          link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-inline-block d-xl-none ml-2', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('sparc_requests/details_popover', request: sr) })
+        end
+      else
+        ""
       end
     )
   end

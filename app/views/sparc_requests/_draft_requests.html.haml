@@ -7,6 +7,6 @@
       %h4.alert.alert-warning.draft-request{ role: 'alert' }
         = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:edit], class: 'edit-draft-request', data: { url: edit_sparc_request_path(dr), toggle: 'tooltip' } do
           = icon('fas', 'edit')
-          = dr.identifier.truncate(60)
+          = request_title_display(dr)
         = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:cancel], class: 'text-danger cancel-draft-request', data: { confirm_swal: true, url: sparc_request_path(dr), method: :delete, toggle: 'tooltip' } do
           = icon('fas', 'trash')
