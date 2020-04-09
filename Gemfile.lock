@@ -54,6 +54,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts_as_list (1.0.1)
+      activerecord (>= 4.2)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
     airbrussh (1.4.0)
@@ -353,6 +355,7 @@ PLATFORMS
 DEPENDENCIES
   actiontext!
   activerecord-oracle_enhanced-adapter (~> 5.2.0)
+  acts_as_list
   babel-transpiler
   bcrypt_pbkdf (>= 1.0, < 2.0)
   bootsnap
