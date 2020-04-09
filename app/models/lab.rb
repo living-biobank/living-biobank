@@ -157,8 +157,8 @@ class Lab < ApplicationRecord
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
-    sort_by     ||= 'id'
-    sort_order  ||= 'desc'
+    sort_by     = sort_by.blank? ? 'id' : sort_by
+    sort_order  = sort_order.blank? ? 'desc' : sort_order
 
     case sort_by
     when 'specimen_source'

@@ -47,8 +47,8 @@ class Group < ApplicationRecord
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
-    sort_by     ||= 'name'
-    sort_order  ||= 'asc'
+    sort_by     = sort_by.blank? ? 'name' : sort_by
+    sort_order  = sort_order.blank? ? 'desc' : sort_order
     
     order(sort_by => sort_order)
   }
