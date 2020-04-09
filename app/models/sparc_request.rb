@@ -157,7 +157,7 @@ class SparcRequest < ApplicationRecord
 
   def add_authorized_users
     # Add Data Honest Brokers
-    ENV.fetch('SPARC_MANAGERS').split(',').each do |net_id|
+    email = ENV.fetch('SPARC_MANAGERS').split(',').map do |net_id|
       identity = SPARC::Directory.find_or_create(net_id)
 
       unless self.protocol.project_roles.exists?(identity: identity)
@@ -168,7 +168,11 @@ class SparcRequest < ApplicationRecord
           role_other:     'Living Biobank Manager'
         )
       end
-    end
+
+      identity
+    end.map(&:email).join(',')
+
+    RequestMailer.with(request: self, email: email).manager_email.deliver_later
   end
 
   def add_additional_services

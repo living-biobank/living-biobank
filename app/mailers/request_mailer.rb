@@ -17,6 +17,12 @@ class RequestMailer < ApplicationMailer
     mail(to: ENV.fetch('ADMIN_EMAIL'), from: ENV.fetch('REPLY_EMAIL'), subject: t(:mailers)[:request_mailer][:submission_email][:subject])
   end
 
+  def manager_email
+    @request = params[:request]
+
+    mail(to: params[:email], subject: t(:mailers)[:request_mailer][:manager_email][:subject])
+  end
+
   def completion_email
     @completer  = params[:completer]
     @request    = params[:request]

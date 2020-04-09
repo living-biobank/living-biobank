@@ -393,7 +393,7 @@ en:
       primary_pi: "<strong>Primary PI:</strong> %{pi_name}"
       services_header: "Services Requested"
       confirmation_email:
-        subject: "Living Biobank Request Confirmation"
+        subject: "Request Confirmation"
         text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
         text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
         text3: "Should you need to make changes to your request, it can be accessed from the <a href='%{requests_link}' target='_blank'>Requests page</a> or directly from <a href='%{direct_link}' target='_blank'>this link</a>."
@@ -401,10 +401,13 @@ en:
         text5: "We look forward to working with you."
         data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
       submission_email:
-        subect: "Living Biobank Request Application"
+        subect: "New Request Application"
         intro: "%{requester} submitted a new Living Biobank request on %{date}."
+      manager_email:
+        Subject: "New Request Needing SPARC Submission"
+        text: "A new Living Biobank request has been submitted and is awaiting your review in SPARCRequest."
       completion_email:
-        subject: "Living Biobank Request Completed"
+        subject: "Request Completed"
         completed_by: "%{user} completed a request on %{date}."
     specimens_available_mailer:
       available_email: 

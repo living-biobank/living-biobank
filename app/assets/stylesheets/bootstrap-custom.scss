@@ -291,7 +291,6 @@ form, .form {
   padding: 0 !important;
   background: white;
   display: flex;
-  flex-wrap: wrap;
 
   input[type=text] {
     margin: 0.5rem 0.5rem;
@@ -418,6 +417,12 @@ form, .form {
     #sort_by + .filter::before {
       display: none;
     }
+  }
+}
+
+@include media-breakpoint-down(lg) {
+  .table-filters {
+    flex-wrap: wrap;
   }
 }
 
