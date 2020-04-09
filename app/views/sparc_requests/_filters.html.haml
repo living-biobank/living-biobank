@@ -1,4 +1,4 @@
-.card.mb-4#requestFilters
+.card.mb-0#requestFilters
   .card-body.justify-content-end.border-bottom-0.table-filters{ data: { url: sparc_requests_path } }
     = text_field_tag 'searchRequests', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:requests)[:filters][:search]
     .tooltip-wrapper.d-flex.order-1{ title: t(:requests)[:filters][:status], data: { toggle: 'tooltip' } }

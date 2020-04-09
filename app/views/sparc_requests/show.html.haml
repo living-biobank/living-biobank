@@ -2,7 +2,7 @@
   = render 'sparc_requests/header'
 = render 'sparc_requests/request', request: @sparc_request
 .text-center.my-4
-  .col-6.offset-3.d-flex
+  .col-12.col-lg-6.offset-lg-3.d-flex
     = link_to sparc_requests_path, class: 'btn btn-lg btn-outline-primary media-body d-inline-flex align-items-center justify-content-center mr-4' do
       = icon('fas', 'file-invoice mr-1')
       = t('requests.view_all')
