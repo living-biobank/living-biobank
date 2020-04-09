@@ -176,8 +176,8 @@ en:
         saved: "Permissions updated successfully!"
         admin_removed: "Your admin privileges were successfully removed. You have been redirected to the requests page."
     groups:
-      link: "Manage Labs"
-      title: "Manage Lab Information"
+      link: "Manage Groups"
+      title: "Manage Group Information"
       headers:
         name: "Name"
         sources: "Specimen Sources"
@@ -188,10 +188,10 @@ en:
         variables: "Pending Variable Services"
         services: "In Process Additional Services"
       form:
-        header: "Manage %{name} Lab"
+        header: "Manage %{name} Group"
         release_email_info: "Note: A greeting and signature will be added automatically."
       tooltips:
-        edit: "Edit Lab"
+        edit: "Edit Group"
       flash:
         saved: "Group updated successfully!"
 
