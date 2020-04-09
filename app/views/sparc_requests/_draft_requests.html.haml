@@ -1,12 +1,13 @@
-.card#draftRequests{ class: draft_requests.any? ? '' : 'd-none' }
-  .card-header.bg-white
-    %h3.m-0
-      = t(:requests)[:draft][:header]
-  .card-body.d-flex.flex-column
-    - draft_requests.each do |dr|
-      %h4.alert.alert-warning.draft-request{ role: 'alert' }
-        = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:edit], class: 'edit-draft-request', data: { url: edit_sparc_request_path(dr), toggle: 'tooltip' } do
-          = icon('fas', 'edit')
-          = request_title_display(dr)
-        = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:cancel], class: 'text-danger cancel-draft-request', data: { confirm_swal: true, url: sparc_request_path(dr), method: :delete, toggle: 'tooltip' } do
-          = icon('fas', 'trash')
+#draftRequests
+  .card.mb-4{ class: draft_requests.any? ? '' : 'd-none' }
+    .card-header.bg-white
+      %h3.m-0
+        = t(:requests)[:draft][:header]
+    .card-body.d-flex.flex-column
+      - draft_requests.each do |dr|
+        %h4.alert.alert-warning.draft-request{ role: 'alert' }
+          = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:edit], class: 'edit-draft-request', data: { url: edit_sparc_request_path(dr), toggle: 'tooltip' } do
+            = icon('fas', 'edit')
+            = request_title_display(dr)
+          = link_to 'javascript:void(0)', title: t(:requests)[:tooltips][:cancel], class: 'text-danger cancel-draft-request', data: { confirm_swal: true, url: sparc_request_path(dr), method: :delete, toggle: 'tooltip' } do
+            = icon('fas', 'trash')
