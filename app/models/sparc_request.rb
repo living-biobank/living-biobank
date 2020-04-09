@@ -82,8 +82,8 @@ class SparcRequest < ApplicationRecord
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
-    sort_by     ||= 'created_at'
-    sort_order  ||=  'desc'
+    sort_by     = sort_by.blank? ? 'created_at' : sort_by
+    sort_order  = sort_order.blank? ? 'desc' : sort_order
 
     case sort_by
     when 'title', 'short_title'
