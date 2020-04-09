@@ -222,7 +222,7 @@ en:
       sort_by: "Sort By"
       sort_order: "Order"
     table:
-      header: "[%{id}] %{source} (%{accession_number})"
+      header: "Specimen %{id} - %{source} (%{accession_number})"
       patient_info:
         with_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
         without_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>DOB</strong> %{dob}"
@@ -287,6 +287,7 @@ en:
     saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
+    view_all: "View All Requests"
     statuses:
       draft: "Draft"
       pending: "Pending"
@@ -373,6 +374,7 @@ en:
       header: "Specimen Release"
   mailers:
     greeting: "Dear %{name},"
+    request_link: "<a href='%{direct_link}' target='_blank'>View Request</a>"
     footer:
       text: "The Living Biobank Team"
     cloverleaf_mailer:
@@ -390,19 +392,16 @@ en:
         subject: "Living Biobank Request Confirmation"
         text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
         text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
-        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
-        text4: "We look forward to working with you."
+        text3: "Should you need to make changes to your request, it can be accessed from the <a href='%{requests_link}' target='_blank'>Requests page</a> or directly from <a href='%{direct_link}' target='_blank'>this link</a>."
+        text4: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
+        text5: "We look forward to working with you."
         data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
       submission_email:
         subect: "Living Biobank Request Application"
-        intro: "A new Living Biobank application was submitted by %{requester} on %{date}."
-        specimen_request_with_sample_size: "<strong>%{source}</strong> - %{requested} samples &geq; %{min_sample_size}"
-        specimen_request_no_sample_size: "<strong>%{source}</strong> - %{requested} samples"
+        intro: "%{requester} submitted a new Living Biobank request on %{date}."
       completion_email:
         subject: "Living Biobank Request Completed"
-        completed_by: "Completed by %{user} on %{date}"
-        specimen_request_with_sample_size: "<strong>%{source}</strong> - %{received} / %{requested} samples &geq; %{min_sample_size}"
-        specimen_request_no_sample_size: "<strong>%{source}</strong> - %{received} / %{requested} samples"
+        completed_by: "%{user} completed a request on %{date}."
     specimens_available_mailer:
       available_email: 
         subject: "%{group} Specimens Are Available"

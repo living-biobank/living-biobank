@@ -3,9 +3,11 @@
 %p
   = t('mailers.request_mailer.confirmation_email.text2')
 %p
-  = t('mailers.request_mailer.confirmation_email.text3').html_safe
+  = t('mailers.request_mailer.confirmation_email.text3', requests_link: sparc_requests_url, direct_link: sparc_request_url(@request)).html_safe
 %p
-  = t('mailers.request_mailer.confirmation_email.text4')
+  = t('mailers.request_mailer.confirmation_email.text4').html_safe
+%p
+  = t('mailers.request_mailer.confirmation_email.text5')
 
 - content_for :ps do
   %h4

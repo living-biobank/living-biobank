@@ -5,4 +5,4 @@
 %p{ style: 'margin:0' }
   = link_to ENV.fetch('REPLY_EMAIL'), "mailto:#{ENV.fetch('REPLY_EMAIL')}"
 %p{ style: 'margin:0' }
-  = link_to ENV.fetch('ROOT_URL'), ENV.fetch('ROOT_URL')
+  = link_to root_url, root_url

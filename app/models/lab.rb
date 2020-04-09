@@ -196,6 +196,10 @@ class Lab < ApplicationRecord
     self.status == I18n.t(:labs)[:statuses][:discarded]
   end
 
+  def identifier
+    "%04d" % self.id
+  end
+
   def send_emails
     if self.released? && (!self.group.notify_when_all_specimens_released? || self.line_item.complete?)
       SpecimenMailer.with(group: self.group, request: self.sparc_request).release_email.deliver_later

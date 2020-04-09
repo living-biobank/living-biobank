@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :labs, only: [:index, :update]
 
-  resources :sparc_requests, except: [:show] do
+  resources :sparc_requests do
     member do
       patch :update_status
     end
