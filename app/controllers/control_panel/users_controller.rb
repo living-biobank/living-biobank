@@ -29,7 +29,7 @@ class ControlPanel::UsersController < ControlPanel::BaseController
   private
 
   def find_users
-    @users = User.all.filtered_for_index(params[:term], params[:privileges], params[:groups], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).preload(:groups)
+    @users = User.all.filtered_for_index(params[:term], params[:privileges], params[:groups], params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1).preload(:groups)
   end
 
   def user_params
