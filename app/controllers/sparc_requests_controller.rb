@@ -34,8 +34,6 @@ class SparcRequestsController < ApplicationController
 
       flash.now[:success] = t(:requests)[:saved]
     else
-      @sparc_request.submitted_at = DateTime.now
-
       if @sparc_request.save
         RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
         RequestMailer.with(requester: current_user, request: @sparc_request).submission_email.deliver_later
@@ -69,8 +67,6 @@ class SparcRequestsController < ApplicationController
 
       flash.now[:success] = t(:requests)[:saved]
     else
-      @sparc_request.submitted_at = DateTime.now if @sparc_request.draft?
-
       if @sparc_request.update_attributes(sparc_request_params)
         flash.now[:success] = t(:requests)[:updated]
       else
@@ -83,16 +79,8 @@ class SparcRequestsController < ApplicationController
     respond_to :js
   end
 
-  def destroy
-    @sparc_request.destroy
-
-    find_requests
-
-    respond_to :js
-  end
-
   def update_status
-    if @sparc_request.update_attribute(:status, sparc_request_params[:status])
+    if @sparc_request.update_columns(sparc_request_params.to_h)
       RequestMailer.with(completer: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
 
       flash.now[:success] = t(:requests)[:updated]
@@ -140,6 +128,10 @@ class SparcRequestsController < ApplicationController
       :id,
       :protocol_id,
       :status,
+      :finalized_at,
+      :finalized_by,
+      :completed_by,
+      :cancelled_by,
       protocol_attributes: [
         :id,
         :research_master_id,

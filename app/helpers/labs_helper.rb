@@ -51,11 +51,13 @@ module LabsHelper
   end
 
   def lab_patient_information(lab)
-    if lab.group.display_patient_information?
-      t('labs.table.patient_info.with_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
-    else
-      t('labs.table.patient_info.without_name', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
-    end.html_safe
+    content_tag :span, class: 'text-muted' do
+      if lab.group.display_patient_information?
+        t('labs.table.patient_info.with_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
+      else
+        t('labs.table.patient_info.without_name', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
+      end.html_safe
+    end
   end
 
   def lab_releaser_information(lab)
@@ -63,14 +65,14 @@ module LabsHelper
       link_to(lab.releaser.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.releaser) }) +
       link_to(lab.releaser.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.releaser) })
 
-    content_tag :span do
-      icon('fas', 'user mr-1') + t('labs.table.released.releaser', name: name, date: format_date(lab.released_at)).html_safe
+    content_tag :span, class: 'text-muted' do
+      icon('fas', 'user mr-1') + t('labs.table.releaser', name: name, date: format_date(lab.released_at)).html_safe
     end
   end
 
   def lab_retriever_information(lab)
-    content_tag :span do
-      icon('fas', 'user mr-1') + t('labs.table.retrieved.retriever', date: format_date(lab.retrieved_at)).html_safe
+    content_tag :span, class: 'text-success' do
+      icon('fas', 'user mr-1') + t('labs.table.retriever', date: format_date(lab.retrieved_at)).html_safe
     end
   end
 
@@ -79,8 +81,8 @@ module LabsHelper
       link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.discarder) }) +
       link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.discarder) })
 
-    content_tag :span do
-      icon('fas', 'user mr-1') + t('labs.table.discarded.discarder', name: name, date: format_date(lab.discarded_at)).html_safe
+    content_tag :span, class: 'text-danger' do
+      icon('fas', 'user mr-1') + t('labs.table.discarder', name: name, date: format_date(lab.discarded_at)).html_safe
     end
   end
 
@@ -111,7 +113,7 @@ module LabsHelper
     actions = []
 
     actions.push(retrieve_lab_button(lab)) if lab.released? && lab.group.process_specimen_retrieval?
-    actions.push(cancel_lab_button(lab))   unless lab.available?
+    actions.push(reset_lab_button(lab))   unless lab.available?
     actions.push(discard_lab_button(lab))  unless lab.retrieved? || lab.discarded?
 
     content_tag :div, class: 'd-flex' do
@@ -133,8 +135,8 @@ module LabsHelper
     end
   end
 
-  def cancel_lab_button(lab)
-    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil, discarded_by: nil, discard_reason: nil })), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
+  def reset_lab_button(lab)
+    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_at: nil, released_by: nil, retrieved_at: nil, discarded_at: nil, discarded_by: nil, discard_reason: nil })), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:reset_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.reset_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
       icon('fas', 'redo')
     end
   end

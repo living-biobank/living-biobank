@@ -15,12 +15,17 @@
   .collapse{ class: ["request-#{request.id}-collapse", request.cancelled? ? '' : 'show'] }
     .card-body
       .d-flex.flex-wrap.justify-content-between
-        %h4
-          %small.text-muted<
-            = requester_display(request)
-        - unless request.cancelled? || request.completed?
+        - if request.previously_submitted?
           %h4
             %small.text-muted<
+              = requester_display(request)
+        %h4
+          %small<
+            - if request.completed? && request.completer.present?
+              = request_completer_display(request)
+            - elsif request.cancelled? && request.canceller.present?
+              = request_canceller_display(request)
+            - else
               = request_duration_display(request)
       - if request.specimen_requests.any?
         %h4.card-title.font-weight-bold
@@ -35,15 +40,16 @@
             .col-sm-8.col-12
               - unless request.cancelled?
                 = render 'line_items/progress_bar', li: li
-    .card-body.border-top
-      %h4.card-title.font-weight-bold<
-        = t('requests.table.additional_services.header')
-      - request.additional_services.each do |li|
-        .row.line-item
-          .col-sm-4.col-12
-            %h5.d-flex.mb-0<
-              %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
-                = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
-              = li.service.name
-          .col-sm-8.col-12
-            = render 'line_items/progress_bar', li: li
+    - if request.previously_submitted?
+      .card-body.border-top
+        %h4.card-title.font-weight-bold<
+          = t('requests.table.additional_services.header')
+        - request.additional_services.each do |li|
+          .row.line-item
+            .col-sm-4.col-12
+              %h5.d-flex.mb-0<
+                %span{ title: li.complete? ? t('requests.table.additional_services.complete') : t('requests.table.additional_services.incomplete'), data: { toggle: 'tooltip' } }
+                  = li.complete? ? icon('fas', 'check text-success mr-2') : icon('fas', 'times text-danger mr-2')
+                = li.service.name
+            .col-sm-8.col-12
+              = render 'line_items/progress_bar', li: li

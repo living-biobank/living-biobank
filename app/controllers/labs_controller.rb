@@ -37,7 +37,10 @@ class LabsController < ApplicationController
     params.require(:lab).permit(
       :line_item_id,
       :status,
+      :released_at,
       :released_by,
+      :retrieved_at,
+      :discarded_at,
       :discarded_by,
       :discard_reason
     )

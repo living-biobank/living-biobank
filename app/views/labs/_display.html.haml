@@ -21,19 +21,19 @@
           .card-body
             .d-flex.flex-wrap.justify-content-between
               %h4
-                %small.text-muted<
+                %small<
                   = lab_patient_information(lab)
               - if lab.releaser.present?
                 %h4.text-right
-                  %small.text-muted<
+                  %small<
                     = lab_releaser_information(lab)
               - if lab.discarded? && lab.discarder.present?
                 %h4.text-right
-                  %small.text-danger<
+                  %small<
                     = lab_discarder_information(lab)
               - elsif lab.retrieved?
                 %h4.text-right
-                  %small.text-success<
+                  %small<
                     = lab_retriever_information(lab)
             - if lab.available?
               - if lab.line_items.any?
@@ -62,7 +62,7 @@
             - else
               - if lab.line_item.present?
                 %h4.card-title.font-weight-bold
-                  = t('labs.table.released.header')
+                  = t('labs.table.released_header')
                 .row.line-item.specimen-line-item
                   .col-sm-4.col-12.d-flex
                     .d-flex.flex-column.mr-2
@@ -86,7 +86,7 @@
                   = Lab.human_attribute_name(:discard_reason)
                 .row
                   %blockquote.blockquote.mb-0.col-12.col-sm-6
-                    = lab.discard_reason.present? ? lab.discard_reason : t('labs.table.discarded.reason_blank')
+                    = lab.discard_reason.present? ? lab.discard_reason : t('labs.table.discard_reason_blank')
     = render 'layouts/pagination', records: labs, filter_params: lab_filter_params.merge({ controller: 'labs', action: 'index' })
   - else
     .card

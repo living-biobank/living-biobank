@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_210725) do
+ActiveRecord::Schema.define(version: 2020_04_10_134825) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -171,6 +171,15 @@ ActiveRecord::Schema.define(version: 2020_04_09_210725) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "submitted_at"
+    t.datetime "finalized_at"
+    t.bigint "finalized_by"
+    t.datetime "completed_at"
+    t.bigint "completed_by"
+    t.datetime "cancelled_at"
+    t.bigint "cancelled_by"
+    t.index ["cancelled_by"], name: "index_sparc_requests_on_cancelled_by"
+    t.index ["completed_by"], name: "index_sparc_requests_on_completed_by"
+    t.index ["finalized_by"], name: "index_sparc_requests_on_finalized_by"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -1,5 +1,8 @@
 class SparcRequest < ApplicationRecord
   belongs_to :requester, class_name: "User", foreign_key: :user_id
+  belongs_to :finalizer, class_name: "User", foreign_key: :finalized_by, optional: true
+  belongs_to :completer, class_name: "User", foreign_key: :completed_by, optional: true
+  belongs_to :canceller, class_name: "User", foreign_key: :cancelled_by, optional: true
   belongs_to :protocol, class_name: "SPARC::Protocol"
 
   has_one :primary_pi, through: :protocol, class_name: "SPARC::Identity"
@@ -103,6 +106,16 @@ class SparcRequest < ApplicationRecord
     end
   }
 
+  def status=(status)
+    [:submitted, :finalized, :completed, :cancelled].each do |s|
+      if status == I18n.t(:requests)[:statuses][s]
+        self.send("#{s}_at=", DateTime.now)
+      end
+    end
+
+    super
+  end
+
   def completed?
     self.status == I18n.t(:requests)[:statuses][:completed]
   end
@@ -121,6 +134,14 @@ class SparcRequest < ApplicationRecord
 
   def cancelled?
     self.status == I18n.t(:requests)[:statuses][:cancelled]
+  end
+
+  def previously_submitted?
+    self.submitted_at.present?
+  end
+
+  def previously_finalized?
+    self.finalized_at.present?
   end
 
   def identifier

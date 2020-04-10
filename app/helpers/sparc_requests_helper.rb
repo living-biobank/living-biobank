@@ -35,7 +35,7 @@ module SparcRequestsHelper
     raw(
       content_tag(:span, t('requests.table.header', id: sr.identifier), class: 'mt-0 mt-sm-1 mr-2') +
       content_tag(:small, sr.protocol.identifier.truncate(60), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
-      if opts[:popover]
+      if opts[:popover] && sr.previously_submitted?
         content_tag(:span, class: 'mt-0 mt-sm-1') do
           link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
           link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-inline-block d-xl-none ml-2', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('sparc_requests/details_popover', request: sr) })
@@ -62,6 +62,26 @@ module SparcRequestsHelper
     end
   end
 
+  def request_completer_display(sr)
+    name =
+      link_to(sr.completer.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.completer) }) +
+      link_to(sr.completer.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.completer) })
+
+    content_tag :span, class: 'text-success' do
+      icon('fas', 'user mr-1') + t('requests.table.completer', name: name, date: format_date(sr.completed_at)).html_safe
+    end
+  end
+
+  def request_canceller_display(sr)
+    name =
+      link_to(sr.canceller.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.canceller) }) +
+      link_to(sr.canceller.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.canceller) })
+
+    content_tag :span, class: 'text-danger' do
+      icon('fas', 'user mr-1') + t('requests.table.canceller', name: name, date: format_date(sr.cancelled_at)).html_safe
+    end
+  end
+
   def request_duration_display(sr)
     if sr.end_date < DateTime.now.utc
       content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
@@ -72,7 +92,7 @@ module SparcRequestsHelper
         icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
       end
     else
-      content_tag :span, class: 'd-inline-flex align-items-center' do
+      content_tag :span, class: 'd-inline-flex align-items-center text-muted' do
         icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
       end
     end
@@ -126,20 +146,21 @@ module SparcRequestsHelper
         complete_request_button(sr),
         finalize_request_button(sr),
         edit_request_button(sr),
-        cancel_request_button(sr)
+        cancel_request_button(sr),
+        reset_request_button(sr)
       ].join(''))
     end
   end
 
   def complete_request_button(sr)
     if sr.in_process? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:completed] })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.complete_confirm.title', id: sr.identifier), text: t('requests.complete_confirm.text') }
+      link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:completed], completed_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.complete_confirm.title', id: sr.identifier), text: t('requests.complete_confirm.text') }
     end
   end
 
   def finalize_request_button(sr)
     if sr.pending? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:in_process] })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.finalize_confirm.title', id: sr.identifier), text: t('requests.finalize_confirm.text') }
+      link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:in_process], finalized_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.finalize_confirm.title', id: sr.identifier), text: t('requests.finalize_confirm.text') }
     end
   end
 
@@ -150,8 +171,27 @@ module SparcRequestsHelper
   end
 
   def cancel_request_button(sr)
-    if sr.pending?
-      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:cancelled] })), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip', confirm_swal: 'true' }
+    if sr.pending? || sr.draft?
+      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:cancelled], cancelled_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip', confirm_swal: 'true' }
+    end
+  end
+
+  def reset_request_button(sr)
+    # Only DHBs and Admins can reset previously "In Process" or "Complete" requests
+    if ((sr.completed? || (sr.cancelled? && sr.previously_finalized?)) && (current_user.data_honest_broker? || current_user.admin?)) || (sr.cancelled? && !sr.previously_finalized?)
+      if sr.previously_finalized?
+        status  = t('requests.statuses.in_process')
+        klass   = 'text-primary'
+      elsif sr.previously_submitted?
+        status  = t('requests.statuses.pending')
+        klass   = 'text-warning'
+      else
+        status  = t('requests.statuses.draft')
+        klass   = 'text-warning'
+      end
+      link_to update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: status, completed_at: nil, completed_by: nil, cancelled_at: nil, cancelled_by: nil })), remote: true, method: :patch, class: 'btn btn-warning ml-1', title: t('requests.tooltips.reset'), data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.reset_confirm.title', klass: klass, status: status) } do
+        icon('fas', 'redo')
+      end
     end
   end
 

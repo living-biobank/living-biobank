@@ -223,7 +223,7 @@ en:
       title: "Release this specimen to<br>Request %{id}?"
     retrieve_confirm:
       title: "Specimen retrieved by requester?"
-    cancel_confirm:
+    reset_confirm:
       title: "Change this specimen to <span class='text-warning'>%{available}</span>?"
     discard_confirm:
       title: "Discard this specimen?"
@@ -256,14 +256,11 @@ en:
         samples_needed:
           singular: "%{requested_number} Sample %{requested_size}"
           plural: "%{requested_number} Samples %{requested_size}"
-      released:
-        header: "Specimen Released To"
-        releaser: "Released by %{name} on %{date}"
-      retrieved:
-        retriever: "Retrieved on %{date}"
-      discarded:
-        discarder: "Discarded by %{name} on %{date}"
-        reason_blank: "Not Specified"
+      released_header: ""
+      releaser: "Released by %{name} on %{date}"
+      retriever: "Retrieved on %{date}"
+      discarder: "Discarded by %{name} on %{date}"
+      discard_reason_blank: "Not Specified"
     tooltips:
       release: "Release Specimens"
     requests:
@@ -276,7 +273,7 @@ en:
     actions:
       release_specimen: "Release Specimen"
       retrieve_specimen: "Specimen Retrieved"
-      cancel_release: "Reset Specimen"
+      reset_specimen: "Reset Specimen"
       discard_specimen:  "Discard Specimen"
   home:
     header: "Living Biobank enables access to Clinical Specimens and Microbiome Data"
@@ -313,6 +310,14 @@ en:
       html: "<h5 class='text-left font-weight-bold'>Before using the MUSC Living Biobank specimen request system, you must agree to the following Specimen Request System Agreement:</h5><p class='text-left'>The Specimen Request System Agreement is designed to provide principal investigators or study staff with access to de-identified specimens for the express purpose of MUSC IRB approved research.</p><p class='text-left'>Your acceptance of this assurance certifies that you understand and agree to all applicable terms contained herein.</p><p class='text-left'>I understand that only de-identified specimens will be provided.</p><p class='text-left'>I will make no attempt to learn the identity of any person or family who is the source of the specimen(s) and associated data, or attempt contact any individual or family member from whom the specimen or data were derived.</p><p class='text-left'>I understand that any effort to determine the identity of the source of the specimens, or to use the specimens provided for any purpose other than indicated above, is prohibited.</p><p class='text-left'>I understand that any violation of this assurance may result in a disciplinary action by my institution with the appropriate office(s) at my institution.</p><p class='text-left'>I agree to restrict my request for specimen(s) to those required for my MUSC IRB approved research study.</p><p class='text-left'>I declare that the requested specimens are necessary to accomplish the goals of the research.</p><p class='text-left'>I acknowledge the additional level of ethical sensitivity inherent in using the specimen(s) and agree to exercise exemplary ethical conduct in my use of the provided specimen(s).</p><p class='text-left'>I have completed the MUSC Code of Conduct training in MyQuest, Human Research Training (CITI) and other MUSC provided training, as required.</p>"
       confirm: "Accept"
       cancel: "Decline"
+    finalize_confirm:
+      title: "Finalize Request %{id}?"
+      text: "This request will become eligible to receive specimens."
+    complete_confirm:
+      title: "Complete Request %{id}?"
+      text: "This request will no longer be eligible to receive additional specimens."
+    reset_confirm:
+      title: "Change this Request to <span class='%{klass}'>%{status}</span>?"
     created: "Your inquiry has been received. A confirmation email has been sent to your mailbox."
     saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
@@ -332,17 +337,13 @@ en:
       sort_by: "Sort By"
       sort_order: "Order"
     tooltips:
+      edit_draft: "Edit Draft Request"
       time_estimate: "This request could take a long time to fulfill."
       complete: "Complete this request once all specimens have been received"
       finalize: "Finalize Request"
       edit: "Edit Request"
       cancel: "Cancel Request"
-    finalize_confirm:
-      title: "Finalize Request %{id}?"
-      text: "This request will become eligible to receive specimens."
-    complete_confirm:
-      title: "Complete Request %{id}?"
-      text: "This request will no longer be eligible to receive additional specimens."
+      reset: "Reset Request"
     form:
       new_title: "New Specimen Request"
       edit_title: "Edit Specimen Request %{id}"
@@ -375,6 +376,8 @@ en:
       sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
       requester: "Requested by %{name} %{time_elapsed} ago"
+      completer: "Completed by %{name} on %{date}"
+      canceller: "Cancelled by %{name} on %{date}"
       duration:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"
@@ -398,7 +401,6 @@ en:
         complete: "This service has been completed"
         incomplete: "This service has not yet been completed"
     draft:
-      header: "Draft Requests"
       placeholder: "No Title Specified"
   site_information:
     name: "Living Biobank"
