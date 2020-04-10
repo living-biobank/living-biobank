@@ -38,6 +38,8 @@ class LabsController < ApplicationController
       :line_item_id,
       :status,
       :released_by,
+      :discarded_by,
+      :discard_reason
     )
   end
 end

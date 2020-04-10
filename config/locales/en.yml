@@ -60,6 +60,7 @@ en:
         discard_email: "Specimen Discard Email"
       lab:
         accession_number: "Accession Number"
+        discard_reason: "Reason for Discard"
         id: "Specimen ID"
         released_at: "Date Released"
         specimen_source: "Specimen Source"
@@ -257,6 +258,9 @@ en:
       released:
         header: "Specimen Released To"
         releaser: "Released by %{name} on %{date}"
+      discarded:
+        discarder: "Discarded by %{name} on %{date}"
+        reason_blank: "Not Specified"
     tooltips:
       release: "Release Specimens"
     requests:

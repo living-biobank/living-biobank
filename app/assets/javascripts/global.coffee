@@ -1,3 +1,10 @@
+# Provide the CSRF Authenticity Token for all Ajax requests
+$.ajaxSetup({
+  headers: {
+    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+  }
+});
+
 $.fn.datepicker.defaults.clearBtn = true
 
 $ ->

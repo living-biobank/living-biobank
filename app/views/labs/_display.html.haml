@@ -2,7 +2,8 @@
   - if labs.any?
     - labs.each do |lab|
       .card.specimen
-        .card-header{ class: lab.retrieved? || lab.discarded? ? 'collapsed' : '', data: { toggle: 'collapse', target: ".specimen-#{lab.id}-collapse" } }
+        - collapse = (lab.retrieved? && params[:status] != t(:labs)[:statuses][:available]) || (lab.discarded? && params[:status] != t(:labs)[:statuses][:discarded])
+        .card-header{ class: collapse ? 'collapsed' : '', data: { toggle: 'collapse', target: ".specimen-#{lab.id}-collapse" } }
           .row
             .col-12.col-sm-10.d-flex.flex-column.justify-content-between
               %h4.d-flex.w-100.font-weight-bold.mb-2.mb-sm-0
@@ -16,21 +17,25 @@
               %h4.d-block.d-sm-none.mb-0
                 = lab_status_context(lab)
               = lab_actions(lab)
-        .collapse{ class: ["specimen-#{lab.id}-collapse", lab.retrieved? || lab.discarded? ? '' : 'show'] }
+        .collapse{ class: ["specimen-#{lab.id}-collapse", collapse ? '' : 'show'] }
           .card-body
             .d-flex.flex-wrap.justify-content-between
               %h4
                 %small.text-muted<
                   = lab_patient_information(lab)
-              - if lab.releaser.present?
+              - if lab.released? || lab.retrieved?
                 %h4.text-right
                   %small.text-muted<
                     = lab_releaser_information(lab)
+              - elsif lab.discarded?
+                %h4.text-right
+                  %small.text-muted<
+                    = lab_discarder_information(lab)
             - if lab.available?
               - if lab.line_items.any?
                 %h4.card-title.font-weight-bold
                   = t('labs.table.requests.header')
-                - lab.line_items.eager_load(:labs).preload(sparc_request: [:protocol, :primary_pi]).each do |line_item|
+                - lab.line_items.eager_load(:labs, :group).preload(sparc_request: [:protocol, :primary_pi, :requester]).each do |line_item|
                   .row.line-item.specimen-line-item
                     .col-sm-4.col-12.d-flex
                       .d-flex.align-items-start.mr-2
@@ -72,6 +77,12 @@
                           %p.mb-0
                             = request_duration_display(lab.sparc_request)
                       = render 'line_items/progress_bar', li: lab.line_item
+              - if lab.discarded?
+                %h4.card-title.font-weight-bold{ class: lab.line_item_id ? 'mt-3' : '' }
+                  = Lab.human_attribute_name(:discard_reason)
+                .row
+                  %blockquote.blockquote.mb-0.col-12.col-sm-6
+                    = lab.discard_reason.present? ? lab.discard_reason : t('labs.table.discarded.reason_blank')
     = render 'layouts/pagination', records: labs, filter_params: lab_filter_params.merge({ controller: 'labs', action: 'index' })
   - else
     .card

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_193603) do
+ActiveRecord::Schema.define(version: 2020_04_09_210725) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -94,6 +94,9 @@ ActiveRecord::Schema.define(version: 2020_04_09_193603) do
     t.bigint "released_by"
     t.datetime "retrieved_at"
     t.datetime "discarded_at"
+    t.bigint "discarded_by"
+    t.string "discard_reason"
+    t.index ["discarded_by"], name: "index_labs_on_discarded_by"
     t.index ["line_item_id"], name: "fk_rails_f32b2a1d2a"
     t.index ["patient_id"], name: "index_labs_on_patient_id"
     t.index ["released_by"], name: "index_labs_on_released_by"

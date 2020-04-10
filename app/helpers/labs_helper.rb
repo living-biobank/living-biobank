@@ -68,6 +68,16 @@ module LabsHelper
     end
   end
 
+  def lab_discarder_information(lab)
+    name =
+      link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.discarder) }) +
+      link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.discarder) })
+
+    content_tag :span do
+      icon('fas', 'user mr-1') + t('labs.table.discarded.discarder', name: name, date: format_date(lab.discarded_at)).html_safe
+    end
+  end
+
   def lab_sample_size_display(line_item)
     text = line_item.number_of_specimens_requested == 1 ? 'singular' : 'plural'
 
@@ -118,14 +128,16 @@ module LabsHelper
   end
 
   def cancel_lab_button(lab)
-    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil })), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
+    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_by: nil, released_at: nil, retrieved_at: nil, discarded_at: nil, discarded_by: nil, discard_reason: nil })), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:cancel_release], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.cancel_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
       icon('fas', 'redo')
     end
   end
 
   def discard_lab_button(lab)
-    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:discarded] })), remote: true, method: :patch, class: "btn btn-danger ml-1", title: t(:labs)[:actions][:discard_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.discard_confirm.title') } do
-      icon('fas', 'trash-alt')
+    content_tag(:div, class: 'tooltip-wrapper', title: t(:labs)[:actions][:discard_specimen], data: { toggle: 'tooltip' }) do
+      link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:discarded], discarded_by: current_user.id })), remote: true, method: :patch, class: "btn btn-danger ml-1", data: { confirm_swal: 'true', title: t('labs.discard_confirm.title'), form: 'true', html: fields_for(:lab) { |f| f.text_area(:discard_reason, class: 'form-control mt-3', placeholder: "Why was this specimen discarded? (Optional)", maxlength: 255) } } do
+        icon('fas', 'trash-alt')
+      end
     end
   end
 
