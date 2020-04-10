@@ -52,7 +52,7 @@ class User < ApplicationRecord
 
     case privileges
     when 'user'
-      left_outer_joins(:groups).where(groups: { id: nil }).where.not(admin: true, data_honest_broker: true)
+      left_outer_joins(:groups).where(groups: { id: nil }).where(admin: [nil, false], data_honest_broker: [nil, false])
     when 'admin'
       admins
     when 'lhb'
