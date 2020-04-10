@@ -412,7 +412,7 @@ en:
   mailers:
     greeting: "Dear %{name},"
     request_link: "<a href='%{direct_link}' target='_blank'>View Request</a>"
-    specimens_link: "<a href='%{specimens_link'} target='_blank'>View Specimens</a>"
+    specimens_link: "<a href='%{specimens_link}' target='_blank'>View Specimens</a>"
     footer:
       text: "The Living Biobank Team"
     cloverleaf_mailer:
