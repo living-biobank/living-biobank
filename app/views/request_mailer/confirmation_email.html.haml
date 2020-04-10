@@ -1,9 +1,18 @@
 %p
   = t('mailers.request_mailer.confirmation_email.text1')
 %p
-  = t('mailers.request_mailer.confirmation_email.text2')
+  = t('mailers.request_link', direct_link: sparc_request_url(@request)).html_safe
+%p{ style: "margin-bottom:0;" }
+  = t('mailers.request_mailer.confirmation_email.text2', id: @request.identifier, protocol_identifier: @request.protocol.identifier).html_safe
+- @request.specimen_requests.each do |sr|
+  %p{ style: "margin:0;" }
+    - plural = sr.number_of_specimens_requested > 1
+    - if sr.group.process_sample_size
+      = "- " + t("requests.table.specimens.line_item_with_sample_size.#{plural ? 'plural' : 'singular'}", source: sr.source.value, amount_requested: sr.number_of_specimens_requested, min_sample_size: sr.minimum_sample_size)
+    - else
+      = "- " + t("requests.table.specimens.line_item_no_sample_size.#{plural ? 'plural' : 'singular'}", source: sr.source.value, amount_requested: sr.number_of_specimens_requested)
 %p
-  = t('mailers.request_mailer.confirmation_email.text3', requests_link: sparc_requests_url, direct_link: sparc_request_url(@request)).html_safe
+  = t('mailers.request_mailer.confirmation_email.text3')
 %p
   = t('mailers.request_mailer.confirmation_email.text4').html_safe
 %p

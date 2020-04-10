@@ -425,10 +425,10 @@ en:
       primary_pi: "<strong>Primary PI:</strong> %{pi_name}"
       services_header: "Services Requested"
       confirmation_email:
-        subject: "Request Confirmation"
+        subject: "New Request Confirmation"
         text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
-        text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
-        text3: "Should you need to make changes to your request, it can be accessed from the <a href='%{requests_link}' target='_blank'>Requests page</a> or directly from <a href='%{direct_link}' target='_blank'>this link</a>."
+        text2: "<strong>Request %{id}</strong> %{protocol_identifier}"
+        text3: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
         text4: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
         text5: "We look forward to working with you."
         data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
