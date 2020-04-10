@@ -1,4 +1,4 @@
 %p
   = t('mailers.specimens_available_mailer.available_email.text', group: @group.name)
 %p
-  = t('mailers.specimens_link', specimens_link: labs_url)
+  = t('mailers.specimens_link', specimens_link: labs_url).html_safe
