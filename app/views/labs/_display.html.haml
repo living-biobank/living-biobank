@@ -23,7 +23,7 @@
               %h4
                 %small.text-muted<
                   = lab_patient_information(lab)
-              - if lab.line_item_id || lab.retrieved?
+              - if lab.releaser.present?
                 %h4.text-right
                   %small.text-muted<
                     = lab_releaser_information(lab)
