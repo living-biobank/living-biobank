@@ -1,4 +1,4 @@
 %p
   = t('mailers.request_mailer.submission_email.intro', requester: @requester.display_name, date: format_date(@request.submitted_at))
 %p
-  = t('mailers.request_link', direct_link: sparc_request_url(@request)).html_safe
+  = link_to t('mailers.request_link'), sparc_request_url(@request), target: :_blank

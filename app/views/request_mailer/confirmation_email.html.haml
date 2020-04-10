@@ -1,7 +1,7 @@
 %p
   = t('mailers.request_mailer.confirmation_email.text1')
 %p
-  = t('mailers.request_link', direct_link: sparc_request_url(@request)).html_safe
+  = link_to t('mailers.request_link'), sparc_request_url(@request), target: :_blank
 %p{ style: "margin-bottom:0;" }
   = t('mailers.request_mailer.confirmation_email.text2', id: @request.identifier, protocol_identifier: @request.protocol.identifier).html_safe
 - @request.specimen_requests.each do |sr|
