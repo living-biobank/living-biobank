@@ -29,7 +29,7 @@
               = request_duration_display(request)
       - if request.specimen_requests.any?
         %h4.card-title.font-weight-bold
-          = t('requests.table.specimens.header')
+          = SparcRequest.human_attribute_name(:specimen_requests)
         - request.specimen_requests.each do |li|
           .row.line-item
             .col-sm-4.col-12
@@ -43,7 +43,7 @@
     - if request.previously_submitted?
       .card-body.border-top
         %h4.card-title.font-weight-bold<
-          = t('requests.table.additional_services.header')
+          = SparcRequest.human_attribute_name(:additional_services)
         - request.additional_services.each do |li|
           .row.line-item
             .col-sm-4.col-12

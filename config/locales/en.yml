@@ -84,6 +84,8 @@ en:
         status: "Status"
         time_remaining: "Time Remaining"
         title: "Title"
+        specimen_requests: "Specimens Requested"
+        additional_services: "Services"
       sparc/protocol:
         research_master_id: "Research Master ID"
         title: "Title"
@@ -382,7 +384,6 @@ en:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"
       specimens:
-        header: "Specimens Requested"
         chart:
           header: "%{source} Sample Accrual"
           loading: "Loading..."
@@ -396,7 +397,6 @@ en:
           plural: "%{source} - %{amount_requested} samples &geq; %{min_sample_size}"
         progress: "Specimens Collected: %{received} / %{total}"
       additional_services:
-        header: "Services"
         progress: "Progress: %{current} / %{end}"
         complete: "This service has been completed"
         incomplete: "This service has not yet been completed"
@@ -430,11 +430,11 @@ en:
       services_header: "Services Requested"
       confirmation_email:
         subject: "New Request Confirmation"
+        request_info: "Living Biobank Request Information"
         text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
-        text2: "<strong>Request %{id}</strong> %{protocol_identifier}"
-        text3: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
-        text4: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
-        text5: "We look forward to working with you."
+        text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
+        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
+        text4: "We look forward to working with you."
         data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
       submission_email:
         subect: "New Request Application"
