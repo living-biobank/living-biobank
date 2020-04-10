@@ -68,6 +68,12 @@ module LabsHelper
     end
   end
 
+  def lab_retriever_information(lab)
+    content_tag :span do
+      icon('fas', 'user mr-1') + t('labs.table.retrieved.retriever', date: format_date(lab.retrieved_at)).html_safe
+    end
+  end
+
   def lab_discarder_information(lab)
     name =
       link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.discarder) }) +

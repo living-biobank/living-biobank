@@ -259,6 +259,8 @@ en:
       released:
         header: "Specimen Released To"
         releaser: "Released by %{name} on %{date}"
+      retrieved:
+        retriever: "Retrieved on %{date}"
       discarded:
         discarder: "Discarded by %{name} on %{date}"
         reason_blank: "Not Specified"

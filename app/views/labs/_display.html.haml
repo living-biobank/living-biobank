@@ -23,14 +23,18 @@
               %h4
                 %small.text-muted<
                   = lab_patient_information(lab)
-              - if lab.released? || lab.retrieved?
+              - if lab.line_item_id || lab.retrieved?
                 %h4.text-right
                   %small.text-muted<
                     = lab_releaser_information(lab)
-              - elsif lab.discarded?
+              - if lab.discarded?
                 %h4.text-right
-                  %small.text-muted<
+                  %small.text-danger<
                     = lab_discarder_information(lab)
+              - elsif lab.retrieved?
+                %h4.text-right
+                  %small.text-success<
+                    = lab_retriever_information(lab)
             - if lab.available?
               - if lab.line_items.any?
                 %h4.card-title.font-weight-bold
