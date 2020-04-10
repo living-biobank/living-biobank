@@ -27,7 +27,7 @@
                 %h4.text-right
                   %small.text-muted<
                     = lab_releaser_information(lab)
-              - if lab.discarded?
+              - if lab.discarded? && lab.discarder.present?
                 %h4.text-right
                   %small.text-danger<
                     = lab_discarder_information(lab)
