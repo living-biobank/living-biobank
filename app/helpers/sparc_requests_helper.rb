@@ -133,13 +133,13 @@ module SparcRequestsHelper
 
   def complete_request_button(sr)
     if sr.in_process? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:completed] })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip' }
+      link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:completed] })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.complete_confirm.title', id: sr.identifier), text: t('requests.complete_confirm.text') }
     end
   end
 
   def finalize_request_button(sr)
     if sr.pending? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:in_process] })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip' }
+      link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:in_process] })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.finalize_confirm.title', id: sr.identifier), text: t('requests.finalize_confirm.text') }
     end
   end
 
@@ -151,7 +151,7 @@ module SparcRequestsHelper
 
   def cancel_request_button(sr)
     if sr.pending?
-      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:cancelled] })), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip', confirm_swal: true }
+      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:cancelled] })), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip', confirm_swal: 'true' }
     end
   end
 

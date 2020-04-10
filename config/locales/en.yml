@@ -220,13 +220,14 @@ en:
   labs:
     header: "Lab Specimens"
     release_confirm:
-      title: "Release this specimen to<br>%{request}?"
+      title: "Release this specimen to<br>Request %{id}?"
     retrieve_confirm:
       title: "Specimen retrieved by requester?"
     cancel_confirm:
       title: "Change this specimen to <span class='text-warning'>%{available}</span>?"
     discard_confirm:
       title: "Discard this specimen?"
+      reason_placeholder: "Why was this specimen discarded? (Optional)"
     search:
       placeholder: "Verify Samples"
       found: "Specimens Found"
@@ -334,6 +335,12 @@ en:
       finalize: "Finalize Request"
       edit: "Edit Request"
       cancel: "Cancel Request"
+    finalize_confirm:
+      title: "Finalize Request %{id}?"
+      text: "This request will become eligible to receive specimens."
+    complete_confirm:
+      title: "Complete Request %{id}?"
+      text: "This request will no longer be eligible to receive additional specimens."
     form:
       new_title: "New Specimen Request"
       edit_title: "Edit Specimen Request %{id}"
