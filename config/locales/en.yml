@@ -278,7 +278,7 @@ en:
       reset_specimen: "Reset Specimen"
       discard_specimen:  "Discard Specimen"
   home:
-    header: "Living Biobank enables access to Clinical Specimens and Microbiome Data"
+    header: "Living Biobank enables access to clinical specimens and microbiome data"
     text1: "Living Biobank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
     text2: "Submissions of blood samples will result in blood specimens whereas those of microbiome will result in assay data."
     text3: "Living Biobank is an end-to-end workflow that allows investigators to acquire specimens/data based on clinical criteria from the electronic health records, e-phenotype, in a de-identified manner."
