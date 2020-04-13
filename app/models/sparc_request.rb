@@ -25,7 +25,7 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :protocol
 
   after_save :update_variables, if: :pending?
-  after_save :add_authorized_users, unless: :draft?
+  after_save :add_authorized_users, if: :pending?
 
   after_update :add_additional_services, if: :in_process?
 
