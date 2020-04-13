@@ -165,7 +165,7 @@ module SparcRequestsHelper
   end
 
   def edit_request_button(sr)
-    if sr.pending?
+    if sr.pending? || (sr.in_process? && (current_user.data_honest_broker? || current_user.admin?))
       link_to icon('fas', 'edit'), edit_sparc_request_path(sr, request_filter_params), remote: true, class: 'btn btn-warning edit-request ml-1', title: t(:requests)[:tooltips][:edit], data: { toggle: 'tooltip' }
     end
   end
