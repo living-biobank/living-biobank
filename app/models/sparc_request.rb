@@ -107,10 +107,15 @@ class SparcRequest < ApplicationRecord
   }
 
   def status=(status)
-    [:submitted, :finalized, :completed, :cancelled].each do |s|
-      if status == I18n.t(:requests)[:statuses][s]
-        self.send("#{s}_at=", DateTime.now)
-      end
+    case status
+    when I18n.t(:requests)[:statuses][:pending]
+      self.send("submitted_at=", DateTime.now)
+    when I18n.t(:requests)[:statuses][:in_process]
+      self.send("finalized_at=", DateTime.now)
+    when I18n.t(:requests)[:statuses][:completed]
+      self.send("completed_at=", DateTime.now)
+    when I18n.t(:requests)[:statuses][:cancelled]
+      self.send("cancelled_at=", DateTime.now)
     end
 
     super
@@ -190,10 +195,8 @@ class SparcRequest < ApplicationRecord
         )
       end
 
-      identity
-    end.map(&:email).join(',')
-
-    RequestMailer.with(request: self, email: email).manager_email.deliver_later
+      RequestMailer.with(request: self, user: User.new(first_name: identity.first_name, last_name: identity.last_name, email: identity.email)).manager_email.deliver_now
+    end
   end
 
   def add_additional_services

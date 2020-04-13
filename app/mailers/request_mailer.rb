@@ -18,9 +18,10 @@ class RequestMailer < ApplicationMailer
   end
 
   def manager_email
-    @request = params[:request]
+    @request  = params[:request]
+    @user     = params[:user]
 
-    mail(to: params[:email], subject: t(:mailers)[:request_mailer][:manager_email][:subject])
+    mail(to: @user.email, subject: t(:mailers)[:request_mailer][:manager_email][:subject])
   end
 
   def completion_email

@@ -84,8 +84,6 @@
         data = "";
       }
 
-      console.log(data);
-
       if (tagName === 'A' && href !== 'javascript:void(0)' && remote !== 'true') {
         window.location = href + data;
         NProgress.start();

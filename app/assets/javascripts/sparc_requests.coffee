@@ -234,3 +234,5 @@ $ ->
     meethod: 'GET'
     dataType: 'script'
     url: '/query_names'
+    data:
+      user_id: $('#sparc_request_user_id').val()

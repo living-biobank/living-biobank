@@ -80,7 +80,10 @@ class SparcRequestsController < ApplicationController
   end
 
   def update_status
-    if @sparc_request.update_columns(sparc_request_params.to_h)
+    @sparc_request.assign_attributes(sparc_request_params)
+
+    # Ignore validations, specifically for Draft requests
+    if @sparc_request.save(validate: false)
       RequestMailer.with(completer: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
 
       flash.now[:success] = t(:requests)[:updated]
