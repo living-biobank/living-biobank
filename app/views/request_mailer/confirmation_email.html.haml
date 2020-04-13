@@ -5,33 +5,33 @@
 %table
   %thead
     %tr
-      %th{ colspan: 2 }
+      %th{ colspan: 2, style: 'padding: 0.5rem;' }
         = t('mailers.request_mailer.confirmation_email.request_info')
   %tbody
     %tr
-      %th{ style: 'text-align:left;' }
+      %th{ style: 'text-align:right;padding: 0.5rem;' }
         = SparcRequest.human_attribute_name(:id)
-      %td
+      %td{ style: 'padding: 0.5rem;' }
         = @request.identifier
     %tr
-      %th{ style: 'text-align:left;' }
+      %th{ style: 'text-align:right;padding: 0.5rem;' }
         = SparcRequest.human_attribute_name(:protocol_id)
-      %td
+      %td{ style: 'padding: 0.5rem;' }
         = @request.protocol_id
     %tr
-      %th{ style: 'text-align:left;' }
+      %th{ style: 'text-align:right;padding: 0.5rem;' }
         = SPARC::Protocol.human_attribute_name(:short_title)
-      %td
+      %td{ style: 'padding: 0.5rem;' }
         = @request.protocol.short_title
     %tr
-      %th{ style: 'text-align:left;' }
+      %th{ style: 'text-align:right;padding: 0.5rem;' }
         = SparcRequest.human_attribute_name(:specimen_requests)
-      %td
+      %td{ style: 'padding: 0.5rem;' }
         - @request.specimen_requests.each do |sr|
           %p{ style: "margin:0;" }
             - plural = sr.number_of_specimens_requested > 1
             - if sr.group.process_sample_size
-              = "- " + raw(t("requests.table.specimens.line_item_with_sample_size.#{plural ? 'plural' : 'singular'}", source: sr.source.value, amount_requested: sr.number_of_specimens_requested, min_sample_size: sr.minimum_sample_size))
+              = raw("- " + t("requests.table.specimens.line_item_with_sample_size.#{plural ? 'plural' : 'singular'}", source: sr.source.value, amount_requested: sr.number_of_specimens_requested, min_sample_size: sr.minimum_sample_size))
             - else
               = "- " + t("requests.table.specimens.line_item_no_sample_size.#{plural ? 'plural' : 'singular'}", source: sr.source.value, amount_requested: sr.number_of_specimens_requested)
 %p
