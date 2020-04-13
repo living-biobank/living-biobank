@@ -363,6 +363,7 @@ en:
         rmid: "Please provide your <a href='https://rmid.musc.edu' target='blank'>Research Master ID</a>"
         rmid_not_found: "Research Master ID not found"
         rmid_server_down: "The Research Master ID server is unavailable at this time. Please try again later."
+        imported_from_rmid: "Imported from Research Master ID"
         protocol: "Search for an existing Protocol in SPARCRequest"
         protocol_found: "Imported data from Study #%{id}"
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"

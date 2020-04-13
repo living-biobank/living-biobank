@@ -23,7 +23,9 @@ class ProtocolsController < ApplicationController
         render json: { error: t(:requests)[:form][:subtext][:rmid_not_found], status: 404 }, status: 404
       else
         unless @protocol = SPARC::Protocol.find_by(research_master_id: params[:rmid])
-          render json: { title: @rmid_record['long_title'], short_title: @rmid_record['short_title'], status: 202 }, status: 202
+          primary_pi = SPARC::Directory.find_or_create(@rmid_record['principal_investigator']['net_id'])
+
+          render json: { title: @rmid_record['long_title'], short_title: @rmid_record['short_title'], primary_pi: { id: primary_pi.id, display_name: primary_pi.display_name }, status: 202 }, status: 202
         end
       end
     end

@@ -1,3 +1,5 @@
+require 'sparc/directory'
+
 module SPARC
   class Identity < SPARC::Base
     has_many :project_roles, dependent: :destroy
