@@ -1,5 +1,6 @@
 class SparcRequest < ApplicationRecord
   belongs_to :requester, class_name: "User", foreign_key: :user_id
+  belongs_to :updater, class_name: "User", foreign_key: :updated_by, optional: true
   belongs_to :finalizer, class_name: "User", foreign_key: :finalized_by, optional: true
   belongs_to :completer, class_name: "User", foreign_key: :completed_by, optional: true
   belongs_to :canceller, class_name: "User", foreign_key: :cancelled_by, optional: true
@@ -24,10 +25,10 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :update_variables, if: :pending?
-  after_save :add_authorized_users, if: :pending?
+  after_save :add_authorized_users, if: Proc.new{ |sr| sr.pending? && sr.sr.submitted_at_changed? }
 
-  after_update :add_additional_services, if: :in_process?
+  after_update :update_additional_services, if: :in_process?
+  after_update :update_variables, if: Proc.new{ |sr| sr.pending? || sr.in_process? }
 
   scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
 
@@ -118,7 +119,20 @@ class SparcRequest < ApplicationRecord
       self.send("cancelled_at=", DateTime.now)
     end
 
-    super
+    super(status)
+  end
+
+  def updated_by=(updater_id)
+    if updater_id != self.user_id
+      RequestMailer.with(request: self, user: self.requester).admin_update_email.deliver_later
+      RequestMailer.with(request: self, user: self.primary_pi).admin_update_email.deliver_later
+    end
+
+    super(updater_id)
+  end
+
+  def updated?
+    self.updated_at > self.created_at && self.updater
   end
 
   def completed?
@@ -179,6 +193,8 @@ class SparcRequest < ApplicationRecord
         end
       end
     end
+
+    self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
   def add_authorized_users
@@ -199,7 +215,7 @@ class SparcRequest < ApplicationRecord
     end
   end
 
-  def add_additional_services
+  def update_additional_services
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
     # Find or create an Identity for the requester
@@ -212,6 +228,8 @@ class SparcRequest < ApplicationRecord
         create_sparc_line_item(line_item, sr, requester)
       end
     end
+
+    self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
   private

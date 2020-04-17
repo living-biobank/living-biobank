@@ -16,9 +16,12 @@
     .card-body
       .d-flex.flex-wrap.justify-content-between
         - if request.previously_submitted?
-          %h4
+          %h4.d-flex.flex-column
             %small.text-muted<
               = requester_display(request)
+            - if request.updated?
+              %small.text-warning.mt-1<
+                = request_updater_display(request)
         %h4
           %small<
             - if request.completed? && request.completer.present?

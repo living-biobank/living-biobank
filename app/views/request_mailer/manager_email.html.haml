@@ -1,4 +1,4 @@
 %p
   = t('mailers.request_mailer.manager_email.text')
-%p
-  = link_to t('mailers.request_link'), sparc_request_url(@request), target: :_blank
+= render 'layouts/mailer/request_link', request: @request
+= render 'layouts/mailer/request_information', request: @request

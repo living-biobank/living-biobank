@@ -24,6 +24,13 @@ class RequestMailer < ApplicationMailer
     mail(to: @user.email, subject: t(:mailers)[:request_mailer][:manager_email][:subject])
   end
 
+  def admin_update_email
+    @request  = params[:request]
+    @user     = params[:user]
+
+    mail(to: @user.email, subject: t('mailers.request_mailer.admin_update_email.subject'))
+  end
+
   def completion_email
     @completer  = params[:completer]
     @request    = params[:request]

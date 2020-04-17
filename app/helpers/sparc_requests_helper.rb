@@ -62,6 +62,16 @@ module SparcRequestsHelper
     end
   end
 
+  def request_updater_display(sr)
+    name =
+      link_to(sr.updater.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block mx-1', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.updater) }) +
+      link_to(sr.updater.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none mx-1', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.updater) })
+
+    content_tag :span, class: 'd-inline-flex align-items-center flex-wrap' do
+      icon('fas', 'user mr-1') + t('requests.table.updater', name: name, date: format_date(sr.updated_at)).html_safe
+    end
+  end
+
   def request_completer_display(sr)
     name =
       link_to(sr.completer.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'right', container: 'body', trigger: 'manual', content: render('users/user_popover', user: sr.completer) }) +

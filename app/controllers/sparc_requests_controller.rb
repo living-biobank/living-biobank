@@ -50,8 +50,7 @@ class SparcRequestsController < ApplicationController
   end
 
   def edit
-    @is_draft             = @sparc_request.draft?
-    @sparc_request.status = t(:requests)[:statuses][:pending]
+    @is_draft = @sparc_request.draft?
 
     if @sparc_request.specimen_requests.none?
       @sparc_request.specimen_requests.build
@@ -67,7 +66,7 @@ class SparcRequestsController < ApplicationController
 
       flash.now[:success] = t(:requests)[:saved]
     else
-      if @sparc_request.update_attributes(sparc_request_params)
+      if @sparc_request.update_attributes(sparc_request_params.merge(updated_by: current_user.id))
         flash.now[:success] = t(:requests)[:updated]
       else
         @errors = @sparc_request.errors

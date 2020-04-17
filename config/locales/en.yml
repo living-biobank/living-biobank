@@ -379,6 +379,7 @@ en:
       sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
       requester: "Requested by %{name} %{time_elapsed} ago"
+      updater: "Updated by %{name} on %{date}"
       completer: "Completed by %{name} on %{date}"
       canceller: "Cancelled by %{name} on %{date}"
       duration:
@@ -414,6 +415,7 @@ en:
       header: "Specimen Release"
   mailers:
     greeting: "Dear %{name},"
+    request_info: "Living Biobank Request Information"
     request_link: "View Request"
     specimens_link: "View Specimens"
     footer:
@@ -431,7 +433,6 @@ en:
       services_header: "Services Requested"
       confirmation_email:
         subject: "New Request Confirmation"
-        request_info: "Living Biobank Request Information"
         text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
         text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
         text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
@@ -441,8 +442,11 @@ en:
         subect: "New Request Application"
         intro: "%{requester} submitted a new Living Biobank request on %{date}."
       manager_email:
-        Subject: "New Request Needing SPARC Submission"
+        subject: "New Request Pending SPARC Submission"
         text: "A new Living Biobank request has been submitted and is awaiting your review in SPARCRequest."
+      admin_update_email:
+        subject: "Administrative Updates to Your Request"
+        text: "An Administrator has made changes to your request. Please review your request to ensure that all information is correct."
       completion_email:
         subject: "Request Completed"
         completed_by: "%{user} completed a request on %{date}."
