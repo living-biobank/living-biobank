@@ -19,7 +19,7 @@ module SPARC
 
     validates_uniqueness_of :research_master_id, if: :rmid_enabled?
 
-    validate :rmid_valid?, if: :rmid_enabled?
+    validate :rmid_valid?, if: Proc.new{ |p| rmid_enabled? && p.research_master_id_changed? }
 
     validates_associated :primary_pi_role
 
