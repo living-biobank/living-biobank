@@ -66,7 +66,7 @@ module LabsHelper
       link_to(lab.releaser.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.releaser) })
 
     content_tag :span, class: 'text-muted' do
-      icon('fas', 'user mr-1') + t('labs.table.releaser', name: name, date: format_date(lab.released_at)).html_safe
+      icon('fas', 'user mr-1') + t("labs.table.#{lab.releaser == current_user ? 'releaser_self' : 'releaser'}", name: name, date: format_date(lab.released_at)).html_safe
     end
   end
 
@@ -82,7 +82,7 @@ module LabsHelper
       link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.discarder) })
 
     content_tag :span, class: 'text-danger' do
-      icon('fas', 'user mr-1') + t('labs.table.discarder', name: name, date: format_date(lab.discarded_at)).html_safe
+      icon('fas', 'user mr-1') + t("labs.table.#{lab.discarder == current_user ? 'discarder_self' : 'discarder'}", name: name, date: format_date(lab.discarded_at)).html_safe
     end
   end
 

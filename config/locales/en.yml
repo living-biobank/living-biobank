@@ -258,9 +258,10 @@ en:
         samples_needed:
           singular: "%{requested_number} Sample %{requested_size}"
           plural: "%{requested_number} Samples %{requested_size}"
-      released_header: ""
+      releaser_self: "You released this specimen on %{date}"
       releaser: "Released by %{name} on %{date}"
       retriever: "Retrieved on %{date}"
+      discarder_self: "You discarded this specimen on %{date}"
       discarder: "Discarded by %{name} on %{date}"
       discard_reason_blank: "Not Specified"
     tooltips:
@@ -378,9 +379,13 @@ en:
       header: "Request %{id}"
       sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
+      requester_self: "You made this request %{time_elapsed} ago"
       requester: "Requested by %{name} %{time_elapsed} ago"
+      updater_self: "You updated this request on %{date}"
       updater: "Updated by %{name} on %{date}"
+      completer_self: "You completed this requeest on %{date}"
       completer: "Completed by %{name} on %{date}"
+      canceller_self: "You cancelled this request on %{date}"
       canceller: "Cancelled by %{name} on %{date}"
       duration:
         remaining: "%{duration} remaining"

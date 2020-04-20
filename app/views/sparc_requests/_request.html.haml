@@ -15,13 +15,13 @@
   .collapse{ class: ["request-#{request.id}-collapse", request.cancelled? ? '' : 'show'] }
     .card-body
       .d-flex.flex-wrap.justify-content-between
-        - if request.previously_submitted?
-          %h4.d-flex.flex-column
+        %h4.d-flex.flex-column
+          - if request.previously_submitted?
             %small.text-muted<
               = requester_display(request)
-            - if request.updated?
-              %small.text-warning.mt-1<
-                = request_updater_display(request)
+          - if request.updated?
+            %small.text-warning.mt-1<
+              = request_updater_display(request)
         %h4
           %small<
             - if request.completed? && request.completer.present?

@@ -58,7 +58,7 @@ module SparcRequestsHelper
       link_to(sr.requester.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none mx-1', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.requester) })
 
     content_tag :span, class: 'd-inline-flex align-items-center flex-wrap' do
-      icon('fas', 'user mr-1') + t('requests.table.requester', name: name, time_elapsed: distance_of_time_in_words(sr.submitted_at, DateTime.now.utc)).html_safe
+      icon('fas', 'user mr-1') + t("requests.table.#{sr.requester == current_user ? 'requester_self' : 'requester'}", name: name, time_elapsed: distance_of_time_in_words(sr.submitted_at, DateTime.now.utc)).html_safe
     end
   end
 
@@ -68,7 +68,7 @@ module SparcRequestsHelper
       link_to(sr.updater.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none mx-1', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.updater) })
 
     content_tag :span, class: 'd-inline-flex align-items-center flex-wrap' do
-      icon('fas', 'user mr-1') + t('requests.table.updater', name: name, date: format_date(sr.updated_at)).html_safe
+      icon('fas', 'user mr-1') + t("requests.table.#{sr.updater == current_user ? 'updater_self' : 'updater' }", name: name, date: format_date(sr.updated_at)).html_safe
     end
   end
 
@@ -78,7 +78,7 @@ module SparcRequestsHelper
       link_to(sr.completer.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.completer) })
 
     content_tag :span, class: 'text-success' do
-      icon('fas', 'user mr-1') + t('requests.table.completer', name: name, date: format_date(sr.completed_at)).html_safe
+      icon('fas', 'user mr-1') + t("requests.table.#{sr.completer == current_user ? 'completer_self' : 'completer'}", name: name, date: format_date(sr.completed_at)).html_safe
     end
   end
 
@@ -88,7 +88,7 @@ module SparcRequestsHelper
       link_to(sr.canceller.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: sr.canceller) })
 
     content_tag :span, class: 'text-danger' do
-      icon('fas', 'user mr-1') + t('requests.table.canceller', name: name, date: format_date(sr.cancelled_at)).html_safe
+      icon('fas', 'user mr-1') + t("requests.table.#{sr.canceller == current_user ? 'canceller_self' : 'canceller'}", name: name, date: format_date(sr.cancelled_at)).html_safe
     end
   end
 
