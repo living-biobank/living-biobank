@@ -25,7 +25,7 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :add_authorized_users, if: Proc.new{ |sr| sr.pending? && sr.submitted_at_changed? }
+  after_save :add_authorized_users, if: Proc.new{ |sr| sr.pending? && !self.updated? }
 
   after_update :update_additional_services, if: :in_process?
   after_update :update_variables, if: Proc.new{ |sr| sr.pending? || sr.in_process? }
@@ -125,7 +125,9 @@ class SparcRequest < ApplicationRecord
   def updated_by=(updater_id)
     if updater_id != self.user_id && self.valid?
       RequestMailer.with(request: self, user: self.requester).admin_update_email.deliver_later
-      RequestMailer.with(request: self, user: self.primary_pi).admin_update_email.deliver_later
+      unless self.requester == self.primary_pi
+        RequestMailer.with(request: self, user: self.primary_pi).admin_update_email.deliver_later
+      end
     end
 
     super(updater_id)
@@ -211,7 +213,7 @@ class SparcRequest < ApplicationRecord
         )
       end
 
-      RequestMailer.with(request: self, user: User.new(first_name: identity.first_name, last_name: identity.last_name, email: identity.email)).manager_email.deliver_now
+      RequestMailer.with(request: self, user: identity).manager_email.deliver_now
     end
   end
 
