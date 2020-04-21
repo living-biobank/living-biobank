@@ -443,9 +443,6 @@ en:
         text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
         text4: "We look forward to working with you."
         data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
-      submission_email:
-        subect: "New Request Application"
-        intro: "%{requester} submitted a new Living Biobank request on %{date}."
       manager_email:
         subject: "New Request Pending SPARC Submission"
         text: "A new Living Biobank request has been submitted and is awaiting your review in SPARCRequest."
@@ -461,7 +458,7 @@ en:
         text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
     specimen_mailer:
       release_email:
-        subject: "Specimen Pick-up Request"
+        subject: "A Specimen is Ready for Pick-up"
       discard_email:
         subject: "Specimen Discard Notification"
     user_permissions_mailer:

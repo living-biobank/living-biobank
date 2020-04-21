@@ -36,7 +36,6 @@ class SparcRequestsController < ApplicationController
     else
       if @sparc_request.save
         RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
-        RequestMailer.with(requester: current_user, request: @sparc_request).submission_email.deliver_later
 
         flash.now[:success] = t(:requests)[:created]
       else
