@@ -4,7 +4,8 @@ class SpecimenMailer < ApplicationMailer
   default from: ENV.fetch('REPLY_EMAIL')
 
   def release_email
-    @group    = params[:group]
+    @specimen = params[:specimen]
+    @group    = @specimen.group
     @request  = params[:request]
     @user     = @request.requester
 
@@ -12,7 +13,8 @@ class SpecimenMailer < ApplicationMailer
   end
 
   def discard_email
-    @group    = params[:group]
+    @specimen = params[:specimen]
+    @group    = @specimen.group
     @request  = params[:request]
     @user     = @request.requester
 

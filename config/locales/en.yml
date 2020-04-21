@@ -422,6 +422,7 @@ en:
     greeting: "Dear %{name},"
     request_info: "Living Biobank Request Information"
     request_link: "View Request"
+    specimen_id: "Specimen ID: %{id}"
     specimens_link: "View Specimens"
     footer:
       text: "The Living Biobank Team"
@@ -459,6 +460,7 @@ en:
     specimen_mailer:
       release_email:
         subject: "A Specimen is Ready for Pick-up"
+        text: "Please have your specimen ID readily available in order to speed up the pick-up process."
       discard_email:
         subject: "Specimen Discard Notification"
     user_permissions_mailer:

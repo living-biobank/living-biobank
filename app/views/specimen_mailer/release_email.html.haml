@@ -1,3 +1,10 @@
 = @group.release_email
+- unless @group.notify_when_all_specimens_released
+  %p{ style: 'margin-bottom: 0;' }
+    %strong
+      = t('mailers.specimen_mailer.release_email.text')
+  %p{ style: 'margin-top: 0;' }
+    %strong
+      = t('mailers.specimen_id', id: @specimen.identifier)
 = render 'layouts/mailer/request_link', request: @request
 = render 'layouts/mailer/request_information', request: @request

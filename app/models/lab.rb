@@ -203,11 +203,11 @@ class Lab < ApplicationRecord
 
   def send_emails
     if self.released? && (!self.group.notify_when_all_specimens_released? || self.line_item.complete?)
-      SpecimenMailer.with(group: self.group, request: self.sparc_request).release_email.deliver_later
+      SpecimenMailer.with(specimen: self, request: self.sparc_request).release_email.deliver_later
     end
 
-    if self.discarded? && self.sparc_request
-      SpecimenMailer.with(group: self.group, request: self.sparc_request).discard_email.deliver_later
+    if self.discarded? && self.sparc_request && !self.group.notify_when_all_specimens_released?
+      SpecimenMailer.with(specimen: self, request: self.sparc_request).discard_email.deliver_later
     end
   end
 end
