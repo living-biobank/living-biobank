@@ -9,7 +9,7 @@ class SpecimenMailer < ApplicationMailer
     @request  = params[:request]
     @user     = @request.requester
 
-    mail(to: @user.email, subject: t(:mailers)[:specimen_mailer][:release_email][:subject])
+    mail(to: @user.email, subject: t("mailers.specimen_mailer.release_email.#{@group.notify_when_all_specimens_released? ? 'subject_batch' : 'subject_individual'}"))
   end
 
   def discard_email

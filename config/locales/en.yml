@@ -422,7 +422,6 @@ en:
     greeting: "Dear %{name},"
     request_info: "Living Biobank Request Information"
     request_link: "View Request"
-    specimen_id: "Specimen ID: %{id}"
     specimens_link: "View Specimens"
     footer:
       text: "The Living Biobank Team"
@@ -459,8 +458,10 @@ en:
         text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
     specimen_mailer:
       release_email:
-        subject: "A Specimen is Ready for Pick-up"
-        text: "Please have your specimen ID readily available in order to speed up the pick-up process."
+        subject_batch: "Specimens are Ready for Processing"
+        subject_individual: "A Specimen is Ready for Pick-up"
+        specimen_batch_text: "%{number_of_specimens_requested} %{specimen_type} specimens you requested are ready for processing."
+        specimen_id_text: "A specimen you requested is ready for pick-up. Your specimen ID is <strong>%{specimen_id}</strong>. Please have this number ready in order to speed up the pick-up process."
       discard_email:
         subject: "Specimen Discard Notification"
     user_permissions_mailer:
