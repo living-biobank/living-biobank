@@ -59,6 +59,8 @@ class SparcRequest < ApplicationRecord
 
     eager_load(:requester, specimen_requests: :source).where(protocol_id: queried_protocol_ids).
     where(SparcRequest.arel_table[:status].matches("%#{term}%")
+    ).or(
+      eager_load(:requester, specimen_requests: :source).where(SparcRequest.arel_table[:id].matches("#{term.to_i}%"))
     ).or( # Search by Releaser First Name
       eager_load(:requester, specimen_requests: :source).where(User.arel_table[:first_name].matches("%#{term}%"))
     ).or( # Search by Releaser Last Name
@@ -110,7 +112,9 @@ class SparcRequest < ApplicationRecord
   def status=(status)
     case status
     when I18n.t(:requests)[:statuses][:pending]
-      self.send("submitted_at=", DateTime.now)
+      if self.submitted_at.blank?
+        self.send("submitted_at=", DateTime.now)
+      end
     when I18n.t(:requests)[:statuses][:in_process]
       self.send("finalized_at=", DateTime.now)
     when I18n.t(:requests)[:statuses][:completed]

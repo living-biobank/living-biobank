@@ -98,7 +98,7 @@ class Lab < ApplicationRecord
     # Now combine all of the labs together and that's our result
     joins(:patient, source: :group).where(id: queried_released_labs.ids + queried_available_labs.ids
     ).or(
-      joins(:patient, source: :group).where("#{Lab.quoted_table_name}.`id` LIKE ?", "#{term}%")
+      joins(:patient, source: :group).where(Lab.arel_table[:id].matches("#{term.to_i}%"))
     ).or(
       joins(:patient, source: :group).where(Lab.arel_table[:status].matches("%#{term}%"))
     ).or(
