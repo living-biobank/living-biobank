@@ -67,6 +67,13 @@ class SparcRequestsController < ApplicationController
     else
       if @sparc_request.update_attributes(sparc_request_params.merge(updated_by: current_user.id))
         flash.now[:success] = t(:requests)[:updated]
+
+        if current_user != @sparc_request.requester
+          RequestMailer.with(request: @sparc_request, user: @sparc_request.requester).admin_update_email.deliver_later
+          unless @sparc_request.requester == @sparc_request.primary_pi
+            RequestMailer.with(request: @sparc_request, user: @sparc_request.primary_pi).admin_update_email.deliver_later
+          end
+        end
       else
         @errors = @sparc_request.errors
       end

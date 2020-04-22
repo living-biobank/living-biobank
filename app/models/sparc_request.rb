@@ -126,17 +126,6 @@ class SparcRequest < ApplicationRecord
     super(status)
   end
 
-  def updated_by=(updater_id)
-    if updater_id != self.user_id && self.valid?
-      RequestMailer.with(request: self, user: self.requester).admin_update_email.deliver_later
-      unless self.requester == self.primary_pi
-        RequestMailer.with(request: self, user: self.primary_pi).admin_update_email.deliver_later
-      end
-    end
-
-    super(updater_id)
-  end
-
   def updated?
     self.updated_at > self.created_at && self.updater
   end
