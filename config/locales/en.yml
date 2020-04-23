@@ -460,7 +460,7 @@ en:
       release_email:
         subject_batch: "Specimens are Ready for Processing"
         subject_individual: "A Specimen is Ready for Pick-up"
-        specimen_batch_text: "%{number_of_specimens_requested} %{specimen_type} specimens you requested have been collected and are ready for processing."
+        specimen_batch_text: "%{number_of_specimens_requested} %{specimen_type} specimen(s) you requested have been collected and are ready for processing."
         specimen_id_text: "A specimen you requested is ready for pick-up. Your specimen ID is <strong>%{specimen_id}</strong>. Please have this number ready in order to speed up the pick-up process."
       discard_email:
         subject: "Specimen Discard Notification"

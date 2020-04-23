@@ -19,5 +19,6 @@ module SparcBiobank
     config.i18n.available_locales = %(en)
 
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
+    config.active_job.queue_adapter = :delayed_job
   end
 end
