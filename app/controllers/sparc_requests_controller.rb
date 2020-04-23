@@ -65,8 +65,18 @@ class SparcRequestsController < ApplicationController
 
       flash.now[:success] = t(:requests)[:saved]
     else
-      if @sparc_request.update_attributes(sparc_request_params.merge(updated_by: current_user.id))
-        flash.now[:success] = t(:requests)[:updated]
+      if @sparc_request.draft?
+        params[:sparc_request][:status] = t(:requests)[:statuses][:pending] 
+      else
+        params[:sparc_request][:updated_by] = current_user.id
+      end
+
+      if @sparc_request.update_attributes(sparc_request_params)
+        if @sparc_request.updater.present?
+          flash.now[:success] = t(:requests)[:updated]
+        else
+          flash.now[:success] = t(:requests)[:created]
+        end
 
         if current_user != @sparc_request.requester
           RequestMailer.with(request: @sparc_request, user: @sparc_request.requester).admin_update_email.deliver_later
@@ -138,6 +148,7 @@ class SparcRequestsController < ApplicationController
       :status,
       :finalized_at,
       :finalized_by,
+      :updated_by,
       :completed_by,
       :cancelled_by,
       protocol_attributes: [
