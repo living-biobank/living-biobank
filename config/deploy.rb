@@ -18,3 +18,5 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log',
                                                'tmp/sockets',
                                                'public/system'
                                               )
+
+after "deploy:restart", "delayed_job:restart"
