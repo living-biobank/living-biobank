@@ -1,6 +1,4 @@
 class RequestMailer < ApplicationMailer
-  default from: ENV.fetch('NO_REPLY_EMAIL')
-
   def job_error
     @lab        = params[:lab]
     @job        = params[:job]

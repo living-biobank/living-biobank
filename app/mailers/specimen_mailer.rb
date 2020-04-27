@@ -1,8 +1,6 @@
 class SpecimenMailer < ApplicationMailer
   add_template_helper(ApplicationHelper)
 
-  default from: ENV.fetch('REPLY_EMAIL')
-
   def release_email
     @specimen = params[:specimen]
     @group    = @specimen.group

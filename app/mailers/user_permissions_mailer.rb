@@ -1,6 +1,4 @@
 class UserPermissionsMailer < ApplicationMailer
-  default from: ENV.fetch('NO_REPLY_EMAIL')
-
   def permissions_changed(user, changes)
     @user = user
 

@@ -1,8 +1,6 @@
 class RequestMailer < ApplicationMailer
   add_template_helper(ApplicationHelper)
 
-  default from: ENV.fetch('NO_REPLY_EMAIL')
-
   def confirmation_email
     @user     = params[:user]
     @request  = params[:request]

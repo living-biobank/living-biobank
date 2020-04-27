@@ -3,6 +3,6 @@
     = t('mailers.footer.text')
 
 %p{ style: 'margin:0' }
-  = link_to ENV.fetch('REPLY_EMAIL'), "mailto:#{ENV.fetch('REPLY_EMAIL')}"
+  = link_to ENV.fetch('LBB_EMAIL'), "mailto:#{ENV.fetch('LBB_EMAIL')}"
 %p{ style: 'margin:0' }
   = link_to root_url, root_url
