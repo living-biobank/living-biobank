@@ -1,5 +1,5 @@
 - content_for :header do
-  = render 'help/header'
+  = render 'pages/help_header'
 
 .row
   .col-12.col-lg-8.d-flex.mb-3.mb-md-4
@@ -22,11 +22,9 @@
               .d-flex.flex-column
                 %h5.font-weight-bold
                   = t(:home)[:links][:help3][:text]
-                %ul.pl-3.mb-0
-                  %li
-                    = link_to t(:home)[:links][:help3][:link1], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
-                  %li
-                    = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
+                = link_to t(:home)[:links][:help3][:link1], user_guide_path, target: :_blank
+                = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
+                = link_to t(:home)[:links][:help3][:link3], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
   .col-12.col-lg-4.d-flex.mb-3.mb-md-4
     .card.flex-fill
       .card-header

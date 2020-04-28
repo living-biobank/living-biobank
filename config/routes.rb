@@ -32,7 +32,9 @@ Rails.application.routes.draw do
 
   get 'directory/index', to: 'directory#index'
 
-  get '/help', to: 'help#index'
+  get '/help',        to: 'pages#help', as: 'help'
+  get '/user_guide',  to: 'pages#user_guide', as: 'user_guide'
+
   get '/404', to: 'errors#not_found'
   get '/422', to: 'errors#unacceptable'
   get '/500', to: 'errors#internal_error'
