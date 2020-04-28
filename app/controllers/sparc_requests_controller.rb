@@ -31,7 +31,7 @@ class SparcRequestsController < ApplicationController
     if params[:save_draft]
       if !SPARC::Protocol.rmid_enabled? || (SPARC::Protocol.rmid_enabled? && @sparc_request.protocol.research_master_id.present?)
         @sparc_request.status = t(:requests)[:statuses][:draft]
-        @sparc_request.specimen_requests.each{ |sr| sr.source_id = 0 }
+        @sparc_request.specimen_requests.each{ |sr| sr.source_id ||= 0 }
         @sparc_request.save(validate: false)
         flash.now[:success] = t(:requests)[:saved]
       else
@@ -66,6 +66,7 @@ class SparcRequestsController < ApplicationController
   def update
     if params[:save_draft]
       @sparc_request.assign_attributes(sparc_request_params)
+      @sparc_request.specimen_requests.each{ |sr| sr.source_id ||= 0 }
       @sparc_request.save(validate: false)
 
       flash.now[:success] = t(:requests)[:saved]
