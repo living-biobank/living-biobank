@@ -361,7 +361,7 @@ en:
         primary_pi: "e.g. Smith"
         minimum_sample: "e.g. 2mL"
       subtext:
-        rmid: "Please provide your <a href='https://rmid.musc.edu' target='blank'>Research Master ID</a>"
+        rmid: "Please provide your Study's <strong>Research Master ID</strong> or visit <a href='https://rmid.musc.edu' target='blank'>rmid.musc.edu</a> to create one."
         rmid_not_found: "Research Master ID not found"
         rmid_server_down: "The Research Master ID server is unavailable at this time. Please try again later."
         imported_from_rmid: "Imported from Research Master ID"

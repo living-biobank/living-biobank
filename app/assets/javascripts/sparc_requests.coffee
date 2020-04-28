@@ -144,6 +144,7 @@ $ ->
     $form = $('form#sparcRequestForm')
     $form.append("<input name='save_draft' type='hidden' value='true' />")
     Rails.fire($form[0], 'submit')
+    $("[name='save_draft']").remove()
 
   $.rails = {
     allowAction: ($el) ->

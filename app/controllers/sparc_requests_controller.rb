@@ -29,10 +29,15 @@ class SparcRequestsController < ApplicationController
     @sparc_request = current_user.sparc_requests.new(sparc_request_params)
 
     if params[:save_draft]
-      @sparc_request.status = t(:requests)[:statuses][:draft]
-      @sparc_request.save(validate: false)
-
-      flash.now[:success] = t(:requests)[:saved]
+      if !SPARC::Protocol.rmid_enabled? || (SPARC::Protocol.rmid_enabled? && @sparc_request.protocol.research_master_id.present?)
+        @sparc_request.status = t(:requests)[:statuses][:draft]
+        @sparc_request.specimen_requests.each{ |sr| sr.source_id = 0 }
+        @sparc_request.save(validate: false)
+        flash.now[:success] = t(:requests)[:saved]
+      else
+        @sparc_request.protocol.errors.add(:research_master_id, :invalid)
+        @errors = @sparc_request.protocol.errors
+      end
     else
       if @sparc_request.save
         RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
@@ -75,6 +80,7 @@ class SparcRequestsController < ApplicationController
         if @sparc_request.updater.present?
           flash.now[:success] = t(:requests)[:updated]
         else
+          RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
           flash.now[:success] = t(:requests)[:created]
         end
 

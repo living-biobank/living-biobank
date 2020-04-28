@@ -1,8 +1,8 @@
 class SpecimensAvailableMailer < ApplicationMailer
-  def available_email(lab_honest_broker, group)
-    @lab_honest_broker  = lab_honest_broker
-    @group              = group
+  def available_email
+    @user   = params[:user]
+    @group  = params[:group]
 
-    mail(to: lab_honest_broker.email, subject: t('mailers.specimens_available_mailer.available_email.subject', group: group.name))
+    mail(to: @user.email, subject: t('mailers.specimens_available_mailer.available_email.subject', group: @group.name))
   end
 end

@@ -4,7 +4,7 @@ namespace :email_tasks do
     Group.all.each do |group|
       if group.labs.where(status: (I18n.t(:labs)[:statuses][:available])).any?
         group.lab_honest_brokers.each do |lhb|
-  		    SpecimensAvailableMailer.available_email(lhb, group).deliver_now
+  		    SpecimensAvailableMailer.with(user: lhb, group: group).available_email.deliver_now
         end
       end
     end

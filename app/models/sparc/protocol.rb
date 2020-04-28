@@ -11,15 +11,15 @@ module SPARC
     has_many :service_requests, dependent: :destroy
     has_many :sub_service_requests, dependent: :destroy
 
-    validates_presence_of :research_master_id, if: :rmid_enabled?
+    validates_presence_of :research_master_id, if: Proc.new{ |p| Protocol.rmid_enabled? }
     validates_presence_of :short_title, :title, :funding_status, :start_date, :end_date, :next_ssr_id
     validates_presence_of :funding_source, if: Proc.new{ |p| p.funded? || p.funding_status.blank? }
     validates_presence_of :potential_funding_source, if: Proc.new{ |p| !p.funded? }
     validates_presence_of :sponsor_name
 
-    validates_uniqueness_of :research_master_id, if: :rmid_enabled?
+    validates_uniqueness_of :research_master_id, if: Proc.new{ |p| Protocol.rmid_enabled? && p.research_master_id.present? }
 
-    validate :rmid_valid?, if: Proc.new{ |p| rmid_enabled? && p.research_master_id_changed? }
+    validate :rmid_valid?, if: Proc.new{ |p| Protocol.rmid_enabled? && p.research_master_id_changed? }
 
     validates_associated :primary_pi_role
 
@@ -40,6 +40,10 @@ module SPARC
         where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
       )
     }
+
+    def self.rmid_enabled?
+      SPARC::Setting.get_value('research_master_enabled') || false
+    end
 
     def self.get_rmid(rmid)
       begin
@@ -80,10 +84,6 @@ module SPARC
 
     def default_values
       self.next_ssr_id ||= 1
-    end
-
-    def rmid_enabled?
-      SPARC::Setting.get_value('research_master_enabled') || false
     end
 
     def rmid_valid?
