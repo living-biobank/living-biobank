@@ -18,20 +18,22 @@
       %p
         = t(:home)[:text4]
       .d-flex.justify-content-between.flex-wrap
-        .d-flex.flex-column.mb-3
+        .d-flex.flex-column.mb-3.mb-md-4
           %h5.font-weight-bold
             = t(:home)[:links][:help1][:text]
           = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
-        .d-flex.flex-column.mb-3
+        .d-flex.flex-column.mb-3.mb-md-4
           %h5.font-weight-bold
             = t(:home)[:links][:help2][:text]
           = link_to t(:home)[:links][:help2][:link], "https://www.actnetwork.us/national/act-local-landing-pages-46EU-1434P4.html", target: :_blank
-        .d-flex.flex-column.mb-3
+        .d-flex.flex-column.mb-3.mb-md-4
           %h5.font-weight-bold
             = t(:home)[:links][:help3][:text]
-          = link_to t(:home)[:links][:help3][:link1], user_guide_path, target: :_blank
           = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
           = link_to t(:home)[:links][:help3][:link3], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
+      %h5.text-center.mb-3.mb-md-4
+        = t('home.user_guide').html_safe
+
       - if Rails.env.development? || Rails.env.test?
         %h3.text-center
           = t(:home)[:login][:header]

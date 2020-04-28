@@ -293,12 +293,15 @@ en:
         link: "Access your participating site's i2b2"
       help3:
         text: "Guides & FAQs"
-        link1: "Living Biobank User Guide"
         link2: "i2b2 User Guide"
         link3: "i2b2 FAQ"
+      help4:
+        text: "Living Biobank How-To Guide"
+        link: "User Guide"
       contact:
         header: "Living Biobank Support"
         link: "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>"
+    user_guide: "New to Living Biobank? Click <a href='LBB_Guide_v1.1.pptx'>here</a> to download our How-To guide!"
     login:
       header: "Developer Login"
       net_id: "NetID"
