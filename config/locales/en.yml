@@ -55,9 +55,11 @@ en:
   activerecord:
     attributes:
       group:
-        notify_when_all_specimens_released: "When to send the Specimen Release Email"
-        release_email: "Specimen Release Email"
         discard_email: "Specimen Discard Email"
+        display_patient_information: "Include patient names alongside other patient information?"
+        notify_when_all_specimens_released: "When should release emails be sent?"
+        process_sample_size: "Require a Minimum Sample Size per specimen?"
+        release_email: "Specimen Release Email"
       lab:
         accession_number: "Accession Number"
         discard_reason: "Reason for Discard"
@@ -206,13 +208,14 @@ en:
         name: "Name"
         sources: "Specimen Sources"
         manage: "Manage"
-        edit_release_email: "Edit Release Email"
-        edit_discard_email: "Edit Discard Email"
       table:
         variables: "Pending Variable Services"
         services: "In Process Additional Services"
       form:
         header: "Manage %{name} Group"
+        release_email_time:
+          all_samples: "After All Samples Released"
+          each_sample: "After Each Sample Released"
         release_email_info: "Note: A greeting and signature will be added automatically."
       tooltips:
         edit: "Edit Group"
@@ -425,7 +428,7 @@ en:
   mailers:
     greeting: "Dear %{name},"
     request_info: "Living Biobank Request Information"
-    request_link: "View Request"
+    request_link: "View Living BioBank Request"
     specimens_link: "View Specimens"
     footer:
       text: "The Living Biobank Team"
@@ -456,11 +459,16 @@ en:
       completion_email:
         subject: "Request Completed"
         completed_by: "%{user} completed a request on %{date}."
-    specimens_available_mailer:
+    service_mailer:
+      locked_email:
+        subject: "New Living Biobank request with locked SPARCRequest service"
+        sparc_link: "View in SPARCRequest"
+        text1: "You are being contacted because you are a SPARCRequest service provider for the <strong>%{service}</strong> service."
+        text2: "A new Living BioBank request has been submitted submitted which includes this service, but alocked service was found on the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask that you take the necessary steps to determine how you wish to process this additional service."
+    specimen_mailer:
       available_email: 
         subject: "%{group} Specimens Are Available"
         text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
-    specimen_mailer:
       release_email:
         subject_batch: "Specimens are Ready for Processing"
         subject_individual: "A Specimen is Ready for Pick-up"

@@ -3,6 +3,7 @@ require 'sparc/directory'
 module SPARC
   class Identity < SPARC::Base
     has_many :project_roles, dependent: :destroy
+    has_many :service_providers, dependent: :destroy
     has_many :labs
 
     devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable

@@ -1,6 +1,13 @@
 class SpecimenMailer < ApplicationMailer
   add_template_helper(ApplicationHelper)
 
+  def available_email
+    @user   = params[:user]
+    @group  = params[:group]
+
+    mail(to: @user.email, subject: t('mailers.specimen_mailer.available_email.subject', group: @group.name))
+  end
+
   def release_email
     @specimen = params[:specimen]
     @group    = @specimen.group
