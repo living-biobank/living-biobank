@@ -86,6 +86,7 @@ en:
         title: "Title"
         specimen_requests: "Specimens Requested"
         additional_services: "Services"
+        dr_consult: "I have completed the Research Data Consult Mini Form linked above"
       sparc/protocol:
         research_master_id: "Research Master ID"
         title: "Title"
@@ -360,6 +361,7 @@ en:
         specimens: "Request Specimens"
       fields:
         protocol_search: "SPARCRequest Protocol"
+        minimum_sample_size: "Minimum Sample Size (milliliters)"
       placeholders:
         protocol_search: "Search for your Protocol by SRID, title, or short title"
         primary_pi: "e.g. Smith"
@@ -475,7 +477,7 @@ en:
       data_honest_broker_removed: "Your data honest broker privileges were removed"
       lab_honest_broker_granted: "You were made an honest broker for the following groups:"
       lab_honest_broker_removed: "Your honest broker privileges were removed for the following groups:"
-      subject: "Biobank User Privileges Change"
+      subject: "Living Biobank User Privileges Change"
       permissions_changed_email:
         text1: "You are receiving this email because the following changes have been made to your user privileges within Living Biobank: "
         text2: "If you have any questions, please contact one of the system administrators."

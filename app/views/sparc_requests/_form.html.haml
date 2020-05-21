@@ -9,7 +9,6 @@
       = f.hidden_field :id
       = f.hidden_field :protocol_id
       = f.hidden_field :status
-      = f.hidden_field :user_id
 
       .modal-header
         %h4.modal-title
@@ -89,8 +88,27 @@
               = ff_p.text_field :sponsor_name, class: 'form-control', readonly: protocol_persisted && protocol_valid
             = ff_p.fields_for :research_types_info do |ff_rti|
               = ff_rti.hidden_field :id
+        %section.border-top.border-bottom
+          %h4.mt-4
+            = "Request Data"
+          %p.form-text.text-muted.m-0
+            = "As part of this Living BioBank request, a data request consult is necessary to:"
+            %ul.text-muted
+              %li
+                = "Review regulatory requirements associated with the request"
+              %li
+                = "Confirm and/or refine the i2b2 e-phenotype(s) to ensure accuracy in capturing the intended population"
+              %li
+                = "Determine the need for associated clinical patient data from medical records"
+            .text-muted
+              = "Please complete the Research Data Consult Mini Form by visiting "
+              = link_to "this link", "https://redcap.musc.edu/surveys/?s=T7YXHADCY9"
+          %p.form-group
+            = f.label :dr_consult, class: 'required'
+            = f.check_box :dr_consult
+               
         %section
-          %h4.m-0
+          %h4.mt-4
             = t(:requests)[:form][:headers][:specimens]
           .form-group
             %p.form-text.text-muted.m-0
@@ -108,7 +126,7 @@
                 = ff_li.label :number_of_specimens_requested, class: 'required'
                 = ff_li.text_field :number_of_specimens_requested, class: 'form-control specimens-requested', min: 1, maxlength: 7
               .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
-                = ff_li.label :minimum_sample_size, class: 'required'
+                = ff_li.label t(:requests)[:form][:fields][:minimum_sample_size], class: 'required'
                 = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample], maxlength: 30
               .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
                 %label.w-100 &nbsp;

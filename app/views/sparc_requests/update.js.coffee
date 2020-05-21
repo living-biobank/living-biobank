@@ -2,6 +2,11 @@
 $("[id^='sparc_request_'], [id=primary_pi_search]").parents('.form-group').removeClass('is-invalid').addClass('is-valid')
 $('.form-error').remove()
 
+# Data Request Consult Error
+<% if @errors[:dr_consult].present? %>
+$("#sparc_request_dr_consult").parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= @errors[:dr_consult].first.capitalize %></small>")
+<% end %>
+
 # Protocol Errors
 <% @sparc_request.protocol.errors.messages.each do |attr, messages| %>
 <% messages.each do |message| %>

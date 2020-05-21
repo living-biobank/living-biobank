@@ -16,6 +16,8 @@ class SparcRequest < ApplicationRecord
   has_many :services, through: :groups, source: :services
   has_many :variables, through: :groups
 
+  validates_presence_of :dr_consult, unless: :draft?
+
   validates :specimen_requests, length: { minimum: 1 }
 
   validates_associated :specimen_requests

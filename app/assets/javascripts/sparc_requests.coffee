@@ -233,10 +233,10 @@ $ ->
   }).on 'typeahead:select', (event, suggestion) ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
 
-(exports ? this).loadI2B2Queries = () ->
+(exports ? this).loadI2B2Queries = (user) ->
   $.ajax
     meethod: 'GET'
     dataType: 'script'
     url: '/query_names'
     data:
-      user_id: $('#sparc_request_user_id').val()
+      user_id: user
