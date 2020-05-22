@@ -235,23 +235,34 @@ class SparcRequest < ApplicationRecord
     service = line_item.service
 
     # Find or create a Sub Service Request for the SPARC Line Item
-    if ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).detect{ |ssr| !ssr.complete? }
-      ssr.update_attribute(:status, 'draft')
-    else
+    ssr = sr.sub_service_requests.where(organization: service.process_ssrs_organization).detect{ |ssr| !ssr.complete? }
+
+    if ssr.nil?
       ssr = sr.sub_service_requests.create(
         protocol:           self.protocol,
         organization:       service.process_ssrs_organization,
         service_requester:  requester
       )
+    elsif ssr.locked?
+      if email = organization.submission_emails.last.try(:email)
+        ServiceMailer.with(line_item: line_item, sub_service_request: ssr, to: email).locked_email.deliver_later
+      elsif ssr.organization.service_providers.any?
+        ssr.organization.service_providers.eager_load(:identity).each do |sp|
+          ServiceMailer.with(line_item: line_item, sub_service_request: ssr, user: sp.identity).locked_email.deliver_later
+        end
+      end
+    else
+      ssr.update_attribute(:status, 'draft')
     end
 
     # Find or create a SPARC Line Item for the Line Item
-    sparc_li = ssr.line_items.where(
-      service: service,
-    ).first_or_create(
-      service_request:  sr,
-      optional:         true
-    )
+    unless sparc_li = ssr.line_items.where(service: service).first
+      sparc_li = ssr.line_items.create(
+        service:          service,
+        service_request:  sr,
+        optional:         true
+      )
+    end
 
     line_item.update_attribute(:sparc_id, sparc_li.id)
   end

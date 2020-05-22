@@ -7,6 +7,7 @@ class LineItem < ApplicationRecord
   has_many :populations
   has_many :labs
 
+  has_one :protocol, through: :sparc_request
   has_one :sub_service_request, through: :sparc_line_item, class_name: "SPARC::SubServiceRequest"
   has_one :group, through: :source
 
@@ -18,7 +19,7 @@ class LineItem < ApplicationRecord
 
   before_destroy :update_sparc_records
 
-  scope :specimen_reqeuests, -> () {
+  scope :specimen_requests, -> () {
     where.not(source_id: nil)
   }
 

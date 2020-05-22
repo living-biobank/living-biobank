@@ -18,10 +18,10 @@ class Group < ApplicationRecord
   validates_presence_of :release_email
   validates_presence_of :discard_email, if: :process_specimen_retrieval?
 
-  validates_inclusion_of :process_specimen_retrieval,         in: [true, false]
-  validates_inclusion_of :notify_when_all_specimens_released, in: [true, false]
-  validates_inclusion_of :process_sample_size,                in: [true, false]
-  validates_inclusion_of :display_patient_information,        in: [true, false]
+  validates_inclusion_of :process_specimen_retrieval,             in: [true, false]
+  validates_inclusion_of :notify_when_all_specimens_released,     in: [true, false]
+  validates_inclusion_of :process_sample_size,                    in: [true, false]
+  validates_inclusion_of :display_patient_information,            in: [true, false]
 
   scope :filtered_for_index, -> (term, sort_by, sort_order) {
     search(term).
