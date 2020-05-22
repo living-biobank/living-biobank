@@ -12,11 +12,15 @@ module SPARC
     before_validation :default_values, on: :create
 
     def complete?
-      SPARC::Setting.get_value('finished_statuses').include?(self.status) && process_ssrs_organization.has_editable_status?(self.status)
+      SPARC::Setting.get_value('finished_statuses').include?(self.status) && organization.has_editable_status?(self.status)
     end
 
-    def process_ssrs_organization
-      self.organization.process_ssrs_parent
+    def locked?
+      !organization.has_editable_status?(status)
+    end
+
+    def display_id
+      "#{protocol.id}-#{self.ssr_id}"
     end
 
     private

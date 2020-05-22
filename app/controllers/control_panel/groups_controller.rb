@@ -38,6 +38,8 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   def group_params
     params.require(:group).permit(
       :name,
+      :process_sample_size,
+      :display_patient_information,
       :notify_when_all_specimens_released,
       :release_email,
       :discard_email

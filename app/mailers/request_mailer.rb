@@ -1,6 +1,4 @@
 class RequestMailer < ApplicationMailer
-  add_template_helper(ApplicationHelper)
-
   def confirmation_email
     @user     = params[:user]
     @request  = params[:request]

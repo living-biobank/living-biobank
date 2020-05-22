@@ -3,9 +3,11 @@ module SPARC
     belongs_to :parent, class_name: "SPARC::Organization", optional: true
 
     has_many :services, dependent: :destroy
+    has_many :service_providers, dependen: :destroy
     has_many :sub_service_requests, dependent: :destroy
     has_many :available_statuses, dependent: :destroy
     has_many :editable_statuses, dependent: :destroy
+    has_many :submission_emails, dependent: :destroy
 
     def org_tree
       self.parent ? self.parent.org_tree + [self] : [self]
