@@ -5,6 +5,7 @@ class UpdateAllSparcRequestsToIncludeHumanSubjectInfo < ActiveRecord::Migration[
         sr.protocol.research_types_info.update(human_subjects: true)
       else
         sr.protocol.create_research_types_info(human_subjects: true)
+      end
     end
   end
 end
