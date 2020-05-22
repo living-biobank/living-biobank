@@ -11,12 +11,12 @@
           = current_user.full_name
       - if current_user.admin? || current_user.lab_honest_broker?
         .nav-item
-          = link_to labs_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''] do
+          = link_to specimens_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''] do
             = icon('fas', 'flask')
             %span
               = t('navigation.labs')
       .nav-item
-        = link_to sparc_requests_path, class: ['nav-link btn btn-dark', controller_name == 'sparc_requests' ? 'active' : ''] do
+        = link_to requests_path, class: ['nav-link btn btn-dark', controller_name == 'sparc_requests' ? 'active' : ''] do
           = icon('fas', 'file-invoice')
           %span
             = t('navigation.requests')

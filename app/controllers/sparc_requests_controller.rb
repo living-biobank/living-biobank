@@ -48,6 +48,11 @@ class SparcRequestsController < ApplicationController
       end
     end
 
+    # Add the user only to a *NEW* SPARC Study if they're not the Primary PI
+    if @sparc_request.protocol.saved_change_to_attribute?(:id) && @sparc_request.protocol.primary_pi.ldap_uid != current_user.net_id
+      @sparc_request.protocol.project_roles.create(role: 'research-assistant-coordinator', project_rights: 'approve')
+    end
+
     find_requests
 
     respond_to :js
@@ -128,16 +133,9 @@ class SparcRequestsController < ApplicationController
   end
 
   def find_requests
-    @requests =
-      if current_user.admin? || current_user.data_honest_broker?
-        SparcRequest.all
-      elsif current_user.lab_honest_broker?
-        current_user.sparc_requests.merge(current_user.honest_broker_requests)
-      else
-        current_user.sparc_requests
-      end.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:requester, specimen_requests: [:labs, :source, :group]).preload(:protocol, :primary_pi, additional_services: [:service, :sub_service_request])
+    @requests = current_user.eligible_requests.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:requester, specimen_requests: [:labs, :source, :group]).preload(:primary_pi, protocol: { project_roles: :identity }, additional_services: [:service, :sub_service_request])
 
-    @draft_requests = current_user.sparc_requests.draft.preload(:protocol)
+    @draft_requests = current_user.eligible_requests.draft.preload(protocol: { project_roles: :identity })
   end
 
   def sparc_request_params

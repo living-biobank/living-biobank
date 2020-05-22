@@ -1,6 +1,7 @@
 $("[id^='sparc_request_'], [id=primary_pi_search]").parents('.form-group').removeClass('is-valid is-invalid')
 $('.form-error, .form-alert').remove()
 
+<% if @rights %>
 # Use the title/short title from SPARC
 $('#sparc_request_protocol_attributes_title').val("<%= @protocol.title %>").prop('readonly', true)
 $('#sparc_request_protocol_attributes_short_title').val("<%= @protocol.short_title %>").prop('readonly', true)
@@ -39,3 +40,10 @@ $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').v
 # add the persist-validation class and then remove it here
 $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').removeClass('persist-validation')
 $('#sparc_request_protocol_attributes_research_master_id').focus()
+<% else %>
+SweetAlert.fire(
+  type: 'error'
+  title: I18n.t('requests.form.alerts.permissions.title')
+  html: I18n.t('requests.form.alerts.permissions.body', identifier: "<%= @protocol.identifier %>", pi_name: "<%= @protocol.primary_pi.full_name %>", pi_email: "<%= @protocol.primary_pi.email %>")
+)
+<% end %>

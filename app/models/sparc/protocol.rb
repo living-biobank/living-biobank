@@ -11,6 +11,9 @@ module SPARC
     has_many :service_requests, dependent: :destroy
     has_many :sub_service_requests, dependent: :destroy
 
+    has_many :study_user_roles, -> { where(role: %w(primary-pi pi co-investigator staff-scientist postdoc grad-research-assistant research-assistant-coordinator mentor research-nurse)) }, class_name: "ProjectRole"
+    has_many :study_users, through: :study_user_roles, source: :identity
+
     validates_presence_of :research_master_id, if: Proc.new{ |p| Protocol.rmid_enabled? }
     validates_presence_of :short_title, :title, :funding_status, :start_date, :end_date, :next_ssr_id
     validates_presence_of :funding_source, if: Proc.new{ |p| p.funded? || p.funding_status.blank? }

@@ -88,7 +88,7 @@ $ ->
                 $('#sparc_request_protocol_attributes_research_master_id').focus()
                 $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
         )
-      ), 500)
+      ), 750)
     else
       $.ajax
         type: 'GET'
@@ -233,10 +233,11 @@ $ ->
   }).on 'typeahead:select', (event, suggestion) ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
 
-(exports ? this).loadI2B2Queries = (user) ->
+(exports ? this).loadI2B2Queries = () ->
   $.ajax
     meethod: 'GET'
     dataType: 'script'
     url: '/query_names'
     data:
-      user_id: user
+      user_id: $('#sparc_request_user_id').val()
+      request_id: $('#sparc_request_id').val()
