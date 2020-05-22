@@ -70,7 +70,7 @@ en:
         source_id: "Specimen Source"
         query_name: "i2b2 Query"
         number_of_specimens_requested: "Quantity Requested"
-        minimum_sample_size: "Minimum Sample Size"
+        minimum_sample_size: "Minimum Sample Size (milliliters)"
         three_month_accrual: "Past 3 Months"
         six_month_accrual: "Past 6 Months"
         one_year_accrual: "Past Year"
@@ -88,6 +88,7 @@ en:
         title: "Title"
         specimen_requests: "Specimens Requested"
         additional_services: "Services"
+        dr_consult: "I have completed the Research Data Consult Mini Form linked above"
       sparc/protocol:
         research_master_id: "Research Master ID"
         title: "Title"
@@ -282,11 +283,11 @@ en:
       reset_specimen: "Reset Specimen"
       discard_specimen:  "Discard Specimen"
   home:
-    header: "Living Biobank enables access to clinical specimens and microbiome data"
-    text1: "Living Biobank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
+    header: "Living BioBank enables access to clinical specimens and microbiome data"
+    text1: "Living BioBank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
     text2: "Submissions of blood samples will result in blood specimens whereas those of microbiome will result in assay data."
-    text3: "Living Biobank is an end-to-end workflow that allows investigators to acquire specimens/data based on clinical criteria from the electronic health records, e-phenotype, in a de-identified manner."
-    text4: "Investigators interested in obtaining data through Living Biobank must create an electronic phenotype using i2b2."
+    text3: "Living BioBank is an end-to-end workflow that allows investigators to acquire specimens/data based on clinical criteria from the electronic health records, e-phenotype, in a de-identified manner."
+    text4: "Investigators interested in obtaining data through Living BioBank must create an electronic phenotype using i2b2."
     links:
       help1:
         text: "MUSC Investigators"
@@ -299,12 +300,12 @@ en:
         link2: "i2b2 User Guide"
         link3: "i2b2 FAQ"
       help4:
-        text: "Living Biobank How-To Guide"
+        text: "Living BioBank How-To Guide"
         link: "User Guide"
       contact:
-        header: "Living Biobank Support"
+        header: "Living BioBank Support"
         link: "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>"
-    user_guide: "New to Living Biobank? Click <a href='LBB_Guide_v1.1.pptx'>here</a> to download our How-To guide!"
+    user_guide: "New to Living BioBank? Click <a href='LBB_Guide_v1.1.pptx'>here</a> to download our How-To guide!"
     login:
       header: "Developer Login"
       net_id: "NetID"
@@ -316,8 +317,8 @@ en:
     header: "Requests"
     create: "New Request"
     create_confirm:
-      title: "LIVING BIOBANK DATA USE AGREEMENT"
-      html: "<h5 class='text-left font-weight-bold'>Before using the MUSC Living Biobank specimen request system, you must agree to the following Specimen Request System Agreement:</h5><p class='text-left'>The Specimen Request System Agreement is designed to provide principal investigators or study staff with access to de-identified specimens for the express purpose of MUSC IRB approved research.</p><p class='text-left'>Your acceptance of this assurance certifies that you understand and agree to all applicable terms contained herein.</p><p class='text-left'>I understand that only de-identified specimens will be provided.</p><p class='text-left'>I will make no attempt to learn the identity of any person or family who is the source of the specimen(s) and associated data, or attempt contact any individual or family member from whom the specimen or data were derived.</p><p class='text-left'>I understand that any effort to determine the identity of the source of the specimens, or to use the specimens provided for any purpose other than indicated above, is prohibited.</p><p class='text-left'>I understand that any violation of this assurance may result in a disciplinary action by my institution with the appropriate office(s) at my institution.</p><p class='text-left'>I agree to restrict my request for specimen(s) to those required for my MUSC IRB approved research study.</p><p class='text-left'>I declare that the requested specimens are necessary to accomplish the goals of the research.</p><p class='text-left'>I acknowledge the additional level of ethical sensitivity inherent in using the specimen(s) and agree to exercise exemplary ethical conduct in my use of the provided specimen(s).</p><p class='text-left'>I have completed the MUSC Code of Conduct training in MyQuest, Human Research Training (CITI) and other MUSC provided training, as required.</p>"
+      title: "Living BioBank DATA USE AGREEMENT"
+      html: "<h5 class='text-left font-weight-bold'>Before using the MUSC Living BioBank specimen request system, you must agree to the following Specimen Request System Agreement:</h5><p class='text-left'>The Specimen Request System Agreement is designed to provide principal investigators or study staff with access to de-identified specimens for the express purpose of MUSC IRB approved research.</p><p class='text-left'>Your acceptance of this assurance certifies that you understand and agree to all applicable terms contained herein.</p><p class='text-left'>I understand that only de-identified specimens will be provided.</p><p class='text-left'>I will make no attempt to learn the identity of any person or family who is the source of the specimen(s) and associated data, or attempt contact any individual or family member from whom the specimen or data were derived.</p><p class='text-left'>I understand that any effort to determine the identity of the source of the specimens, or to use the specimens provided for any purpose other than indicated above, is prohibited.</p><p class='text-left'>I understand that any violation of this assurance may result in a disciplinary action by my institution with the appropriate office(s) at my institution.</p><p class='text-left'>I agree to restrict my request for specimen(s) to those required for my MUSC IRB approved research study.</p><p class='text-left'>I declare that the requested specimens are necessary to accomplish the goals of the research.</p><p class='text-left'>I acknowledge the additional level of ethical sensitivity inherent in using the specimen(s) and agree to exercise exemplary ethical conduct in my use of the provided specimen(s).</p><p class='text-left'>I have completed the MUSC Code of Conduct training in MyQuest, Human Research Training (CITI) and other MUSC provided training, as required.</p>"
       confirm: "Accept"
       cancel: "Decline"
     finalize_confirm:
@@ -361,6 +362,14 @@ en:
       headers:
         protocol_information: "Protocol Information"
         specimens: "Request Specimens"
+        request_data: "Request Data"
+      request_data:
+        text_1: "As part of this Living BioBank request, a data request consult is necessary to:"
+        text_2: "Review regulatory requirements associated with the request"
+        text_3: "Confirm and/or refine the i2b2 e-phenotype(s) to ensure accuracy in capturing the intended population"
+        text_4: "Determine the need for associated clinical patient data from medical records"
+        text_5: "Please complete the Research Data Consult Mini Form by visiting "
+        link_text: "this link"
       fields:
         protocol_search: "SPARCRequest Protocol"
       placeholders:
@@ -417,7 +426,8 @@ en:
     draft:
       placeholder: "No Title Specified"
   site_information:
-    name: "Living Biobank"
+    name: "Living BioBank"
+    footer_name: "Living BioBank<sup>TM</sup>"
     version: "%{site_name} Version %{version}"
     copyright: "&copy; 2020 MUSC"
   site_version:
@@ -427,11 +437,11 @@ en:
       header: "Specimen Release"
   mailers:
     greeting: "Dear %{name},"
-    request_info: "Living Biobank Request Information"
+    request_info: "Living BioBank Request Information"
     request_link: "View Living BioBank Request"
     specimens_link: "View Specimens"
     footer:
-      text: "The Living Biobank Team"
+      text: "The Living BioBank Team"
     cloverleaf_mailer:
       job_error:
         subject: "Cloverleaf Message Job Error"
@@ -445,14 +455,14 @@ en:
       services_header: "Services Requested"
       confirmation_email:
         subject: "New Request Confirmation"
-        text1: "We have received your Living Biobank request. Our team will review and process your request within 3 business days."
+        text1: "We have received your Living BioBank request. Our team will review and process your request within 3 business days."
         text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
         text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
         text4: "We look forward to working with you."
-        data_use_agreement: "By submitting this request you agree to the Living Biobank Data Use Agreement"
+        data_use_agreement: "By submitting this request you agree to the Living BioBank Data Use Agreement"
       manager_email:
         subject: "New Request Pending SPARC Submission"
-        text: "A new Living Biobank request has been submitted and is awaiting your review in SPARCRequest."
+        text: "A new Living BioBank request has been submitted and is awaiting your review in SPARCRequest."
       admin_update_email:
         subject: "Administrative Updates to Your Request"
         text: "An Administrator has made changes to your request. Please review your request to ensure that all information is correct."
@@ -461,7 +471,7 @@ en:
         completed_by: "%{user} completed a request on %{date}."
     service_mailer:
       locked_email:
-        subject: "New Living Biobank request with locked SPARCRequest service"
+        subject: "New Living BioBank request with locked SPARCRequest service"
         sparc_link: "View in SPARCRequest"
         text1: "You are being contacted because you are a SPARCRequest service provider for the <strong>%{service}</strong> service."
         text2: "A new Living BioBank request has been submitted submitted which includes this service, but alocked service was found on the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask that you take the necessary steps to determine how you wish to process this additional service."
@@ -483,7 +493,7 @@ en:
       data_honest_broker_removed: "Your data honest broker privileges were removed"
       lab_honest_broker_granted: "You were made an honest broker for the following groups:"
       lab_honest_broker_removed: "Your honest broker privileges were removed for the following groups:"
-      subject: "Biobank User Privileges Change"
+      subject: "Living BioBank User Privileges Change"
       permissions_changed_email:
-        text1: "You are receiving this email because the following changes have been made to your user privileges within Living Biobank: "
+        text1: "You are receiving this email because the following changes have been made to your user privileges within Living BioBank: "
         text2: "If you have any questions, please contact one of the system administrators."

@@ -29,7 +29,7 @@ class SparcRequestsController < ApplicationController
     @sparc_request = current_user.sparc_requests.new(sparc_request_params)
 
     if params[:save_draft]
-      if !SPARC::Protocol.rmid_enabled? || (SPARC::Protocol.rmid_enabled? && @sparc_request.protocol.research_master_id.present?)
+      if (!SPARC::Protocol.rmid_enabled? || (SPARC::Protocol.rmid_enabled? && @sparc_request.protocol.research_master_id.present?)) && @sparc_request.protocol.valid?
         @sparc_request.status = t(:requests)[:statuses][:draft]
         @sparc_request.specimen_requests.each{ |sr| sr.source_id ||= 0 }
         @sparc_request.save(validate: false)
@@ -67,9 +67,12 @@ class SparcRequestsController < ApplicationController
     if params[:save_draft]
       @sparc_request.assign_attributes(sparc_request_params)
       @sparc_request.specimen_requests.each{ |sr| sr.source_id ||= 0 }
-      @sparc_request.save(validate: false)
-
-      flash.now[:success] = t(:requests)[:saved]
+      
+      if @sparc_request.protocol.valid? && @sparc_request.save(validate: false)
+        flash.now[:success] = t(:requests)[:saved]
+      else
+        @errors = @sparc_request.errors
+      end
     else
       if @sparc_request.draft?
         params[:sparc_request][:status] = t(:requests)[:statuses][:pending] 
@@ -158,6 +161,7 @@ class SparcRequestsController < ApplicationController
       :updated_by,
       :completed_by,
       :cancelled_by,
+      :dr_consult,
       protocol_attributes: [
         :id,
         :research_master_id,
@@ -177,7 +181,8 @@ class SparcRequestsController < ApplicationController
           :identity_id
         ],
         research_types_info_attributes: [
-          :id
+          :id,
+          :human_subjects
         ]
       ],
       specimen_requests_attributes: [
