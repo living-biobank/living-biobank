@@ -88,21 +88,22 @@
               = ff_p.text_field :sponsor_name, class: 'form-control', readonly: protocol_persisted && protocol_valid
             = ff_p.fields_for :research_types_info do |ff_rti|
               = ff_rti.hidden_field :id
+              = ff_rti.hidden_field :human_subjects, value: true
         %section.border-top.border-bottom
           %h4.mt-4
-            = "Request Data"
+            = t(:requests)[:form][:headers][:request_data]
           %p.form-text.text-muted.m-0
-            = "As part of this Living BioBank request, a data request consult is necessary to:"
+            = t(:requests)[:form][:request_data][:text_1]
             %ul.text-muted
               %li
-                = "Review regulatory requirements associated with the request"
+                = t(:requests)[:form][:request_data][:text_2]
               %li
-                = "Confirm and/or refine the i2b2 e-phenotype(s) to ensure accuracy in capturing the intended population"
+                = t(:requests)[:form][:request_data][:text_3]
               %li
-                = "Determine the need for associated clinical patient data from medical records"
+                = t(:requests)[:form][:request_data][:text_4]
             .text-muted
-              = "Please complete the Research Data Consult Mini Form by visiting "
-              = link_to "this link", "https://redcap.musc.edu/surveys/?s=T7YXHADCY9"
+              = t(:requests)[:form][:request_data][:text_5]
+              = link_to t(:requests)[:form][:request_data][:link_text], "https://redcap.musc.edu/surveys/?s=T7YXHADCY9"
           %p.form-group
             = f.label :dr_consult, class: 'required'
             = f.check_box :dr_consult

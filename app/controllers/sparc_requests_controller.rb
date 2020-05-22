@@ -180,7 +180,8 @@ class SparcRequestsController < ApplicationController
           :identity_id
         ],
         research_types_info_attributes: [
-          :id
+          :id,
+          :human_subjects
         ]
       ],
       specimen_requests_attributes: [

@@ -359,6 +359,14 @@ en:
       headers:
         protocol_information: "Protocol Information"
         specimens: "Request Specimens"
+        request_data: "Request Data"
+      request_data:
+        text_1: "As part of this Living BioBank request, a data request consult is necessary to:"
+        text_2: "Review regulatory requirements associated with the request"
+        text_3: "Confirm and/or refine the i2b2 e-phenotype(s) to ensure accuracy in capturing the intended population"
+        text_4: "Determine the need for associated clinical patient data from medical records"
+        text_5: "Please complete the Research Data Consult Mini Form by visiting "
+        link_text: "this link"
       fields:
         protocol_search: "SPARCRequest Protocol"
         minimum_sample_size: "Minimum Sample Size (milliliters)"
@@ -416,7 +424,7 @@ en:
     draft:
       placeholder: "No Title Specified"
   site_information:
-    name: "Living Biobank"
+    name: "Living Biobank<sup>TM</sup>"
     version: "%{site_name} Version %{version}"
     copyright: "&copy; 2020 MUSC"
   site_version:
