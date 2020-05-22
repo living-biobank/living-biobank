@@ -2,5 +2,5 @@ $('#modalContainer').html("<%= j render 'sparc_requests/form', sparc_request: @s
 setRequiredFields()
 initializeProtocolTypeahead()
 initializePrimaryPITypeahead()
-loadI2B2Queries("<%= current_user.id %>")
+loadI2B2Queries("<%= @sparc_request.requester.id %>")
 $('#modalContainer').modal('show')

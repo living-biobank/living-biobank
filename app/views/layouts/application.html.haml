@@ -20,7 +20,7 @@
         = yield
         .flex-fill.d-flex.flex-column.justify-content-end
           %p.text-muted.text-center.mb-1.mt-3
-            = t('site_information.version', site_name: t('site_information.name'), version: ENV.fetch('APP_VERSION')).html_safe
+            = t('site_information.version', site_name: t('site_information.footer_name'), version: ENV.fetch('APP_VERSION')).html_safe
           %p.text-muted.text-center.mb-0
             = t('site_information.copyright').html_safe
     = render 'layouts/modal'

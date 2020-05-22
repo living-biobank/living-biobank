@@ -125,10 +125,14 @@
                 = ff_li.select :query_name, (ff_li.object.query_name ? [[ff_li.object.query_name, ff_li.object.query_name, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true', query_name: ff_li.object.query_name }
               .form-group.col-6.col-lg
                 = ff_li.label :number_of_specimens_requested, class: 'required'
-                = ff_li.text_field :number_of_specimens_requested, class: 'form-control specimens-requested', min: 1, maxlength: 7
+                = ff_li.text_field :number_of_specimens_requested, class: 'form-control numerical', min: 1, maxlength: 7
               .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
-                = ff_li.label t(:requests)[:form][:fields][:minimum_sample_size], class: 'required'
-                = ff_li.text_field :minimum_sample_size, class: 'form-control', placeholder: t(:requests)[:form][:placeholders][:minimum_sample], maxlength: 30
+                = ff_li.label :minimum_sample_size, class: 'required'
+                .input-group
+                  = ff_li.text_field :minimum_sample_size, class: 'form-control numerical', placeholder: t(:requests)[:form][:placeholders][:minimum_sample], maxlength: 30
+                  .input-group-append
+                    %span.input-group-text
+                      = "mL"
               .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
                 %label.w-100 &nbsp;
                 = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
