@@ -362,7 +362,7 @@ en:
       headers:
         protocol_information: "Protocol Information"
         specimens: "Request Specimens"
-        request_data: "Request Data"
+        request_data: "Data Request Acknowledgement"
       request_data:
         text_1: "As part of this Living BioBank request, a data request consult is necessary to:"
         text_2: "Review regulatory requirements associated with the request"
@@ -420,8 +420,8 @@ en:
           singular: "%{source} - %{amount_requested} sample"
           plural: "%{source} - %{amount_requested} samples"
         line_item_with_sample_size:
-          singular: "%{source} - %{amount_requested} sample ≥ %{min_sample_size}"
-          plural: "%{source} - %{amount_requested} samples ≥ %{min_sample_size}"
+          singular: "%{source} - %{amount_requested} sample ≥ %{min_sample_size} mL"
+          plural: "%{source} - %{amount_requested} samples ≥ %{min_sample_size} mL"
         progress: "Specimens Collected: %{received} / %{total}"
       additional_services:
         progress: "Progress: %{current} / %{end}"
