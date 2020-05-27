@@ -27,10 +27,9 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :add_authorized_users, if: Proc.new{ |sr| sr.pending? && !self.updated? }
-
-  after_update :update_additional_services, if: :in_process?
-  after_update :update_variables, if: Proc.new{ |sr| sr.pending? || sr.in_process? }
+  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.pending? && !self.updated? }
+  after_save :update_additional_services, if: :in_process?
+  after_save :update_variables,           if: :active?
 
   scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
 
@@ -130,6 +129,10 @@ class SparcRequest < ApplicationRecord
 
   def updated?
     self.updated_at > self.created_at && self.updater
+  end
+
+  def active?
+    self.pending? || self.in_process?
   end
 
   def completed?
