@@ -11,12 +11,15 @@
         = t(:home)[:header]
       %p
         = t(:home)[:text1]
-      %p
-        = t(:home)[:text2]
+      %p.mb-1
+        = t('home.text2.text')
+      %ul.pl-3
+        %li
+          = t('home.text2.bullet1', arrow: icon('fas', 'long-arrow-alt-right')).html_safe
+        %li
+          = t('home.text2.bullet2', arrow: icon('fas', 'long-arrow-alt-right')).html_safe
       %p
         = t(:home)[:text3]
-      %p
-        = t(:home)[:text4]
       .d-flex.justify-content-between.flex-wrap
         .d-flex.flex-column.mb-3.mb-md-4
           %h5.font-weight-bold
@@ -31,7 +34,7 @@
             = t(:home)[:links][:help3][:text]
           = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
           = link_to t(:home)[:links][:help3][:link3], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
-      %h5.text-center.mb-3.mb-md-4
+      %h5.text-center.mb-3.mb-md-4.font-weight-bold
         = t('home.user_guide').html_safe
 
       - if Rails.env.development? || Rails.env.test?

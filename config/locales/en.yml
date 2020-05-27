@@ -283,11 +283,13 @@ en:
       reset_specimen: "Reset Specimen"
       discard_specimen:  "Discard Specimen"
   home:
-    header: "Living BioBank enables access to clinical specimens and microbiome data"
-    text1: "Living BioBank tracks availability of surplus materials for precisely e-phenotyped cohorts of patients and allows investigators to request those samples and the resulting microbiome assay data for research use."
-    text2: "Submissions of blood samples will result in blood specimens whereas those of microbiome will result in assay data."
-    text3: "Living BioBank is an end-to-end workflow that allows investigators to acquire specimens/data based on clinical criteria from the electronic health records, e-phenotype, in a de-identified manner."
-    text4: "Investigators interested in obtaining data through Living BioBank must create an electronic phenotype using i2b2."
+    header: "Living BioBank enables access to clinical data, surplus specimens, and microbiome data"
+    text1: "Living BioBank™ and Living µBiome Bank™ allow for the just-in-time capture and delivery of de-identified clinical data and precisely phenotyped surplus standard-of-care specimens and microbiome assay data resulting from specimens."
+    text2:
+      text: "There are two types of Living BioBank requests:"
+      bullet1: "<strong>Specimen requests (whole blood and plasma)</strong> %{arrow} Physical samples (your research team will take direct possession of de-identified samples on an ongoing basis)"
+      bullet2: "<strong>Microbiome data requests (nasal, nasopharyngeal, and perianal swabs, stool)</strong> %{arrow} Assay data provided in bulk once all samples are collected, processed, and sequenced (samples are not directly provided)"
+    text3: "Investigators interested in using Living BioBank must first specify inclusion and exclusion criteria by creating an electronic phenotype using i2b2 (please see the Living BioBank and i2b2 guides below)."
     links:
       help1:
         text: "MUSC Investigators"
