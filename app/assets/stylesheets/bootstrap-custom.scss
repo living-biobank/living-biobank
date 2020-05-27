@@ -215,6 +215,13 @@ form, .form {
 /////////////////////////////////
 
 .bootstrap-select {
+  .dropdown-toggle {
+    &.btn-light.disabled {
+      background: $input-disabled-bg !important;
+      opacity: 1;
+    }
+  }
+
   .dropdown-menu {
     min-width: max-content;
 
