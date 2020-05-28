@@ -216,9 +216,10 @@ form, .form {
 
 .bootstrap-select {
   .dropdown-toggle {
-    &.btn-light.disabled {
+    &.btn-light.disabled, &.btn-light:disabled {
       background: $input-disabled-bg !important;
       opacity: 1;
+      cursor: not-allowed;
     }
   }
 
