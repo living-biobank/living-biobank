@@ -58,8 +58,10 @@ class SparcRequest < ApplicationRecord
       SPARC::Protocol.where(SPARC::Protocol.arel_identifier(:title).matches("%#{term}%"))
     ).ids
 
-    eager_load(:requester, specimen_requests: :source).where(protocol_id: queried_protocol_ids).
-    where(SparcRequest.arel_table[:status].matches("%#{term}%")
+    eager_load(:requester, specimen_requests: :source).where(protocol_id: queried_protocol_ids
+    ).or(
+      eager_load(:requester, specimen_requests: :source).where(SparcRequest.arel_table[:status].matches("%#{term}%")
+    )
     ).or(
       eager_load(:requester, specimen_requests: :source).where(SparcRequest.arel_table[:id].matches("#{term.to_i}%"))
     ).or( # Search by Releaser First Name
