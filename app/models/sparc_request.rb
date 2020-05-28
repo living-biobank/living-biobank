@@ -247,7 +247,7 @@ class SparcRequest < ApplicationRecord
         service_requester:  requester
       )
     elsif ssr.locked?
-      if email = organization.submission_emails.last.try(:email)
+      if email = ssr.organization.submission_emails.last.try(:email)
         ServiceMailer.with(line_item: line_item, sub_service_request: ssr, to: email).locked_email.deliver_later
       elsif ssr.organization.service_providers.any?
         ssr.organization.service_providers.eager_load(:identity).each do |sp|
