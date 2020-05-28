@@ -2,10 +2,10 @@ fillQueries = ->
   <% if @queries.any? %>
   options = []
   $("select[name*=query_name]").each ->
+    val = $(this).val()
     $(this).children('option:not(:first-child)').remove()
-    q = $(this).data('query-name')
     <% @queries.each do |query| %>
-    selected = if q == "<%= query.name %>" then "selected=\"selected\"" else ""
+    selected = if val == "<%= query.name %>" then "selected=\"selected\"" else ""
     $(this).append($("<option value=\"<%= query.name %>\" #{selected}><%= query.name %></option>"))
     <% end %>
 

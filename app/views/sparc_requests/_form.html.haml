@@ -136,11 +136,11 @@
                     = ff_li.label :minimum_sample_size, 'mL', class: 'input-group-text'
               .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
                 %label.w-100 &nbsp;
-                = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
+                = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                   = icon('fas', 'trash')
               .form-group.d-block.d-sm-none.col-6.col-sm
                 %label.w-100 &nbsp;
-                = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
+                = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                   = icon('fas', 'trash')
           .form-group
             = f.add_nested_fields_link :specimen_requests, class: 'btn btn-success' do
