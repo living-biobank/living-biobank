@@ -11,7 +11,8 @@
       .col-12.col-sm-2.d-flex.flex-wrap.align-items-start.justify-content-between.justify-content-sm-end
         %h4.d-block.d-sm-none.mb-0
           = request_status_context(request)
-        = request_actions(request)
+        - if current_user.can_edit_request?(request)
+          = request_actions(request)
   .collapse{ class: ["request-#{request.id}-collapse", request.cancelled? ? '' : 'show'] }
     .card-body
       .d-flex.flex-wrap.justify-content-between

@@ -59,7 +59,7 @@ $ ->
     setTimeout( (->
       if !$('.popover:hover').length
         $(_this).popover('hide')
-    ), 300)
+    ), 500)
   )
 
   $(document).on 'mouseup', (e) ->
@@ -100,7 +100,7 @@ $ ->
         dataType: 'script'
         url: $container.data('url')
         data: data
-    ), 500)
+    ), 750)
   ).on('keydown', '.table-search', ->
     clearTimeout(searchTimer)
   )

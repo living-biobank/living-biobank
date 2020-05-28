@@ -8,6 +8,7 @@
       = hidden_field_tag :page,       params[:page]
       = f.hidden_field :id
       = f.hidden_field :protocol_id
+      = f.hidden_field :user_id
       = f.hidden_field :status
 
       .modal-header
@@ -94,7 +95,7 @@
             = t(:requests)[:form][:headers][:request_data]
           %p.form-text.text-muted.m-0
             = t(:requests)[:form][:request_data][:text_1]
-            %ul.text-muted
+            %ul.text-muted.pl-3
               %li
                 = t(:requests)[:form][:request_data][:text_2]
               %li
@@ -104,9 +105,10 @@
             .text-muted
               = t(:requests)[:form][:request_data][:text_5]
               = link_to t(:requests)[:form][:request_data][:link_text], "https://redcap.musc.edu/surveys/?s=T7YXHADCY9"
-          %p.form-group
-            = f.label :dr_consult, class: 'required'
-            = f.check_box :dr_consult
+          .form-group
+            .custom-control.custom-checkbox
+              = f.check_box :dr_consult, class: 'custom-control-input'
+              = f.label :dr_consult, class: 'custom-control-label required'
                
         %section
           %h4.mt-4
@@ -131,8 +133,7 @@
                 .input-group
                   = ff_li.text_field :minimum_sample_size, class: 'form-control numerical', placeholder: t(:requests)[:form][:placeholders][:minimum_sample], maxlength: 30
                   .input-group-append
-                    %span.input-group-text
-                      = "mL"
+                    = ff_li.label :minimum_sample_size, 'mL', class: 'input-group-text'
               .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
                 %label.w-100 &nbsp;
                 = ff_li.remove_nested_fields_link class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do

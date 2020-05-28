@@ -136,7 +136,7 @@ form, .form {
   &.custom-control-lg {
     .custom-control-label {
       margin-left: 1rem !important;
-      font-size: 1.5rem !important;
+      font-size: 1rem !important;
 
       &::before, &::after {
         top: 0.25rem !important;
@@ -235,7 +235,12 @@ form, .form {
       }
     }
 
+    .dropdown-item:focus {
+      color: white !important;
+    }
+
     .selected.active {
+      color: white !important;
       @each $color, $theme in $theme-colors {
         .text-#{$color} {
           color: white !important;

@@ -70,7 +70,7 @@ en:
         source_id: "Specimen Source"
         query_name: "i2b2 Query"
         number_of_specimens_requested: "Quantity Requested"
-        minimum_sample_size: "Minimum Sample Size (milliliters)"
+        minimum_sample_size: "Minimum Sample Size"
         three_month_accrual: "Past 3 Months"
         six_month_accrual: "Past 6 Months"
         one_year_accrual: "Past Year"
@@ -364,7 +364,7 @@ en:
       headers:
         protocol_information: "Protocol Information"
         specimens: "Request Specimens"
-        request_data: "Request Data"
+        request_data: "Data Request Acknowledgement"
       request_data:
         text_1: "As part of this Living BioBank request, a data request consult is necessary to:"
         text_2: "Review regulatory requirements associated with the request"
@@ -389,6 +389,10 @@ en:
         i2b2_query: "Information about creating an i2b2 Query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>"
       tooltips:
         no_i2b2_queries: "You don't have any I2b2 Queries. I2b2 queries are required to find the right specimens for your Study."
+      alerts:
+        permissions:
+          title: "Invalid Permissions"
+          body: "<p class='font-weight-bold'>Study %{identifier}</p>You do not have permission to make requests for this Study. If you believe this is in error, please contact the Primary PI <span class='font-weight-bold'>%{pi_name}</span> at <a href='mailto:%{pi_email}'>%{pi_email}</a>."
       add_specimen: "Add Specimen"
       delete_specimen: "Delete Specimen"
       submit: "Submit for Inquiry"
@@ -397,7 +401,7 @@ en:
       header: "Request %{id}"
       sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
-      requester_self: "You made this request %{time_elapsed} ago"
+      requester_self: "You submitted this request %{time_elapsed} ago"
       requester: "Requested by %{name} %{time_elapsed} ago"
       updater_self: "You updated this request on %{date}"
       updater: "Updated by %{name} on %{date}"
@@ -418,8 +422,8 @@ en:
           singular: "%{source} - %{amount_requested} sample"
           plural: "%{source} - %{amount_requested} samples"
         line_item_with_sample_size:
-          singular: "%{source} - %{amount_requested} sample ≥ %{min_sample_size}"
-          plural: "%{source} - %{amount_requested} samples ≥ %{min_sample_size}"
+          singular: "%{source} - %{amount_requested} sample ≥ %{min_sample_size} mL"
+          plural: "%{source} - %{amount_requested} samples ≥ %{min_sample_size} mL"
         progress: "Specimens Collected: %{received} / %{total}"
       additional_services:
         progress: "Progress: %{current} / %{end}"
@@ -427,6 +431,9 @@ en:
         incomplete: "This service has not yet been completed"
     draft:
       placeholder: "No Title Specified"
+      requester_self: "You started this request %{time_elapsed} ago"
+      requester: "Request started by %{name} %{time_elapsed} ago"
+      requester: ""
   site_information:
     name: "Living BioBank"
     footer_name: "Living BioBank<sup>TM</sup>"

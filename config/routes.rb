@@ -12,11 +12,15 @@ Rails.application.routes.draw do
 
   resources :labs, only: [:index, :update]
 
+  get '/specimens', to: 'labs#index', as: 'specimens'
+
   resources :sparc_requests do
     member do
       patch :update_status
     end
   end
+
+  get '/requests', to: 'sparc_requests#index', as: 'requests'
 
   resources :protocols, only: [:index]
   resource :protocol, only: [:show]
