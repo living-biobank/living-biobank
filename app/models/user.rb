@@ -133,9 +133,9 @@ class User < ApplicationRecord
   def can_edit_request?(request)
     self.admin? || self.data_honest_broker? ||
       if request.protocol.project_roles.loaded?
-        protocol.project_roles.detect{ |pr| %w(approve).include?(pr.project_rights) && pr.identity.ldap_uid == seelf.net_id }
+        request.protocol.project_roles.detect{ |pr| %w(approve).include?(pr.project_rights) && pr.identity.ldap_uid == seelf.net_id }
       else
-        protocol.project_roles.joins(:identity).where(project_rights: %w(request approve), identities: { ldap_uid: self.net_id })
+        request.protocol.project_roles.joins(:identity).where(project_rights: %w(request approve), identities: { ldap_uid: self.net_id })
       end
   end
 
