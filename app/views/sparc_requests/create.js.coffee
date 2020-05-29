@@ -1,6 +1,11 @@
 <% if @errors %>
+<% if @sparc_request.draft? %>
+$("[id^='sparc_request_protocol_'], [id=primary_pi_search]").parents('.form-group').removeClass('is-invalid').addClass('is-valid')
+$('.form-error').remove()
+<% else %>
 $("[id^='sparc_request_'], [id=primary_pi_search]").parents('.form-group').removeClass('is-invalid').addClass('is-valid')
 $('.form-error').remove()
+<% end %>
 
 # Data Request Consult Error
 <% @errors[:dr_consult].each do |message| %>
