@@ -25,19 +25,10 @@ $('#primary_pi_search').parents('.form-group').removeClass('is-valid').addClass(
 <% end %>
 
 # Line Item Errors
-<% if @sparc_request.draft? %>
-<% @sparc_request.specimen_requests.each_with_index do |line_item, index| %>
-$(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[source_id]']").parents('.form-group').removeClass('is-valid')
-$(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[query_name]']").parents('.form-group').removeClass('is-valid')
-$(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[number_of_specimens_requested]']").parents('.form-group').removeClass('is-valid')
-$(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[minimum_sample_size]']").parents('.form-group').removeClass('is-valid')
-<% end %>
-<% else %>
 <% @sparc_request.specimen_requests.each_with_index do |line_item, index| %>
 <% line_item.errors.messages.each do |attr, messages| %>
 <% messages.each do |message| %>
 $(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[<%= attr.to_s %>]']").parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
-<% end %>
 <% end %>
 <% end %>
 <% end %>
