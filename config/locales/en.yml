@@ -377,7 +377,6 @@ en:
       placeholders:
         protocol_search: "Search for your Protocol by SRID, title, or short title"
         primary_pi: "e.g. Smith"
-        minimum_sample: "e.g. 2mL"
       subtext:
         rmid: "Please provide your Study's <strong>Research Master ID</strong> or visit <a href='https://rmid.musc.edu' target='blank'>rmid.musc.edu</a> to create one."
         rmid_not_found: "Research Master ID not found"

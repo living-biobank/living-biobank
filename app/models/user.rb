@@ -123,7 +123,7 @@ class User < ApplicationRecord
         project_roles: { project_rights: %w(approve view) }
       ).ids).distinct
      if self.lab_honest_broker?
-        requests_with_access.merge(self.honest_broker_requests)
+        requests_with_access.or(self.honest_broker_requests.joins(project_roles: :identity))
       else
         requests_with_access
       end
