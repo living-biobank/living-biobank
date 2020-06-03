@@ -143,7 +143,7 @@
                 = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                   = icon('fas', 'trash')
           .form-group
-            = f.add_nested_fields_link :specimen_requests, class: 'btn btn-success' do
+            = f.add_nested_fields_link :specimen_requests, href: 'javascript:void(0)', class: 'btn btn-success' do
               = succeed t(:requests)[:form][:add_specimen] do
                 = icon('fas', 'plus mr-2')
       .modal-footer
