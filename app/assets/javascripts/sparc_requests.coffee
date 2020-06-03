@@ -253,5 +253,5 @@ $ ->
     dataType: 'script'
     url: '/query_names'
     data:
-      user_id: $('#sparc_request_user_id').val()
-      request_id: $('#sparc_request_id').val()
+      user_id:      $('#sparc_request_user_id').val()
+      protocol_id:  $('#sparc_request_protocol_id').val()

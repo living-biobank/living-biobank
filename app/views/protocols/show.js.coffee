@@ -40,6 +40,8 @@ $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').v
 # add the persist-validation class and then remove it here
 $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').removeClass('persist-validation')
 $('#sparc_request_protocol_attributes_research_master_id').focus()
+
+loadI2B2Queries()
 <% else %>
 SweetAlert.fire(
   type: 'error'

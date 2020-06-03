@@ -3,12 +3,12 @@ class QueryNamesController < ApplicationController
     respond_to :js
 
     @queries = 
-      if params[:request_id].present?
-        request = SparcRequest.find(params[:request_id])
-        I2b2::QueryName.where(user_id: request.protocol.study_users.pluck(:ldap_uid))
+      if params[:protocol_id].present?
+        protocol = SPARC::Protocol.find(params[:protocol_id])
+        I2b2::QueryName.where(user_id: protocol.study_users.pluck(:ldap_uid))
       else
         requester = User.find(params[:user_id])
         I2b2::QueryName.where(user_id: requester.net_id)
-      end.order(create_date: :desc)
+      end.order(:name)
   end
 end
