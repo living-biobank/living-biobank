@@ -1,5 +1,5 @@
 %p
-  = t('mailers.request_mailer.pi_email.text1', requester_name: @request.requester.full_name).html_safe
+  = t('mailers.request_mailer.pi_email.text1', requester_name: @request.requester.full_name, email: ENV.fetch('LBB_EMAIL')).html_safe
 = render 'layouts/mailer/request_link', request: @request
 = render 'layouts/mailer/request_information', request: @request
 

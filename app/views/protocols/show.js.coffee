@@ -1,7 +1,24 @@
 $("[id^='sparc_request_'], [id=primary_pi_search]").parents('.form-group').removeClass('is-valid is-invalid')
 $('.form-error, .form-alert').remove()
 
-<% if @rights %>
+<% if @duplicate %>
+Swal.fire(
+  type: 'warning'
+  title: "<%= t('requests.form.existing_request.title', status: @existing_request.status) %>"
+  html: "<%= (@existing_request.in_process? ? t('requests.form.existing_request.in_process', status: @existing_request.status, email: ENV.fetch('LBB_EMAIL'), srid: @protocol.id, short_title: @protocol.short_title, lbb_id: @existing_request.identifier) : t('requests.form.existing_request.pending', status: @existing_request.status, srid: @protocol.id, short_title: @protocol.short_title, lbb_id: @existing_request.identifier)).html_safe %>"
+  confirmButtonText: "<i class='fas fa-edit mr-1'></i>Edit Request"
+  confirmButtonClass: 'btn btn-lg btn-warning mr-1'
+  showConfirmButton: "<%= @existing_request.in_process? %>" == 'false'
+  showCancelButton: true
+  cancelButtonClass: 'btn btn-lg btn-secondary ml-1'
+  buttonsStyling: false
+).then (result) ->
+  if result.value
+    $.ajax
+      method: 'GET'
+      dataType: 'script'
+      url: "<%= edit_sparc_request_path(@existing_request) %>"
+<% elsif @rights %>
 # Use the title/short title from SPARC
 $('#sparc_request_protocol_attributes_title').val("<%= @protocol.title %>").prop('readonly', true)
 $('#sparc_request_protocol_attributes_short_title').val("<%= @protocol.short_title %>").prop('readonly', true)
