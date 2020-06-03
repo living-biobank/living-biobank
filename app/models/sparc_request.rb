@@ -209,7 +209,7 @@ class SparcRequest < ApplicationRecord
           identity: identity,
           project_rights: 'approve',
           role:           'other',
-          role_other:     'Living Biobank Manager'
+          role_other:     'Living BioBank Manager'
         )
       end
 

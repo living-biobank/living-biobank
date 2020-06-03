@@ -171,11 +171,25 @@ $ ->
     48, 49, 50, 51, 52, 53, 54, 55, 56, 57,       # 0-9
     96, 97, 98, 99, 100, 101, 102, 103, 104, 105  # 0-9 Num Pad
   ]
-  $(document).on 'keydown', '.numerical', ->
+
+  decimalKeys = [
+    110, 190 # period keys
+  ]
+
+  $(document).on 'keydown', '.numerical:not(.decimal)', ->
     val = $(this).val()
     key = event.keyCode || event.charCode
 
     if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key))
+      event.preventDefault()
+
+  $(document).on 'keydown', '.numerical.decimal', ->
+    val = $(this).val()
+    key = event.keyCode || event.charCode
+
+    if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key) || decimalKeys.includes(key))
+      event.preventDefault()
+    else if decimalKeys.includes(key) && val.includes('.')
       event.preventDefault()
 
 (exports ? this).initializeProtocolTypeahead = () ->
