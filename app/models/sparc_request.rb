@@ -22,7 +22,7 @@ class SparcRequest < ApplicationRecord
 
   validates_associated :specimen_requests
 
-  delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
+  delegate :title, :short_title, :start_date, :end_date, to: :protocol
 
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
@@ -31,9 +31,9 @@ class SparcRequest < ApplicationRecord
   after_save :update_additional_services, if: :in_process?
   after_save :update_variables,           if: :active?
 
-  scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
-
-  scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
+  scope :active,      -> { where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]]) }
+  scope :in_process,  -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
+  scope :draft,       -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
 
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
     search(term).
@@ -84,7 +84,7 @@ class SparcRequest < ApplicationRecord
     if status == 'any'
       where.not(status: I18n.t(:requests)[:statuses][:draft])
     elsif status == 'active'
-      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
+      active
     else
       where(status: status)
     end

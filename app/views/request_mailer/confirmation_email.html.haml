@@ -5,7 +5,7 @@
 %p
   = t('mailers.request_mailer.confirmation_email.text2')
 %p
-  = t('mailers.request_mailer.confirmation_email.text3').html_safe
+  = t('mailers.request_mailer.confirmation_email.text3', email: ENV.fetch('LBB_EMAIL')).html_safe
 %p
   = t('mailers.request_mailer.confirmation_email.text4')
 

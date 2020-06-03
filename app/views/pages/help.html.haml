@@ -33,6 +33,6 @@
           = t(:help_links)[:headers][:header2]
       .card-body.p-4.text-center
         %h5.font-weight-bold
-          = t(:home)[:links][:contact][:header]
+          = t('home.links.contact.header')
         %p.d-flex.flex-column.mb-0
-          = t(:home)[:links][:contact][:link].html_safe
+          = t('home.links.contact.link', email: ENV.fetch('LBB_EMAIL')).html_safe
