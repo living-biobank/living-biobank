@@ -118,10 +118,10 @@ class User < ApplicationRecord
     if self.admin? || self.data_honest_broker?
       SparcRequest.all
     else
-      requests_with_access = SparcRequest.joins(protocol: { project_roles: :identity }).where(
+      requests_with_access = SparcRequest.where(protocol_id: SPARC::Protocol.joins(project_roles: :identity).where(
         identities: { ldap_uid: self.net_id },
         project_roles: { project_rights: %w(approve view) }
-      ).distinct
+      ).ids).distinct
      if self.lab_honest_broker?
         requests_with_access.merge(self.honest_broker_requests)
       else
@@ -132,10 +132,10 @@ class User < ApplicationRecord
 
   def can_edit_request?(request)
     self.admin? || self.data_honest_broker? ||
-      if request.protocol.project_rols.loaded?
-        protocol.project_roles.detect{ |pr| %w(approve).include?(pr.project_rights) && pr.identity.ldap_uid == seelf.net_id }
+      if request.protocol.project_roles.loaded?
+        request.protocol.project_roles.detect{ |pr| %w(approve).include?(pr.project_rights) && pr.identity.ldap_uid == self.net_id }
       else
-        protocol.project_roles.joins(:identity).where(project_rights: %w(request approve), identities: { ldap_uid: self.net_id })
+        request.protocol.project_roles.joins(:identity).where(project_rights: %w(request approve), identities: { ldap_uid: self.net_id })
       end
   end
 
