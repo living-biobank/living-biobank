@@ -265,6 +265,7 @@ class SparcRequest < ApplicationRecord
       sparc_li = ssr.line_items.create(
         service:          service,
         service_request:  sr,
+        quantity:         1,
         optional:         true
       )
     end
