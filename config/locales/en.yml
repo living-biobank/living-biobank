@@ -477,7 +477,7 @@ en:
         data_use_agreement: "By submitting this request you agree to the Living BioBank Data Use Agreement"
       pi_email:
         subject: "New Request Confirmation"
-        text1: "We are contacting you on behalf of the MUSC Living BioBank team. %{requester_name} submitted a request for specimens/data under a Study in which you are a PI (details below). If you think this is done in error please contact our team at <a href='mailto:%{email}'>%{email}</a> as soon as possible. If this was done under your supervision, no further action is necessary on your part at this time."
+        text1: "We are contacting you on behalf of the MUSC Living BioBank team. %{requester_name} submitted a request for specimens/data under a study in which you are a PI (details below). If you think this is done in error please contact our team at <a href='mailto:%{email}'>%{email}</a> as soon as possible. If this was done under your supervision, no further action is necessary on your part at this time."
         data_use_agreement: "Please note that all requests to the Living BioBank are bound by the following Data Use Agreement"
       manager_email:
         subject: "New Request Pending SPARC Submission"

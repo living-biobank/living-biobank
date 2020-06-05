@@ -43,7 +43,7 @@ class SparcRequestsController < ApplicationController
       if @sparc_request.save
         RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
         unless @sparc_request.requester.net_id == @sparc_request.protocol.primary_pi.ldap_uid
-          RequestMailer.with(user: current_user, request: @sparc_request).pi_email.deliver_later
+          RequestMailer.with(user: @sparc_request.protocol.primary_pi, request: @sparc_request).pi_email.deliver_later
         end
 
         flash.now[:success] = t(:requests)[:created]
