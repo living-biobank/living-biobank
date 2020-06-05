@@ -62,6 +62,6 @@
       .d-flex.justify-content-center.mt-3
         .d-flex.flex-column.text-center
           .font-weight-bold
-            = t(:home)[:links][:contact][:header]
-          = t(:home)[:links][:contact][:link].html_safe
+            = t('home.links.contact.header')
+          = t('home.links.contact.link', email: ENV.fetch('LBB_EMAIL')).html_safe
   = render 'layouts/footer'

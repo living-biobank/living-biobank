@@ -18,16 +18,17 @@ class SparcRequest < ApplicationRecord
 
   validates_presence_of :dr_consult, unless: :draft?
 
-  validates :specimen_requests, length: { minimum: 1 }
-
+  validates_associated :protocol
   validates_associated :specimen_requests
+
+  validates :specimen_requests, length: { minimum: 1 }
 
   delegate :title, :short_title, :start_date, :end_date, to: :protocol
 
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.pending? && !self.updated? }
+  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.draft? || (sr.pending? && !self.updated?) }
   after_save :update_additional_services, if: :in_process?
   after_save :update_variables,           if: :active?
 
