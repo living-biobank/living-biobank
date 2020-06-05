@@ -492,8 +492,8 @@ en:
       locked_email:
         subject: "New Living BioBank request with locked SPARCRequest service"
         sparc_link: "View in SPARCRequest"
-        text1: "You are being contacted because you are a SPARCRequest service provider for the <strong>%{service}</strong> service."
-        text2: "A new Living BioBank request has been submitted submitted which includes this service, but alocked service was found on the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask that you take the necessary steps to determine how you wish to process this additional service."
+        text1: "You are being contacted because you are a SPARCRequest service provider for <strong>%{service}</strong>."
+        text2: "A request on Living BioBank was submitted in which there is an existing locked service in the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask you to take the necessary steps in determining how you wish to process this additional service."
     specimen_mailer:
       available_email: 
         subject: "%{group} Specimens Are Available"
