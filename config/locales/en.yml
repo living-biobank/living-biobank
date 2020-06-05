@@ -392,7 +392,7 @@ en:
         protocol: "Search for an existing Protocol in SPARCRequest"
         protocol_found: "Imported data from Study #%{id}"
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
-        i2b2_query: "Information about creating an i2b2 Query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>"
+        i2b2_query: "Information about creating an i2b2 query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='_blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>. Queries shown are populated from all SPARCRequest team members."
       tooltips:
         no_i2b2_queries: "You don't have any I2b2 Queries. I2b2 queries are required to find the right specimens for your Study."
       alerts:
