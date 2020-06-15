@@ -11,7 +11,9 @@ updateQueries = () ->
 
     $(this).selectpicker('refresh')
   <% else %>
-  $("select[name*=query_name]").parents('.dropdown').attr('data-toggle', 'tooltip').prop('title', I18n.t('requests.form.tooltips.no_i2b2_queries'))
+  $("select[name*=query_name]").parents('.dropdown').attr('data-toggle', 'tooltip').prop('title', "<%= t("requests.form.tooltips.no_i2b2_queries.#{params[:protocol_id].present? ? 'protocol' : 'user'}").html_safe %>")
+  $("select[name*=query_name] option:not(:first-child)").remove()
+  $("select[name*=query_name]").selectpicker('refresh')
   <% end %>
 
 updateQueries()
