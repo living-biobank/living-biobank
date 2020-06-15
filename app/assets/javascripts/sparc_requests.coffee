@@ -184,12 +184,18 @@ $ ->
       event.preventDefault()
 
   $(document).on 'keydown', '.numerical.decimal', ->
-    val = $(this).val()
-    key = event.keyCode || event.charCode
+    val           = $(this).val()
+    key           = event.keyCode || event.charCode
+    decimalIndex  = val.indexOf('.')
 
+    # Prevent non-numerical characters/utility key presses
     if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key) || decimalKeys.includes(key))
       event.preventDefault()
-    else if decimalKeys.includes(key) && val.includes('.')
+    # Prevent duplicate decimal characters
+    else if decimalKeys.includes(key) && decimalIndex >= 0
+      event.preventDefault()
+    # Limit the input to two decimal places
+    else if numericalKeys.includes(key) && decimalIndex >= 0 && decimalIndex < val.length - 2 && this.selectionStart > decimalIndex
       event.preventDefault()
 
 (exports ? this).initializeProtocolTypeahead = () ->
