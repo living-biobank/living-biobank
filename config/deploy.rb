@@ -1,7 +1,7 @@
 lock "3.12.1"
 
 set :application, "biobank"
-set :repo_url, "git@sparc_biobank:HSSC/sparc-biobank.git"
+set :repo_url, "git@sparc_biobank:living-biobank/living-biobank.git"
 
 set :linked_files, fetch(:linked_files, []).push('config/database.yml',
                                                  'config/secrets.yml',
