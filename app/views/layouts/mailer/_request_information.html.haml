@@ -23,9 +23,9 @@
       %th{ style: 'text-align:right;padding: 0.5rem;' }
         = SparcRequest.human_attribute_name(:specimen_requests)
       %td{ style: 'padding: 0.5rem;' }
-        - request.specimen_requests.each do |sr|
+        - request.specimen_requests.joins(:group).each do |sr|
           %p{ style: "margin:0;" }
-            - plural = sr.number_of_specimens_requested > 1
+            - plural = sr.number_of_specimens_requested.try(:>, 1)
             - if sr.group.process_sample_size
               = "- " + t("requests.table.specimens.line_item_with_sample_size.#{plural ? 'plural' : 'singular'}", source: sr.source.value, amount_requested: sr.number_of_specimens_requested, min_sample_size: sr.minimum_sample_size)
             - else

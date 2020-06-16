@@ -214,7 +214,7 @@ class SparcRequest < ApplicationRecord
         )
       end
 
-      RequestMailer.with(request: self, user: identity).manager_email.deliver_now
+      RequestMailer.with(request: self, user: identity).manager_email.deliver_later
     end
   end
 
