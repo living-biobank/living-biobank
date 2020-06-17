@@ -306,7 +306,7 @@ en:
         link: "User Guide"
       contact:
         header: "Living BioBank Support"
-        link: "For help and questions, please reach out to our team at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>"
+        link: "For help and questions, please reach out to our team at <a href='mailto:%{email}'>%{email}</a>"
     user_guide: "New to Living BioBank? Click <a href='LBB_Guide_v1.1.pptx'>here</a> to download our How-To guide!"
     login:
       header: "Developer Login"
@@ -318,19 +318,6 @@ en:
   requests:
     header: "Requests"
     create: "New Request"
-    create_confirm:
-      title: "Living BioBank DATA USE AGREEMENT"
-      html: "<h5 class='text-left font-weight-bold'>Before using the MUSC Living BioBank specimen request system, you must agree to the following Specimen Request System Agreement:</h5><p class='text-left'>The Specimen Request System Agreement is designed to provide principal investigators or study staff with access to de-identified specimens for the express purpose of MUSC IRB approved research.</p><p class='text-left'>Your acceptance of this assurance certifies that you understand and agree to all applicable terms contained herein.</p><p class='text-left'>I understand that only de-identified specimens will be provided.</p><p class='text-left'>I will make no attempt to learn the identity of any person or family who is the source of the specimen(s) and associated data, or attempt contact any individual or family member from whom the specimen or data were derived.</p><p class='text-left'>I understand that any effort to determine the identity of the source of the specimens, or to use the specimens provided for any purpose other than indicated above, is prohibited.</p><p class='text-left'>I understand that any violation of this assurance may result in a disciplinary action by my institution with the appropriate office(s) at my institution.</p><p class='text-left'>I agree to restrict my request for specimen(s) to those required for my MUSC IRB approved research study.</p><p class='text-left'>I declare that the requested specimens are necessary to accomplish the goals of the research.</p><p class='text-left'>I acknowledge the additional level of ethical sensitivity inherent in using the specimen(s) and agree to exercise exemplary ethical conduct in my use of the provided specimen(s).</p><p class='text-left'>I have completed the MUSC Code of Conduct training in MyQuest, Human Research Training (CITI) and other MUSC provided training, as required.</p>"
-      confirm: "Accept"
-      cancel: "Decline"
-    finalize_confirm:
-      title: "Finalize Request %{id}?"
-      text: "This request will become eligible to receive specimens."
-    complete_confirm:
-      title: "Complete Request %{id}?"
-      text: "This request will no longer be eligible to receive additional specimens."
-    reset_confirm:
-      title: "Change this Request to <span class='%{klass}'>%{status}</span>?"
     created: "Your inquiry has been received. A confirmation email has been sent to your mailbox."
     saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
@@ -357,9 +344,29 @@ en:
       edit: "Edit Request"
       cancel: "Cancel Request"
       reset: "Reset Request"
+    confirms:
+      create:
+        title: "Living BioBank DATA USE AGREEMENT"
+        html: "<h5 class='text-left font-weight-bold'>Before using the MUSC Living BioBank specimen request system, you must agree to the following Specimen Request System Agreement:</h5><p class='text-left'>The Specimen Request System Agreement is designed to provide principal investigators or study staff with access to de-identified specimens for the express purpose of MUSC IRB approved research.</p><p class='text-left'>Your acceptance of this assurance certifies that you understand and agree to all applicable terms contained herein.</p><p class='text-left'>I understand that only de-identified specimens will be provided.</p><p class='text-left'>I will make no attempt to learn the identity of any person or family who is the source of the specimen(s) and associated data, or attempt contact any individual or family member from whom the specimen or data were derived.</p><p class='text-left'>I understand that any effort to determine the identity of the source of the specimens, or to use the specimens provided for any purpose other than indicated above, is prohibited.</p><p class='text-left'>I understand that any violation of this assurance may result in a disciplinary action by my institution with the appropriate office(s) at my institution.</p><p class='text-left'>I agree to restrict my request for specimen(s) to those required for my MUSC IRB approved research study.</p><p class='text-left'>I declare that the requested specimens are necessary to accomplish the goals of the research.</p><p class='text-left'>I acknowledge the additional level of ethical sensitivity inherent in using the specimen(s) and agree to exercise exemplary ethical conduct in my use of the provided specimen(s).</p><p class='text-left'>I have completed the MUSC Code of Conduct training in MyQuest, Human Research Training (CITI) and other MUSC provided training, as required.</p>"
+        confirm: "Accept"
+        cancel: "Decline"
+      delete:
+        title: "Delete Reqeuest %{id}?"
+      finalize:
+        title: "Finalize Request %{id}?"
+        text: "This request will become eligible to receive specimens."
+      complete:
+        title: "Complete Request %{id}?"
+        text: "This request will no longer be eligible to receive additional specimens."
+      reset:
+        title: "Change this Request to <span class='%{klass}'>%{status}</span>?"
     form:
       new_title: "New Specimen Request"
       edit_title: "Edit Specimen Request %{id}"
+      existing_request:
+        title: "%{status} Request Found"
+        pending: "We found an existing SPARC Study connected to this RMID but it already has an active Living BioBank Specimen Request in %{status} status. Would you like to edit the existing request instead?<br><br><span class='font-weight-bold'>SPARC Study %{srid}</span><br>%{short_title}<br><br><em>LBB Request #%{lbb_id}</em>"
+        in_process: "We found an existing SPARC Study connected to this RMID but it already has an active Living BioBank Specimen Request in %{status} status. If you need to make changes to the existing request please contact us at <a href='mailto:%{email}'>%{email}</a>.<br><br><span class='font-weight-bold'>SPARC Study %{srid}</span><br>%{short_title}<br><br><em>LBB Request #%{lbb_id}</em>"
       date_separator: "to"
       headers:
         protocol_information: "Protocol Information"
@@ -377,7 +384,6 @@ en:
       placeholders:
         protocol_search: "Search for your Protocol by SRID, title, or short title"
         primary_pi: "e.g. Smith"
-        minimum_sample: "e.g. 2mL"
       subtext:
         rmid: "Please provide your Study's <strong>Research Master ID</strong> or visit <a href='https://rmid.musc.edu' target='blank'>rmid.musc.edu</a> to create one."
         rmid_not_found: "Research Master ID not found"
@@ -386,9 +392,11 @@ en:
         protocol: "Search for an existing Protocol in SPARCRequest"
         protocol_found: "Imported data from Study #%{id}"
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
-        i2b2_query: "Information about creating an i2b2 Query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest.html' target='blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>"
+        i2b2_query: "Information about creating an i2b2 query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest' target='_blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>. Queries shown are populated from all SPARC study team members."
       tooltips:
-        no_i2b2_queries: "You don't have any I2b2 Queries. I2b2 queries are required to find the right specimens for your Study."
+        no_i2b2_queries:
+          protocol: "None of this study's users have existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."
+          user: "You don't have any existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."
       alerts:
         permissions:
           title: "Invalid Permissions"
@@ -416,7 +424,7 @@ en:
         chart:
           header: "%{source} Sample Accrual"
           loading: "Loading..."
-          no_data: "We're still processing data for samples matching your request. Please try again later."
+          no_data: "We're still processing data for samples matching your request.\nPlease try again later."
           value: "%{value} (%{rate}/week)"
         line_item_no_sample_size:
           singular: "%{source} - %{amount_requested} sample"
@@ -466,9 +474,13 @@ en:
         subject: "New Request Confirmation"
         text1: "We have received your Living BioBank request. Our team will review and process your request within 3 business days."
         text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
-        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:livingbiobank@musc.edu'>livingbiobank@musc.edu</a>."
+        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:%{email}'>%{email}</a>."
         text4: "We look forward to working with you."
         data_use_agreement: "By submitting this request you agree to the Living BioBank Data Use Agreement"
+      pi_email:
+        subject: "New Request Confirmation"
+        text1: "We are contacting you on behalf of the MUSC Living BioBank team. %{requester_name} submitted a request for specimens/data under a study in which you are a PI (details below). If you think this is done in error please contact our team at <a href='mailto:%{email}'>%{email}</a> as soon as possible. If this was done under your supervision, no further action is necessary on your part at this time."
+        data_use_agreement: "Please note that all requests to the Living BioBank are bound by the following Data Use Agreement"
       manager_email:
         subject: "New Request Pending SPARC Submission"
         text: "A new Living BioBank request has been submitted and is awaiting your review in SPARCRequest."
@@ -482,8 +494,8 @@ en:
       locked_email:
         subject: "New Living BioBank request with locked SPARCRequest service"
         sparc_link: "View in SPARCRequest"
-        text1: "You are being contacted because you are a SPARCRequest service provider for the <strong>%{service}</strong> service."
-        text2: "A new Living BioBank request has been submitted submitted which includes this service, but alocked service was found on the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask that you take the necessary steps to determine how you wish to process this additional service."
+        text1: "You are being contacted because you are a SPARCRequest service provider for <strong>%{service}</strong>."
+        text2: "A request on Living BioBank was submitted in which there is an existing locked service in the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask you to take the necessary steps in determining how you wish to process this additional service."
     specimen_mailer:
       available_email: 
         subject: "%{group} Specimens Are Available"

@@ -171,11 +171,31 @@ $ ->
     48, 49, 50, 51, 52, 53, 54, 55, 56, 57,       # 0-9
     96, 97, 98, 99, 100, 101, 102, 103, 104, 105  # 0-9 Num Pad
   ]
-  $(document).on 'keydown', '.numerical', ->
+
+  decimalKeys = [
+    110, 190 # period keys
+  ]
+
+  $(document).on 'keydown', '.numerical:not(.decimal)', ->
     val = $(this).val()
     key = event.keyCode || event.charCode
 
     if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key))
+      event.preventDefault()
+
+  $(document).on 'keydown', '.numerical.decimal', ->
+    val           = $(this).val()
+    key           = event.keyCode || event.charCode
+    decimalIndex  = val.indexOf('.')
+
+    # Prevent non-numerical characters/utility key presses
+    if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key) || decimalKeys.includes(key))
+      event.preventDefault()
+    # Prevent duplicate decimal characters
+    else if decimalKeys.includes(key) && decimalIndex >= 0
+      event.preventDefault()
+    # Limit the input to two decimal places
+    else if numericalKeys.includes(key) && decimalIndex >= 0 && decimalIndex < val.length - 2 && this.selectionStart > decimalIndex
       event.preventDefault()
 
 (exports ? this).initializeProtocolTypeahead = () ->
@@ -239,5 +259,5 @@ $ ->
     dataType: 'script'
     url: '/query_names'
     data:
-      user_id: $('#sparc_request_user_id').val()
-      request_id: $('#sparc_request_id').val()
+      user_id:      $('#sparc_request_user_id').val()
+      protocol_id:  $('#sparc_request_protocol_id').val()

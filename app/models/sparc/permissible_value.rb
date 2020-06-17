@@ -9,7 +9,15 @@ module SPARC
     }
     
     def self.get_value(category, key)
-      PermissibleValue.where(category: category, key: key).first.try(:value)
+      PermissibleValue.available.where(category: category, key: key).first.try(:value)
+    end
+
+    def self.get_key_list(category, default=nil)
+      if default.nil?
+        PermissibleValue.available.where(category: category).pluck(:key)
+      else
+        PermissibleValue.available.where(category: category, default: default).pluck(:key)
+      end
     end
     
     def self.get_hash(category, default=nil)

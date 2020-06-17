@@ -18,22 +18,23 @@ class SparcRequest < ApplicationRecord
 
   validates_presence_of :dr_consult, unless: :draft?
 
-  validates :specimen_requests, length: { minimum: 1 }
-
+  validates_associated :protocol
   validates_associated :specimen_requests
 
-  delegate :title, :short_title, :identifier, :start_date, :end_date, to: :protocol
+  validates :specimen_requests, length: { minimum: 1 }
+
+  delegate :title, :short_title, :start_date, :end_date, to: :protocol
 
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.pending? && !self.updated? }
+  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.draft? || (sr.pending? && !self.updated?) }
   after_save :update_additional_services, if: :in_process?
   after_save :update_variables,           if: :active?
 
-  scope :in_process, -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
-
-  scope :draft, -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
+  scope :active,      -> { where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]]) }
+  scope :in_process,  -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
+  scope :draft,       -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
 
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
     search(term).
@@ -84,7 +85,7 @@ class SparcRequest < ApplicationRecord
     if status == 'any'
       where.not(status: I18n.t(:requests)[:statuses][:draft])
     elsif status == 'active'
-      where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]])
+      active
     else
       where(status: status)
     end
@@ -209,11 +210,11 @@ class SparcRequest < ApplicationRecord
           identity: identity,
           project_rights: 'approve',
           role:           'other',
-          role_other:     'Living Biobank Manager'
+          role_other:     'Living BioBank Manager'
         )
       end
 
-      RequestMailer.with(request: self, user: identity).manager_email.deliver_now
+      RequestMailer.with(request: self, user: identity).manager_email.deliver_later
     end
   end
 
@@ -265,6 +266,7 @@ class SparcRequest < ApplicationRecord
       sparc_li = ssr.line_items.create(
         service:          service,
         service_request:  sr,
+        quantity:         1,
         optional:         true
       )
     end

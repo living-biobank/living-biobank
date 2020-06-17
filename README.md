@@ -1,39 +1,6 @@
-# Living Biobank
+Living BioBank™ (LBB™) and Living µBiome Bank™ (LµBB™) allow for the just-in-time capture and delivery of de-identified clinical data and precisely phenotyped surplus standard-of-care specimens and microbiome assay data resulting from specimens. 
 
-### Installation Guide
 
-Before installing Gems, you will need to download several files from [Oracle Technology Network](https://www.oracle.com/technetwork/topics/intel-macsoft-096467.html) in order to make the `ruby-oci8` Gem work. (See [this guide](https://github.com/kubo/ruby-oci8/blob/master/docs/install-on-osx.md))
+The system is open-source under BSD 3-clause license (see LICENSE.md) with the capability to encompass multiple institutions, institutional entities, and service providers.
 
-* Instant Client Package - Basic (`instantclient-basic-macos.x64-12.1.0.2.0.zip`) or Basic Lite (`instantclient-basiclite-macos.x64-12.1.0.2.0.zip`)
-* Instant Client Package - SDK (`instantclient-sdk-macos.x64-12.1.0.2.0.zip`)
-* Instant Client Package - SQL*Plus (`instantclient-sqlplus-macos.x64-12.1.0.2.0.zip`) (optionally)
-
-Install Gems
-```
-bundle install
-```
-
-Install Yarn Packages
-```
-# Install Yarn unless you already have it
-brew install yarn
-
-# Install yarn packages
-yarn install
-```
-
-Set up your database, sharding, and environment configuration
-```
-cp config/database.yml.example config/database.yml
-cp config/sparc_request_database.yml.example config/sparc_request_database.yml
-cp config/i2b2_database.yml.example config/i2b2_database.yml
-cp config/dotenv.example .env
-```
-
-After copying the `.yml.example` files, modify the corresponding `.yml` files with your database and shard configuration. In addition, make any necessary changes to your `.env`.
-
-Create and migrate your database
-```
-rake db:create
-rake db:migrate
-```
+LBB™ and LµBB™ integrate multiple informatics systems to achieve this, including Informatics for Integrating Biology and the Bedside (i2b2), management system Service, Pricing, and Applications for Research Centers (SPARC), research data warehouse, CTSA Accrual to Clinical Trials (ACT) Network Shared Health Resource Information Network (SHRINE), inter-institutional authentication system InCommon. The current implementation uses i2b2 as an entry point for precisely defining an e-phenotype matching desired patient characteristics. This e-phenotype is then used to match patients who have laboratory testing orders and to deliver just-in-time specimen availability reports to laboratory honest brokers. The specimens are available for capture after clinical testing is completed and just prior to discard. In cases of requests for physical specimens laboratory honest brokers strip specimens of identifiers and assign a de-identified specimen number prior to fulfillment. In other cases where microbiome data is requested, microbiome assay data are stripped of all human DNA and delivered with de-identified linked clinical data. Multi-institutional requests of microbiome data are fulfilled by transmission of i2b2 e-phenotype through the ACT SHRINE network from the originating institution. E-phenotype queries are transmitted and populated in L(µ)BB which is accessed through the InCommon authentication infrastructure across institutions.

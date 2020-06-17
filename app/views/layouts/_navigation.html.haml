@@ -27,7 +27,7 @@
             %span
               = t('navigation.control_panel')
       .nav-item
-        = link_to help_path, class: ['nav-link btn btn-dark', controller_name == 'help' ? 'active' : ''] do
+        = link_to help_path, class: ['nav-link btn btn-dark', action_name == 'help' ? 'active' : ''] do
           = icon('fas', 'question')
           %span
             = t('navigation.help')

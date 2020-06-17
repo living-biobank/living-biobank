@@ -12,9 +12,7 @@ class ProtocolsController < ApplicationController
   def show
     respond_to :js
 
-    if params[:id]
-      @protocol = SPARC::Protocol.find(params[:id])
-    elsif SPARC::Setting.get_value('research_master_enabled') && params[:rmid]
+    if SPARC::Setting.get_value('research_master_enabled') && params[:rmid]
       @rmid_record = SPARC::Protocol.get_rmid(params[:rmid])
 
       if @rmid_record.nil?
@@ -34,6 +32,11 @@ class ProtocolsController < ApplicationController
           @rights = true
         end
       end
+    else
+      @protocol = SPARC::Protocol.find(params[:id])
     end
+
+    @duplicate        = @protocol.sparc_requests.active.or(@protocol.sparc_requests.draft).any? if @protocol
+    @existing_request = @protocol.sparc_requests.active.or(@protocol.sparc_requests.draft).first if @duplicate
   end
 end

@@ -1,0 +1,10 @@
+%p
+  = t('mailers.request_mailer.pi_email.text1', requester_name: @request.requester.full_name, email: ENV.fetch('LBB_EMAIL')).html_safe
+= render 'layouts/mailer/request_link', request: @request
+= render 'layouts/mailer/request_information', request: @request
+
+- content_for :ps do
+  %h4
+    = t('mailers.request_mailer.pi_email.data_use_agreement')
+
+  = render 'layouts/mailer/dua_footer'

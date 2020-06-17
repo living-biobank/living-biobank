@@ -62,10 +62,6 @@
       .d-flex.justify-content-center.mt-3
         .d-flex.flex-column.text-center
           .font-weight-bold
-            = t(:home)[:links][:contact][:header]
-          = t(:home)[:links][:contact][:link].html_safe
-  .d-flex.flex-column.justify-content-end
-    %p.text-muted.text-center.mb-1.mt-3
-      = t('site_information.version', site_name: t('site_information.name'), version: ENV.fetch('APP_VERSION'))
-    %p.text-muted.text-center.mb-0
-      = t('site_information.copyright').html_safe
+            = t('home.links.contact.header')
+          = t('home.links.contact.link', email: ENV.fetch('LBB_EMAIL')).html_safe
+  = render 'layouts/footer'

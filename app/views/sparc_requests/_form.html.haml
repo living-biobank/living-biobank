@@ -104,7 +104,7 @@
                 = t(:requests)[:form][:request_data][:text_4]
             .text-muted
               = t(:requests)[:form][:request_data][:text_5]
-              = link_to t(:requests)[:form][:request_data][:link_text], "https://redcap.musc.edu/surveys/?s=T7YXHADCY9"
+              = link_to t(:requests)[:form][:request_data][:link_text], "https://redcap.musc.edu/surveys/?s=T7YXHADCY9", target: :_blank
           .form-group
             .custom-control.custom-checkbox
               = f.check_box :dr_consult, class: 'custom-control-input'
@@ -131,7 +131,7 @@
               .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
                 = ff_li.label :minimum_sample_size, class: 'required'
                 .input-group
-                  = ff_li.text_field :minimum_sample_size, class: 'form-control numerical', placeholder: t(:requests)[:form][:placeholders][:minimum_sample], maxlength: 30
+                  = ff_li.text_field :minimum_sample_size, class: 'form-control numerical decimal', maxlength: 30
                   .input-group-append
                     = ff_li.label :minimum_sample_size, 'mL', class: 'input-group-text'
               .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
@@ -143,7 +143,7 @@
                 = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
                   = icon('fas', 'trash')
           .form-group
-            = f.add_nested_fields_link :specimen_requests, class: 'btn btn-success' do
+            = f.add_nested_fields_link :specimen_requests, href: 'javascript:void(0)', class: 'btn btn-success' do
               = succeed t(:requests)[:form][:add_specimen] do
                 = icon('fas', 'plus mr-2')
       .modal-footer
