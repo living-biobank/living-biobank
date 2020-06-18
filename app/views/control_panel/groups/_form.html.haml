@@ -8,47 +8,51 @@
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
-        .card
-          .card-header.bg-light
-            %h5.card-title.mb-0
-              = "General Group Information"
-          .card-body
-            .form-group
-              = f.label :name, class: 'required'
-              = f.text_field :name, class: 'form-control'
-            .form-group.row
-              = f.label :process_sample_size, class: 'col-form-label col-6'
-              .col-4.offset-2
-                = f.check_box :process_sample_size, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
-            .form-group.row.mb-0
-              = f.label :display_patient_information, class: 'col-form-label col-6'
-              .col-4.offset-2
-                = f.check_box :display_patient_information, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
-        .card
-          .card-header.bg-light
-            %h5.card-title.mb-0
-              = Group.human_attribute_name(:release_email)
-          .card-body.mb-0
-            .form-group
-              = f.label :release_email, class: 'required'
-              = f.rich_text_area :release_email, class: 'form-control'
+        %section.pb-4.mb-4.border-bottom
+          %h4.m-0
+            = t('control_panel.groups.form.group_info')
+          .form-group
+            = f.label :name, class: 'required'
+            = f.text_field :name, class: 'form-control'
+          .form-group.row
+            = f.label :process_sample_size, class: 'col-form-label col-6'
+            .col-4.offset-2
+              = f.check_box :process_sample_size, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
+          .form-group.row.mb-0
+            = f.label :display_patient_information, class: 'col-form-label col-6'
+            .col-4.offset-2
+              = f.check_box :display_patient_information, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
+        %section.pb-4.mb-4.border-bottom
+          %h4.required<
+            = Group.human_attribute_name(:release_email)
+          .form-group
+            = f.rich_text_area :release_email, class: 'form-control'
+            %small.form-text.text-muted
+              = t('control_panel.groups.form.release_email_info')
+          .form-group.row.mb-0
+            = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
+            .col-4.offset-2
+              = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: t('control_panel.groups.form.release_email_time.all_samples'), off: t('control_panel.groups.form.release_email_time.each_sample'), style: 'btn-block' }
+        - if group.process_specimen_retrieval?
+          %section.pb-4.mb-4.border-bottom
+            %h4.required<
+              = Group.human_attribute_name(:discard_email)
+            .form-group.mb-0
+              = f.rich_text_area :discard_email, class: 'form-control'
               %small.form-text.text-muted
                 = t('control_panel.groups.form.release_email_info')
-            .form-group.row.mb-0
-              = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
-              .col-4.offset-2
-                = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: t('control_panel.groups.form.release_email_time.all_samples'), off: t('control_panel.groups.form.release_email_time.each_sample'), style: 'btn-block' }
-        - if group.process_specimen_retrieval
-          .card.mt-3
-            .card-header.bg-light
-              %h5.card-title.mb-0
-                = Group.human_attribute_name(:discard_email)
-            .card-body
-              .form-group.mb-0
-                = f.label :discard_email, class: 'required'
-                = f.rich_text_area :discard_email, class: 'form-control'
-                %small.form-text.text-muted
-                  = t('control_panel.groups.form.release_email_info')
+        %section
+          %h4
+            = Group.human_attribute_name(:finalize_email)
+          .form-group
+            = f.rich_text_area :finalize_email, class: 'form-control'
+            %small.form-text.text-muted
+              = t('control_panel.groups.form.release_email_info')
+          .form-group.mb-0
+            = f.label :finalize_email_to
+            = f.text_field :finalize_email_to, class: 'form-control'
+            %small.form-text.text-muted
+              = "Separate multiple emails with a comma"
       .modal-footer
         = f.submit t('actions.save'), class: 'btn btn-primary'
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

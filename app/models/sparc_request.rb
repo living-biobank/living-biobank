@@ -29,8 +29,9 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :protocol
 
   after_save :add_authorized_users,       if: Proc.new{ |sr| sr.draft? || (sr.pending? && !self.updated?) }
-  after_save :update_additional_services, if: :in_process?
   after_save :update_variables,           if: :active?
+  after_save :update_additional_services, if: :in_process?
+  after_save :send_finalization_emails,   if: :in_process?
 
   scope :active,      -> { where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]]) }
   scope :in_process,  -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
@@ -181,6 +182,24 @@ class SparcRequest < ApplicationRecord
     !irb_approved
   end
 
+  def add_authorized_users
+    # Add Data Honest Brokers
+    email = ENV.fetch('SPARC_MANAGERS').split(',').map do |net_id|
+      identity = SPARC::Directory.find_or_create(net_id)
+
+      unless self.protocol.project_roles.exists?(identity: identity)
+        self.protocol.project_roles.create(
+          identity: identity,
+          project_rights: 'approve',
+          role:           'other',
+          role_other:     'Living BioBank Manager'
+        )
+      end
+
+      RequestMailer.with(request: self, user: identity).manager_email.deliver_later
+    end
+  end
+
   def update_variables
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
@@ -200,24 +219,6 @@ class SparcRequest < ApplicationRecord
     self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
-  def add_authorized_users
-    # Add Data Honest Brokers
-    email = ENV.fetch('SPARC_MANAGERS').split(',').map do |net_id|
-      identity = SPARC::Directory.find_or_create(net_id)
-
-      unless self.protocol.project_roles.exists?(identity: identity)
-        self.protocol.project_roles.create(
-          identity: identity,
-          project_rights: 'approve',
-          role:           'other',
-          role_other:     'Living BioBank Manager'
-        )
-      end
-
-      RequestMailer.with(request: self, user: identity).manager_email.deliver_later
-    end
-  end
-
   def update_additional_services
     # Find or create a Service Request
     sr = self.protocol.service_requests.first_or_create
@@ -233,6 +234,14 @@ class SparcRequest < ApplicationRecord
     end
 
     self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
+  end
+
+  def send_finalization_emails
+    self.groups.each do |g|
+      if g.finalize_email.present? && g.finalize_email_to.present?
+        RequestMailer.with(group: g, sparc_request: self).finalization_email.deliver_later
+      end
+    end
   end
 
   private

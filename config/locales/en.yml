@@ -57,6 +57,8 @@ en:
       group:
         discard_email: "Specimen Discard Email"
         display_patient_information: "Include patient names alongside other patient information?"
+        finalize_email: "Additional Finalization Email"
+        finalize_email_to: "Recipient Email(s)"
         notify_when_all_specimens_released: "When should release emails be sent?"
         process_sample_size: "Require a Minimum Sample Size per specimen?"
         release_email: "Specimen Release Email"
@@ -214,6 +216,7 @@ en:
         services: "In Process Additional Services"
       form:
         header: "Manage %{name} Group"
+        group_info: "General Group Information"
         release_email_time:
           all_samples: "After All Samples Released"
           each_sample: "After Each Sample Released"
@@ -441,7 +444,6 @@ en:
       placeholder: "No Title Specified"
       requester_self: "You started this request %{time_elapsed} ago"
       requester: "Request started by %{name} %{time_elapsed} ago"
-      requester: ""
   site_information:
     name: "Living BioBank"
     footer_name: "Living BioBank<sup>TM</sup>"
