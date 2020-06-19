@@ -243,7 +243,7 @@ class SparcRequest < ApplicationRecord
   def send_finalization_emails
     self.groups.each do |g|
       if g.finalize_email.present? && g.finalize_email_to.present?
-        RequestMailer.with(group: g, sparc_request: self).finalization_email.deliver_now
+        RequestMailer.with(group: g, request: self).finalization_email.deliver_later
       end
     end
   end
