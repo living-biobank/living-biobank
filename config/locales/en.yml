@@ -57,8 +57,10 @@ en:
       group:
         discard_email: "Specimen Discard Email"
         display_patient_information: "Include patient names alongside other patient information?"
+        email_body: "Body"
+        email_subject: "Subject"
         finalize_email: "Additional Finalization Email"
-        finalize_email_to: "Recipient Email(s)"
+        finalize_email_to: "Recipients"
         notify_when_all_specimens_released: "When should release emails be sent?"
         process_sample_size: "Require a Minimum Sample Size per specimen?"
         release_email: "Specimen Release Email"
@@ -220,7 +222,9 @@ en:
         release_email_time:
           all_samples: "After All Samples Released"
           each_sample: "After Each Sample Released"
-        release_email_info: "Note: A greeting and signature will be added automatically."
+        subtext:
+          email: "Note: A greeting and signature will be added automatically."
+          recipients: "Separate multiple emails with a comma"
       tooltips:
         edit: "Edit Group"
       flash:
@@ -397,6 +401,7 @@ en:
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
         i2b2_query: "Information about creating an i2b2 query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest' target='_blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>. Queries shown are populated from all SPARC study team members."
       tooltips:
+        loading_i2b2_queries: "Loading queries..."
         no_i2b2_queries:
           protocol: "None of this study's users have existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."
           user: "You don't have any existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."

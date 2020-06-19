@@ -26,9 +26,9 @@
           %h4.required<
             = Group.human_attribute_name(:release_email)
           .form-group
-            = f.rich_text_area :release_email, class: 'form-control'
+            = f.rich_text_area :release_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
             %small.form-text.text-muted
-              = t('control_panel.groups.form.release_email_info')
+              = t('control_panel.groups.form.subtext.email')
           .form-group.row.mb-0
             = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
             .col-4.offset-2
@@ -38,21 +38,23 @@
             %h4.required<
               = Group.human_attribute_name(:discard_email)
             .form-group.mb-0
-              = f.rich_text_area :discard_email, class: 'form-control'
+              = f.rich_text_area :discard_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
               %small.form-text.text-muted
-                = t('control_panel.groups.form.release_email_info')
+                = t('control_panel.groups.form.subtext.email')
         %section
           %h4
             = Group.human_attribute_name(:finalize_email)
-          .form-group
-            = f.rich_text_area :finalize_email, class: 'form-control'
-            %small.form-text.text-muted
-              = t('control_panel.groups.form.release_email_info')
+          .form-row
+            .form-group.col-6
+              = f.text_field :finalize_email_subject, class: 'form-control', placeholder: Group.human_attribute_name(:email_subject)
+            .form-group.col-6
+              = f.text_field :finalize_email_to, class: 'form-control', placeholder: Group.human_attribute_name(:finalize_email_to)
+              %small.form-text.text-muted
+                = t('control_panel.groups.form.subtext.recipients')
           .form-group.mb-0
-            = f.label :finalize_email_to
-            = f.text_field :finalize_email_to, class: 'form-control'
+            = f.rich_text_area :finalize_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
             %small.form-text.text-muted
-              = "Separate multiple emails with a comma"
+              = t('control_panel.groups.form.subtext.email')
       .modal-footer
         = f.submit t('actions.save'), class: 'btn btn-primary'
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

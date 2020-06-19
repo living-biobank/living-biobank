@@ -216,6 +216,8 @@ class SparcRequest < ApplicationRecord
       end
     end
 
+    send_locked_emails(self.variables)
+
     self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
@@ -233,13 +235,15 @@ class SparcRequest < ApplicationRecord
       end
     end
 
+    send_locked_emails(self.additional_services)
+
     self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
   def send_finalization_emails
     self.groups.each do |g|
       if g.finalize_email.present? && g.finalize_email_to.present?
-        RequestMailer.with(group: g, sparc_request: self).finalization_email.deliver_later
+        RequestMailer.with(group: g, sparc_request: self).finalization_email.deliver_now
       end
     end
   end
@@ -258,7 +262,28 @@ class SparcRequest < ApplicationRecord
         organization:       service.process_ssrs_organization,
         service_requester:  requester
       )
-    elsif ssr.locked?
+    elsif !ssr.locked?
+      ssr.update_attribute(:status, 'draft')
+    end
+
+    # Do not add services in SPARC if the SSR is locked
+    unless ssr.locked?
+      # Find or create a SPARC Line Item for the Line Item
+      unless sparc_li = ssr.line_items.where(service: service).first
+        sparc_li = ssr.line_items.create(
+          service:          service,
+          service_request:  sr,
+          quantity:         1,
+          optional:         true
+        )
+      end
+
+      line_item.update_attribute(:sparc_id, sparc_li.id)
+    end
+  end
+
+  def send_locked_emails(line_items)
+    SPARC::SubServiceRequest.where(id: SPARC::LineItem.where(id: line_items.pluck(:sparc_id)).pluck(:sub_service_request_id)).select(&:locked?).each do |ssr|
       if email = ssr.organization.submission_emails.last.try(:email)
         ServiceMailer.with(line_item: line_item, sub_service_request: ssr, to: email).locked_email.deliver_later
       elsif ssr.organization.service_providers.any?
@@ -266,20 +291,6 @@ class SparcRequest < ApplicationRecord
           ServiceMailer.with(line_item: line_item, sub_service_request: ssr, user: sp.identity).locked_email.deliver_later
         end
       end
-    else
-      ssr.update_attribute(:status, 'draft')
     end
-
-    # Find or create a SPARC Line Item for the Line Item
-    unless sparc_li = ssr.line_items.where(service: service).first
-      sparc_li = ssr.line_items.create(
-        service:          service,
-        service_request:  sr,
-        quantity:         1,
-        optional:         true
-      )
-    end
-
-    line_item.update_attribute(:sparc_id, sparc_li.id)
   end
 end

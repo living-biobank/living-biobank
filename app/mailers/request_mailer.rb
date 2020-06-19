@@ -31,7 +31,7 @@ class RequestMailer < ApplicationMailer
     @request  = params[:request]
     @group    = params[:group]
 
-    mail(to: @group.finalize_email_to, subject: t(''))
+    mail(to: @group.finalize_email_to, subject: @group.finalize_email_subject)
   end
 
   def completion_email
