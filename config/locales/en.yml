@@ -429,6 +429,7 @@ en:
       duration:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"
+        blank: "End date not specified"
       specimens:
         chart:
           header: "%{source} Sample Accrual"

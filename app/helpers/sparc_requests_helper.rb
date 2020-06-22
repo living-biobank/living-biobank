@@ -112,6 +112,10 @@ module SparcRequestsHelper
           icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
         end
       end
+    else
+      content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
+        icon('fas', 'hourglass-end mr-1') + t('requests.table.duration.blank')
+      end
     end
   end
 
