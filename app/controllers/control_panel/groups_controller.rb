@@ -44,6 +44,7 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
       :release_email,
       :discard_email,
       :finalize_email,
+      :finalize_email_subject,
       :finalize_email_to
     )
   end

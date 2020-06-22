@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_180354) do
+ActiveRecord::Schema.define(version: 2020_06_19_141854) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2020_06_16_180354) do
     t.boolean "process_sample_size"
     t.boolean "notify_when_all_specimens_released"
     t.boolean "display_patient_information"
+    t.string "finalize_email_subject"
     t.string "finalize_email_to"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
