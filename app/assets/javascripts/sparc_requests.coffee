@@ -125,6 +125,13 @@ $ ->
       $('#potentialFundingSource').removeClass('d-none')
       $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '')
       $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', potential_funding_source)
+    else
+      funding_source = $('#sparc_request_protocol_attributes_funding_source').val()
+      potential_funding_source = $('#sparc_request_protocol_attributes_potential_funding_source').val()
+      $('#fundingSource').addClass('d-none')
+      $('#potentialFundingSource').addClass('d-none')
+      $('#sparc_request_protocol_attributes_funding_source').selectpicker('val', '')
+      $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('val', '')
 
   $(document).on 'change', '#sparc_request_protocol_attributes_start_date', ->
     if $(this).val()
