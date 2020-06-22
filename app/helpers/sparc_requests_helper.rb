@@ -98,17 +98,19 @@ module SparcRequestsHelper
   end
 
   def request_duration_display(sr)
-    if sr.end_date < DateTime.now.utc
-      content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
-        icon('fas', 'hourglass-end mr-1') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, DateTime.now.utc).capitalize)
-      end
-    elsif ((sr.end_date - DateTime.now.utc).to_i / (60*60*24)) <= 30
-      content_tag :span, class: 'd-inline-flex align-items-center text-warning' do
-        icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
-      end
-    else
-      content_tag :span, class: 'd-inline-flex align-items-center text-muted' do
-        icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
+    if sr.end_date
+      if sr.end_date < DateTime.now.utc
+        content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
+          icon('fas', 'hourglass-end mr-1') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, DateTime.now.utc).capitalize)
+        end
+      elsif ((sr.end_date - DateTime.now.utc).to_i / (60*60*24)) <= 30
+        content_tag :span, class: 'd-inline-flex align-items-center text-warning' do
+          icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
+        end
+      else
+        content_tag :span, class: 'd-inline-flex align-items-center text-muted' do
+          icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
+        end
       end
     end
   end
