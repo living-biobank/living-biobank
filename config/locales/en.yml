@@ -415,6 +415,7 @@ en:
       save_as_draft: "Save as Draft"
     table:
       header: "Request %{id}"
+      sparc_header: "SPARC %{identifier}"
       sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
       requester_self: "You submitted this request %{time_elapsed} ago"

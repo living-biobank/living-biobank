@@ -34,7 +34,7 @@ module SparcRequestsHelper
     # of popovers on XS screens
     raw(
       content_tag(:span, t('requests.table.header', id: sr.identifier), class: 'mt-0 mt-sm-1 mr-2') +
-      content_tag(:small, sr.protocol.identifier.truncate(60), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
+      content_tag(:small, t('requests.table.sparc_header', identifier: sr.protocol.identifier.truncate(60)), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
       if opts[:popover] && sr.previously_submitted?
         content_tag(:span, class: 'mt-0 mt-sm-1') do
           link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
