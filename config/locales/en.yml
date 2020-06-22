@@ -45,11 +45,11 @@ en:
     unacceptable:
       header: "Oh no"
       text1: "Your browser did something unexpected."
-      text2: "Please contact us if the problem persists."
+      text2: "Please contact us at <a href='mailto:%{email}'>%{email}</a> if the problem persists."
     internal_error:
       header: "Server Error"
       text1: "Looks like something went wrong!"
-      text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
+      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>. In the meantime, try refreshing your page."
     user:
       user_delete: "cannot be removed as it would leave no users with admin privileges."
   activerecord:

@@ -1,4 +1,6 @@
 class SparcRequest < ApplicationRecord
+  include DirtyAssociations
+
   belongs_to :requester, class_name: "User", foreign_key: :user_id
   belongs_to :updater, class_name: "User", foreign_key: :updated_by, optional: true
   belongs_to :finalizer, class_name: "User", foreign_key: :finalized_by, optional: true
@@ -10,7 +12,7 @@ class SparcRequest < ApplicationRecord
 
   has_many :line_items, dependent: :destroy
   has_many :specimen_requests, -> { where.not(source_id: nil) }, class_name: "LineItem"
-  has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem"
+  has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem", after_add: :dirty_create, after_remove: :dirty_delete
   has_many :sources, through: :specimen_requests
   has_many :groups, through: :sources
   has_many :services, through: :groups, source: :services
@@ -250,16 +252,16 @@ class SparcRequest < ApplicationRecord
   end
 
   def send_locked_emails
-    locked_services = SPARC::Service.eager_load(organization: { parent: { parent: :parent } }).where(id: self.additional_services.where.not(sparc_id: nil).pluck(:service_id))
+    locked_services = SPARC::Service.eager_load(organization: { parent: { parent: :parent } }).where(id: self.additional_services.where(id: self.saved_changes[:line_item][:added], sparc_id: nil).pluck(:service_id))
 
     SPARC::SubServiceRequest.eager_load(:organization).where(protocol_id: self.protocol_id, organization_id: locked_services.pluck(:organization_id)).distinct.reject(&:complete?).each do |ssr|
       services = locked_services.select{ |s| s.process_ssrs_organization.id == ssr.organization_id }
 
       if email = ssr.organization.submission_emails.last.try(:email)
-        RequestMailer.with(sub_service_request: ssr, request: self, services: services, to: email).locked_email.deliver_now
+        RequestMailer.with(sub_service_request: ssr, request: self, services: services, to: email).locked_email.deliver_later
       elsif ssr.organization.service_providers.any?
         ssr.organization.service_providers.eager_load(:identity).each do |sp|
-          RequestMailer.with(sub_service_request: ssr, request: self, services: services, user: sp.identity).locked_email.deliver_now
+          RequestMailer.with(sub_service_request: ssr, request: self, services: services, user: sp.identity).locked_email.deliver_later
         end
       end
     end
