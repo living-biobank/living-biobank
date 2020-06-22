@@ -32,6 +32,7 @@ class SparcRequest < ApplicationRecord
   after_save :update_variables,           if: :active?
   after_save :update_additional_services, if: :in_process?
   after_save :send_finalization_emails,   if: :in_process?
+  after_save :send_locked_emails,         if: :active?
 
   scope :active,      -> { where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]]) }
   scope :in_process,  -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
@@ -174,8 +175,12 @@ class SparcRequest < ApplicationRecord
   # Friendly named for Variables
 
   def irb_approved
-    rmid = self.protocol.research_master_id
-    SPARC::Protocol.get_rmid(rmid)['eirb_validated'].present?
+    if @approved.nil?
+      rmid      = self.protocol.research_master_id
+      @approved = SPARC::Protocol.get_rmid(rmid)['eirb_validated'].present?
+    end
+
+    @approved
   end
 
   def irb_not_approved
@@ -216,8 +221,6 @@ class SparcRequest < ApplicationRecord
       end
     end
 
-    send_locked_emails(self.variables)
-
     self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
@@ -235,8 +238,6 @@ class SparcRequest < ApplicationRecord
       end
     end
 
-    send_locked_emails(self.additional_services)
-
     self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
@@ -244,6 +245,22 @@ class SparcRequest < ApplicationRecord
     self.groups.each do |g|
       if g.finalize_email.present? && g.finalize_email_to.present?
         RequestMailer.with(group: g, request: self).finalization_email.deliver_later
+      end
+    end
+  end
+
+  def send_locked_emails
+    locked_services = SPARC::Service.eager_load(organization: { parent: { parent: :parent } }).where(id: self.additional_services.where.not(sparc_id: nil).pluck(:service_id))
+
+    SPARC::SubServiceRequest.eager_load(:organization).where(protocol_id: self.protocol_id, organization_id: locked_services.pluck(:organization_id)).distinct.reject(&:complete?).each do |ssr|
+      services = locked_services.select{ |s| s.process_ssrs_organization.id == ssr.organization_id }
+
+      if email = ssr.organization.submission_emails.last.try(:email)
+        RequestMailer.with(sub_service_request: ssr, request: self, services: services, to: email).locked_email.deliver_now
+      elsif ssr.organization.service_providers.any?
+        ssr.organization.service_providers.eager_load(:identity).each do |sp|
+          RequestMailer.with(sub_service_request: ssr, request: self, services: services, user: sp.identity).locked_email.deliver_now
+        end
       end
     end
   end
@@ -279,18 +296,6 @@ class SparcRequest < ApplicationRecord
       end
 
       line_item.update_attribute(:sparc_id, sparc_li.id)
-    end
-  end
-
-  def send_locked_emails(line_items)
-    SPARC::SubServiceRequest.where(id: SPARC::LineItem.where(id: line_items.pluck(:sparc_id)).pluck(:sub_service_request_id)).select(&:locked?).each do |ssr|
-      if email = ssr.organization.submission_emails.last.try(:email)
-        ServiceMailer.with(line_item: line_item, sub_service_request: ssr, to: email).locked_email.deliver_later
-      elsif ssr.organization.service_providers.any?
-        ssr.organization.service_providers.eager_load(:identity).each do |sp|
-          ServiceMailer.with(line_item: line_item, sub_service_request: ssr, user: sp.identity).locked_email.deliver_later
-        end
-      end
     end
   end
 end
