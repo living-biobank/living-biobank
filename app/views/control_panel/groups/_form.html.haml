@@ -54,7 +54,7 @@
           .form-group.mb-0
             = f.rich_text_area :finalize_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
             %small.form-text.text-muted
-              = t('control_panel.groups.form.subtext.email')
+              = t('control_panel.groups.form.subtext.finalize_email')
       .modal-footer
         = f.submit t('actions.save'), class: 'btn btn-primary'
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

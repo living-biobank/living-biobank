@@ -224,6 +224,7 @@ en:
           each_sample: "After Each Sample Released"
         subtext:
           email: "Note: A greeting and signature will be added automatically."
+          finalize_email: "Note: A signature will be added automatically."
           recipients: "Separate multiple emails with a comma"
       tooltips:
         edit: "Edit Group"
