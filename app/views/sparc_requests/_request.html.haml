@@ -31,10 +31,10 @@
               = request_canceller_display(request)
             - else
               = request_duration_display(request)
-      - if request.specimen_requests.any?
+      - if (specimen_requests = request.specimen_requests.select{ |sr| sr.group.present? } ).any?
         %h4.card-title.font-weight-bold
           = SparcRequest.human_attribute_name(:specimen_requests)
-        - request.specimen_requests.each do |li|
+        - specimen_requests.each do |li|
           .row.line-item
             .col-sm-4.col-12
               %h5.d-flex.flex-column.mb-0<

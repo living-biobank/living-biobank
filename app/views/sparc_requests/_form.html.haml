@@ -17,7 +17,7 @@
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
-        %section.mb-5
+        %section.pb-4.mb-4.border-bottom
           %h4.m-0
             = t(:requests)[:form][:headers][:protocol_information]
           - protocol            = sparc_request.protocol
@@ -84,14 +84,14 @@
                     %label.input-group-text<
                       = t(:requests)[:form][:date_separator]
                   = ff_p.text_field :end_date, value: format_date(protocol.end_date), class: 'form-control', placeholder: SparcRequest.human_attribute_name(:end_date), readonly: protocol_persisted && protocol_valid, data: { date_enable_on_readonly: 'false' }
-            .form-group
+            .form-group.mb-0
               = ff_p.label :sponsor_name, class: 'required'
               = ff_p.text_field :sponsor_name, class: 'form-control', readonly: protocol_persisted && protocol_valid
             = ff_p.fields_for :research_types_info do |ff_rti|
               = ff_rti.hidden_field :id
               = ff_rti.hidden_field :human_subjects, value: true
-        %section.border-top.border-bottom
-          %h4.mt-4
+        %section.pb-4.mb-4.border-bottom
+          %h4
             = t(:requests)[:form][:headers][:request_data]
           %p.form-text.text-muted.m-0
             = t(:requests)[:form][:request_data][:text_1]
@@ -105,13 +105,13 @@
             .text-muted
               = t(:requests)[:form][:request_data][:text_5]
               = link_to t(:requests)[:form][:request_data][:link_text], "https://redcap.musc.edu/surveys/?s=T7YXHADCY9", target: :_blank
-          .form-group
+          .form-group.mb-0
             .custom-control.custom-checkbox
               = f.check_box :dr_consult, class: 'custom-control-input'
               = f.label :dr_consult, class: 'custom-control-label required'
                
         %section
-          %h4.mt-4
+          %h4
             = t(:requests)[:form][:headers][:specimens]
           .form-group
             %p.form-text.text-muted.m-0

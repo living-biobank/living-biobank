@@ -1,5 +1,6 @@
 updateQueries = () ->
   <% if @queries.any? %>
+  $("select[name*=query_name]").parents('.dropdown').prop('title', '').tooltip('show')
   options = []
   $("select[name*=query_name]").each ->
     val = $(this).val()

@@ -1,4 +1,4 @@
 %h4
   = t('errors.internal_error.text1')
 %h5.text-muted
-  = t('errors.internal_error.text2')
+  = t('errors.internal_error.text2', email: ENV.fetch('LBB_EMAIL')).html_safe

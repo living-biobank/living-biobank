@@ -45,11 +45,11 @@ en:
     unacceptable:
       header: "Oh no"
       text1: "Your browser did something unexpected."
-      text2: "Please contact us if the problem persists."
+      text2: "Please contact us at <a href='mailto:%{email}'>%{email}</a> if the problem persists."
     internal_error:
       header: "Server Error"
       text1: "Looks like something went wrong!"
-      text2: "We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing."
+      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>. In the meantime, try refreshing your page."
     user:
       user_delete: "cannot be removed as it would leave no users with admin privileges."
   activerecord:
@@ -57,6 +57,10 @@ en:
       group:
         discard_email: "Specimen Discard Email"
         display_patient_information: "Include patient names alongside other patient information?"
+        email_body: "Body"
+        email_subject: "Subject"
+        finalize_email: "Additional Finalization Email"
+        finalize_email_to: "Recipients"
         notify_when_all_specimens_released: "When should release emails be sent?"
         process_sample_size: "Require a Minimum Sample Size per specimen?"
         release_email: "Specimen Release Email"
@@ -214,10 +218,14 @@ en:
         services: "In Process Additional Services"
       form:
         header: "Manage %{name} Group"
+        group_info: "General Group Information"
         release_email_time:
           all_samples: "After All Samples Released"
           each_sample: "After Each Sample Released"
-        release_email_info: "Note: A greeting and signature will be added automatically."
+        subtext:
+          email: "Note: A greeting and signature will be added automatically."
+          finalize_email: "Note: A signature will be added automatically."
+          recipients: "Separate multiple emails with a comma"
       tooltips:
         edit: "Edit Group"
       flash:
@@ -392,8 +400,9 @@ en:
         protocol: "Search for an existing Protocol in SPARCRequest"
         protocol_found: "Imported data from Study #%{id}"
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
-        i2b2_query: "Information about creating an i2b2 query can be found at <a href='http://academicdepartments.musc.edu/bmic/DataRequest' target='_blank'>http://academicdepartments.musc.edu/bmic/DataRequest.html</a>. Queries shown are populated from all SPARC study team members."
+        i2b2_query: "Please select your specimen source and an associated e-phenotype using your <a href='https://i2b2.musc.edu/' target='_blank'>i2b2</a> query history. <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'>Click here</a> if you need help with creating a query. Queries shown are populated from all SPARC study team members."
       tooltips:
+        loading_i2b2_queries: "Loading queries..."
         no_i2b2_queries:
           protocol: "None of this study's users have existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."
           user: "You don't have any existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."
@@ -407,6 +416,7 @@ en:
       save_as_draft: "Save as Draft"
     table:
       header: "Request %{id}"
+      sparc_header: "SPARC %{identifier}"
       sparc_link: "View in SPARCRequest"
       primary_pi: "Primary PI: %{name}"
       requester_self: "You submitted this request %{time_elapsed} ago"
@@ -420,6 +430,7 @@ en:
       duration:
         remaining: "%{duration} remaining"
         overdue: "%{duration} overdue"
+        blank: "End date not specified"
       specimens:
         chart:
           header: "%{source} Sample Accrual"
@@ -441,7 +452,6 @@ en:
       placeholder: "No Title Specified"
       requester_self: "You started this request %{time_elapsed} ago"
       requester: "Request started by %{name} %{time_elapsed} ago"
-      requester: ""
   site_information:
     name: "Living BioBank"
     footer_name: "Living BioBank<sup>TM</sup>"
@@ -490,12 +500,12 @@ en:
       completion_email:
         subject: "Request Completed"
         completed_by: "%{user} completed a request on %{date}."
-    service_mailer:
       locked_email:
         subject: "New Living BioBank request with locked SPARCRequest service"
         sparc_link: "View in SPARCRequest"
-        text1: "You are being contacted because you are a SPARCRequest service provider for <strong>%{service}</strong>."
-        text2: "A request on Living BioBank was submitted in which there is an existing locked service in the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask you to take the necessary steps in determining how you wish to process this additional service."
+        text1: "You are being contacted because you are a SPARCRequest service provider for <strong>%{provider}</strong>."
+        text2: "A request on Living BioBank was submitted in which there is an existing locked service in the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask you to take the necessary steps in determining how you wish to process this additional service(s)."
+        text3: "The following services could not be added/updated:"
     specimen_mailer:
       available_email: 
         subject: "%{group} Specimens Are Available"

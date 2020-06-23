@@ -19,9 +19,10 @@ Swal.fire(
       dataType: 'script'
       url: "<%= edit_sparc_request_path(@existing_request) %>"
 <% elsif @rights %>
+
 # Use the title/short title from SPARC
-$('#sparc_request_protocol_attributes_title').val("<%= @protocol.title %>").prop('readonly', true)
-$('#sparc_request_protocol_attributes_short_title').val("<%= @protocol.short_title %>").prop('readonly', true)
+$('#sparc_request_protocol_attributes_title').val("<%= raw j @protocol.title %>").prop('readonly', true)
+$('#sparc_request_protocol_attributes_short_title').val("<%= raw j @protocol.short_title %>").prop('readonly', true)
 
 # Pull remaining fields form SPARC
 $('#sparc_request_protocol_id').val("<%= @protocol.id %>")
@@ -29,7 +30,7 @@ $('#sparc_request_protocol_attributes_id').val("<%= @protocol.id %>")
 $('#sparc_request_protocol_attributes_selected_for_epic').val("<%= @protocol.selected_for_epic? %>")
 $('#sparc_request_protocol_attributes_research_master_id').parents('.form-group').addClass('persist-validation is-valid').append("<small class='form-text text-success form-alert'>#{I18n.t('requests.form.subtext.protocol_found', {id: <%= @protocol.id %>})}</small>")
 $('#sparc_request_protocol_attributes_funding_status').selectpicker('val', "<%= @protocol.funding_status %>").siblings('.dropdown-toggle').prop('disabled', true)
-$('#sparc_request_protocol_attributes_sponsor_name').val("<%= @protocol.sponsor_name %>").prop('readonly', true)
+$('#sparc_request_protocol_attributes_sponsor_name').val("<%= raw j @protocol.sponsor_name %>").prop('readonly', true)
 $('#sparc_request_protocol_attributes_research_types_info_attributes_id').val("<%= @protocol.research_types_info.id %>").prop('readonly', true)
 
 <% if @protocol.funded? %>

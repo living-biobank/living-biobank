@@ -27,10 +27,28 @@ class RequestMailer < ApplicationMailer
     mail(to: @user.email, subject: t('mailers.request_mailer.admin_update_email.subject'))
   end
 
+  def finalization_email
+    @request  = params[:request]
+    @group    = params[:group]
+
+    mail(to: @group.finalize_email_to, subject: @group.finalize_email_subject)
+  end
+
   def completion_email
     @completer  = params[:completer]
     @request    = params[:request]
 
     mail(to: User.data_honest_brokers.pluck(:email), subject: t(:mailers)[:request_mailer][:completion_email][:subject])
+  end
+
+  def locked_email
+    @sub_service_request  = params[:sub_service_request]
+    @request              = params[:request]
+    @services             = params[:services]
+    @user                 = params[:user]
+
+    to = @user.present? ? @user.email : params[:to]
+
+    mail(to: to, subject: t('mailers.request_mailer.locked_email.subject'))
   end
 end

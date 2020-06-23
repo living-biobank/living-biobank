@@ -42,7 +42,10 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
       :display_patient_information,
       :notify_when_all_specimens_released,
       :release_email,
-      :discard_email
+      :discard_email,
+      :finalize_email,
+      :finalize_email_subject,
+      :finalize_email_to
     )
   end
 end

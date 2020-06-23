@@ -1,0 +1,19 @@
+%p
+  = t('mailers.request_mailer.locked_email.text1', provider: @sub_service_request.organization.name).html_safe
+
+%p
+  = t('mailers.request_mailer.locked_email.text2')
+
+%p
+  = t('mailers.request_mailer.locked_email.text3')
+
+%ul
+  - @services.each do |s|
+    %li
+      = s.name
+
+%p
+  = link_to t('mailers.request_mailer.locked_email.sparc_link'), "#{ENV.fetch('SPARC_HOST')}/dashboard/sub_service_requests/#{@sub_service_request.id}"
+
+= render 'layouts/mailer/request_link', request: @request
+= render 'layouts/mailer/request_information', request: @request

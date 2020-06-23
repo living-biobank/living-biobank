@@ -34,7 +34,7 @@ module SparcRequestsHelper
     # of popovers on XS screens
     raw(
       content_tag(:span, t('requests.table.header', id: sr.identifier), class: 'mt-0 mt-sm-1 mr-2') +
-      content_tag(:small, sr.protocol.identifier.truncate(60), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
+      content_tag(:small, t('requests.table.sparc_header', identifier: sr.protocol.identifier.truncate(60)), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
       if opts[:popover] && sr.previously_submitted?
         content_tag(:span, class: 'mt-0 mt-sm-1') do
           link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
@@ -98,17 +98,23 @@ module SparcRequestsHelper
   end
 
   def request_duration_display(sr)
-    if sr.end_date < DateTime.now.utc
-      content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
-        icon('fas', 'hourglass-end mr-1') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, DateTime.now.utc).capitalize)
-      end
-    elsif ((sr.end_date - DateTime.now.utc).to_i / (60*60*24)) <= 30
-      content_tag :span, class: 'd-inline-flex align-items-center text-warning' do
-        icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
+    if sr.end_date
+      if sr.end_date < DateTime.now.utc
+        content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
+          icon('fas', 'hourglass-end mr-1') + t('requests.table.duration.overdue', duration: distance_of_time_in_words(sr.end_date, DateTime.now.utc).capitalize)
+        end
+      elsif ((sr.end_date - DateTime.now.utc).to_i / (60*60*24)) <= 30
+        content_tag :span, class: 'd-inline-flex align-items-center text-warning' do
+          icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
+        end
+      else
+        content_tag :span, class: 'd-inline-flex align-items-center text-muted' do
+          icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
+        end
       end
     else
-      content_tag :span, class: 'd-inline-flex align-items-center text-muted' do
-        icon('fas', 'hourglass-half mr-1') + t('requests.table.duration.remaining', duration: distance_of_time_in_words(DateTime.now.utc, sr.end_date).capitalize)
+      content_tag :span, class: 'd-inline-flex align-items-center text-danger' do
+        icon('fas', 'hourglass-end mr-1') + t('requests.table.duration.blank')
       end
     end
   end
