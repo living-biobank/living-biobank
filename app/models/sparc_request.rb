@@ -252,16 +252,18 @@ class SparcRequest < ApplicationRecord
   end
 
   def send_locked_emails
-    locked_services = SPARC::Service.eager_load(organization: { parent: { parent: :parent } }).where(id: self.additional_services.where(id: self.saved_changes[:line_item][:added], sparc_id: nil).pluck(:service_id))
+    if self.saved_changes[:line_item] && self.saved_changes[:line_item][:added]
+      locked_services = SPARC::Service.eager_load(organization: { parent: { parent: :parent } }).where(id: self.additional_services.where(id: self.saved_changes[:line_item][:added], sparc_id: nil).pluck(:service_id))
 
-    SPARC::SubServiceRequest.eager_load(:organization).where(protocol_id: self.protocol_id, organization_id: locked_services.pluck(:organization_id)).distinct.reject(&:complete?).each do |ssr|
-      services = locked_services.select{ |s| s.process_ssrs_organization.id == ssr.organization_id }
+      SPARC::SubServiceRequest.eager_load(:organization).where(protocol_id: self.protocol_id, organization_id: locked_services.pluck(:organization_id)).distinct.reject(&:complete?).each do |ssr|
+        services = locked_services.select{ |s| s.process_ssrs_organization.id == ssr.organization_id }
 
-      if email = ssr.organization.submission_emails.last.try(:email)
-        RequestMailer.with(sub_service_request: ssr, request: self, services: services, to: email).locked_email.deliver_later
-      elsif ssr.organization.service_providers.any?
-        ssr.organization.service_providers.eager_load(:identity).each do |sp|
-          RequestMailer.with(sub_service_request: ssr, request: self, services: services, user: sp.identity).locked_email.deliver_later
+        if email = ssr.organization.submission_emails.last.try(:email)
+          RequestMailer.with(sub_service_request: ssr, request: self, services: services, to: email).locked_email.deliver_later
+        elsif ssr.organization.service_providers.any?
+          ssr.organization.service_providers.eager_load(:identity).each do |sp|
+            RequestMailer.with(sub_service_request: ssr, request: self, services: services, user: sp.identity).locked_email.deliver_later
+          end
         end
       end
     end
