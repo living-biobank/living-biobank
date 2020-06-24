@@ -261,11 +261,11 @@ $ ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
 
 (exports ? this).loadI2B2Queries = () ->
-  $("select[name*=query_name]").parents('.dropdown').attr('data-toggle', 'tooltip').prop('title', I18n.t('requests.form.tooltips.loading_i2b2_queries'))
+  $("select[name*=query_id]").parents('.dropdown').attr('data-toggle', 'tooltip').prop('title', I18n.t('requests.form.tooltips.loading_i2b2_queries'))
   $.ajax
     meethod: 'GET'
     dataType: 'script'
-    url: '/query_names'
+    url: '/i2b2_queries'
     data:
       user_id:      $('#sparc_request_user_id').val()
       protocol_id:  $('#sparc_request_protocol_id').val()

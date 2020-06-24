@@ -140,7 +140,7 @@ class SparcRequestsController < ApplicationController
   end
 
   def find_requests
-    @requests = current_user.eligible_requests.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:requester, specimen_requests: [:labs, :source, :group]).preload(:primary_pi, protocol: { project_roles: :identity }, additional_services: [:service, :sub_service_request])
+    @requests = current_user.eligible_requests.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:requester, specimen_requests: [:labs, :source, :group]).preload(:primary_pi, protocol: { project_roles: :identity }, specimen_requests: :i2b2_query, additional_services: [:service, :sub_service_request])
 
     @draft_requests = current_user.eligible_requests.draft.preload(protocol: { project_roles: :identity })
   end

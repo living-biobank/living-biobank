@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_19_141854) do
+ActiveRecord::Schema.define(version: 2020_06_24_144457) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -110,6 +110,7 @@ ActiveRecord::Schema.define(version: 2020_06_19_141854) do
     t.integer "service_id"
     t.integer "sparc_id"
     t.bigint "source_id"
+    t.bigint "query_id"
     t.string "query_name"
     t.integer "query_count"
     t.decimal "minimum_sample_size", precision: 8, scale: 2

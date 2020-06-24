@@ -72,7 +72,7 @@ en:
         specimen_source: "Specimen Source"
       line_item:
         source_id: "Specimen Source"
-        query_name: "i2b2 Query"
+        query_id: "i2b2 Query"
         number_of_specimens_requested: "Quantity Requested"
         minimum_sample_size: "Minimum Sample Size"
         three_month_accrual: "Past 3 Months"

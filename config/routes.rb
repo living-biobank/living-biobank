@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     root to: 'users#index'
   end
 
-  resources :query_names, only: [:index]
+  resources :i2b2_queries, only: [:index]
 
   get 'directory/index', to: 'directory#index'
 
