@@ -12,7 +12,7 @@ class LineItem < ApplicationRecord
   has_one :sub_service_request, through: :sparc_line_item, class_name: "SPARC::SubServiceRequest"
   has_one :group, through: :source
 
-  validates_presence_of     :query_name, :number_of_specimens_requested, :source_id,                                  if: :specimen_request?
+  validates_presence_of     :query_id, :number_of_specimens_requested, :source_id,                                    if: :specimen_request?
   validates_numericality_of :number_of_specimens_requested, greater_than: 0, less_than: 10000000, allow_blank: true,  if: :specimen_request?
   validates_numericality_of :minimum_sample_size, greater_than: 0, less_than: 10000000, allow_blank: true,            if: Proc.new{ |li| li.specimen_request? && li.group && li.group.process_sample_size? }
 
