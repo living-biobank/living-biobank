@@ -142,7 +142,7 @@ module SparcRequestsHelper
 
   def query_display(li)
     content_tag :span, class: 'd-flex text-muted' do
-      icon('fas', 'database fa-sm mr-2') + content_tag(:small, li.i2b2_query.name.truncate(50))
+      icon('fas', 'database fa-sm mr-2') + content_tag(:small, li.i2b2_query.try(:name).try(:truncate, 50))
     end
   end
 
