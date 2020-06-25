@@ -1,9 +1,11 @@
 class CreateLabHonestBrokers < ActiveRecord::Migration[5.1]
   def change
     #create new table
-    create_table :lab_honest_brokers do |t|
-      t.references :user, foreign_key: true
-      t.references :group, foreign_key: true
+    unless ActiveRecord::Base.connection.table_exists?('lab_honest_brokers')
+      create_table :lab_honest_brokers do |t|
+        t.references :user, foreign_key: true
+        t.references :group, foreign_key: true
+      end
     end
 
     #transfer honest broker data to new table
