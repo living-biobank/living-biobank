@@ -4,7 +4,7 @@ set :application, "biobank"
 set :repo_url, "git@sparc_biobank:living-biobank/living-biobank.git"
 
 set :linked_files, fetch(:linked_files, []).push('config/database.yml',
-                                                 'config/secrets.yml',
+                                                 'config/secrets.yml.key',
                                                  'config/i2b2_database.yml',
                                                  'config/sparc_request_database.yml',
                                                  'config/ldap.yml',
