@@ -10,7 +10,7 @@ class CreateLabHonestBrokers < ActiveRecord::Migration[5.1]
     @users = User.all
     @users.each do |user|
       if user.honest_broker_id.present?
-        LabHonestBroker.create(user_id: user.id, group_id: user.honest_broker_id)
+        user.groups << Group.find(user.honest_broker_id)
       end
     end
 
