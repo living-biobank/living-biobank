@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_144457) do
+ActiveRecord::Schema.define(version: 2020_07_15_160211) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -106,12 +106,11 @@ ActiveRecord::Schema.define(version: 2020_06_24_144457) do
   end
 
   create_table "line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "sparc_request_id"
-    t.integer "service_id"
-    t.integer "sparc_id"
+    t.bigint "sparc_request_id"
+    t.bigint "service_id"
+    t.bigint "sparc_id"
     t.bigint "source_id"
     t.bigint "query_id"
-    t.string "query_name"
     t.integer "query_count"
     t.decimal "minimum_sample_size", precision: 8, scale: 2
     t.integer "number_of_specimens_requested"
@@ -150,7 +149,9 @@ ActiveRecord::Schema.define(version: 2020_06_24_144457) do
   create_table "services", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "group_id"
     t.integer "position"
-    t.integer "sparc_id"
+    t.bigint "sparc_id"
+    t.string "status"
+    t.string "condition"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["group_id", "sparc_id"], name: "index_services_on_group_id_and_sparc_id", unique: true
@@ -208,18 +209,6 @@ ActiveRecord::Schema.define(version: 2020_06_24_144457) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "variables", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "group_id"
-    t.integer "position"
-    t.integer "service_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "condition"
-    t.index ["group_id", "name"], name: "index_variables_on_group_id_and_name", unique: true
-    t.index ["group_id"], name: "index_variables_on_group_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
