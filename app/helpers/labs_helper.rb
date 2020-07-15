@@ -20,20 +20,20 @@ module LabsHelper
     if current_user.admin? || current_user.groups.any?(&:process_specimen_retrieval?)
       status = status.blank? ? 'active' : status
       options_for_select([
-        [t('labs.filters.all_status'), 'any'],
+        [t('labs.filters.all_status'),    'any'],
         [t('labs.filters.active_status'), 'active'],
-        [t('labs.statuses.retrieved'), class: 'text-success'],
-        [t('labs.statuses.released'), class: 'text-primary'],
-        [t('labs.statuses.available'), class: 'text-warning'],
-        [t('labs.statuses.discarded'), class: 'text-secondary']
+        [t('labs.statuses.retrieved'),    'retrieved',  class: 'text-success'],
+        [t('labs.statuses.released'),     'released',   class: 'text-primary'],
+        [t('labs.statuses.available'),    'available',  class: 'text-warning'],
+        [t('labs.statuses.discarded'),    'discarded',  class: 'text-secondary']
       ], status)
     else
       status = status.blank? ? 'any' : status
       options_for_select([
-        [t('labs.filters.all_status'), 'any'],
-        [t('labs.statuses.available'), class: 'text-warning'],
-        [t('labs.statuses.released'), class: 'text-primary'],
-        [t('labs.statuses.discarded'), class: 'text-secondary']
+        [t('labs.filters.all_status'),  'any'],
+        [t('labs.statuses.available'),  'available',  class: 'text-warning'],
+        [t('labs.statuses.released'),   'released',   class: 'text-primary'],
+        [t('labs.statuses.discarded'),  'discarded',  class: 'text-secondary']
       ], status)
     end
   end
@@ -106,7 +106,7 @@ module LabsHelper
         'badge-warning'
       end
 
-    content_tag(:span, lab.status, class: ['badge p-2 ml-sm-2 lab-status', klass])
+    content_tag(:span, lab.human_status, class: ['badge p-2 ml-sm-2 lab-status', klass])
   end
 
   def lab_actions(lab)
@@ -123,27 +123,27 @@ module LabsHelper
 
   def release_lab_button(lab, line_item)
     content_tag :div, class: 'tooltip-wrapper', title: t(:labs)[:actions][:release_specimen], data: { toggle: 'tooltip' } do
-      link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:released], line_item_id: line_item.id, released_by: current_user.id })), remote: true, method: :patch, class: "btn btn-primary", data: { confirm_swal: 'true', title: t('labs.release_confirm.title', id: line_item.sparc_request.identifier), html: ' ' } do
+      link_to lab_path(lab, lab_filter_params.merge(lab: { status: 'released', line_item_id: line_item.id, released_by: current_user.id })), remote: true, method: :patch, class: "btn btn-primary", data: { confirm_swal: 'true', title: t('labs.release_confirm.title', id: line_item.sparc_request.identifier), html: ' ' } do
         icon('fas', 'dolly')
       end
     end
   end
 
   def retrieve_lab_button(lab)
-    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:retrieved] })), remote: true, method: :patch, class: "btn btn-success ml-1", title: t(:labs)[:actions][:retrieve_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.retrieve_confirm.title') } do
+    link_to lab_path(lab, lab_filter_params.merge(lab: { status: 'retrieved' })), remote: true, method: :patch, class: "btn btn-success ml-1", title: t(:labs)[:actions][:retrieve_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.retrieve_confirm.title') } do
       icon('fas', 'check-circle')
     end
   end
 
   def reset_lab_button(lab)
-    link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:available], line_item_id: nil, released_at: nil, released_by: nil, retrieved_at: nil, discarded_at: nil, discarded_by: nil, discard_reason: nil })), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:reset_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.reset_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
+    link_to lab_path(lab, lab_filter_params.merge(lab: { status: 'available', line_item_id: nil, released_at: nil, released_by: nil, retrieved_at: nil, discarded_at: nil, discarded_by: nil, discard_reason: nil })), remote: true, method: :patch, class: "btn btn-warning ml-1", title: t(:labs)[:actions][:reset_specimen], data: { toggle: "tooltip", confirm_swal: 'true', title: t('labs.reset_confirm.title', available: I18n.t(:labs)[:statuses][:available]) } do
       icon('fas', 'redo')
     end
   end
 
   def discard_lab_button(lab)
     content_tag(:div, class: 'tooltip-wrapper', title: t(:labs)[:actions][:discard_specimen], data: { toggle: 'tooltip' }) do
-      link_to lab_path(lab, lab_filter_params.merge(lab: { status: I18n.t(:labs)[:statuses][:discarded], discarded_by: current_user.id })), remote: true, method: :patch, class: "btn btn-danger ml-1", data: { confirm_swal: 'true', title: t('labs.discard_confirm.title'), form: 'true', html: fields_for(:lab) { |f| f.text_area(:discard_reason, class: 'form-control mt-3', placeholder: t('labs.discard_confirm.reason_placeholder'), maxlength: 255) } } do
+      link_to lab_path(lab, lab_filter_params.merge(lab: { status: 'discarded', discarded_by: current_user.id })), remote: true, method: :patch, class: "btn btn-danger ml-1", data: { confirm_swal: 'true', title: t('labs.discard_confirm.title'), form: 'true', html: fields_for(:lab) { |f| f.text_area(:discard_reason, class: 'form-control mt-3', placeholder: t('labs.discard_confirm.reason_placeholder'), maxlength: 255) } } do
         icon('fas', 'trash-alt')
       end
     end

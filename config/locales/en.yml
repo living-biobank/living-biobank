@@ -214,8 +214,9 @@ en:
         sources: "Specimen Sources"
         manage: "Manage"
       table:
-        variables: "Pending Variable Services"
-        services: "In Process Additional Services"
+        services:
+          pending: "Pending Variable Services"
+          in_process: "In Process Additional Services"
       form:
         header: "Manage %{name} Group"
         group_info: "General Group Information"
@@ -335,7 +336,7 @@ en:
       draft: "Draft"
       pending: "Pending"
       in_process: "In Process"
-      completed: "Completed"
+      complete: "Completed"
       cancelled: "Cancelled"
     filters:
       search: "Search"

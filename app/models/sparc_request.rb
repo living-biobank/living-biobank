@@ -15,8 +15,7 @@ class SparcRequest < ApplicationRecord
   has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem", after_add: :dirty_create, after_remove: :dirty_delete
   has_many :sources, through: :specimen_requests
   has_many :groups, through: :sources
-  has_many :services, through: :groups, source: :services
-  has_many :variables, through: :groups
+  has_many :services, through: :groups
 
   validates_presence_of :dr_consult, unless: :draft?
 
@@ -31,14 +30,13 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :protocol
 
   after_save :add_authorized_users,       if: Proc.new{ |sr| sr.draft? || (sr.pending? && !self.updated?) }
-  after_save :update_variables,           if: :active?
-  after_save :update_additional_services, if: :in_process?
+  after_save :update_services
   after_save :send_finalization_emails,   if: :in_process?
   after_save :send_locked_emails,         if: :active?
 
-  scope :active,      -> { where(status: [I18n.t(:requests)[:statuses][:pending], I18n.t(:requests)[:statuses][:in_process]]) }
-  scope :in_process,  -> { where(status: I18n.t(:requests)[:statuses][:in_process]) }
-  scope :draft,       -> { where(status: I18n.t(:requests)[:statuses][:draft]) }
+  scope :active,      -> { where(status: %w(pending in_process)) }
+  scope :in_process,  -> { where(status: 'in_process') }
+  scope :draft,       -> { where(status: 'draft') }
 
   scope :filtered_for_index, -> (term, status, sort_by, sort_order) {
     search(term).
@@ -87,7 +85,7 @@ class SparcRequest < ApplicationRecord
     status = status.blank? ? 'active' : status
 
     if status == 'any'
-      where.not(status: I18n.t(:requests)[:statuses][:draft])
+      where.not(status: 'draft')
     elsif status == 'active'
       active
     else
@@ -118,20 +116,12 @@ class SparcRequest < ApplicationRecord
   }
 
   def status=(status)
-    case status
-    when I18n.t(:requests)[:statuses][:pending]
-      if self.submitted_at.blank?
-        self.send("submitted_at=", DateTime.now)
-      end
-    when I18n.t(:requests)[:statuses][:in_process]
-      self.send("finalized_at=", DateTime.now)
-    when I18n.t(:requests)[:statuses][:completed]
-      self.send("completed_at=", DateTime.now)
-    when I18n.t(:requests)[:statuses][:cancelled]
-      self.send("cancelled_at=", DateTime.now)
-    end
-
+    self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
     super(status)
+  end
+
+  def human_status
+    I18n.t("requests.statuses.#{self.status}")
   end
 
   def updated?
@@ -143,23 +133,23 @@ class SparcRequest < ApplicationRecord
   end
 
   def completed?
-    self.status == I18n.t(:requests)[:statuses][:completed]
+    self.status == 'completed'
   end
 
   def in_process?
-    self.status == I18n.t(:requests)[:statuses][:in_process]
+    self.status == 'in_process'
   end
 
   def pending?
-    self.status == I18n.t(:requests)[:statuses][:pending]
+    self.status == 'pending'
   end
 
   def draft?
-    self.status == I18n.t(:requests)[:statuses][:draft]
+    self.status == 'draft'
   end
 
   def cancelled?
-    self.status == I18n.t(:requests)[:statuses][:cancelled]
+    self.status == 'cancelled'
   end
 
   def previously_submitted?
@@ -179,7 +169,7 @@ class SparcRequest < ApplicationRecord
   def irb_approved
     if @approved.nil?
       rmid      = self.protocol.research_master_id
-      @approved = SPARC::Protocol.get_rmid(rmid)['eirb_validated'].present?
+      @approved = SPARC::Protocol.get_rmid(rmid).try(:[], 'eirb_validated').present?
     end
 
     @approved
@@ -207,40 +197,22 @@ class SparcRequest < ApplicationRecord
     end
   end
 
-  def update_variables
-    # Find or create a Service Request
-    sr = self.protocol.service_requests.first_or_create
-    # Find or create an Identity for the requester
-    requester = SPARC::Directory.find_or_create(self.requester.net_id)
+  def update_services
+    if (services_to_add = self.services.where(status: self.status)).any?
+      # Find or create a Service Request
+      sr = self.protocol.service_requests.first_or_create
+      # Find or create an Identity for the requester
+      requester = SPARC::Directory.find_or_create(self.requester.net_id)
 
-    # Add additional services based on services the Variable requires
-    self.variables.each do |variable|
-      if self.instance_eval(variable.condition)
-        unless self.additional_services.exists?(service: variable.service)
-          line_item = self.additional_services.create(service: variable.service)
+      services_to_add.each do |serv|
+        if (serv.condition.blank? || self.instance_eval(serv.condition)) && !self.additional_services.exists?(service: serv.sparc_service)
+          line_item = self.additional_services.create(service: serv.sparc_service)
           create_sparc_line_item(line_item, sr, requester)
         end
       end
+
+      self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id)).destroy_all
     end
-
-    self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
-  end
-
-  def update_additional_services
-    # Find or create a Service Request
-    sr = self.protocol.service_requests.first_or_create
-    # Find or create an Identity for the requester
-    requester = SPARC::Directory.find_or_create(self.requester.net_id)
-
-    # Add additional services based on services the Group provides
-    self.services.each do |service|
-      unless self.additional_services.exists?(service: service.sparc_service)
-        line_item = self.additional_services.create(service: service.sparc_service)
-        create_sparc_line_item(line_item, sr, requester)
-      end
-    end
-
-    self.additional_services.where.not(service_id: [nil] + self.services.pluck(:sparc_id) + self.variables.pluck(:service_id)).destroy_all
   end
 
   def send_finalization_emails
