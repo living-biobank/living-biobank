@@ -335,7 +335,7 @@ en:
       draft: "Draft"
       pending: "Pending"
       in_process: "In Process"
-      completed: "Completed"
+      complete: "Completed"
       cancelled: "Cancelled"
     filters:
       search: "Search"
