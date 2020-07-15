@@ -137,11 +137,11 @@ class Lab < ApplicationRecord
 
     if status == 'active'
       joins(:group).where(
-        status: 'available',
+        status: I18n.t(:labs)[:statuses][:available],
         groups: { process_specimen_retrieval: false }
       ).or(
         joins(:group).where(
-          status: %w(available released),
+          status: [I18n.t(:labs)[:statuses][:available], I18n.t(:labs)[:statuses][:released]],
           groups: { process_specimen_retrieval: true }
         )
       )
@@ -172,28 +172,29 @@ class Lab < ApplicationRecord
   }
 
   def status=(status)
-    self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
-    super(status)
-  end
+    [:released, :retrieved, :discarded].each do |s|
+      if status == I18n.t(:labs)[:statuses][s]
+        self.send("#{s}_at=", DateTime.now)
+      end
+    end
 
-  def human_status
-    I18n.t("labs.statuses.#{self.status}")
+    super
   end
 
   def available?
-    self.status == 'available'
+    self.status == I18n.t(:labs)[:statuses][:available]
   end
 
   def released?
-    self.status == 'released'
+    self.status == I18n.t(:labs)[:statuses][:released]
   end
 
   def retrieved?
-    self.status == 'retrieved'
+    self.status == I18n.t(:labs)[:statuses][:retrieved]
   end
 
   def discarded?
-    self.status == 'discarded'
+    self.status == I18n.t(:labs)[:statuses][:discarded]
   end
 
   def identifier

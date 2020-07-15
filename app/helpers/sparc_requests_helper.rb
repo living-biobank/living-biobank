@@ -19,12 +19,12 @@ module SparcRequestsHelper
   def request_status_filter_options(status)
     status = status.blank? ? 'active' : status
     options_for_select([
-      [t('requests.filters.all_status'),    'any'],
+      [t('requests.filters.all_status'), 'any'],
       [t('requests.filters.active_status'), 'active'],
-      [t('requests.statuses.completed'),    'complete',   class: 'text-success'],
-      [t('requests.statuses.in_process'),   'in_process', class: 'text-primary'],
-      [t('requests.statuses.pending'),      'pending',    class: 'text-warning'],
-      [t('requests.statuses.cancelled'),    'cancelled',  class: 'text-secondary']
+      [t('requests.statuses.completed'), class: 'text-success'],
+      [t('requests.statuses.in_process'), class: 'text-primary'],
+      [t('requests.statuses.pending'), class: 'text-warning'],
+      [t('requests.statuses.cancelled'), class: 'text-secondary']
     ], status)
   end
 
@@ -158,7 +158,7 @@ module SparcRequestsHelper
         'badge-warning'
       end
 
-    content_tag(:span, sr.human_status, class: ['badge p-2 ml-sm-2 mb-sm-0 request-status', klass])
+    content_tag(:span, sr.status, class: ['badge p-2 ml-sm-2 mb-sm-0 request-status', klass])
   end
 
   def request_actions(sr)
@@ -175,13 +175,13 @@ module SparcRequestsHelper
 
   def complete_request_button(sr)
     if sr.in_process? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: 'complete', completed_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.complete.title', id: sr.identifier), text: t('requests.confirms.complete.text') }
+      link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:completed], completed_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.complete.title', id: sr.identifier), text: t('requests.confirms.complete.text') }
     end
   end
 
   def finalize_request_button(sr)
     if sr.pending? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: 'in_process', finalized_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.finalize.title', id: sr.identifier), text: t('requests.confirms.finalize.text') }
+      link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:in_process], finalized_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.finalize.title', id: sr.identifier), text: t('requests.confirms.finalize.text') }
     end
   end
 
@@ -193,7 +193,7 @@ module SparcRequestsHelper
 
   def cancel_request_button(sr)
     if sr.pending? || sr.draft?
-      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: 'cancelled', cancelled_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.delete.title', id: sr.identifier) }
+      link_to icon('fas', 'trash'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: t(:requests)[:statuses][:cancelled], cancelled_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-danger cancel-request ml-1', title: t(:requests)[:tooltips][:cancel], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.delete.title', id: sr.identifier) }
     end
   end
 
@@ -201,13 +201,13 @@ module SparcRequestsHelper
     # Only DHBs and Admins can reset previously "In Process" or "Complete" requests
     if ((sr.completed? || (sr.cancelled? && sr.previously_finalized?)) && (current_user.data_honest_broker? || current_user.admin?)) || (sr.cancelled? && !sr.previously_finalized?)
       if sr.previously_finalized?
-        status  = 'in_process'
+        status  = t('requests.statuses.in_process')
         klass   = 'text-primary'
       elsif sr.previously_submitted?
-        status  = 'pending'
+        status  = t('requests.statuses.pending')
         klass   = 'text-warning'
       else
-        status  = 'draft'
+        status  = t('requests.statuses.draft')
         klass   = 'text-warning'
       end
       link_to update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: status, completed_at: nil, completed_by: nil, cancelled_at: nil, cancelled_by: nil })), remote: true, method: :patch, class: 'btn btn-warning ml-1', title: t('requests.tooltips.reset'), data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.reset.title', klass: klass, status: status) } do

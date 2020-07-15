@@ -32,7 +32,7 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   end
 
   def find_groups
-    @groups = Group.all.filtered_for_index(params[:term], params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1).preload(:sources, services: :sparc_service)
+    @groups = Group.all.filtered_for_index(params[:term], params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1).preload(:sources, services: :sparc_service, variables: :service)
   end
 
   def group_params

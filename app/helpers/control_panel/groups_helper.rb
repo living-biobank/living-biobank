@@ -6,14 +6,23 @@ module ControlPanel::GroupsHelper
   end
 
   def group_services_display(group)
-    %w(pending in_process).map do |status|
-      if (services = group.services.select{ |s| s.status == status }).any?
-        content_tag(:h6, t("control_panel.groups.table.services.#{status}"), class: 'font-weight-bold mb-0') + 
-        services.map do |service|
-          content_tag(:span, "- #{service.sparc_service.name}", class: 'd-flex')
-        end.join('').html_safe
-      end
-    end.join('').html_safe
+    if group.variables.any?
+      content_tag(:h6, t('control_panel.groups.table.variables'), class: 'font-weight-bold mb-0') +
+      group.variables.map do |variable|
+        content_tag(:span, "- #{variable.service.name} (#{variable.name})", class: 'd-flex')
+      end.join('').html_safe
+    else
+      ""
+    end +
+
+    if group.services.any?
+      content_tag(:h6, t('control_panel.groups.table.services'), class: 'font-weight-bold mb-0') +
+      group.services.map do |service|
+        content_tag(:span, "- #{service.sparc_service.name}", class: 'd-flex')
+      end.join('').html_safe
+    else
+      ""
+    end
   end
 
   def edit_group_button(group)
