@@ -116,7 +116,11 @@ class SparcRequest < ApplicationRecord
   }
 
   def status=(status)
-    self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
+    if status == 'pending'
+      self.submitted_at = DateTime.now
+    else
+      self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
+    end
     super(status)
   end
 

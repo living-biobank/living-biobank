@@ -16,7 +16,7 @@ class SparcRequestsController < ApplicationController
   end
 
   def new
-    @sparc_request = current_user.sparc_requests.new(status: t(:requests)[:statuses][:pending])
+    @sparc_request = current_user.sparc_requests.new(status: 'pending')
     @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.protocol.build_research_types_info
@@ -30,12 +30,12 @@ class SparcRequestsController < ApplicationController
 
     if params[:save_draft]
       if @sparc_request.protocol.valid?
-        @sparc_request.status = t(:requests)[:statuses][:draft]
+        @sparc_request.status = 'draft'
         @sparc_request.specimen_requests.each{ |sr| sr.source_id ||= 0 }
         @sparc_request.save(validate: false)
         flash.now[:success] = t(:requests)[:saved]
       else
-        @sparc_request.status = t(:requests)[:statuses][:draft]
+        @sparc_request.status = 'draft'
         @sparc_request.protocol.errors.add(:research_master_id, :invalid)
         @errors = @sparc_request.protocol.errors
       end
@@ -84,7 +84,7 @@ class SparcRequestsController < ApplicationController
       end
     else
       if @sparc_request.draft?
-        params[:sparc_request][:status] = t(:requests)[:statuses][:pending] 
+        params[:sparc_request][:status] = 'pending'
       else
         params[:sparc_request][:updated_by] = current_user.id
       end
