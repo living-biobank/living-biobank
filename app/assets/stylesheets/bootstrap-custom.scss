@@ -163,11 +163,18 @@ form, .form {
 ///////////
 
 .nav {
-  .nav-link:not(.active) {
-    border-color: $nav-tabs-link-hover-border-color;;
+  .nav-link {
+    &.active {
+      color: theme-color('primary');
+    }
 
-    &:hover {
-      background: theme-color-level('light', 1);
+    &:not(.active) {
+      border-color: $nav-tabs-link-hover-border-color;
+      color: black;
+
+      &:hover {
+        color: theme-color('primary');
+      }
     }
   }
 }
@@ -289,6 +296,10 @@ form, .form {
     }
   }
 
+  &.table-interactive tbody tr:hover {
+    cursor: pointer;
+  }
+
   tbody {
     tr {
       &:last-child {
@@ -306,7 +317,7 @@ form, .form {
   display: flex;
 
   input[type=text] {
-    margin: 0.5rem 0.5rem;
+    margin: 0.5rem 0.5rem 0.5rem 0;
     border: 0;
   }
 

@@ -1,7 +1,7 @@
 - content_for :header do
   = render 'control_panel/header'
-
-- content_for :content do
-  = render 'control_panel/nav_links'
+- if action_name == 'index'
+  - content_for :subheader do
+    = render 'control_panel/subheader'
 
 = render template: 'layouts/application'

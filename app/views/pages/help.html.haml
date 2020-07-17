@@ -1,38 +1,31 @@
 - content_for :header do
-  = render 'pages/help_header'
+  = render 'pages/help/header'
+- content_for :subheader do
+  = render 'pages/help/subheader'
 
 .row
-  .col-12.col-lg-8.d-flex.mb-3.mb-md-4
+  .col-3.d-flex.mb-3.mb-sm-0
     .card.flex-fill
-      .card-header
-        %h4.card-title.text-center.mb-0
-          = t(:help_links)[:headers][:header1]
-      .card-body.p-4
-        .d-flex.justify-content-between.flex-wrap
-          .d-flex.flex-column.mb-3.mb-sm-0
-            %h5.font-weight-bold
-              = t(:home)[:links][:help1][:text]
-            = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
-          .d-flex.flex-column.mb-3.mb-sm-0
-            %h5.font-weight-bold
-              = t(:home)[:links][:help2][:text]
-            = link_to t(:home)[:links][:help2][:link], "https://www.actnetwork.us/national/act-local-landing-pages-46EU-1434P4.html", target: :_blank
-          .d-flex.flex-column
-            %h5.font-weight-bold
-              = t(:home)[:links][:help3][:text]
-            = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
-            = link_to t(:home)[:links][:help3][:link3], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
-          .d-flex.flex-column
-            %h5.font-weight-bold
-              = t('home.links.help4.text')
-            = link_to t('home.links.help4.link'), 'LBB_Guide_v1.1.pptx'
-  .col-12.col-lg-4.d-flex.mb-3.mb-md-4
-    .card.flex-fill
-      .card-header
-        %h4.card-title.text-center.mb-0
-          = t(:help_links)[:headers][:header2]
-      .card-body.p-4.text-center
+      .card-body
         %h5.font-weight-bold
-          = t('home.links.contact.header')
-        %p.d-flex.flex-column.mb-0
-          = t('home.links.contact.link', email: ENV.fetch('LBB_EMAIL')).html_safe
+          = t(:home)[:links][:help1][:text]
+        = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
+  .col-3.d-flex.mb-3.mb-sm-0
+    .card.flex-fill
+      .card-body
+        %h5.font-weight-bold
+          = t(:home)[:links][:help2][:text]
+        = link_to t(:home)[:links][:help2][:link], "https://www.actnetwork.us/national/act-local-landing-pages-46EU-1434P4.html", target: :_blank
+  .col-3.d-flex.mb-3.mb-sm-0
+    .card.flex-fill
+      .card-body.d-flex.flex-column
+        %h5.font-weight-bold
+          = t(:home)[:links][:help3][:text]
+        = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
+        = link_to t(:home)[:links][:help3][:link3], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
+  .col-3.d-flex
+    .card.flex-fill
+      .card-body
+        %h5.font-weight-bold
+          = t('home.links.help4.text')
+        = link_to t('home.links.help4.link'), 'LBB_Guide_v1.1.pptx'

@@ -1,0 +1,14 @@
+%subheader
+  .page-title
+    = icon('fas', 'tasks')
+    %span
+      = group.name
+  %ul.nav.subheader-links
+    %li.nav-item
+      = link_to 'Group Details', edit_control_panel_group_path(group, tab: 'details'), class: ['nav-link', params[:tab].blank? || params[:tab] == 'details' ? 'active' : '']
+    %li.nav-item
+      = link_to 'Honest Brokers', edit_control_panel_group_path(group, tab: 'users'), class: ['nav-link', params[:tab] == 'users' ? 'active' : '']
+    %li.nav-item
+      = link_to 'Sources', edit_control_panel_group_path(group, tab: 'sources'), class: ['nav-link', params[:tab] == 'sources' ? 'active' : '']
+    %li.nav-item
+      = link_to 'Services', edit_control_panel_group_path(group, tab: 'services'), class: ['nav-link', params[:tab] == 'services' ? 'active' : '']

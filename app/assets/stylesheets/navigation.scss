@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   padding: 0;
-  border-bottom: 2px solid theme-color-level('dark', 5);
+  border-bottom: 1px solid theme-color-level('dark', 5);
   z-index: 1;
 
   .navbar-brand {
@@ -96,14 +96,14 @@
   .navbar {
     position: fixed;
     bottom: 0;
-    border-right: 2px solid theme-color-level('dark', 5);
+    border-right: 1px solid theme-color-level('dark', 5);
     border-bottom: none;
     flex-flow: column;
 
     .navbar-brand {
       width: 100%;
       padding: 1.5rem;
-      border-bottom: 2px solid theme-color-level('dark', 5);
+      border-bottom: 1px solid theme-color-level('dark', 5);
     }
 
     #navbarLinks {
@@ -116,8 +116,7 @@
 
         #userInformation {
           padding: 1.5rem;
-          border-bottom: 2px solid theme-color-level('dark', 5);
-          margin-bottom: 1.5rem;
+          border-bottom: 1px solid theme-color-level('dark', 5);
           align-items: center;
 
           i {

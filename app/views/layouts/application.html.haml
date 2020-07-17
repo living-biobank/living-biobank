@@ -13,6 +13,8 @@
     = render 'layouts/navigation'
     .d-flex.flex-column.flex-fill#contentContainer
       = yield(:header) if content_for(:header)
+      = yield(:subheader) if content_for(:subheader)
+      = yield(:filters) if content_for(:filters)
       %main.d-flex.flex-column#content
         = render 'layouts/environment'
         = render 'layouts/flash'

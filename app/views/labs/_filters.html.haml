@@ -1,4 +1,4 @@
-.card.mb-4#specimenFilters
+%filters#specimenFilters
   .card-body.justify-content-end.border-bottom-0.table-filters{ data: { url: labs_path } }
     = text_field_tag 'searchLabs', params[:term], class: 'form-control form-control-lg table-search', placeholder: t(:labs)[:filters][:search]
     .d-flex.align-items-center.filter.filter-date

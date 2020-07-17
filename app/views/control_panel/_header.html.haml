@@ -3,3 +3,7 @@
     = icon('fas', 'cogs')
     %span
       = t('navigation.control_panel')
+  - if controller_name == 'groups' && action_name == 'index'
+    %button.btn.btn-lg.btn-success
+      = succeed "New Group" do
+        = icon('fas', 'plus mr-2')

@@ -175,13 +175,15 @@ module SparcRequestsHelper
 
   def complete_request_button(sr)
     if sr.in_process? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to t(:actions)[:complete_request], update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: 'complete', completed_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.complete.title', id: sr.identifier), text: t('requests.confirms.complete.text') }
+      link_to update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: 'complete', completed_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-success complete-request', title: t(:requests)[:tooltips][:complete], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.complete.title', id: sr.identifier), text: t('requests.confirms.complete.text') } do
+        icon('fas', 'check-circle mr-1') + t('actions.complete')
+      end
     end
   end
 
   def finalize_request_button(sr)
     if sr.pending? && (current_user.data_honest_broker? || current_user.admin?)
-      link_to icon('fas', 'check-circle'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: 'in_process', finalized_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.finalize.title', id: sr.identifier), text: t('requests.confirms.finalize.text') }
+      link_to icon('fas', 'user-check'), update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: 'in_process', finalized_by: current_user.id })), remote: true, method: :patch, class: 'btn btn-primary finalize-request', title: t(:requests)[:tooltips][:finalize], data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.finalize.title', id: sr.identifier), text: t('requests.confirms.finalize.text') }
     end
   end
 

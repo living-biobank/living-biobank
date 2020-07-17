@@ -1,8 +1,4 @@
 .control-panel-container#userManagement
   .card.control-panel
-    .card-header
-      %h4.card-title.text-center.mb-0
-        = t('control_panel.users.title')
-    = render 'control_panel/users/filters'
     = render 'control_panel/users/table'
   = render 'layouts/pagination', records: users, filter_params: user_filter_params.merge({ controller: 'users', action: 'index' })

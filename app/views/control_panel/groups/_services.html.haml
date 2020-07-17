@@ -1,0 +1,5 @@
+.col-8.offset-2#groupSection
+  .card
+    .card-body
+      - group.services.each do |service|
+        = service.sparc_service.name

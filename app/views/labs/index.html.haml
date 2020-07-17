@@ -1,9 +1,6 @@
 - content_for :header do
-  %header
-    .page-title
-      = icon('fas', 'flask')
-      %span
-        = t(:labs)[:header]
+  = render 'labs/header'
+- content_for :filters do
+  = render 'labs/filters'
 
-= render 'labs/filters'
 = render 'labs/display', labs: @labs

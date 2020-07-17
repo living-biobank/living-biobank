@@ -7,8 +7,9 @@
     .navbar-nav
       .text-white.d-flex.d-md-none.d-xl-flex#userInformation
         = icon('fas', 'user-circle')
-        %span.text-break
-          = current_user.full_name
+        .d-flex.flex-column
+          %span.text-break<
+            = current_user.full_name
       - if current_user.admin? || current_user.lab_honest_broker?
         .nav-item
           = link_to specimens_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''] do
@@ -31,7 +32,7 @@
           = icon('fas', 'question')
           %span
             = t('navigation.help')
-      .nav-item.d-block.d-md-none.d-xl-block
+      .nav-item.d-block.d-md-none.d-xl-block#signOut
         = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link btn btn-dark text-danger' do
           = icon('fas', 'sign-out-alt')
           %span

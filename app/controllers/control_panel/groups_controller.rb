@@ -6,7 +6,7 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   end
 
   def edit
-    respond_to :js
+    respond_to :html, :js
 
     find_group
   end

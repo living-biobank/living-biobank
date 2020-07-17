@@ -1,0 +1,10 @@
+%subheader#controlPanelSubheader
+  %ul.nav.subheader-links
+    %li.nav-item
+      = link_to control_panel_users_path, class: ['nav-link', controller_name == 'users' ? 'active' : ''] do
+        = icon('fas', 'users mr-2')
+        = t('control_panel.users.link')
+    %li.nav-item
+      = link_to control_panel_groups_path, class: ['nav-link', controller_name == 'groups' ? 'active' : ''] do
+        = icon('fas', 'tasks mr-2')
+        = t('control_panel.groups.link')

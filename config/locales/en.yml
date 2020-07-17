@@ -34,7 +34,7 @@ en:
   actions:
     cancel: "Cancel"
     close: "Close"
-    complete_request: "Complete Request"
+    complete: "Complete"
     release: "Release"
     save: "Save"
   errors:
@@ -56,13 +56,13 @@ en:
     attributes:
       group:
         discard_email: "Specimen Discard Email"
-        display_patient_information: "Include patient names alongside other patient information?"
         email_body: "Body"
         email_subject: "Subject"
         finalize_email: "Additional Finalization Email"
         finalize_email_to: "Recipients"
         notify_when_all_specimens_released: "When should release emails be sent?"
         process_sample_size: "Require a Minimum Sample Size per specimen?"
+        process_specimen_retrieval: "Will specimens be retrieved by investigators?"
         release_email: "Specimen Release Email"
       lab:
         accession_number: "Accession Number"
@@ -160,20 +160,15 @@ en:
   navigation:
     labs: "Specimens"
     requests: "Requests"
-    help: "Help Links"
+    help: "Help/FAQs"
     control_panel: "Control Panel"
-    logout: "Logout"
-  help_links:
-    headers:
-      header1: "Helpful Links"
-      header2: "Contact Us"
+    logout: "Sign Out"
   jobs:
     fields:
       id: "Job ID"
   control_panel:
     users:
       link: "Manage Users"
-      title: "Manage User Privileges"
       filters:
         search: "Search"
         privileges: "Fiilter by Privileges"
@@ -208,7 +203,6 @@ en:
         admin_removed: "Your admin privileges were successfully removed. You have been redirected to the requests page."
     groups:
       link: "Manage Groups"
-      title: "Manage Group Information"
       headers:
         name: "Name"
         sources: "Specimen Sources"
