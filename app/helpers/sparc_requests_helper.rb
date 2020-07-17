@@ -218,6 +218,14 @@ module SparcRequestsHelper
     end
   end
 
+  def request_breadcrumb(sr)
+    content_tag :span do
+      content_tag :em do
+        link_to("Requests", requests_path) + " / " + request_title_display(sr)
+      end
+    end
+  end
+
   def request_filter_params
     {
       term:       params[:term],

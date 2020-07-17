@@ -37,6 +37,8 @@ en:
     complete: "Complete"
     release: "Release"
     save: "Save"
+    save_changes: "Save Changes"
+    search: "Search"
   errors:
     not_found:
       header: "Page not found"
@@ -170,7 +172,6 @@ en:
     users:
       link: "Manage Users"
       filters:
-        search: "Search"
         privileges: "Fiilter by Privileges"
         any_privileges: "Any Privileges"
         groups: "Filter by Group"
@@ -211,8 +212,7 @@ en:
         services:
           pending: "Pending Variable Services"
           in_process: "In Process Additional Services"
-      form:
-        header: "Manage %{name} Group"
+      details:
         group_info: "General Group Information"
         release_email_time:
           all_samples: "After All Samples Released"
@@ -221,6 +221,8 @@ en:
           email: "Note: A greeting and signature will be added automatically."
           finalize_email: "Note: A signature will be added automatically."
           recipients: "Separate multiple emails with a comma"
+      honest_brokers:
+        new: "New Honest Broker"
       tooltips:
         edit: "Edit Group"
       flash:
@@ -242,7 +244,6 @@ en:
       found: "Specimens Found"
       not_found: "No Specimens found"
     filters:
-      search: "Search"
       date_released:
         label: "Date Released"
         start: "Start Date"
@@ -325,7 +326,6 @@ en:
     saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
-    view_all: "View All Requests"
     statuses:
       draft: "Draft"
       pending: "Pending"
@@ -333,7 +333,6 @@ en:
       complete: "Completed"
       cancelled: "Cancelled"
     filters:
-      search: "Search"
       status: "Filter by Request Status"
       all_status: "Any Status"
       active_status: "Active Requests"

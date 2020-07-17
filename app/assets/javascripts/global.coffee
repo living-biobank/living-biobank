@@ -8,13 +8,13 @@ $.ajaxSetup({
 $.fn.datepicker.defaults.clearBtn = true
 
 $ ->
+  $('html').addClass('ready')
+  setRequiredFields()
   initializeSelectpickers()
   initializeTables()
   initializeTooltips()
   initializePopovers()
   initializeToggles()
-  $('html').addClass('ready')
-  
 
   $(document).on 'ajaxComplete ajax:complete', ->
     setRequiredFields()

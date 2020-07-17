@@ -73,8 +73,6 @@ class SparcRequest < ApplicationRecord
       eager_load(:requester, specimen_requests: :source).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or( # Search by Releaser Full Name 
       eager_load(:requester, specimen_requests: :source).where(User.arel_full_name.matches("%#{term}%"))
-    ).or(
-      eager_load(:requester, specimen_requests: :source).where(LineItem.arel_table[:query_name].matches("%#{term}%"))
     )
     .or(
       eager_load(:requester, specimen_requests: :source).where(Source.arel_table[:value].matches("%#{term}%"))

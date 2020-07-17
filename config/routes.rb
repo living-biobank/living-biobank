@@ -21,13 +21,18 @@ Rails.application.routes.draw do
   end
 
   get '/requests', to: 'sparc_requests#index', as: 'requests'
+  get '/requests/:id/', to: 'sparc_requests#show', as: 'request'
 
   resources :protocols, only: [:index]
   resource :protocol, only: [:show]
 
   namespace :control_panel do
     resources :users, only: [:index, :edit, :update]
-    resources :groups, only: [:index, :edit, :update]
+    resources :groups, only: [:index, :edit, :update] do
+      member do
+        get :honest_brokers
+      end
+    end
 
     root to: 'users#index'
   end

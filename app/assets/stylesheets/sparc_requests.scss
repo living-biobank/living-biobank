@@ -13,10 +13,11 @@
   }
 
   i {
-    display: flex;
-    justify-content: center;
     max-width: 14px;
     min-width: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .btn {

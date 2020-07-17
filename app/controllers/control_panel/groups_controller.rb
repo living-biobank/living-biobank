@@ -1,4 +1,6 @@
 class ControlPanel::GroupsController < ControlPanel::BaseController
+  before_action :find_group, except: [:index]
+
   def index
     respond_to :html, :js, :json
 
@@ -6,9 +8,7 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   end
 
   def edit
-    respond_to :html, :js
-
-    find_group
+    respond_to :html
   end
 
   def update
@@ -23,6 +23,12 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
     else
       @errors = @group.errors
     end
+  end
+
+  def honest_brokers
+    respond_to :json
+
+    @honest_brokers = @group.lab_honest_brokers
   end
 
   private

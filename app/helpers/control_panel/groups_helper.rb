@@ -22,6 +22,18 @@ module ControlPanel::GroupsHelper
     end
   end
 
+  def group_breadcrumb(group)
+    content_tag :span do
+      content_tag :em do
+        link_to("Groups", control_panel_groups_path) + " / " + group.name
+      end
+    end
+  end
+
+  def remove_honest_broker_button()
+    link_to icon('fas', 'times'), '', class: 'btn btn-danger'
+  end
+
   def group_filter_params
     {
       term:       params[:term],

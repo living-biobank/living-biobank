@@ -1,0 +1,7 @@
+%subheader
+  .page-title
+    = request_breadcrumb(request)
+  .subheader-links.d-flex.align-items-center
+    = link_to "#{ENV.fetch('SPARC_HOST')}/dashboard/protocols/#{@sparc_request.protocol_id}", target: :_blank, class: 'btn btn-lg btn-outline-primary media-body d-inline-flex align-items-center justify-content-center' do
+      = image_tag 'sparcrequest_icon.ico', width: 16, height: 16, class: 'mr-2'
+      = t('requests.table.sparc_link')

@@ -30,7 +30,12 @@
 /////////////
 /// CARDS ///
 /////////////
+
 .card {
+  &+ .card {
+    margin-top: 1.5rem;
+  }
+
   .card-header, .card-body, .card-footer {
     padding: 0.75rem;
   }
@@ -39,8 +44,19 @@
     background: white;
   }
 
-  + .card {
-    margin-top: 1.5rem;
+  .card-title {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+
+    i {
+      width: 20px;
+      height: 20px;
+      margin-right: 0.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 
@@ -312,7 +328,7 @@ form, .form {
 }
 
 .table-filters {
-  padding: 0 !important;
+  padding: 0 $grid-gutter-width;
   background: white;
   display: flex;
 
@@ -322,8 +338,8 @@ form, .form {
   }
 
   .filter {
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: calc(#{$grid-gutter-width} / 2);
+    margin-right: calc(#{$grid-gutter-width} / 2);
   }
 
   .table-search {
@@ -345,19 +361,6 @@ form, .form {
           background: white;
         }
       }
-    }
-  }
-
-  #sort_by + .filter {
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      width: 1px;
-      height: 100%;
-      background: $border-color;
-      left: -1rem;
     }
   }
 
@@ -388,6 +391,13 @@ form, .form {
         }
       }
     }
+  }
+
+  .new-record-btn-container {
+    padding-left: $grid-gutter-width;
+    border-left: $border-width solid $border-color;
+    display: flex;
+    align-items: center;
   }
 }
 

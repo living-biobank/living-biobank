@@ -1,3 +1,6 @@
-%filters.control-panel-filters#groupFilters
-  .card-body.justify-content-end.table-filters{ data: { url: control_panel_groups_path } }
-    = text_field_tag 'searchGroups', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('control_panel.users.filters.search')
+%filters.table-filters.control-panel-filters#groupFilters{ data: { url: control_panel_groups_path } }
+  = text_field_tag 'searchGroups', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('filters.search')
+  .new-record-btn-container
+    %button.btn.btn-lg.btn-success.new-record-btn
+      = succeed "New Group" do
+        = icon('fas', 'plus mr-2')

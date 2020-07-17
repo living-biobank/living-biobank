@@ -1,52 +1,61 @@
-.col-8.offset-2#groupSection
-  = form_for [:control_panel, group], remote: true do |f|
-    .card
-      .card-body
-        %h4.mb-4
-          = t('control_panel.groups.form.group_info')
-        .form-group
-          = f.text_field :name, class: 'form-control', placeholder: Group.human_attribute_name(:name)
-        .form-group.row
-          = f.label :process_sample_size, class: 'col-form-label col-6'
-          .col-4.offset-2
-            = f.check_box :process_sample_size, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
-        .form-group.row
-          = f.label :process_specimen_retrieval, class: 'col-form-label col-6'
-          .col-4.offset-2
-            = f.check_box :process_specimen_retrieval, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
-    .card
-      .card-body
-        %h4.mb-4.required<
-          = Group.human_attribute_name(:release_email)
-        .form-group
-          = f.rich_text_area :release_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
-          %small.form-text.text-muted
-            = t('control_panel.groups.form.subtext.email')
-        .form-group.row.mb-0
-          = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
-          .col-4.offset-2
-            = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: t('control_panel.groups.form.release_email_time.all_samples'), off: t('control_panel.groups.form.release_email_time.each_sample'), style: 'btn-block' }
-    - if group.process_specimen_retrieval?
+.row
+  .col-2.text-center
+    %button.btn.btn-lg.btn-primary.sticky-form-btn.d-none{ type: 'submit' }<
+      = icon('fas', 'check mr-2')
+      = t('actions.save_changes')
+  .col-8#groupSection
+    = form_for [:control_panel, group], remote: true do |f|
       .card
         .card-body
-          %h4.mb-4.required<
-            = Group.human_attribute_name(:discard_email)
+          %h4.card-title<
+            = icon('fas', 'info')
+            = t('control_panel.groups.details.group_info')
+          .form-group
+            = f.text_field :name, class: 'form-control', placeholder: Group.human_attribute_name(:name)
+          .form-group.row
+            = f.label :process_sample_size, class: 'col-form-label col-6'
+            .col-4.offset-2
+              = f.check_box :process_sample_size, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
+          .form-group.row
+            = f.label :process_specimen_retrieval, class: 'col-form-label col-6'
+            .col-4.offset-2
+              = f.check_box :process_specimen_retrieval, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
+      .card
+        .card-body
+          %h4.card-title.required<
+            = icon('far', 'envelope')
+            = Group.human_attribute_name(:release_email)
+          .form-group
+            = f.rich_text_area :release_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
+            %small.form-text.text-muted
+              = t('control_panel.groups.details.subtext.email')
+          .form-group.row.mb-0
+            = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
+            .col-4.offset-2
+              = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: t('control_panel.groups.details.release_email_time.all_samples'), off: t('control_panel.groups.details.release_email_time.each_sample'), style: 'btn-block' }
+      - if group.process_specimen_retrieval?
+        .card
+          .card-body
+            %h4.card-title.required<
+              = icon('far', 'envelope')
+              = Group.human_attribute_name(:discard_email)
+            .form-group.mb-0
+              = f.rich_text_area :discard_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
+              %small.form-text.text-muted
+                = t('control_panel.groups.details.subtext.email')
+      .card
+        .card-body
+          %h4.card-title<
+            = icon('far', 'envelope')
+            = Group.human_attribute_name(:finalize_email)
+          .form-row
+            .form-group.col-6
+              = f.text_field :finalize_email_subject, class: 'form-control', placeholder: Group.human_attribute_name(:email_subject)
+            .form-group.col-6
+              = f.text_field :finalize_email_to, class: 'form-control', placeholder: Group.human_attribute_name(:finalize_email_to)
+              %small.form-text.text-muted
+                = t('control_panel.groups.details.subtext.recipients')
           .form-group.mb-0
-            = f.rich_text_area :discard_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
+            = f.rich_text_area :finalize_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
             %small.form-text.text-muted
-              = t('control_panel.groups.form.subtext.email')
-    .card
-      .card-body
-        %h4.mb-4
-          = Group.human_attribute_name(:finalize_email)
-        .form-row
-          .form-group.col-6
-            = f.text_field :finalize_email_subject, class: 'form-control', placeholder: Group.human_attribute_name(:email_subject)
-          .form-group.col-6
-            = f.text_field :finalize_email_to, class: 'form-control', placeholder: Group.human_attribute_name(:finalize_email_to)
-            %small.form-text.text-muted
-              = t('control_panel.groups.form.subtext.recipients')
-        .form-group.mb-0
-          = f.rich_text_area :finalize_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
-          %small.form-text.text-muted
-            = t('control_panel.groups.form.subtext.finalize_email')
+              = t('control_panel.groups.details.subtext.finalize_email')

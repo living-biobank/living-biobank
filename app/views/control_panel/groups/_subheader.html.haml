@@ -1,8 +1,6 @@
 %subheader
   .page-title
-    = icon('fas', 'tasks')
-    %span
-      = group.name
+    = group_breadcrumb(group)
   %ul.nav.subheader-links
     %li.nav-item
       = link_to 'Group Details', edit_control_panel_group_path(group, tab: 'details'), class: ['nav-link', params[:tab].blank? || params[:tab] == 'details' ? 'active' : '']

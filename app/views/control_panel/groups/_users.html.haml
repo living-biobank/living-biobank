@@ -1,0 +1,21 @@
+- content_for :subheader do
+  %filters.table-filters
+    = text_field_tag 'searchUsers', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
+    .new-record-btn-container
+      = button_tag type: 'submit', class: 'btn btn-lg btn-success new-record-btn' do
+        = succeed t('control_panel.groups.honest_brokers.new') do
+          = icon('fas', 'plus mr-2')
+
+.col-8.offset-2#groupSection
+  .card
+    %table.table.table-bordered.table-hover.mb-0.border-0#usersTable{ data: { toggle: 'table', url: honest_brokers_control_panel_group_path(group), side_pagination: 'server' } }
+      %thead
+        %tr
+          %th.col-10.d-table-cell.d-md-none{ data: { field: 'user', sortable: 'true' } }
+            = t('control_panel.users.headers.user')
+          %th.col-5.d-none.d-md-table-cell.border-left-0{ data: { field: 'name', sortable: 'true' } }
+            = t('control_panel.users.headers.name')
+          %th.col-5.d-none.d-md-table-cell{ data: { field: 'email', sortable: 'true' } }
+            = t('control_panel.users.headers.email')
+          %th.text-center.col-2{ data: { field: 'remove' } }
+            = t('actions.remove')
