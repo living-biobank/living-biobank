@@ -22,7 +22,6 @@ class Group < ApplicationRecord
   validates_inclusion_of :process_specimen_retrieval,             in: [true, false]
   validates_inclusion_of :notify_when_all_specimens_released,     in: [true, false]
   validates_inclusion_of :process_sample_size,                    in: [true, false]
-  validates_inclusion_of :display_patient_information,            in: [true, false]
 
   validates_format_of :finalize_email_to, with: /\A([^\s\@]+@[A-Za-z0-9.-]+)(,[ ]?[^\s\@]+@[A-Za-z0-9.-]+)*\Z/, allow_blank: true
 

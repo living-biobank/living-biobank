@@ -3,10 +3,10 @@
     = group_breadcrumb(group)
   %ul.nav.subheader-links
     %li.nav-item
-      = link_to 'Group Details', edit_control_panel_group_path(group, tab: 'details'), class: ['nav-link', params[:tab].blank? || params[:tab] == 'details' ? 'active' : '']
+      = link_to 'Group Details', group.new_record? ? 'javascript:void(0)' : edit_control_panel_group_path(group, tab: 'details'), class: ['nav-link', params[:tab].blank? || params[:tab] == 'details' ? 'active' : '']
     %li.nav-item
-      = link_to 'Honest Brokers', edit_control_panel_group_path(group, tab: 'users'), class: ['nav-link', params[:tab] == 'users' ? 'active' : '']
+      = link_to 'Honest Brokers', group.new_record? ? 'javascript:void(0)' : edit_control_panel_group_path(group, tab: 'users'), class: ['nav-link', group.new_record? ? 'disabled' : '', params[:tab] == 'users' ? 'active' : '']
     %li.nav-item
-      = link_to 'Sources', edit_control_panel_group_path(group, tab: 'sources'), class: ['nav-link', params[:tab] == 'sources' ? 'active' : '']
+      = link_to 'Sources', group.new_record? ? 'javascript:void(0)' : edit_control_panel_group_path(group, tab: 'sources'), class: ['nav-link', group.new_record? ? 'disabled' : '', params[:tab] == 'sources' ? 'active' : '']
     %li.nav-item
-      = link_to 'Services', edit_control_panel_group_path(group, tab: 'services'), class: ['nav-link', params[:tab] == 'services' ? 'active' : '']
+      = link_to 'Services', group.new_record? ? 'javascript:void(0)' : edit_control_panel_group_path(group, tab: 'services'), class: ['nav-link', group.new_record? ? 'disabled' : '', params[:tab] == 'services' ? 'active' : '']

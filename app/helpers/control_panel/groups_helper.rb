@@ -25,7 +25,7 @@ module ControlPanel::GroupsHelper
   def group_breadcrumb(group)
     content_tag :span do
       content_tag :em do
-        link_to("Groups", control_panel_groups_path) + " / " + group.name
+        link_to("Groups", control_panel_groups_path) + " / " + (group.new_record? ? t('control_panel.groups.new') : group.name)
       end
     end
   end

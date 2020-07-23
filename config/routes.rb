@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   namespace :control_panel do
     resources :users, only: [:index, :edit, :update]
-    resources :groups, only: [:index, :edit, :update] do
+    resources :groups, only: [:index, :new, :create, :edit, :update] do
       resources :lab_honest_brokers, only: [:index, :new, :create] do
         collection do
           delete :destroy

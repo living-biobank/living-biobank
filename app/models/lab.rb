@@ -104,9 +104,9 @@ class Lab < ApplicationRecord
     ).or(
       joins(:patient, source: :group).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Patient.arel_table[:lastname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
+      joins(:patient, source: :group).where(Patient.arel_table[:lastname].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Patient.arel_table[:firstname].matches("%#{term}%").and(Group.arel_table[:display_patient_information].eq(true)))
+      joins(:patient, source: :group).where(Patient.arel_table[:firstname].matches("%#{term}%"))
     ).or(
       joins(:patient, source: :group).where(Patient.arel_table[:mrn].matches("%#{term}%"))
     ).or(

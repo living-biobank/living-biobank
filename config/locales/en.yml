@@ -209,6 +209,7 @@ en:
         admin_removed: "Your admin privileges were successfully removed. You have been redirected to the requests page."
     groups:
       link: "Manage Groups"
+      new: "New Group"
       headers:
         name: "Name"
         sources: "Specimen Sources"
@@ -228,11 +229,13 @@ en:
           recipients: "Separate multiple emails with a comma"
       lab_honest_brokers:
         new: "New Lab Honest Broker"
-        created: "Lab honest broker added!"
-        destroyed: "Lab honest broker removed!"
+        flash:
+          created: "Lab honest broker added!"
+          destroyed: "Lab honest broker removed!"
       tooltips:
         edit: "Edit Group"
       flash:
+        created: "%{name} Group created!"
         saved: "Group updated successfully!"
 
   labs:
@@ -265,9 +268,7 @@ en:
       sort_order: "Order"
     table:
       header: "Specimen %{id}"
-      patient_info:
-        with_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
-        without_name: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>DOB</strong> %{dob}"
+      patient_info: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
       requests:
         header: "Requests Matching this Specimen"
         samples_needed:

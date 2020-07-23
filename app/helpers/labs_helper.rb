@@ -52,11 +52,7 @@ module LabsHelper
 
   def lab_patient_information(lab)
     content_tag :span, class: 'text-muted' do
-      if lab.group.display_patient_information?
-        t('labs.table.patient_info.with_name', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob))
-      else
-        t('labs.table.patient_info.without_name', id: lab.identifier, mrn: lab.mrn, dob: format_date(lab.dob))
-      end.html_safe
+      t('labs.table.patient_info', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob)).html_safe
     end
   end
 

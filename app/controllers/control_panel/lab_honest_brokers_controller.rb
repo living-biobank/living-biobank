@@ -19,7 +19,7 @@ class ControlPanel::LabHonestBrokersController < ControlPanel::BaseController
     @honest_broker = LabHonestBroker.new(lab_honest_broker_params)
 
     if @honest_broker.save
-      flash.now[:success] = t('control_panel.lab_honest_brokers.created')
+      flash.now[:success] = t('control_panel.groups.lab_honest_brokers.flash.created')
     else
       @errors = @honest_broker.errors
     end
@@ -31,7 +31,7 @@ class ControlPanel::LabHonestBrokersController < ControlPanel::BaseController
     @honest_broker = LabHonestBroker.find_by(group_id: params[:group_id], user_id: params[:user_id])
     @honest_broker.destroy
 
-    flash.now[:success] = t('control_panel.lab_honest_brokers.destroyed')
+    flash.now[:success] = t('control_panel.groups.lab_honest_brokers.flash.destroyed')
   end
 
   private
