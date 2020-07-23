@@ -29,8 +29,10 @@ Rails.application.routes.draw do
   namespace :control_panel do
     resources :users, only: [:index, :edit, :update]
     resources :groups, only: [:index, :edit, :update] do
-      member do
-        get :honest_brokers
+      resources :lab_honest_brokers, only: [:index, :new, :create] do
+        collection do
+          delete :destroy
+        end
       end
     end
 
@@ -40,6 +42,10 @@ Rails.application.routes.draw do
   resources :i2b2_queries, only: [:index]
 
   get 'directory/index', to: 'directory#index'
+
+  namespace :sparc do
+    get '/directory/index', to: 'directory#index'
+  end
 
   get '/help', to: 'pages#help', as: 'help'
 

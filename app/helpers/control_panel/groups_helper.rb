@@ -30,10 +30,6 @@ module ControlPanel::GroupsHelper
     end
   end
 
-  def remove_honest_broker_button()
-    link_to icon('fas', 'times'), '', class: 'btn btn-danger'
-  end
-
   def group_filter_params
     {
       term:       params[:term],

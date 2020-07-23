@@ -43,6 +43,10 @@ class User < ApplicationRecord
       where(User.arel_full_name.matches("%#{term}%"))
     ).or(
       where(User.arel_full_name.matches("%#{term}%"))
+    ).or(
+      where(User.arel_table[:net_id].matches("%#{term}"))
+    ).or(
+      where(User.arel_table[:email].matches("%#{term}%"))
     )
   }
 
@@ -80,6 +84,10 @@ class User < ApplicationRecord
       order(sort_by => sort_order)
     end
   }
+
+  def self.find_or_create(id)
+    Directory.find_or_create(id)
+  end
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

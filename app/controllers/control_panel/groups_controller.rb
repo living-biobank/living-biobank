@@ -25,12 +25,6 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
     end
   end
 
-  def honest_brokers
-    respond_to :json
-
-    @honest_brokers = @group.lab_honest_brokers
-  end
-
   private
 
   def find_group

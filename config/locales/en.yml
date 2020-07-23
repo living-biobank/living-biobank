@@ -32,6 +32,7 @@
 
 en:
   actions:
+    add: "Add"
     cancel: "Cancel"
     close: "Close"
     complete: "Complete"
@@ -132,6 +133,10 @@ en:
         other: "Users"
     errors:
       models:
+        lab_honest_broker:
+          attributes:
+            user:
+              required: "Please search for a user to add"
         line_item:
           attributes:
             service:
@@ -221,8 +226,10 @@ en:
           email: "Note: A greeting and signature will be added automatically."
           finalize_email: "Note: A signature will be added automatically."
           recipients: "Separate multiple emails with a comma"
-      honest_brokers:
-        new: "New Honest Broker"
+      lab_honest_brokers:
+        new: "New Lab Honest Broker"
+        created: "Lab honest broker added!"
+        destroyed: "Lab honest broker removed!"
       tooltips:
         edit: "Edit Group"
       flash:

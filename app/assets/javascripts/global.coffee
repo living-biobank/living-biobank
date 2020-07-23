@@ -86,20 +86,27 @@ $ ->
     searchTimer = setTimeout( (->
       $container  = $this.parents('.table-filters')
       data        = { term: term }
+      url         = new URL(window.location)
 
+      url.searchParams.delete('term')
       $container.find('select.filter-select').each (index, element) ->
         field = $(element).data('field')
         val   = $(element).val()
         if val != ""
           data[field] = val
+        url.searchParams.delete(field)
+
+      url.searchParams.forEach (value, key) ->
+        data[key] = value
 
       replaceUrl(data)
 
-      $.ajax
+      $.ajax({
         method: 'GET'
         dataType: 'script'
         url: $container.data('url')
         data: data
+      })
     ), 750)
   ).on('keydown', '.table-search', ->
     clearTimeout(searchTimer)

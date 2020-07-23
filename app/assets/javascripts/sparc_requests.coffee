@@ -241,7 +241,7 @@ $ ->
     datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace
     remote:
-      url: "/directory/index?term=%TERM"
+      url: "/sparc/directory/index?term=%TERM"
       wildcard: "%TERM"
   )
 

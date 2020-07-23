@@ -1,14 +1,14 @@
 - content_for :subheader do
-  %filters.table-filters
+  %filters.table-filters#honestBrokerFilters{ data: { url: control_panel_group_lab_honest_brokers_path(group) } }
     = text_field_tag 'searchUsers', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
     .new-record-btn-container
-      = button_tag type: 'submit', class: 'btn btn-lg btn-success new-record-btn' do
-        = succeed t('control_panel.groups.honest_brokers.new') do
+      = link_to new_control_panel_group_lab_honest_broker_path(group), remote: true, class: 'btn btn-lg btn-success new-record-btn' do
+        = succeed t('control_panel.groups.lab_honest_brokers.new') do
           = icon('fas', 'plus mr-2')
 
 .col-8.offset-2#groupSection
   .card
-    %table.table.table-bordered.table-hover.mb-0.border-0#usersTable{ data: { toggle: 'table', url: honest_brokers_control_panel_group_path(group), side_pagination: 'server' } }
+    %table.table.table-bordered.table-hover.mb-0.border-0#honestBrokersTable{ data: { toggle: 'table', url: control_panel_group_lab_honest_brokers_path(group, term: params[:term], sort: params[:sort], order: params[:order], page: params[:page]), side_pagination: 'server' } }
       %thead
         %tr
           %th.col-10.d-table-cell.d-md-none{ data: { field: 'user', sortable: 'true' } }
