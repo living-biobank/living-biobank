@@ -1,10 +1,10 @@
-.row
-  .col-2.text-center
-    %button.btn.btn-lg.btn-primary.sticky-form-btn.d-none{ type: 'submit' }<
-      = icon('fas', 'check mr-2')
-      = t('actions.save_changes')
-  .col-8#groupSection
-    = form_for [:control_panel, group], remote: true do |f|
+= form_for [:control_panel, group], remote: true, html: { id: 'groupDetailsForm', autocomplete: 'off' } do |f|
+  .row
+    .col-2.text-center
+      %button.btn.btn-lg.btn-primary.sticky-form-btn.d-none#saveGroupDetailsBtn{ type: 'submit' }<
+        = icon('fas', 'check mr-2')
+        = t('actions.save_changes')
+    .col-8
       .card
         .card-body
           %h4.card-title<

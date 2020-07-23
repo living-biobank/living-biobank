@@ -1,4 +1,11 @@
 $ ->
+  $(document).on('change', '#groupDetailsForm input:not([type=text])', ->
+    $('#saveGroupDetailsBtn').removeClass('d-none')
+  ).on('keydown', '#groupDetailsForm input[type=text]', ->
+    $('#saveGroupDetailsBtn').removeClass('d-none')
+  ).on('trix-change', '#groupDetailsForm trix-editor', ->
+    $('#saveGroupDetailsBtn').removeClass('d-none')
+  )
 
 (exports ? this).initializeHonestBrokerTypeahead = () ->
   $("#honestBrokerSearch").typeahead('destroy')

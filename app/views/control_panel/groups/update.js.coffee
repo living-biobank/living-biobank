@@ -8,7 +8,6 @@ $("#group_<%= attr.to_s %>").parents('.form-group').removeClass('is-valid').addC
 <% end %>
 <% end %>
 <% else %>
-$('#groupsTable').bootstrapTable('refresh')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
-$('#modalContainer').modal('hide')
+$('#saveGroupDetailsBtn').addClass('d-none')
 <% end %>

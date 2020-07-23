@@ -84,7 +84,7 @@ subheader, filters {
     top: $subheader-height-lg;
   }
 
-  .sticky-form-submit {
+  .sticky-form-btn {
     top: calc(#{$subheader-height-lg} + #{$grid-gutter-width});
   }
 }
@@ -102,7 +102,7 @@ subheader, filters {
     top: $subheader-height-xl;
   }
 
-  .sticky-form-submit {
+  .sticky-form-btn {
     top: calc($subheader-height-xl + $grid-gutter-width);
   }
 }
