@@ -1,9 +1,9 @@
 class Group < ApplicationRecord
   has_and_belongs_to_many :lab_honest_brokers, join_table: :lab_honest_brokers, class_name: "User"
 
-  has_many :sources,    dependent: :destroy
-  has_many :services,   dependent: :destroy
-  has_many :variables,  dependent: :destroy
+  has_many :sources, dependent: :destroy
+
+  has_many :services, dependent: :destroy
 
   has_many :labs,           through: :sources
   has_many :line_items,     through: :sources
@@ -37,15 +37,13 @@ class Group < ApplicationRecord
 
     queried_service_ids = SPARC::Service.where(SPARC::Service.arel_table[:name].matches("%#{term}%")).ids
 
-    eager_load(:sources, :variables, :services).where(Group.arel_table[:name].matches("%#{term}%")
+    eager_load(:sources, :services).where(Group.arel_table[:name].matches("%#{term}%")
     ).or(
-      eager_load(:sources, :variables, :services).where(Source.arel_table[:key].matches("%#{term}%"))
+      eager_load(:sources, :services).where(Source.arel_table[:key].matches("%#{term}%"))
     ).or(
-      eager_load(:sources, :variables, :services).where(Source.arel_table[:value].matches("%#{term}%"))
+      eager_load(:sources, :services).where(Source.arel_table[:value].matches("%#{term}%"))
     ).or(
-      eager_load(:sources, :variables, :services).where(Variable.arel_table[:service_id].in(queried_service_ids))
-    ).or(
-      eager_load(:sources, :variables, :services).where(Service.arel_table[:sparc_id].in(queried_service_ids))
+      eager_load(:sources, :services).where(Service.arel_table[:sparc_id].in(queried_service_ids))
     )
   }
 
