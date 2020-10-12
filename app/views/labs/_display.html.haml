@@ -61,8 +61,11 @@
                         = render 'line_items/progress_bar', li: line_item
             - else
               - if lab.line_item.present?
-                %h4.card-title.font-weight-bold
-                  = t('labs.table.released_header')
+                %h4.card-title.font-weight-bold<
+                  - if lab.group.process_specimen_retrieval?
+                    = t('labs.table.requests.released.header.retrieval')
+                  - else
+                    = t('labs.table.requests.released.header.no_retrieval')
                 .row.line-item.specimen-line-item
                   .col-sm-4.col-12.d-flex
                     .d-flex.flex-column.mr-2
