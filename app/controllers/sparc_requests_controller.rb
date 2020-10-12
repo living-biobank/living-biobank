@@ -16,7 +16,7 @@ class SparcRequestsController < ApplicationController
   end
 
   def new
-    @sparc_request = current_user.sparc_requests.new(status: t(:requests)[:statuses][:pending])
+    @sparc_request = current_user.sparc_requests.new(status: 'pending')
     @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.protocol.build_research_types_info

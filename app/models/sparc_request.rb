@@ -116,7 +116,18 @@ class SparcRequest < ApplicationRecord
   }
 
   def status=(status)
-    self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
+    case status
+    when 'pending'
+      if self.submitted_at.blank?
+        self.send("submitted_at=", DateTime.now)
+      end
+    when 'finalized'
+      self.send("finalized_at=", DateTime.now)
+    when 'complete'
+      self.send("completed_at=", DateTime.now)
+    when 'cancelled'
+      self.send("cancelled_at=", DateTime.now)
+    end
     super(status)
   end
 
