@@ -6,7 +6,7 @@ class ControlPanel::SourcesController < ControlPanel::BaseController
 
     # @sources = @group.sources.active.filtered_for_index(params[:term], nil, nil, params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1)
 
-    # @sources = @group.sources.active
+    @sources = @group.groups_sources.active
   end
 
   def new
@@ -17,9 +17,10 @@ class ControlPanel::SourcesController < ControlPanel::BaseController
 
   def edit
     respond_to :js
+    find_groups_source
 
-    @source = @group.sources.where(id: params[:id]).first
-    @groups_source_name = @group.groups_sources.where(source: params[:id]).first.name
+    @source = @groups_source.source
+    @groups_source_name = @groups_source.name
   end
 
   def update
@@ -31,7 +32,7 @@ class ControlPanel::SourcesController < ControlPanel::BaseController
     if @source.update(sources_params.except(:group_id, :name))
       #update join table association on success
       @group.groups_sources.where(source: @source).first.update(name: params[:name])
-      flash.now[:success] = t('control_panel.groups.sources.flash.created')
+      flash.now[:success] = t('control_panel.groups.sources.flash.updated')
     else
       @errors = @source.errors
     end
@@ -43,7 +44,7 @@ class ControlPanel::SourcesController < ControlPanel::BaseController
     #Checks for key uniqueness within the specified group
     unless @group.sources.any? {|source| source.key == sources_params[:key]}
       #If key is unique, begins process of adding new source
-      @source = @group.sources.build(sources_params.except(:group_id, :name))
+      @source = Source.new(sources_params.except(:group_id, :name))
       if @source.save
         #create join table association on success
         @group.groups_sources.create!(source: @source, name: params[:name])
@@ -61,9 +62,9 @@ class ControlPanel::SourcesController < ControlPanel::BaseController
   def destroy
     respond_to :js
 
-    @source = Source.find(params[:id])
+    @groups_source = GroupsSource.find(params[:id])
 
-    if @source.groups_sources.where(source: @source).first.update(deprecated: true)
+    if @groups_source.update(deprecated: true)
       flash.now[:success] = t('control_panel.groups.sources.flash.destroyed')
     end
   end
@@ -71,8 +72,11 @@ class ControlPanel::SourcesController < ControlPanel::BaseController
   private
 
   def find_group
-    puts params[:group_id]
     @group = Group.find(params[:group_id])
+  end
+
+  def find_groups_source
+    @groups_source = GroupsSource.find(params[:id])
   end
 
   def sources_params

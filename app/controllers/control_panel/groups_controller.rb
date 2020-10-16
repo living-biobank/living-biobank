@@ -4,7 +4,7 @@ class ControlPanel::GroupsController < ControlPanel::BaseController
   def index
     respond_to :html, :js, :json
 
-    @groups = Group.all.filtered_for_index(params[:term], params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1).preload(:sources, services: :sparc_service)
+    @groups = Group.all.filtered_for_index(params[:term], params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1).preload(:active_groups_sources, services: :sparc_service)
   end
 
   def new

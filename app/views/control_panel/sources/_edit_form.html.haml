@@ -4,18 +4,18 @@
       = hidden_field_tag :group_id
       .modal-header
         %h4.modal-title
-          = "Edit #{source.value}"
+          = t('control_panel.groups.sources.form.edit_source', source_name: source.value)
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
         %p
-          = "NOTE:  If a source with a different key is needed, you will need to delete this source from the group and create a new one with the desired key."
+          = t('control_panel.groups.sources.form.warning')
         .form-group.mb-2
           .input-group
-            = text_field_tag :name, groups_source_name, class: 'form-control', placeholder: 'Enter the alias for this source-group association'
+            = text_field_tag :name, groups_source_name, class: 'form-control', placeholder: t('control_panel.groups.sources.form.name_placeholder')
         .form-group.mb-0  
           .input-group
-            = f.text_field :value, class: 'form-control', placeholder: 'Enter the name for this source to be displayed to users', id: 'value'
+            = f.text_field :value, class: 'form-control', placeholder: t('control_panel.groups.sources.form.value_placeholder'), id: 'value'
       .modal-footer
         %button.btn.btn-primary<
           = t('actions.save')

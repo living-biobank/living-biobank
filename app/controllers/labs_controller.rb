@@ -30,12 +30,13 @@ class LabsController < ApplicationController
         Lab.all
       else
         current_user.honest_broker_labs
-      end.filtered_for_index(params[:term], params[:released_at_start], params[:released_at_end], params[:status], params[:source], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:releaser, :patient, source: :group)
+      end.filtered_for_index(params[:term], params[:released_at_start], params[:released_at_end], params[:status], params[:source], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:releaser, :patient, source: :groups_sources)
   end
 
   def lab_params
     params.require(:lab).permit(
       :line_item_id,
+      :groups_source_id,
       :status,
       :released_at,
       :released_by,

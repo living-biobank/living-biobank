@@ -138,7 +138,7 @@ $ ->
       $(this).datepicker('hide')
       $('#sparc_request_protocol_attributes_end_date').focus()
 
-  $(document).on 'changed.bs.select', '.source-select', ->
+  $(document).on 'changed.bs.select', '.groups-source-select', ->
     $minSampleContainer = $(this).parents('.form-group').siblings('.min-sample-size-container')
     if $(this).find('option:selected').data('validates-sample-size') == true
       $minSampleContainer.removeClass('d-none')

@@ -1,7 +1,9 @@
 class Group < ApplicationRecord
   has_and_belongs_to_many :lab_honest_brokers, join_table: :lab_honest_brokers, class_name: "User"
 
-  has_many :sources, dependent: :destroy
+  has_many :groups_sources
+  has_many :active_groups_sources, -> { active }, class_name: "GroupsSource"
+  has_many :sources, through: :groups_sources
 
   has_many :services, dependent: :destroy
 

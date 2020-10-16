@@ -11,10 +11,10 @@ class SparcRequest < ApplicationRecord
   has_one :primary_pi, through: :protocol, class_name: "SPARC::Identity"
 
   has_many :line_items, dependent: :destroy
-  has_many :specimen_requests, -> { where.not(source_id: nil) }, class_name: "LineItem"
-  has_many :additional_services, -> { where(source_id: nil) }, class_name: "LineItem", after_add: :dirty_create, after_remove: :dirty_delete
-  has_many :sources, through: :specimen_requests
-  has_many :groups, through: :sources
+  has_many :specimen_requests, -> { where.not(groups_source_id: nil) }, class_name: "LineItem"
+  has_many :additional_services, -> { where(groups_source_id: nil) }, class_name: "LineItem", after_add: :dirty_create, after_remove: :dirty_delete
+  has_many :groups_sources, through: :specimen_requests
+  has_many :groups, through: :groups_sources
   has_many :services, through: :groups
 
   validates_presence_of :dr_consult, unless: :draft?
