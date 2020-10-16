@@ -4,8 +4,8 @@ $('.form-error, .form-alert').remove()
 <% if @duplicate %>
 Swal.fire(
   type: 'warning'
-  title: "<%= t('requests.form.existing_request.title', status: @existing_request.status) %>"
-  html: "<%= (@existing_request.in_process? ? t('requests.form.existing_request.in_process', status: @existing_request.status, email: ENV.fetch('LBB_EMAIL'), srid: @protocol.id, short_title: @protocol.short_title, lbb_id: @existing_request.identifier) : t('requests.form.existing_request.pending', status: @existing_request.status, srid: @protocol.id, short_title: @protocol.short_title, lbb_id: @existing_request.identifier)).html_safe %>"
+  title: "<%= t('requests.form.existing_request.title', status: @existing_request.human_status) %>"
+  html: "<%= (@existing_request.in_process? ? t('requests.form.existing_request.in_process', status: @existing_request.human_status, email: ENV.fetch('LBB_EMAIL'), srid: @protocol.id, short_title: @protocol.short_title, lbb_id: @existing_request.identifier) : t('requests.form.existing_request.pending', status: @existing_request.human_status, srid: @protocol.id, short_title: @protocol.short_title, lbb_id: @existing_request.identifier)).html_safe %>"
   confirmButtonText: "<i class='fas fa-edit mr-1'></i>Edit Request"
   confirmButtonClass: 'btn btn-lg btn-warning mr-1'
   showConfirmButton: "<%= @existing_request.in_process? %>" == 'false'
