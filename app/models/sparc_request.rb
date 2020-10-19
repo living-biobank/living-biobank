@@ -29,7 +29,7 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.draft? || (sr.pending? && !self.updated?) }
+  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.pending? && !self.updated? }
   after_save :update_services
   after_save :send_finalization_emails,   if: :in_process?
   after_save :send_locked_emails,         if: :active?
@@ -114,10 +114,17 @@ class SparcRequest < ApplicationRecord
   }
 
   def status=(status)
-    if status == 'pending'
-      self.submitted_at = DateTime.now
-    else
-      self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
+    case status
+    when 'pending'
+      if self.submitted_at.blank?
+        self.send("submitted_at=", DateTime.now)
+      end
+    when 'finalized'
+      self.send("finalized_at=", DateTime.now)
+    when 'complete'
+      self.send("completed_at=", DateTime.now)
+    when 'cancelled'
+      self.send("cancelled_at=", DateTime.now)
     end
     super(status)
   end
