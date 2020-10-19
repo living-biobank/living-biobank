@@ -29,7 +29,7 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
-  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.draft? || (sr.pending? && !self.updated?) }
+  after_save :add_authorized_users,       if: Proc.new{ |sr| sr.pending? && !self.updated? }
   after_save :update_services
   after_save :send_finalization_emails,   if: :in_process?
   after_save :send_locked_emails,         if: :active?
