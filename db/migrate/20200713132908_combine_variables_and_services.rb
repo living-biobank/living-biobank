@@ -10,7 +10,7 @@ class CombineVariablesAndServices < ActiveRecord::Migration[5.2]
 
     Service.reset_column_information
 
-    Service.update_all(:status, 'in_process')
+    Service.update_all(status: 'in_process')
 
     Variable.all.order(position: :desc).each do |v|
       Service.create(
