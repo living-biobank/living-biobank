@@ -5,8 +5,8 @@ class CombineVariablesAndServices < ActiveRecord::Migration[5.2]
   end
 
   def up
-    add_column :services, :status,    :string, after: :sparc_id
-    add_column :services, :condition, :string, after: :status
+    add_column :services, :status,    :string, after: :sparc_id unless column_exists?(:services, :status)
+    add_column :services, :condition, :string, after: :status unless column_exists?(:services, :condition)
 
     Service.reset_column_information
 
