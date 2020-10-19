@@ -41,11 +41,7 @@ class SparcRequestsController < ApplicationController
       end
     else
       if @sparc_request.save
-        RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
-        unless @sparc_request.requester.net_id == @sparc_request.protocol.primary_pi.ldap_uid
-          RequestMailer.with(user: @sparc_request.protocol.primary_pi, request: @sparc_request).pi_email.deliver_later
-        end
-
+        send_submission_emails()
         flash.now[:success] = t(:requests)[:created]
       else
         @errors = @sparc_request.errors
@@ -93,19 +89,10 @@ class SparcRequestsController < ApplicationController
         if @sparc_request.updater.present?
           flash.now[:success] = t(:requests)[:updated]
         else
-          RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
-          unless @sparc_request.requester.net_id == @sparc_request.protocol.primary_pi.ldap_uid
-            RequestMailer.with(user: current_user, request: @sparc_request).pi_email.deliver_later
-          end
+          send_submission_emails()
           flash.now[:success] = t(:requests)[:created]
         end
-
-        if current_user != @sparc_request.requester
-          RequestMailer.with(request: @sparc_request, user: @sparc_request.requester).admin_update_email.deliver_later
-          unless @sparc_request.requester == @sparc_request.primary_pi
-            RequestMailer.with(request: @sparc_request, user: @sparc_request.primary_pi).admin_update_email.deliver_later
-          end
-        end
+        send_admin_update_emails() if current_user != @sparc_request.requester
       else
         @errors = @sparc_request.errors
       end
@@ -121,8 +108,7 @@ class SparcRequestsController < ApplicationController
 
     # Ignore validations, specifically for Draft requests
     if @sparc_request.save(validate: false)
-      RequestMailer.with(completer: current_user, request: @sparc_request).completion_email.deliver_later if @sparc_request.completed?
-
+      send_completion_emails() if @sparc_request.completed?
       flash.now[:success] = t(:requests)[:updated]
     else
       flash.now[:error] = t(:requests)[:failed]
@@ -143,6 +129,24 @@ class SparcRequestsController < ApplicationController
     @requests = current_user.eligible_requests.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:requester, specimen_requests: [:labs, :source, :group]).preload(:primary_pi, protocol: { project_roles: :identity }, specimen_requests: :i2b2_query, additional_services: [:service, :sub_service_request])
 
     @draft_requests = current_user.eligible_requests.draft.preload(protocol: { project_roles: :identity })
+  end
+
+  def send_submission_emails
+    RequestMailer.with(user: current_user, request: @sparc_request).confirmation_email.deliver_later
+    unless @sparc_request.requester.net_id == @sparc_request.protocol.primary_pi.ldap_uid
+      RequestMailer.with(user: @sparc_request.protocol.primary_pi, request: @sparc_request).pi_email.deliver_later
+    end
+  end
+
+  def send_admin_update_emails
+    RequestMailer.with(request: @sparc_request, user: @sparc_request.requester).admin_update_email.deliver_later
+    unless @sparc_request.requester == @sparc_request.primary_pi
+      RequestMailer.with(request: @sparc_request, user: @sparc_request.primary_pi).admin_update_email.deliver_later
+    end
+  end
+
+  def send_completion_emails
+    RequestMailer.with(completer: current_user, request: @sparc_request).completion_email.deliver_later
   end
 
   def sparc_request_params

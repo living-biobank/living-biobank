@@ -34,6 +34,8 @@ class ProtocolsController < ApplicationController
       end
     else
       @protocol = SPARC::Protocol.find(params[:id])
+
+      @rights = current_user.admin? || current_user.data_honest_broker?|| @protocol.project_roles.joins(:identity).where(project_rights: %w(request approve), identities: { ldap_uid: current_user.net_id }).any?
     end
 
     @duplicate        = @protocol.sparc_requests.active.or(@protocol.sparc_requests.draft).any? if @protocol

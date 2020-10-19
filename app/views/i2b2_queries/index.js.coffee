@@ -17,7 +17,7 @@ updateQueries()
 $("select[name*=query_id]").selectpicker('refresh')
 
 $(document).off('fields_added.nested_form_fields').on('fields_added.nested_form_fields', ->
-  $("select[name*=query_id]").one 'rendered.bs.select', ->
-    updateQueries()
   $(document).trigger('ajax:complete') # rails-ujs element replacement bug fix
+  updateQueries()
+  $("select[name*=query_id]").selectpicker('refresh')
 )
