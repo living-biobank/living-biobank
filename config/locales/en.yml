@@ -306,6 +306,10 @@ en:
       patient_info: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
       requests:
         header: "Requests Matching this Specimen"
+        released:
+          header:
+            retrieval: "Specimen Released and Awaiting Pick-up"
+            no_retrieval: "Specimen Released for Processing"
         samples_needed:
           singular: "%{requested_number} Sample %{requested_size}"
           plural: "%{requested_number} Samples %{requested_size}"

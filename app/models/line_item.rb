@@ -3,7 +3,7 @@ class LineItem < ApplicationRecord
   belongs_to :service, class_name: "SPARC::Service", optional: true
   belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional: true
   belongs_to :groups_source, optional: true
-  belongs_to :i2b2_query, class_name: "I2b2::Query", foreign_key: :query_id, primary_key: :query_master_id
+  belongs_to :i2b2_query, class_name: "I2b2::Query", foreign_key: :query_id, primary_key: :query_master_id, optional: true
 
   has_many :populations
   has_many :labs
@@ -19,11 +19,11 @@ class LineItem < ApplicationRecord
   before_destroy :update_sparc_records
 
   scope :specimen_requests, -> () {
-    where.not(source_id: nil)
+    where.not(groups_source_id: nil)
   }
 
   scope :additional_services, -> () {
-    where(source_id: nil)
+    where(groups_source_id: nil)
   }
 
   def specimen_request?
