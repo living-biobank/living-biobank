@@ -8,7 +8,11 @@ class CreateJoinTableGroupsSources < ActiveRecord::Migration[5.2]
     # Transfer data to new table
     @sources = Source.all
     @sources.each do |source|
-      source.groups << Group.find(source.group_id)
+      groups_source = GroupsSource.new(
+        source: source,
+        group: Group.find(source.group_id)
+      )
+      groups_source.save(validate: false)
     end
 
     # Remove group column from sources
