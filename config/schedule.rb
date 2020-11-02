@@ -19,7 +19,10 @@
 
 # Learn more: http://github.com/javan/whenever
 
-
 every :weekday, at: '7am' do
   rake 'email_tasks:daily_specimen_check'
+end
+
+every 1.hour do
+  rake 'data:clear_refreshed_sparc_data'
 end
