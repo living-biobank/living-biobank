@@ -30,17 +30,25 @@ ActiveRecord::Base.transaction do
   blood_group = Group.where(
     name: "Blood"
   ).first_or_create(
-    process_specimen_retrieval:   true,
-    process_sample_size:          true,
-    display_patient_information:  false
+    process_specimen_retrieval:         true,
+    process_sample_size:                true,
+    display_patient_information:        true,
+    notify_when_all_specimens_released: false,
+    release_email:                      "Blood specimen released",
+    discard_email:                      "Blood specimen discarded"
   )
 
   microbiome_group = Group.where(
     name: "Microbiome"
   ).first_or_create(
-    process_specimen_retrieval:   false,
-    process_sample_size:          false,
-    display_patient_information:  true
+    process_specimen_retrieval:         false,
+    process_sample_size:                false,
+    display_patient_information:        true,
+    notify_when_all_specimens_released: true,
+    release_email:                      "Microbiome specimen released",
+    discard_email:                      "Microbiome specimen discarded",
+    finalize_email_subject:             "Request Finalized",
+    finalize_email_to:                  "nobody@musc.edu"
   )
 
   ######################
@@ -69,57 +77,77 @@ ActiveRecord::Base.transaction do
   ### Create Services ###
   #######################
 
-  Service.where(
-    group:          microbiome_group,
-    sparc_service:  SPARC::Service.find(26545)
-  ).first_or_create
+  ### Microbiome Services
 
   Service.where(
-    group:          microbiome_group,
-    sparc_service:  SPARC::Service.find(10216)
-  ).first_or_create
+    group:            microbiome_group,
+    sparc_service:    SPARC::Service.find(37778)
+  ).first_or_create(
+    position:         1,
+    status:           'pending',
+    condition:        'irb_not_approved'
+  )
 
   Service.where(
-    group:          microbiome_group,
-    sparc_service:  SPARC::Service.find(10)
-  ).first_or_create
+    group:            microbiome_group,
+    sparc_service:    SPARC::Service.find(8253)
+  ).first_or_create(
+    position:         2,
+    status:           'pending',
+    condition:        'irb_approved'
+  )
 
   Service.where(
-    group:          microbiome_group,
-    sparc_service:  SPARC::Service.find(492)
-  ).first_or_create
+    group:            microbiome_group,
+    sparc_service:    SPARC::Service.find(492)
+  ).first_or_create(
+    position:         3,
+    status:           'in_process'
+  )
 
-  ########################
-  ### Create Variables ###
-  ########################
+  Service.where(
+    group:            microbiome_group,
+    sparc_service:    SPARC::Service.find(26545)
+  ).first_or_create(
+    position:         4,
+    status:           'in_process'
+  )
 
-  Variable.where(
-    name:       "QI",
-    group:      blood_group,
-    service:    SPARC::Service.find(37778),
-    condition:  "irb.blank?"
-  ).first_or_create
+  Service.where(
+    group:            microbiome_group,
+    sparc_service:    SPARC::Service.find(10216)
+  ).first_or_create(
+    position:         5,
+    status:           'in_process'
+  )
 
-  Variable.where(
-    name:       "IRB Approved Research",
-    group:      blood_group,
-    service:    SPARC::Service.find(8253),
-    condition:  "irb.present?"
-  ).first_or_create
+  Service.where(
+    group:            microbiome_group,
+    sparc_service:    SPARC::Service.find(10)
+  ).first_or_create(
+    position:         6,
+    status:           'in_process'
+  )
 
-  Variable.where(
-    name:       "QI",
-    group:      microbiome_group,
-    service:    SPARC::Service.find(37778),
-    condition:  "irb.blank?"
-  ).first_or_create
+  ### Blood Services
 
-  Variable.where(
-    name:       "IRB Approved Research",
-    group:      microbiome_group,
-    service:    SPARC::Service.find(8253),
-    condition:  "irb.present?"
-  ).first_or_create
+  Service.where(
+    group:            blood_group,
+    sparc_service:    SPARC::Service.find(37778)
+  ).first_or_create(
+    position:         1,
+    status:           'pending',
+    condition:        'irb_not_approved'
+  )
+
+  Service.where(
+    group:            blood_group,
+    sparc_service:    SPARC::Service.find(8253)
+  ).first_or_create(
+    position:         2,
+    status:           'pending',
+    condition:        'irb_approved'
+  )
 
   #######################
   ### Create Patients ###
@@ -129,14 +157,16 @@ ActiveRecord::Base.transaction do
     firstname:  "John",
     lastname:   "Doe",
     identifier: "JD0001",
-    mrn:        "111111"
+    mrn:        "111111",
+    dob:        Date.today - 30.years
   ).first_or_create
 
   jane = Patient.where(
     firstname:  "Jane",
     lastname:   "Doe",
     identifier: "JD0002",
-    mrn:        "111111"
+    mrn:        "111111",
+    dob:        Date.today - 30.years
   ).first_or_create
 
   ###################
@@ -146,7 +176,7 @@ ActiveRecord::Base.transaction do
   lab1 = Lab.where(
     patient:          john,
     source:           blood,
-    status:           I18n.t(:labs)[:statuses][:available],
+    status:           'available',
   ).first_or_create(
     accession_number: Faker::Number.number(digits: 10).to_s
   )
@@ -154,7 +184,7 @@ ActiveRecord::Base.transaction do
   lab2 = Lab.where(
     patient:          john,
     source:           nasal,
-    status:           I18n.t(:labs)[:statuses][:available],
+    status:           'available',
   ).first_or_create(
     accession_number: Faker::Number.number(digits: 10).to_s
   )
@@ -162,7 +192,7 @@ ActiveRecord::Base.transaction do
   lab3 = Lab.where(
     patient:          john,
     source:           perianal,
-    status:           I18n.t(:labs)[:statuses][:available],
+    status:           'available',
   ).first_or_create(
     accession_number: Faker::Number.number(digits: 10).to_s
   )
@@ -170,7 +200,7 @@ ActiveRecord::Base.transaction do
   lab4 = Lab.where(
     patient:          jane,
     source:           blood,
-    status:           I18n.t(:labs)[:statuses][:available],
+    status:           'available',
   ).first_or_create(
     accession_number: Faker::Number.number(digits: 10).to_s
   )
@@ -178,7 +208,7 @@ ActiveRecord::Base.transaction do
   lab5 = Lab.where(
     patient:          jane,
     source:           nasal,
-    status:           I18n.t(:labs)[:statuses][:available],
+    status:           'available',
   ).first_or_create(
     accession_number: Faker::Number.number(digits: 10).to_s
   )
@@ -186,7 +216,7 @@ ActiveRecord::Base.transaction do
   lab6 = Lab.where(
     patient:          jane,
     source:           perianal,
-    status:           I18n.t(:labs)[:statuses][:available],
+    status:           'available',
   ).first_or_create(
     accession_number: Faker::Number.number(digits: 10).to_s
   )
@@ -247,111 +277,111 @@ ActiveRecord::Base.transaction do
 
   request_1 = SparcRequest.create(
     protocol:     protocol_1,
-    user:         kayla,
-    status:       I18n.t(:requests)[:statuses][:pending],
-    submitted_at: DateTime.now
+    requester:    kayla,
+    status:       'pending',
+    submitted_at: DateTime.now,
     specimen_requests_attributes: {
       0 => {
         source:                         blood,
-        query_name:                     kayla.i2b2_queries.first.name,
-        minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       kayla.i2b2_queries.first.id,
+        minimum_sample_size:            "#{Faker::Number.within(range: 1..9)}mL",
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       1 => {
         source:                         nasal,
-        query_name:                     kayla.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       kayla.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       2 => {
         source:                         perianal,
-        query_name:                     kayla.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       kayla.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       }
     }
   )
 
-  request_1.update_attribute(:status, I18n.t(:requests)[:statuses][:in_process])
+  request_1.update_attribute(:status, 'in_process')
 
   request_2 = SparcRequest.create(
     protocol:     protocol_2,
-    user:         kayla,
-    status:       I18n.t(:requests)[:statuses][:pending],
-    submitted_at: DateTime.now
+    requester:    kayla,
+    status:       'pending',
+    submitted_at: DateTime.now,
     specimen_requests_attributes: {
       0 => {
         source:                         blood,
-        query_name:                     kayla.i2b2_queries.first.name,
-        minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       kayla.i2b2_queries.first.id,
+        minimum_sample_size:            "#{Faker::Number.within(range: 1..9)}mL",
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       1 => {
         source:                         nasal,
-        query_name:                     kayla.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       kayla.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       2 => {
         source:                         perianal,
-        query_name:                     kayla.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       kayla.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       }
     }
   )
 
-  request_2.update_attribute(:status, I18n.t(:requests)[:statuses][:in_process])
+  request_2.update_attribute(:status, 'in_process')
 
   request_3 = SparcRequest.create(
     protocol:     protocol_1,
-    user:         ito,
-    status:       I18n.t(:requests)[:statuses][:pending],
-    submitted_at: DateTime.now
+    requester:    ito,
+    status:       'pending',
+    submitted_at: DateTime.now,
     specimen_requests_attributes: {
       0 => {
         source:                         blood,
-        query_name:                     ito.i2b2_queries.first.name,
-        minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       ito.i2b2_queries.first.id,
+        minimum_sample_size:            "#{Faker::Number.within(range: 1..9)}mL",
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       1 => {
         source:                         nasal,
-        query_name:                     ito.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       ito.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       2 => {
         source:                         perianal,
-        query_name:                     ito.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       ito.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       }
     }
   )
 
-  request_3.update_attribute(:status, I18n.t(:requests)[:statuses][:in_process])
+  request_3.update_attribute(:status, 'in_process')
 
   request_4 = SparcRequest.create(
     protocol:     protocol_2,
-    user:         ito,
-    status:       I18n.t(:requests)[:statuses][:pending],
-    submitted_at: DateTime.now
+    requester:    ito,
+    status:       'pending',
+    submitted_at: DateTime.now,
     specimen_requests_attributes: {
       0 => {
         source:                         blood,
-        query_name:                     ito.i2b2_queries.first.name,
-        minimum_sample_size:            "#{Faker::Number.within(1..9)}mL",
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       ito.i2b2_queries.first.id,
+        minimum_sample_size:            "#{Faker::Number.within(range: 1..9)}mL",
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       1 => {
         source:                         nasal,
-        query_name:                     ito.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       ito.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       },
       2 => {
         source:                         perianal,
-        query_name:                     ito.i2b2_queries.first.name,
-        number_of_specimens_requested:  Faker::Number.within(1..9)
+        query_id:                       ito.i2b2_queries.first.id,
+        number_of_specimens_requested:  Faker::Number.within(range: 1..9)
       }
     }
   )
 
-  request_4.update_attribute(:status, I18n.t(:requests)[:statuses][:in_process])
+  request_4.update_attribute(:status, 'in_process')
 
   #########################
   ### Creat Populations ###

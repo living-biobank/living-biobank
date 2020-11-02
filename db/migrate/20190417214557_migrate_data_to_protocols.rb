@@ -1,7 +1,7 @@
 class MigrateDataToProtocols < ActiveRecord::Migration[5.1]
   def up
     ActiveRecord::Base.transaction do
-      SparcRequest.eager_load(:user).where(protocol_id: nil).each do |sparc_request|
+      SparcRequest.eager_load(:requester).where(protocol_id: nil).each do |sparc_request|
         p = SPARC::Project.create(
           short_title:              sparc_request.read_attribute(:short_title),
           title:                    sparc_request.read_attribute(:title),

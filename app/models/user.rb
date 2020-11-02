@@ -11,7 +11,7 @@ class User < ApplicationRecord
   has_many :sources, through: :groups
 
   has_many :sparc_requests
-  has_many :i2b2_queries, class_name: "I2b2::QueryName", foreign_key: :user_id, primary_key: :net_id
+  has_many :i2b2_queries, class_name: "I2b2::Query", foreign_key: :user_id, primary_key: :net_id
 
   has_many :labs
 
