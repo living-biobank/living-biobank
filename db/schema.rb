@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_160211) do
+ActiveRecord::Schema.define(version: 2020_11_04_161703) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -71,6 +71,14 @@ ActiveRecord::Schema.define(version: 2020_07_15_160211) do
     t.index ["name"], name: "index_groups_on_name", unique: true
   end
 
+  create_table "groups_sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.bigint "group_id", null: false
+    t.bigint "source_id", null: false
+    t.boolean "deprecated", default: false
+    t.index ["source_id", "group_id"], name: "index_groups_sources_on_source_id_and_group_id"
+  end
+
   create_table "lab_honest_brokers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "group_id"
@@ -109,7 +117,7 @@ ActiveRecord::Schema.define(version: 2020_07_15_160211) do
     t.bigint "sparc_request_id"
     t.bigint "service_id"
     t.bigint "sparc_id"
-    t.bigint "source_id"
+    t.bigint "groups_source_id"
     t.bigint "query_id"
     t.integer "query_count"
     t.decimal "minimum_sample_size", precision: 8, scale: 2
@@ -120,7 +128,7 @@ ActiveRecord::Schema.define(version: 2020_07_15_160211) do
     t.float "one_year_accrual"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["source_id"], name: "index_line_items_on_source_id"
+    t.index ["groups_source_id"], name: "index_line_items_on_groups_source_id"
   end
 
   create_table "patients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -159,13 +167,10 @@ ActiveRecord::Schema.define(version: 2020_07_15_160211) do
   end
 
   create_table "sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "group_id"
     t.string "key"
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["group_id", "key"], name: "index_sources_on_group_id_and_key", unique: true
-    t.index ["group_id"], name: "index_sources_on_group_id"
   end
 
   create_table "sparc_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
