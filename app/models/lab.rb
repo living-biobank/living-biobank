@@ -5,13 +5,12 @@ class Lab < ApplicationRecord
   belongs_to :discarder, foreign_key: :discarded_by, class_name: "User", optional: true
   belongs_to :recipient, class_name: "SPARC::Identity", optional: true
   belongs_to :source
-  belongs_to :groups_source, optional: true
 
   has_many :populations, through: :patient
   # This association is for matching specimen sources between labs and line items
   has_many :line_items, -> (lab) { where(groups_source: [lab.source.groups_sources]) }, through: :populations
 
-  # has_one :group, through: :source
+  has_one :groups_source, through: :line_item
   has_one :group, through: :groups_source
   has_one :sparc_request, through: :line_item
 

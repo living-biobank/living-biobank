@@ -36,7 +36,6 @@ class LabsController < ApplicationController
   def lab_params
     params.require(:lab).permit(
       :line_item_id,
-      :groups_source_id,
       :status,
       :released_at,
       :released_by,
