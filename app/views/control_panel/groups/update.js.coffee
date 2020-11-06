@@ -9,5 +9,5 @@ $("#group_<%= attr.to_s %>").parents('.form-group').removeClass('is-valid').addC
 <% end %>
 <% else %>
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
-$('#saveGroupDetailsBtn').addClass('d-none')
+$('#saveGroupDetailsBtn').removeClass('show')
 <% end %>

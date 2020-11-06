@@ -1,10 +1,10 @@
 $ ->
   $(document).on('change', '#groupDetailsForm input:not([type=text])', ->
-    $('#saveGroupDetailsBtn').removeClass('d-none')
+    $('#saveGroupDetailsBtn').addClass('show')
   ).on('keydown', '#groupDetailsForm input[type=text]', ->
-    $('#saveGroupDetailsBtn').removeClass('d-none')
+    $('#saveGroupDetailsBtn').addClass('show')
   ).on('trix-change', '#groupDetailsForm trix-editor', ->
-    $('#saveGroupDetailsBtn').removeClass('d-none')
+    $('#saveGroupDetailsBtn').addClass('show')
   )
 
 
