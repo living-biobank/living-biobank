@@ -1,30 +1,30 @@
-.row
-  .col-2
-    = link_to new_control_panel_group_service_path(group), remote: true, class: 'btn btn-success' do
-      = icon('fas', 'plus mr-2')
-      = t('control_panel.groups.services.new_service')
+- content_for :subheader do
+  %filters.table-filters#serviceFilters{ data: { url: control_panel_group_sources_path(group) } }
+    -#= text_field_tag 'searchServices', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
+    .flex-fill
+    .new-record-btn-container
+      = link_to new_control_panel_group_service_path(group), remote: true, class: 'btn btn-lg btn-success new-record-btn' do
+        = succeed t('control_panel.groups.services.new_service') do
+          = icon('fas', 'plus mr-2')
 
-  .col-8
-    .card
-      %table.table.table-bordered.table-hover.mb-0.border-0#groupServices
-        %thead
+.col-8.offset-2#groupSection
+  .card
+    %table.table.table-bordered.table-hover.mb-0.border-0#groupServices
+      %thead
+        %tr
+          %th.col-10
+            = t('control_panel.groups.services.table.services')
+          %th.col-2.text-center
+            = t('control_panel.groups.services.table.actions')
+      %tbody
+        - group.services.each do |service|
           %tr
-            %th.col-5.d-none.d-md-table-cell.border-left-0
-              = t('control_panel.groups.services.table.services')
-            %th.col-5.d-none.d-md-table-cell
-              = t('control_panel.groups.services.table.actions')
-        %tbody
-          - group.services.each do |service|
-            %tr
-              %td 
-                = service.sparc_service.name
-              %td
-                .row
-                  .col-1       
-                    = link_to edit_control_panel_group_service_path(group, service), remote: true, class: 'btn btn-warning' do
-                      = icon('fas', 'pencil-alt')
-                  .col-1
-                    = link_to control_panel_group_service_path(group, service), remote: true, method: :delete, class: 'btn btn-danger' do
-                      = icon('fas', 'trash')
+            %td 
+              = service.sparc_service.name
+            %td.text-center
+              = link_to edit_control_panel_group_service_path(group, service), remote: true, class: 'btn btn-warning mr-1' do
+                = icon('fas', 'pencil-alt')
+              = link_to control_panel_group_service_path(group, service), remote: true, method: :delete, class: 'btn btn-danger', data: { confirm_swal: 'true' } do
+                = icon('fas', 'trash')
 
 

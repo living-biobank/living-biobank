@@ -187,7 +187,7 @@ en:
         name: "Name"
         email: "Email"
         groups: "Groups"
-        manage: "Manage"
+        actions: "Actions"
       form:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
@@ -213,7 +213,7 @@ en:
       headers:
         name: "Name"
         sources: "Specimen Sources"
-        manage: "Manage"
+        actions: "Actions"
       table:
         services:
           pending: "Pending Variable Services"
@@ -233,7 +233,7 @@ en:
           created: "Lab honest broker added!"
           destroyed: "Lab honest broker removed!"
       sources:
-        new_source: "Create New Source"
+        new: "Create New Source"
         table:
           sources: "Source Name (Alias)"
           actions: "Actions"
@@ -252,7 +252,7 @@ en:
         errors:
           key_exists: "This Key already exists for this group."
       services:
-        new_service: "Add New Service"
+        new: "Add New Service"
         table:
           services: "Service Name"
           actions: "Actions"

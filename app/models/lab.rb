@@ -137,12 +137,11 @@ class Lab < ApplicationRecord
     return if status == 'any'
 
     if status == 'active'
-      joins(:group).where(
-        status: 'available',
-        groups: { process_specimen_retrieval: false }
+      includes(:group).where(
+        status: 'available'
       ).or(
-        joins(:group).where(
-          status: %w(available released),
+        includes(:group).where(
+          status: 'released',
           groups: { process_specimen_retrieval: true }
         )
       )
