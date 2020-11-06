@@ -1,7 +1,7 @@
 class AddGroupsSourceToLabs < ActiveRecord::Migration[5.2]
   def change
     #Create groups_source column in labs
-    unless column_exists? :labs, :group_source_id
+    unless column_exists? :labs, :groups_source_id
       add_reference :labs, :groups_source, index: true, after: :source_id
     end
 
