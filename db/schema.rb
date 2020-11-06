@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_161703) do
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_sources_on_group_id_and_key", unique: true
   end
 
   create_table "sparc_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
