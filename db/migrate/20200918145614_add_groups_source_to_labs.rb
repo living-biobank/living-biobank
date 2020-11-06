@@ -7,7 +7,7 @@ class AddGroupsSourceToLabs < ActiveRecord::Migration[5.2]
     @labs = Lab.where(status: "released").or(Lab.where(status: "retrieved"))
     @labs.each do |lab|
       groups_source = GroupsSource.where(source: lab.source_id).first
-      lab.update(groups_source: groups_source)
+      lab.update_attribute(:groups_source_id, groups_source.id)
     end
   end
 end
