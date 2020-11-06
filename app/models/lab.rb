@@ -8,9 +8,10 @@ class Lab < ApplicationRecord
 
   has_many :populations, through: :patient
   # This association is for matching specimen sources between labs and line items
-  has_many :line_items, -> (lab) { where(source: lab.source) }, through: :populations
+  has_many :line_items, -> (lab) { where(groups_source: [lab.source.groups_sources]) }, through: :populations
 
-  has_one :group, through: :source
+  has_one :groups_source, through: :line_item
+  has_one :group, through: :groups_source
   has_one :sparc_request, through: :line_item
 
   after_update :send_emails
@@ -136,12 +137,11 @@ class Lab < ApplicationRecord
     return if status == 'any'
 
     if status == 'active'
-      joins(:group).where(
-        status: 'available',
-        groups: { process_specimen_retrieval: false }
+      includes(:group).where(
+        status: 'available'
       ).or(
-        joins(:group).where(
-          status: %w(available released),
+        includes(:group).where(
+          status: 'released',
           groups: { process_specimen_retrieval: true }
         )
       )
@@ -201,11 +201,11 @@ class Lab < ApplicationRecord
   end
 
   def send_emails
-    if self.released? && (!self.group.notify_when_all_specimens_released? || self.line_item.complete?)
+    if self.released? && (!self.groups_source.group.notify_when_all_specimens_released? || self.line_item.complete?)
       SpecimenMailer.with(specimen: self, request: self.sparc_request).release_email.deliver_later
     end
 
-    if self.discarded? && self.sparc_request && !self.group.notify_when_all_specimens_released?
+    if self.discarded? && self.sparc_request && !self.groups_source.group.notify_when_all_specimens_released?
       SpecimenMailer.with(specimen: self, request: self.sparc_request).discard_email.deliver_later
     end
   end

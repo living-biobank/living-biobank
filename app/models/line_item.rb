@@ -2,7 +2,7 @@ class LineItem < ApplicationRecord
   belongs_to :sparc_request, optional: true
   belongs_to :service, class_name: "SPARC::Service", optional: true
   belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional: true
-  belongs_to :source, optional: true
+  belongs_to :groups_source, optional: true
   belongs_to :i2b2_query, class_name: "I2b2::Query", foreign_key: :query_id, primary_key: :query_master_id, optional: true
 
   has_many :populations
@@ -10,7 +10,7 @@ class LineItem < ApplicationRecord
 
   has_one :protocol, through: :sparc_request
   has_one :sub_service_request, through: :sparc_line_item, class_name: "SPARC::SubServiceRequest"
-  has_one :group, through: :source
+  has_one :group, through: :groups_source
 
   validates_presence_of     :query_id, :number_of_specimens_requested, :source_id,                                    if: :specimen_request?
   validates_numericality_of :number_of_specimens_requested, greater_than: 0, less_than: 10000000, allow_blank: true,  if: :specimen_request?
@@ -19,15 +19,15 @@ class LineItem < ApplicationRecord
   before_destroy :update_sparc_records
 
   scope :specimen_requests, -> () {
-    where.not(source_id: nil)
+    where.not(groups_source_id: nil)
   }
 
   scope :additional_services, -> () {
-    where(source_id: nil)
+    where(groups_source_id: nil)
   }
 
   def specimen_request?
-    self.source_id.present? || self.service_id.nil?
+    self.groups_source_id.present? || self.service_id.nil?
   end
 
   def complete?

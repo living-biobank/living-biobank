@@ -7,6 +7,7 @@ $ ->
     $('#saveGroupDetailsBtn').removeClass('d-none')
   )
 
+
 (exports ? this).initializeHonestBrokerTypeahead = () ->
   $("#honestBrokerSearch").typeahead('destroy')
 

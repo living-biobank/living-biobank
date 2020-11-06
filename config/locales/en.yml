@@ -74,7 +74,7 @@ en:
         released_at: "Date Released"
         specimen_source: "Specimen Source"
       line_item:
-        source_id: "Specimen Source"
+        groups_source_id: "Specimen Source"
         query_id: "i2b2 Query"
         number_of_specimens_requested: "Quantity Requested"
         minimum_sample_size: "Minimum Sample Size"
@@ -187,7 +187,7 @@ en:
         name: "Name"
         email: "Email"
         groups: "Groups"
-        manage: "Manage"
+        actions: "Actions"
       form:
         title: "Update Permissions for %{user_name}"
         admin: "Admin Privileges"
@@ -213,7 +213,7 @@ en:
       headers:
         name: "Name"
         sources: "Specimen Sources"
-        manage: "Manage"
+        actions: "Actions"
       table:
         services:
           pending: "Pending Variable Services"
@@ -232,6 +232,41 @@ en:
         flash:
           created: "Lab honest broker added!"
           destroyed: "Lab honest broker removed!"
+      sources:
+        new: "Create New Source"
+        table:
+          sources: "Source Name (Alias)"
+          actions: "Actions"
+          no_alias:  " (<em>Alias Not Set</em>)"
+        flash:
+          created: "Source created successfully!"
+          destroyed:  "Source removed!"
+          updated:  "Source updated successfully!"
+        form:
+          new_source: "New Source"
+          edit_source: "Edit %{source_name}"
+          warning: "NOTE:  If a source with a different key is needed, you will need to delete this source from the group and create a new one with the desired key."
+          name_placeholder: "Enter the alias for this source-group association"
+          value_placeholder: "Enter the name for this source to be displayed to users"
+          key_placeholder: "Enter the Epic key for this source"
+        errors:
+          key_exists: "This Key already exists for this group."
+      services:
+        new: "Add New Service"
+        table:
+          services: "Service Name"
+          actions: "Actions"
+        flash:
+          created: "Service created successfully!"
+          destroyed: "Service removed!"
+          updated: "Service updated successfully!"
+        form:
+          new_service: "New Service"
+          edit_service: "Edit %{service_name}"
+          warning: "NOTE:  To change the SPARC service ID, you will need to delete the unwanted service and create a new one."
+          sparc_id_placeholder: "Enter the SPARC ID for this service"
+          status_placeholder: "Choose the trigger status"
+          condition_placeholder: "Choose the condition"
       tooltips:
         edit: "Edit Group"
       flash:

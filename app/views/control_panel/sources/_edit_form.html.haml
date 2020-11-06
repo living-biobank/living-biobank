@@ -1,0 +1,23 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for [:control_panel, group, source], remote: true do |f|
+      = hidden_field_tag :group_id
+      .modal-header
+        %h4.modal-title
+          = t('control_panel.groups.sources.form.edit_source', source_name: source.value)
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        %p
+          = t('control_panel.groups.sources.form.warning')
+        .form-group.mb-2
+          .input-group
+            = text_field_tag :name, groups_source_name, class: 'form-control', placeholder: t('control_panel.groups.sources.form.name_placeholder')
+        .form-group.mb-0  
+          .input-group
+            = f.text_field :value, class: 'form-control', placeholder: t('control_panel.groups.sources.form.value_placeholder'), id: 'value'
+      .modal-footer
+        %button.btn.btn-primary<
+          = t('actions.save')
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:actions)[:close]

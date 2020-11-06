@@ -34,6 +34,8 @@ Rails.application.routes.draw do
           delete :destroy
         end
       end
+      resources :sources
+      resources :services
     end
 
     root to: 'users#index'

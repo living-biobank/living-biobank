@@ -86,7 +86,7 @@ module LabsHelper
     text = line_item.number_of_specimens_requested == 1 ? 'singular' : 'plural'
 
     content_tag :p, class: 'mb-0 text-muted d-inline-flex align-items-center' do
-      icon('fas', 'flask mr-1') + t("labs.table.requests.samples_needed.#{text}", requested_number: line_item.number_of_specimens_requested, requested_size: line_item.group.process_sample_size ? " &geq; #{line_item.minimum_sample_size}" : "").html_safe
+      icon('fas', 'flask mr-1') + t("labs.table.requests.samples_needed.#{text}", requested_number: line_item.number_of_specimens_requested, requested_size: line_item.groups_source.group.process_sample_size ? " &geq; #{line_item.minimum_sample_size}" : "").html_safe
     end
   end
 

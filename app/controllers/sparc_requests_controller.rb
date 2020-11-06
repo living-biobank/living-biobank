@@ -31,7 +31,7 @@ class SparcRequestsController < ApplicationController
     if params[:save_draft]
       if @sparc_request.protocol.valid?
         @sparc_request.status = 'draft'
-        @sparc_request.specimen_requests.each{ |sr| sr.source_id ||= 0 }
+        @sparc_request.specimen_requests.each{ |sr| sr.groups_source_id ||= 0 }
         @sparc_request.save(validate: false)
         flash.now[:success] = t(:requests)[:saved]
       else
@@ -126,7 +126,7 @@ class SparcRequestsController < ApplicationController
   end
 
   def find_requests
-    @requests = current_user.eligible_requests.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:requester, specimen_requests: [:labs, :source, :group]).preload(:primary_pi, protocol: { project_roles: :identity }, specimen_requests: :i2b2_query, additional_services: [:service, :sub_service_request])
+    @requests = current_user.eligible_requests.filtered_for_index(params[:term], params[:status], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:requester, specimen_requests: [:labs, :groups_source, :group]).preload(:primary_pi, protocol: { project_roles: :identity }, specimen_requests: :i2b2_query, additional_services: [:service, :sub_service_request])
 
     @draft_requests = current_user.eligible_requests.draft.preload(protocol: { project_roles: :identity })
   end
@@ -196,7 +196,7 @@ class SparcRequestsController < ApplicationController
       ],
       specimen_requests_attributes: [
         :id,
-        :source_id,
+        :groups_source_id,
         :query_id,
         :number_of_specimens_requested,
         :minimum_sample_size,
