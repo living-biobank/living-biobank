@@ -1,7 +1,7 @@
 module ControlPanel::GroupsHelper
   def group_sources_display(group)
-    group.sources.map do |source|
-      content_tag(:span, "- #{source.value} (#{source.key})", class: 'd-flex')
+    group.groups_sources.active.map do |groups_source|
+      content_tag(:span, "- #{groups_source.source.value} (#{groups_source.source.key})", class: 'd-flex')
     end.join('')
   end
 
