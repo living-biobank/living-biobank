@@ -59,10 +59,10 @@ class Lab < ApplicationRecord
     # Now try to brute force find available labs matching the query by loading associations and using Ruby code
     # Note: We can't eager_load the :line_items associations because it's instance-dependent, so we have to use
     # Ruby to avoid n+1 queries to the database
-    labs_from_scope   = includes(populations: :line_item).select{ |lab| lab.line_item_id.nil? }
+    labs_from_scope   = includes(populations: { line_item: :source }).select{ |lab| lab.line_item_id.nil? }
     eligible_requests = SparcRequest.where(
       id: labs_from_scope.map do |lab|
-        pops = lab.populations.select{ |pop| pop.line_item.source_id == lab.source_id }
+        pops = lab.populations.select{ |pop| pop.line_item.source.id == lab.source_id }
         pops.map(&:line_item).map(&:sparc_request_id)
       end.flatten.uniq
     )
@@ -91,29 +91,29 @@ class Lab < ApplicationRecord
 
     queried_available_labs = where(
       id: labs_from_scope.select do |lab|
-        pops = lab.populations.select{ |pop| pop.line_item.source_id == lab.source_id }
+        pops = lab.populations.select{ |pop| pop.line_item.source.id == lab.source_id }
         (pops.map(&:line_item).map(&:sparc_request_id) & queried_eligible_request_ids).any?
       end
     )
 
     # Now combine all of the labs together and that's our result
-    joins(:patient, source: :group).where(id: queried_released_labs.ids + queried_available_labs.ids
+    joins(:patient, :source).where(id: queried_released_labs.ids + queried_available_labs.ids
     ).or(
-      joins(:patient, source: :group).where(Lab.arel_table[:id].matches("#{term.to_i}%"))
+      joins(:patient, :source).where(Lab.arel_table[:id].matches("#{term.to_i}%"))
     ).or(
-      joins(:patient, source: :group).where(Lab.arel_table[:status].matches("%#{term}%"))
+      joins(:patient, :source).where(Lab.arel_table[:status].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
+      joins(:patient, :source).where(Lab.arel_table[:accession_number].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Patient.arel_table[:lastname].matches("%#{term}%"))
+      joins(:patient, :source).where(Patient.arel_table[:lastname].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Patient.arel_table[:firstname].matches("%#{term}%"))
+      joins(:patient, :source).where(Patient.arel_table[:firstname].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Patient.arel_table[:mrn].matches("%#{term}%"))
+      joins(:patient, :source).where(Patient.arel_table[:mrn].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Patient.arel_table[:identifier].matches("%#{term}%"))
+      joins(:patient, :source).where(Patient.arel_table[:identifier].matches("%#{term}%"))
     ).or(
-      joins(:patient, source: :group).where(Source.arel_table[:value].matches("%#{term}%"))
+      joins(:patient, :source).where(Source.arel_table[:value].matches("%#{term}%"))
     )
   }
 

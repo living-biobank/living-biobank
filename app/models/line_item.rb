@@ -11,6 +11,7 @@ class LineItem < ApplicationRecord
   has_one :protocol, through: :sparc_request
   has_one :sub_service_request, through: :sparc_line_item, class_name: "SPARC::SubServiceRequest"
   has_one :group, through: :groups_source
+  has_one :source, through: :groups_source
 
   validates_presence_of     :query_id, :number_of_specimens_requested, :source_id,                                    if: :specimen_request?
   validates_numericality_of :number_of_specimens_requested, greater_than: 0, less_than: 10000000, allow_blank: true,  if: :specimen_request?

@@ -194,5 +194,21 @@
     .navbar-brand {
       height: $header-height-lg;
     }
+
+    #navbarLinks {
+      .navbar-nav {
+        #userInformation {
+          height: $subheader-height * 2;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1680px) {
+  .navbar {
+    .navbar-brand {
+      height: $header-height-xl;
+    }
   }
 }
