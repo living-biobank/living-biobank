@@ -8,15 +8,21 @@
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
-        .form-group.mb-2
-          .input-group
-            = text_field_tag :name, groups_source_name, class: 'form-control', placeholder: t('control_panel.groups.sources.form.name_placeholder'), id: 'name'
-        .form-group.mb-2
-          .input-group
-            = f.text_field :key, class: 'form-control', placeholder: t('control_panel.groups.sources.form.key_placeholder'), id: 'key'
-        .form-group.mb-0  
-          .input-group
-            = f.text_field :value, class: 'form-control', placeholder: t('control_panel.groups.sources.form.value_placeholder'), id: 'value'
+        .form-row
+          .form-group.mb-2
+            = f.label t('control_panel.groups.sources.form.name_placeholder')
+            .input-group
+              = text_field_tag :name, groups_source_name, class: 'form-control', id: 'name'
+        .form-row
+          .form-group.mb-2
+            = f.label t('control_panel.groups.sources.form.key_placeholder')
+            .input-group  
+              = f.text_field :key, class: 'form-control', id: 'key'
+        .form-row
+          .form-group.mb-0  
+            = f.label t('control_panel.groups.sources.form.value_placeholder')
+            .input-group
+              = f.text_field :value, class: 'form-control', id: 'value'
       .modal-footer
         %button.btn.btn-primary<
           = icon('fas', 'plus mr-1')
