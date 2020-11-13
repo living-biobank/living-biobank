@@ -11,11 +11,13 @@
         %p
           = t('control_panel.groups.sources.form.warning')
         .form-group.mb-2
+          = f.label t('control_panel.groups.sources.form.name_placeholder')
           .input-group
-            = text_field_tag :name, groups_source_name, class: 'form-control', placeholder: t('control_panel.groups.sources.form.name_placeholder')
+            = text_field_tag :name, groups_source_name, class: 'form-control'
         .form-group.mb-0  
+          = f.label t('control_panel.groups.sources.form.value_placeholder')
           .input-group
-            = f.text_field :value, class: 'form-control', placeholder: t('control_panel.groups.sources.form.value_placeholder'), id: 'value'
+            = f.text_field :value, class: 'form-control', id: 'value'
       .modal-footer
         %button.btn.btn-primary<
           = t('actions.save')
