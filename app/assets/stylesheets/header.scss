@@ -71,38 +71,28 @@ subheader, filters {
   }
 }
 
-@media (min-width: 1200px) and (max-width: 1679.98px) {
-  header {
-    height: $header-height-lg;
-  }
-
+@media (min-width: 1200px) {
   subheader, filters {
-    height: $subheader-height-lg;
+    height: $subheader-height;
   }
 
   subheader + filters {
-    top: $subheader-height-lg;
+    top: $subheader-height;
   }
 
   .sticky-form-btn {
-    top: calc(#{$subheader-height-lg} + #{$grid-gutter-width});
+    top: calc(#{$subheader-height} + #{$grid-gutter-width});
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1679.98px) {
+  header {
+    height: $header-height-lg;
   }
 }
 
 @media (min-width: 1680px) {
   header {
     height: $header-height-xl;
-  }
-
-  subheader, filters {
-    height: $subheader-height-xl;
-  }
-
-  subheader + filters {
-    top: $subheader-height-xl;
-  }
-
-  .sticky-form-btn {
-    top: calc($subheader-height-xl + $grid-gutter-width);
   }
 }

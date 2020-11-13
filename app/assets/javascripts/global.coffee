@@ -89,6 +89,7 @@ $ ->
       url         = new URL(window.location)
 
       url.searchParams.delete('term')
+      url.searchParams.delete('page')
       $container.find('select.filter-select').each (index, element) ->
         field = $(element).data('field')
         val   = $(element).val()
