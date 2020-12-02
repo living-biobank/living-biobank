@@ -11,8 +11,9 @@
         .form-group.mb-0
           .input-group
             = f.hidden_field :user_id
-            .input-group-icon
-              = label_tag 'honestBrokerSearch', icon('fas', 'search'), class: 'text-muted'
+            = label_tag 'honestBrokerSearch', class: 'input-group-icon' do
+              %span.text-muted
+                = icon('fas', 'search')
             = text_field_tag 'honestBrokerSearch', '', class: 'form-control', placeholder: 'Search for a user'
       .modal-footer
         %button.btn.btn-primary<

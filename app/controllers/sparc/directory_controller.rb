@@ -1,4 +1,4 @@
-class SPARC::DirectoryController < ApplicationController
+class Sparc::DirectoryController < ApplicationController
   def index
     respond_to :json
 

@@ -7,7 +7,6 @@ $ ->
     $('#saveGroupDetailsBtn').addClass('show')
   )
 
-
 (exports ? this).initializeHonestBrokerTypeahead = () ->
   $("#honestBrokerSearch").typeahead('destroy')
 
@@ -15,7 +14,7 @@ $ ->
     datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace
     remote:
-      url: "/directory/index?term=%TERM"
+      url: "/control_panel/users/search?term=%TERM"
       wildcard: "%TERM"
   )
 

@@ -27,7 +27,11 @@ Rails.application.routes.draw do
   resource :protocol, only: [:show]
 
   namespace :control_panel do
-    resources :users, only: [:index, :edit, :update]
+    resources :users, only: [:index, :edit, :update] do
+      collection do
+        get :search
+      end
+    end
     resources :groups, only: [:index, :new, :create, :edit, :update] do
       resources :lab_honest_brokers, only: [:index, :new, :create] do
         collection do
@@ -42,8 +46,6 @@ Rails.application.routes.draw do
   end
 
   resources :i2b2_queries, only: [:index]
-
-  get 'directory/index', to: 'directory#index'
 
   namespace :sparc do
     get '/directory/index', to: 'directory#index'
