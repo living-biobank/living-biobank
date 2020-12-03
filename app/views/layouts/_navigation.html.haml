@@ -23,10 +23,15 @@
             = t('site_information.navigation.requests')
       - if current_user.admin?
         .nav-item
-          = link_to control_panel_root_path, class: ['nav-link btn btn-dark', ['users', 'groups'].include?(controller_name) ? 'active' : ''] do
-            = icon('fas', 'cogs')
+          = link_to users_path, class: ['nav-link btn btn-dark', controller_name == 'users' ? 'active' : ''] do
+            = icon('fas', 'users')
             %span
-              = t('site_information.navigation.control_panel')
+              = t('site_information.navigation.users')
+        .nav-item
+          = link_to groups_path, class: ['nav-link btn btn-dark', controller_name == 'groups' ? 'active' : ''] do
+            = icon('fas', 'clipboard-list')
+            %span
+              = t('site_information.navigation.groups')
       .nav-item
         = link_to help_path, class: ['nav-link btn btn-dark', action_name == 'help' ? 'active' : ''] do
           = icon('fas', 'question')

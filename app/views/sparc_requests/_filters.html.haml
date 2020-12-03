@@ -6,8 +6,4 @@
     = select_tag 'sort_by', request_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select form-control', title: t(:requests)[:filters][:sort_by], data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:requests)[:filters][:sort_by] }
   .tooltip-wrapper.d-flex.order-4.order-sm-3{ title: t(:requests)[:filters][:sort_order], data: { toggle: 'tooltip' } }
     = select_tag 'sort_order', request_sort_order_options(params[:sort_order]), class: 'selectpicker filter-select form-control', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:requests)[:filters][:sort_order] }
-  .new-record-btn-container.order-last
-    = link_to new_request_path, class: ['btn btn-lg btn-success new-record-btn', action_name == 'index' ? 'd-block' : 'd-none'], data: { confirm_swal: true, title: t('requests.confirms.create.title'), html: t('requests.confirms.create.html'), type: '', confirm_text: t('requests.confirms.create.confirm'), cancel_text: t('requests.confirms.create.cancel'), class: 'use-agreement text-left' } do
-      = succeed t(:requests)[:create] do
-        = icon('fas', 'plus mr-2')
   .placeholder.invisible.order-2.order-sm-4

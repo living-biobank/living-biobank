@@ -1,0 +1,6 @@
+%filters.table-filters#userFilters{ data: { url: users_path } }
+  = text_field_tag 'searchUsers', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
+  .tooltip-wrapper.d-flex{ title: t('users.filters.privileges'), data: { toggle: 'tooltip' } }
+    = select_tag 'privileges', user_privileges_filter_options(params[:privileges]), class: 'selectpicker filter-select form-control', data: { field: 'privileges', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('users.filters.privileges') }
+  .tooltip-wrapper.d-flex{ title: t('users.filters.groups'), data: { toggle: 'tooltip' } }
+    = select_tag 'groups', user_groups_filter_options(params[:groups]), class: 'selectpicker filter-select form-control', data: { field: 'groups', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('users.filters.groups') }

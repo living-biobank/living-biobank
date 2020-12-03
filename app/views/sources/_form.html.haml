@@ -1,0 +1,31 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for [group, source], remote: true do |f|
+      = hidden_field_tag :group_id
+      .modal-header
+        %h4.modal-title
+          = t('groups.sources.form.new_source')
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        .form-row
+          .form-group.mb-2
+            = f.label t('groups.sources.form.name_placeholder')
+            .input-group
+              = text_field_tag :name, groups_source_name, class: 'form-control', id: 'name'
+        .form-row
+          .form-group.mb-2
+            = f.label t('groups.sources.form.key_placeholder')
+            .input-group  
+              = f.text_field :key, class: 'form-control', id: 'key'
+        .form-row
+          .form-group.mb-0  
+            = f.label t('groups.sources.form.value_placeholder')
+            .input-group
+              = f.text_field :value, class: 'form-control', id: 'value'
+      .modal-footer
+        %button.btn.btn-primary<
+          = icon('fas', 'plus mr-1')
+          = t('actions.add')
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:actions)[:close]

@@ -1,0 +1,6 @@
+- content_for :header do
+  = render 'groups/header', group: @group, tab: @tab
+- content_for :subheader do
+  = render 'groups/subheader', group: @group
+
+= render "groups/details", group: @group

@@ -176,116 +176,6 @@ en:
     negative: "No"
     positive: "Yes"
 
-  #####################
-  ### CONTROL PANEL ###
-  #####################
-
-  control_panel:
-    users:
-      link: "Manage Users"
-      filters:
-        privileges: "Fiilter by Privileges"
-        any_privileges: "Any Privileges"
-        groups: "Filter by Group"
-        any_group: "Any Group"
-      headers:
-        privileges: "Privileges"
-        user: "User"
-        name: "Name"
-        email: "Email"
-        groups: "Groups"
-        actions: "Actions"
-      form:
-        title: "Update Permissions for %{user_name}"
-        admin: "Admin Privileges"
-        admin_warning: "Changing this status will remove your admin privileges and access to the control panel."
-        last_admin: "You must assign another admin before removing your admin privileges"
-        data_honest_broker: "Data Honest Broker Privileges"
-        lab_honest_broker: "Lab Honest Broker Privileges"
-        no_group: "No Group Selected"
-        enabled: "Enabled"
-        disabled: "Disabled"
-      tooltips:
-        edit_user: "Edit User"
-        admin: "Admin"
-        lab_honest_broker: "Lab Honest Broker"
-        user: "General User"
-        data_honest_broker: "Data Honest Broker"
-      flash:
-        saved: "Permissions updated successfully!"
-        admin_removed: "Your admin privileges were successfully removed. You have been redirected to the requests page."
-    groups:
-      link: "Manage Groups"
-      new: "New Group"
-      headers:
-        name: "Name"
-        sources: "Specimen Sources"
-        actions: "Actions"
-      table:
-        services:
-          pending: "Pending Variable Services"
-          in_process: "In Process Additional Services"
-      details:
-        group_info:
-          header: "General Group Information"
-        email_info:
-          header: "Email Information"
-          release_email_time:
-            all_samples: "After All Samples Released"
-            each_sample: "After Each Sample Released"
-          subtext:
-            email: "Note: A greeting and signature will be added automatically."
-            finalize_email: "Note: A signature will be added automatically."
-          tooltips:
-            discard_email: "Details for emails sent to requesters when specimens are discarded"
-            finalize_email: "Details for optional emails which can be sent upon finalization of requests in addition to system-generated emails"
-            release_email: "Details for emails sent to requesters when specimens are released"
-      lab_honest_brokers:
-        new: "New Lab Honest Broker"
-        flash:
-          created: "Lab honest broker added!"
-          destroyed: "Lab honest broker removed!"
-      sources:
-        new: "Create New Source"
-        table:
-          sources: "Source Name (Alias)"
-          actions: "Actions"
-          no_alias:  " (<em>Alias Not Set</em>)"
-        flash:
-          created: "Source created successfully!"
-          destroyed:  "Source removed!"
-          updated:  "Source updated successfully!"
-        form:
-          new_source: "New Source"
-          edit_source: "Edit %{source_name}"
-          warning: "NOTE:  If a source with a different key is needed, you will need to delete this source from the group and create a new one with the desired key."
-          name_placeholder: "Enter the alias for this source-group association"
-          value_placeholder: "Enter the name for this source to be displayed to users"
-          key_placeholder: "Enter the Epic key for this source"
-        errors:
-          key_exists: "This Key already exists for this group."
-      services:
-        new: "Add New Service"
-        table:
-          services: "Service Name"
-          actions: "Actions"
-        flash:
-          created: "Service created successfully!"
-          destroyed: "Service removed!"
-          updated: "Service updated successfully!"
-        form:
-          new_service: "New Service"
-          edit_service: "Edit %{service_name}"
-          warning: "NOTE:  To change the SPARC service ID, you will need to delete the unwanted service and create a new one."
-          sparc_id_placeholder: "Enter the SPARC ID for this service"
-          status_placeholder: "Choose the trigger status"
-          condition_placeholder: "Choose the condition"
-      tooltips:
-        edit: "Edit Group"
-      flash:
-        created: "%{name} Group created!"
-        saved: "Group updated successfully!"
-
   ###########################
   ### ERRORS (CONTROLLER) ###
   ###########################
@@ -307,9 +197,79 @@ en:
   ##############
   ### GROUPS ###
   ##############
-  # Used only for tabs / application title
 
   groups:
+    header: "Groups"
+    new: "New Group"
+    edit: "Edit Group"
+    headers:
+      name: "Name"
+      sources: "Specimen Sources"
+      actions: "Actions"
+    table:
+      services:
+        pending: "Pending Variable Services"
+        in_process: "In Process Additional Services"
+    details:
+      group_info:
+        header: "General Group Information"
+      email_info:
+        header: "Email Information"
+        release_email_time:
+          all_samples: "After All Samples Released"
+          each_sample: "After Each Sample Released"
+        subtext:
+          email: "Note: A greeting and signature will be added automatically."
+          finalize_email: "Note: A signature will be added automatically."
+        tooltips:
+          discard_email: "Details for emails sent to requesters when specimens are discarded"
+          finalize_email: "Details for optional emails which can be sent upon finalization of requests in addition to system-generated emails"
+          release_email: "Details for emails sent to requesters when specimens are released"
+    lab_honest_brokers:
+      new: "New Lab Honest Broker"
+      flash:
+        created: "Lab honest broker added!"
+        destroyed: "Lab honest broker removed!"
+    sources:
+      new: "Create New Source"
+      table:
+        sources: "Source Name (Alias)"
+        actions: "Actions"
+        no_alias:  " (<em>Alias Not Set</em>)"
+      flash:
+        created: "Source created successfully!"
+        destroyed:  "Source removed!"
+        updated:  "Source updated successfully!"
+      form:
+        new_source: "New Source"
+        edit_source: "Edit %{source_name}"
+        warning: "NOTE:  If a source with a different key is needed, you will need to delete this source from the group and create a new one with the desired key."
+        name_placeholder: "Enter the alias for this source-group association"
+        value_placeholder: "Enter the name for this source to be displayed to users"
+        key_placeholder: "Enter the Epic key for this source"
+      errors:
+        key_exists: "This Key already exists for this group."
+    services:
+      new: "Add New Service"
+      table:
+        services: "Service Name"
+        actions: "Actions"
+      flash:
+        created: "Service created successfully!"
+        destroyed: "Service removed!"
+        updated: "Service updated successfully!"
+      form:
+        new_service: "New Service"
+        edit_service: "Edit %{service_name}"
+        warning: "NOTE:  To change the SPARC service ID, you will need to delete the unwanted service and create a new one."
+        sparc_id_placeholder: "Enter the SPARC ID for this service"
+        status_placeholder: "Choose the trigger status"
+        condition_placeholder: "Choose the condition"
+    tooltips:
+      edit: "Edit Group"
+    flash:
+      created: "%{name} Group created!"
+      saved: "Group updated successfully!"
     tabs:
       details: "Group Details"
       users: "Honest Brokers"
@@ -496,7 +456,8 @@ en:
 
   requests:
     header: "Requests"
-    create: "New Request"
+    new: "New Request"
+    edit: "Edit Request"
     created: "Your inquiry has been received. A confirmation email has been sent to your mailbox."
     saved: "Your inquiry has been saved as a draft. You may return later to complete it."
     updated: "Your inquiry has been updated successfully."
@@ -538,8 +499,6 @@ en:
       reset:
         title: "Change this Request to <span class='%{klass}'>%{status}</span>?"
     form:
-      new_title: "New Specimen Request"
-      edit_title: "Edit Specimen Request %{id}"
       existing_request:
         title: "%{status} Request Found"
         pending: "We found an existing SPARC Study connected to this RMID but it already has an active Living BioBank Specimen Request in %{status} status. Would you like to edit the existing request instead?<br><br><span class='font-weight-bold'>SPARC Study %{srid}</span><br>%{short_title}<br><br><em>LBB Request #%{lbb_id}</em>"
@@ -654,6 +613,45 @@ en:
       labs: "Specimens"
       requests: "Requests"
       help: "Help/FAQs"
-      control_panel: "Control Panel"
+      users: "Users"
+      groups: "Groups"
       logout: "Sign Out"
     version: "Version %{version}"
+
+  #############
+  ### USERS ###
+  #############
+
+  users:
+    header: "Users"
+    filters:
+      privileges: "Fiilter by Privileges"
+      any_privileges: "Any Privileges"
+      groups: "Filter by Group"
+      any_group: "Any Group"
+    headers:
+      privileges: "Privileges"
+      user: "User"
+      name: "Name"
+      email: "Email"
+      groups: "Groups"
+      actions: "Actions"
+    form:
+      title: "Update Permissions for %{user_name}"
+      admin: "Admin Privileges"
+      admin_warning: "Changing this status will remove your admin privileges and access to the control panel."
+      last_admin: "You must assign another admin before removing your admin privileges"
+      data_honest_broker: "Data Honest Broker Privileges"
+      lab_honest_broker: "Lab Honest Broker Privileges"
+      no_group: "No Group Selected"
+      enabled: "Enabled"
+      disabled: "Disabled"
+    tooltips:
+      edit_user: "Edit User"
+      admin: "Admin"
+      lab_honest_broker: "Lab Honest Broker"
+      user: "General User"
+      data_honest_broker: "Data Honest Broker"
+    flash:
+      saved: "Permissions updated successfully!"
+      admin_removed: "Your admin privileges were successfully removed. You have been redirected to the requests page."

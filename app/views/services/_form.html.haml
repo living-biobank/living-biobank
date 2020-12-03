@@ -1,0 +1,39 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for [group, service], remote: true do |f|
+      = hidden_field_tag :group_id
+      .modal-header
+        - unless edit_form
+          %h4.modal-title
+            = t('groups.services.form.new_service')
+        - else
+          %h4.modal-title
+            = t('groups.services.form.edit_service', service_name: service.sparc_service.name)
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        - if edit_form
+          %p
+            = t('groups.services.form.warning')
+        .form-group.mb-2
+          .input-group
+            = f.number_field :sparc_id, class: 'form-control', placeholder: t('groups.services.form.sparc_id_placeholder'), id: 'sparc_id', readonly: edit_form
+        .form-group.mb-2
+          .input-group
+            = f.select :status, options_for_select({'In Process' => 'in_process', 'Pending' => 'pending'}, f.object.status), include_blank: t('groups.services.form.status_placeholder'), class: 'form-control', id: 'status'
+        .form-group.mb-2  
+          .input-group
+            = f.select :condition, options_for_select({'IRB Approved' => 'irb_approved', 'Not IRB Approved' => 'irb_not_approved'}, f.object.condition), class: 'form-control', include_blank: t('groups.services.form.condition_placeholder'), id: 'condition'
+        / .form-group.mb-0  
+        /   .input-group
+        /     = f.text_field :position, class: 'form-control', placeholder: 'Enter the position for this service', id: 'condition'
+      .modal-footer
+        - unless edit_form
+          %button.btn.btn-primary<
+            = icon('fas', 'plus mr-1')
+            = t('actions.add')
+        - else
+          %button.btn.btn-primary<
+            = t('actions.save')
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:actions)[:close]

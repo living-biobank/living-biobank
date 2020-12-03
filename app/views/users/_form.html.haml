@@ -1,0 +1,34 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for user, remote: true do |f|
+      = hidden_field_tag :term,       params[:term]
+      = hidden_field_tag :privileges, params[:privileges]
+      = hidden_field_tag :labs,       params[:labs]
+      = hidden_field_tag :sort_by,    params[:sort_by]
+      = hidden_field_tag :sort_order, params[:sort_order]
+      = hidden_field_tag :page,       params[:page]
+
+      .modal-header
+        %h4.modal-title
+          = t('users.form.title', user_name: user.full_name)
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        .form-group.row
+          = f.label :admin, t(:users)[:form][:admin], class: 'col-form-label col-6'
+          .col-6
+            - last_admin = user.admin? && User.admins.length == 1
+            .tooltip-wrapper{ title: last_admin ? t('users.form.last_admin') : "", data: { toggle: 'tooltip' } }
+              = f.check_box :admin, disabled: last_admin, data: { toggle: "toggle", on: t(:users)[:form][:enabled], off: t(:users)[:form][:disabled], style: 'btn-block' }
+        .form-group.row
+          = f.label :data_honest_broker, t(:users)[:form][:data_honest_broker], class: 'col-form-label col-6'
+          .col-6
+            = f.check_box :data_honest_broker, data: { toggle: "toggle", on: t(:users)[:form][:enabled], off: t(:users)[:form][:disabled], style: 'btn-block' }
+        .form-group.row
+          = f.label :group_ids, t(:users)[:form][:lab_honest_broker], class: 'col-form-label col-6'
+          .col-6
+            = f.select :group_ids, options_from_collection_for_select(Group.all, :id, :name, f.object.groups.ids), {}, class: 'form-control selectpicker', multiple: true
+      .modal-footer
+        = f.submit t('actions.save'), class: 'btn btn-primary'
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t('actions.close')

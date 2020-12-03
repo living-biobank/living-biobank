@@ -1,4 +1,15 @@
 module SparcRequestsHelper
+  def request_breadcrumb(sr)
+    content_tag :span do
+      index_title = icon('fas', 'file-invoice') + t('requests.header')
+      header      = action_name == 'index' ? index_title : link_to(index_title, requests_path)
+      header     += icon('fas', 'chevron-right fa-xs mx-2') + t('requests.new')                               if sr.present? && sr.new_record?
+      header     += icon('fas', 'chevron-right fa-xs mx-2') + request_title_display(sr, include_text: false)  if ['show', 'edit'].include?(action_name) 
+      header     += icon('fas', 'chevron-right fa-xs mx-2') + t('requests.edit')                              if action_name == 'edit'
+      header
+    end
+  end
+
   def request_sort_filter_options(sort_by)
     sort_by = sort_by.blank? ? 'created_at' : sort_by
     options_for_select(
@@ -33,7 +44,7 @@ module SparcRequestsHelper
     # so we need to use a second element to change the positioning
     # of popovers on XS screens
     raw(
-      content_tag(:span, t('requests.table.header', id: sr.identifier), class: 'mt-0 mt-sm-1 mr-2') +
+      content_tag(:span, (opts[:include_text] != false ? t('requests.table.header', id: sr.identifier) : sr.identifier), class: 'mt-0 mt-sm-1 mr-2') +
       content_tag(:small, t('requests.table.sparc_header', identifier: sr.protocol.identifier.truncate(60)), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
       if opts[:popover] && sr.previously_submitted?
         content_tag(:span, class: 'mt-0 mt-sm-1') do
@@ -214,14 +225,6 @@ module SparcRequestsHelper
       end
       link_to update_status_sparc_request_path(sr, request_filter_params.merge(sparc_request: { status: status, completed_at: nil, completed_by: nil, cancelled_at: nil, cancelled_by: nil })), remote: true, method: :patch, class: 'btn btn-warning ml-1', title: t('requests.tooltips.reset'), data: { toggle: 'tooltip', confirm_swal: 'true', title: t('requests.confirms.reset.title', klass: klass, status: status) } do
         icon('fas', 'redo')
-      end
-    end
-  end
-
-  def request_breadcrumb(sr)
-    content_tag :span do
-      content_tag :em do
-        link_to("Requests", requests_path) + " / " + (sr.new_record? ? t('requests.form.new_title') : request_title_display(sr)) + (action_name == 'edit' ? (" / " + t('actions.edit')) : "")
       end
     end
   end

@@ -1,4 +1,0 @@
-.control-panel-container#userManagement
-  .card.control-panel
-    = render 'control_panel/users/table'
-  = render 'layouts/pagination', records: users, filter_params: user_filter_params.merge({ controller: 'users', action: 'index' })

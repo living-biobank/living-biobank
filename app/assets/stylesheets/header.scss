@@ -12,14 +12,13 @@ header {
     display: flex;
     align-items: center;
 
-    i {
-      margin-right: 1rem;
+    i:first-child {
+      margin-right: 0.5rem;
     }
   }
 }
 
 subheader, filters {
-  @extend .sticky-top;
   padding: 0 1.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background: white;
@@ -62,6 +61,10 @@ subheader, filters {
   }
 }
 
+header, subheader, filters {
+  @extend .sticky-top;
+}
+
 @include media-breakpoint-down(sm) {
   header, subheader {
     padding: 0.75rem;
@@ -81,6 +84,14 @@ subheader, filters {
 }
 
 @media (min-width: 1200px) {
+  header + subheader, header + filters {
+    top: $header-height-lg;
+  }
+
+  header + subheader + filters {
+    top: calc(#{$header-height-lg} + #{$subheader-height});
+  }
+
   subheader, filters {
     height: $subheader-height;
   }
@@ -99,5 +110,13 @@ subheader, filters {
 @media (min-width: 1680px) {
   header {
     height: $header-height-xl;
+  }
+
+  header + subheader, header + filters {
+    top: $header-height-xl;
+  }
+
+  header + subheader + filters {
+    top: calc(#{$header-height-xl} + #{$subheader-height});
   }
 }

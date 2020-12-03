@@ -28,23 +28,19 @@ Rails.application.routes.draw do
   resources :protocols, only: [:index]
   resource :protocol, only: [:show]
 
-  namespace :control_panel do
-    resources :users, only: [:index, :edit, :update] do
+  resources :users, only: [:index, :edit, :update] do
+    collection do
+      get :search
+    end
+  end
+  resources :groups, only: [:index, :new, :create, :edit, :update] do
+    resources :lab_honest_brokers, only: [:index, :new, :create] do
       collection do
-        get :search
+        delete :destroy
       end
     end
-    resources :groups, only: [:index, :new, :create, :edit, :update] do
-      resources :lab_honest_brokers, only: [:index, :new, :create] do
-        collection do
-          delete :destroy
-        end
-      end
-      resources :sources
-      resources :services
-    end
-
-    root to: 'users#index'
+    resources :sources
+    resources :services
   end
 
   resources :i2b2_queries, only: [:index]

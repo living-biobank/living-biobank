@@ -1,0 +1,26 @@
+- content_for :filters do
+  = render 'sources/filters', group: group
+
+%main.card#groupSection
+  %table.table.table-bordered.table-hover.mb-0.border-0#groupSources
+    %thead
+      %tr
+        %th.col-10
+          = t('groups.sources.table.sources')
+
+        %th.col-2.text-center
+          = t('groups.sources.table.actions')
+    %tbody
+      - group.active_groups_sources.each do |groups_source|
+        %tr
+          %td 
+            = groups_source.source.value
+            - if groups_source.name.present?
+              = " (#{groups_source.name})"
+            -else
+              = t('groups.sources.table.no_alias').html_safe
+          %td.text-center
+            = link_to edit_group_source_path(group, groups_source), remote: true, class: 'btn btn-warning mr-1' do
+              = icon('fas', 'pencil-alt')
+            = link_to group_source_path(group, groups_source), remote: true, method: :delete, class: 'btn btn-danger', data: { confirm_swal: 'true' } do
+              = icon('fas', 'trash')

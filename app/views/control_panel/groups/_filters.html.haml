@@ -1,6 +1,0 @@
-%filters.table-filters.control-panel-filters#groupFilters{ data: { url: control_panel_groups_path } }
-  = text_field_tag 'searchGroups', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
-  .new-record-btn-container
-    = link_to new_control_panel_group_path, class: 'btn btn-lg btn-success new-record-btn' do
-      = succeed t('control_panel.groups.new') do
-        = icon('fas', 'plus mr-2')

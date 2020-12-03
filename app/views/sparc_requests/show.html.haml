@@ -1,6 +1,4 @@
 - content_for :header do
-  = render 'sparc_requests/header'
-- content_for :subheader do
-  = render 'sparc_requests/subheader', request: @sparc_request
+  = render 'sparc_requests/header', request: @sparc_request
 
 = render 'sparc_requests/request', request: @sparc_request
