@@ -15,6 +15,7 @@
 //= require sweetalert_integration
 //= require rails-ujs
 //= require jquery/dist/jquery.min
+//= require jquery.are-you-sure/jquery.are-you-sure
 //= require popper.js/dist/umd/popper.min
 //= require bootstrap/dist/js/bootstrap.min
 //= require bootstrap-datepicker/dist/js/bootstrap-datepicker.min

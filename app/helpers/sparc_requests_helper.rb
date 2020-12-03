@@ -189,7 +189,7 @@ module SparcRequestsHelper
 
   def edit_request_button(sr)
     if sr.pending? || (sr.in_process? && (current_user.data_honest_broker? || current_user.admin?))
-      link_to icon('fas', 'edit'), edit_sparc_request_path(sr, request_filter_params), remote: true, class: 'btn btn-warning edit-request ml-1', title: t(:requests)[:tooltips][:edit], data: { toggle: 'tooltip' }
+      link_to icon('fas', 'edit'), edit_sparc_request_path(sr, request_filter_params), class: 'btn btn-warning edit-request ml-1', title: t(:requests)[:tooltips][:edit], data: { toggle: 'tooltip' }
     end
   end
 
@@ -221,7 +221,7 @@ module SparcRequestsHelper
   def request_breadcrumb(sr)
     content_tag :span do
       content_tag :em do
-        link_to("Requests", requests_path) + " / " + request_title_display(sr)
+        link_to("Requests", requests_path) + " / " + (sr.new_record? ? t('requests.form.new_title') : request_title_display(sr)) + (action_name == 'edit' ? (" / " + t('actions.edit')) : "")
       end
     end
   end

@@ -6,16 +6,15 @@
         = succeed t('control_panel.groups.lab_honest_brokers.new') do
           = icon('fas', 'plus mr-2')
 
-.col-8.offset-2#groupSection
-  .card
-    %table.table.table-bordered.table-hover.mb-0.border-0#honestBrokersTable{ data: { toggle: 'table', url: control_panel_group_lab_honest_brokers_path(group, term: params[:term], sort: params[:sort], order: params[:order], page: params[:page]), side_pagination: 'server' } }
-      %thead
-        %tr
-          %th.col-10.d-table-cell.d-md-none{ data: { field: 'user', sortable: 'true' } }
-            = t('control_panel.users.headers.user')
-          %th.col-5.d-none.d-md-table-cell.border-left-0{ data: { field: 'name', sortable: 'true' } }
-            = t('control_panel.users.headers.name')
-          %th.col-5.d-none.d-md-table-cell{ data: { field: 'email', sortable: 'true' } }
-            = t('control_panel.users.headers.email')
-          %th.text-center.col-2{ data: { field: 'actions' } }
-            = t('control_panel.users.headers.actions')
+%main.card#groupSection
+  %table.table.table-bordered.table-hover.mb-0.border-0#honestBrokersTable{ data: { toggle: 'table', url: control_panel_group_lab_honest_brokers_path(group, term: params[:term], sort: params[:sort], order: params[:order], page: params[:page]), side_pagination: 'server' } }
+    %thead
+      %tr
+        %th.col-10.d-table-cell.d-md-none{ data: { field: 'user', sortable: 'true' } }
+          = t('control_panel.users.headers.user')
+        %th.col-5.d-none.d-md-table-cell.border-left-0{ data: { field: 'name', sortable: 'true' } }
+          = t('control_panel.users.headers.name')
+        %th.col-5.d-none.d-md-table-cell{ data: { field: 'email', sortable: 'true' } }
+          = t('control_panel.users.headers.email')
+        %th.text-center.col-2{ data: { field: 'actions' } }
+          = t('control_panel.users.headers.actions')

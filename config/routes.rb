@@ -21,13 +21,19 @@ Rails.application.routes.draw do
   end
 
   get '/requests', to: 'sparc_requests#index', as: 'requests'
+  get '/requests/new', to: 'sparc_requests#new', as: 'new_request'
+  get '/requests/:id/edit', to: 'sparc_requests#edit', as: 'edit_request'
   get '/requests/:id/', to: 'sparc_requests#show', as: 'request'
 
   resources :protocols, only: [:index]
   resource :protocol, only: [:show]
 
   namespace :control_panel do
-    resources :users, only: [:index, :edit, :update]
+    resources :users, only: [:index, :edit, :update] do
+      collection do
+        get :search
+      end
+    end
     resources :groups, only: [:index, :new, :create, :edit, :update] do
       resources :lab_honest_brokers, only: [:index, :new, :create] do
         collection do
@@ -42,8 +48,6 @@ Rails.application.routes.draw do
   end
 
   resources :i2b2_queries, only: [:index]
-
-  get 'directory/index', to: 'directory#index'
 
   namespace :sparc do
     get '/directory/index', to: 'directory#index'

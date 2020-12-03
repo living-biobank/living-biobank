@@ -1,0 +1,73 @@
+%section.card
+  .card-body.p-3.p-sm-5
+    %h2.card-title.justify-content-center
+      = t(:requests)[:form][:headers][:protocol_information]
+    - protocol            = sparc_request.protocol
+    - protocol_valid      = protocol.valid?
+    - protocol_persisted  = protocol.persisted?
+    = f.fields_for :protocol do |ff_p|
+      = ff_p.hidden_field :id
+      = ff_p.hidden_field :type
+      = ff_p.hidden_field :selected_for_epic
+
+      .form-row
+        .form-group.col-6.mb-4
+          - if SPARC::Setting.get_value('research_master_enabled')
+            = ff_p.label :research_master_id, class: 'required'
+            = ff_p.text_field :research_master_id, class: 'form-control form-control-lg numerical', readonly: protocol_persisted && protocol.research_master_id
+            %small.form-text.text-muted
+              = raw(t(:requests)[:form][:subtext][:rmid])
+            - if sparc_request.persisted? && is_draft && !protocol_valid
+              %small.form-text.text-warning
+                = t('requests.form.subtext.protocol_not_found')
+          - else
+            = label_tag :protocol_search, t(:requests)[:form][:fields][:protocol_search]
+            .input-group
+              = label_tag :protocol_search, class: 'input-group-icon' do
+                %span.text-muted
+                  = icon('fas', 'search')
+              = text_field_tag :protocol_search, protocol_persisted ? sparc_request.identifier : '', class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: protocol_persisted
+            %small.form-text.text-muted
+              = raw(t(:requests)[:form][:subtext][:protocol])
+
+      .form-row
+        .form-group.col-lg-6
+          = ff_p.label :title, class: 'required'
+          = ff_p.text_field :title, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
+        .form-group.col-lg-6
+          = ff_p.label :short_title, class: 'required'
+          = ff_p.text_field :short_title, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
+      .form-group
+        = ff_p.fields_for :primary_pi_role do |ff_ppi|
+          = ff_ppi.hidden_field :id
+          = label_tag :primary_pi_search, SparcRequest.human_attribute_name(:primary_pi), class: 'required'
+          .input-group
+            = label_tag :primary_pi_search, class: 'input-group-icon' do
+              %span.text-muted
+                = icon('fas', 'search')
+            = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: protocol_persisted && protocol_valid
+            = ff_ppi.hidden_field :identity_id
+      .form-row
+        .form-group.col-6.col-lg-3
+          = ff_p.label :funding_status, class: 'required'
+          = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker', data: { style: protocol_persisted && protocol_valid ? 'btn-light disabled' : 'btn-light' }
+        .form-group.col-6.col-lg-3#fundingSource{ class: protocol.funded? || (protocol.funding_status.blank? && protocol.funding_source.blank?) ? '' : 'd-none' }
+          = ff_p.label :funding_source, class: 'required'
+          = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker', data: { style: protocol_persisted && protocol_valid ? 'btn-light disabled' : 'btn-light' }
+        .form-group.col-6.col-lg-3#potentialFundingSource{ class: protocol.pending_funding? ? '' : 'd-none' }
+          = ff_p.label :potential_funding_source, class: 'required'
+          = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker', data: { style: protocol_persisted && protocol_valid ? 'btn-light disabled' : 'btn-light' }
+        .form-group.col-12.col-lg-6
+          = ff_p.label :start_date, class: 'required'
+          .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
+            = ff_p.text_field :start_date, value: format_date(protocol.start_date), class: 'form-control form-control-lg', placeholder: SparcRequest.human_attribute_name(:start_date), readonly: protocol_persisted && protocol_valid, data: { date_enable_on_readonly: 'false' }
+            .input-group-append.input-group-prepend
+              %label.input-group-text<
+                = t(:requests)[:form][:date_separator]
+            = ff_p.text_field :end_date, value: format_date(protocol.end_date), class: 'form-control form-control-lg', placeholder: SparcRequest.human_attribute_name(:end_date), readonly: protocol_persisted && protocol_valid, data: { date_enable_on_readonly: 'false' }
+      .form-group.mb-0
+        = ff_p.label :sponsor_name, class: 'required'
+        = ff_p.text_field :sponsor_name, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
+      = ff_p.fields_for :research_types_info do |ff_rti|
+        = ff_rti.hidden_field :id
+        = ff_rti.hidden_field :human_subjects, value: true

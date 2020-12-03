@@ -31,40 +31,35 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  ###############
+  ### ACTIONS ###
+  ###############
+
   actions:
     add: "Add"
     cancel: "Cancel"
     close: "Close"
     complete: "Complete"
+    edit: "Edit"
     release: "Release"
     save: "Save"
     save_changes: "Save Changes"
     search: "Search"
-  errors:
-    not_found:
-      header: "Page not found"
-      text1: "This is not the page you're looking for."
-      home_link: "Go Home"
-    unacceptable:
-      header: "Oh no"
-      text1: "Your browser did something unexpected."
-      text2: "Please contact us at <a href='mailto:%{email}'>%{email}</a> if the problem persists."
-    internal_error:
-      header: "Server Error"
-      text1: "Looks like something went wrong!"
-      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>. In the meantime, try refreshing your page."
-    user:
-      user_delete: "cannot be removed as it would leave no users with admin privileges."
+
+  #####################
+  ### ACTIVE RECORD ###
+  #####################
+
   activerecord:
     attributes:
       group:
         discard_email: "Specimen Discard Email"
-        email_body: "Body"
+        email_body: "Email body"
         email_subject: "Subject"
         finalize_email: "Additional Finalization Email"
-        finalize_email_to: "Recipients"
+        finalize_email_to: "Recipient(s)"
         notify_when_all_specimens_released: "When should release emails be sent?"
-        process_sample_size: "Require a Minimum Sample Size per specimen?"
+        process_sample_size: "Validate minimum specimen sample sizes?"
         process_specimen_retrieval: "Will specimens be retrieved by investigators?"
         release_email: "Specimen Release Email"
       lab:
@@ -151,6 +146,25 @@ en:
           attributes:
             identity:
               required: "can't be blank"
+        user:
+          attributes:
+            base:
+              last: "cannot be removed as it would leave no users with admin privileges."
+
+  #####################################
+  ### CONFIRM (SWEETALERT DEFAULTS) ###
+  #####################################
+
+  confirm:
+    title: "Are you sure?"
+    text: "This action cannot be undone."
+    confirm: "Yes"
+    cancel: "Cancel"
+
+  #################
+  ### CONSTANTS ###
+  #################
+
   constants:
     date_placeholder: "MM/DD/YYYY"
     select_placeholder: "Please Select"
@@ -159,20 +173,13 @@ en:
       asc: "Ascending"
       desc: "Descending"
     na: "N/A"
-  confirm:
-    title: "Are you sure?"
-    text: "This action cannot be undone."
-    confirm: "Yes"
-    cancel: "Cancel"
-  navigation:
-    labs: "Specimens"
-    requests: "Requests"
-    help: "Help/FAQs"
-    control_panel: "Control Panel"
-    logout: "Sign Out"
-  jobs:
-    fields:
-      id: "Job ID"
+    negative: "No"
+    positive: "Yes"
+
+  #####################
+  ### CONTROL PANEL ###
+  #####################
+
   control_panel:
     users:
       link: "Manage Users"
@@ -219,14 +226,20 @@ en:
           pending: "Pending Variable Services"
           in_process: "In Process Additional Services"
       details:
-        group_info: "General Group Information"
-        release_email_time:
-          all_samples: "After All Samples Released"
-          each_sample: "After Each Sample Released"
-        subtext:
-          email: "Note: A greeting and signature will be added automatically."
-          finalize_email: "Note: A signature will be added automatically."
-          recipients: "Separate multiple emails with a comma"
+        group_info:
+          header: "General Group Information"
+        email_info:
+          header: "Email Information"
+          release_email_time:
+            all_samples: "After All Samples Released"
+            each_sample: "After Each Sample Released"
+          subtext:
+            email: "Note: A greeting and signature will be added automatically."
+            finalize_email: "Note: A signature will be added automatically."
+          tooltips:
+            discard_email: "Details for emails sent to requesters when specimens are discarded"
+            finalize_email: "Details for optional emails which can be sent upon finalization of requests in addition to system-generated emails"
+            release_email: "Details for emails sent to requesters when specimens are released"
       lab_honest_brokers:
         new: "New Lab Honest Broker"
         flash:
@@ -272,6 +285,78 @@ en:
       flash:
         created: "%{name} Group created!"
         saved: "Group updated successfully!"
+
+  ###########################
+  ### ERRORS (CONTROLLER) ###
+  ###########################
+
+  errors:
+    not_found:
+      header: "Page not found"
+      text1: "This is not the page you're looking for."
+      home_link: "Go Home"
+    unacceptable:
+      header: "Oh no"
+      text1: "Your browser did something unexpected."
+      text2: "Please contact us at <a href='mailto:%{email}'>%{email}</a> if the problem persists."
+    internal_error:
+      header: "Server Error"
+      text1: "Looks like something went wrong!"
+      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>. In the meantime, try refreshing your page."
+
+  ##############
+  ### GROUPS ###
+  ##############
+  # Used only for tabs / application title
+
+  groups:
+    tabs:
+      details: "Group Details"
+      users: "Honest Brokers"
+      sources: "Sources"
+      services: "Services"
+
+  ############
+  ### HOME ###
+  ############
+
+  home:
+    header: "Living BioBank enables access to clinical data, surplus specimens, and microbiome data"
+    text1: "Living BioBank™ and Living µBiome Bank™ allow for the just-in-time capture and delivery of de-identified clinical data and precisely phenotyped surplus standard-of-care specimens and microbiome assay data resulting from specimens."
+    text2:
+      text: "There are two types of Living BioBank requests:"
+      bullet1: "<strong>Specimen requests (whole blood and plasma)</strong> %{arrow} Physical samples (your research team will take direct possession of de-identified samples on an ongoing basis)"
+      bullet2: "<strong>Microbiome data requests (nasal, nasopharyngeal, and perianal swabs, stool)</strong> %{arrow} Assay data provided in bulk once all samples are collected, processed, and sequenced (samples are not directly provided)"
+    text3: "Investigators interested in using Living BioBank must first specify inclusion and exclusion criteria by creating an electronic phenotype using i2b2 (please see the Living BioBank and i2b2 guides below)."
+    links:
+      help1:
+        text: "MUSC Investigators"
+        link: "Log in to MUSC i2b2"
+      help2: 
+        text: "ACT-SHRINE Investigators"
+        link: "Access your participating site's i2b2"
+      help3:
+        text: "Guides & FAQs"
+        link2: "i2b2 User Guide"
+        link3: "i2b2 FAQs"
+      help4:
+        text: "Living BioBank How-To Guide"
+        link: "User Guide"
+      contact:
+        header: "Living BioBank Support"
+        link: "For help and questions, please reach out to our team at <a href='mailto:%{email}'>%{email}</a>"
+    user_guide: "New to Living BioBank? Click <a href='LBB_Guide_v1.1.pptx'>here</a> to download our How-To guide!"
+    login:
+      header: "Developer Login"
+      net_id: "NetID"
+      password: "Password"
+      remember_me: "Remember Me"
+      submit: "Login"
+      shibboleth: "Sign In With Shibboleth"
+
+  ############
+  ### LABS ###
+  ############
 
   labs:
     header: "Lab Specimens"
@@ -333,39 +418,82 @@ en:
       retrieve_specimen: "Specimen Retrieved"
       reset_specimen: "Reset Specimen"
       discard_specimen:  "Discard Specimen"
-  home:
-    header: "Living BioBank enables access to clinical data, surplus specimens, and microbiome data"
-    text1: "Living BioBank™ and Living µBiome Bank™ allow for the just-in-time capture and delivery of de-identified clinical data and precisely phenotyped surplus standard-of-care specimens and microbiome assay data resulting from specimens."
-    text2:
-      text: "There are two types of Living BioBank requests:"
-      bullet1: "<strong>Specimen requests (whole blood and plasma)</strong> %{arrow} Physical samples (your research team will take direct possession of de-identified samples on an ongoing basis)"
-      bullet2: "<strong>Microbiome data requests (nasal, nasopharyngeal, and perianal swabs, stool)</strong> %{arrow} Assay data provided in bulk once all samples are collected, processed, and sequenced (samples are not directly provided)"
-    text3: "Investigators interested in using Living BioBank must first specify inclusion and exclusion criteria by creating an electronic phenotype using i2b2 (please see the Living BioBank and i2b2 guides below)."
-    links:
-      help1:
-        text: "MUSC Investigators"
-        link: "Log in to MUSC i2b2"
-      help2: 
-        text: "ACT-SHRINE Investigators"
-        link: "Access your participating site's i2b2"
-      help3:
-        text: "Guides & FAQs"
-        link2: "i2b2 User Guide"
-        link3: "i2b2 FAQ"
-      help4:
-        text: "Living BioBank How-To Guide"
-        link: "User Guide"
-      contact:
-        header: "Living BioBank Support"
-        link: "For help and questions, please reach out to our team at <a href='mailto:%{email}'>%{email}</a>"
-    user_guide: "New to Living BioBank? Click <a href='LBB_Guide_v1.1.pptx'>here</a> to download our How-To guide!"
-    login:
-      header: "Developer Login"
-      net_id: "NetID"
-      password: "Password"
-      remember_me: "Remember Me"
-      submit: "Login"
-      shibboleth: "Sign In With Shibboleth"
+
+  ################
+  ### MAILERS ####
+  ################
+
+  mailers:
+    greeting: "Dear %{name},"
+    request_info: "Living BioBank Request Information"
+    request_link: "View Living BioBank Request"
+    specimens_link: "View Specimens"
+    footer:
+      text: "The Living BioBank Team"
+    cloverleaf_mailer:
+      job_error:
+        subject: "Cloverleaf Message Job Error"
+        text: "A Cloverleaf message job encountered an error."
+        error: "Error"
+      job_failure:
+        subject: "Cloverleaf Message Job Failure"
+        text: "A Cloverleaf message job has failed. The message has not been sent to Cloverleaf."
+    request_mailer:
+      primary_pi: "<strong>Primary PI:</strong> %{pi_name}"
+      services_header: "Services Requested"
+      confirmation_email:
+        subject: "New Request Confirmation"
+        text1: "We have received your Living BioBank request. Our team will review and process your request within 3 business days."
+        text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
+        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:%{email}'>%{email}</a>."
+        text4: "We look forward to working with you."
+        data_use_agreement: "By submitting this request you agree to the Living BioBank Data Use Agreement"
+      pi_email:
+        subject: "New Request Confirmation"
+        text1: "We are contacting you on behalf of the MUSC Living BioBank team. %{requester_name} submitted a request for specimens/data under a study in which you are a PI (details below). If you think this is done in error please contact our team at <a href='mailto:%{email}'>%{email}</a> as soon as possible. If this was done under your supervision, no further action is necessary on your part at this time."
+        data_use_agreement: "Please note that all requests to the Living BioBank are bound by the following Data Use Agreement"
+      manager_email:
+        subject: "New Request Pending SPARC Submission"
+        text: "A new Living BioBank request has been submitted and is awaiting your review in SPARCRequest."
+      admin_update_email:
+        subject: "Administrative Updates to Your Request"
+        text: "An Administrator has made changes to your request. Please review your request to ensure that all information is correct."
+      completion_email:
+        subject: "Request Completed"
+        completed_by: "%{user} completed a request on %{date}."
+      locked_email:
+        subject: "New Living BioBank request with locked SPARCRequest service"
+        sparc_link: "View in SPARCRequest"
+        text1: "You are being contacted because you are a SPARCRequest service provider for <strong>%{provider}</strong>."
+        text2: "A request on Living BioBank was submitted in which there is an existing locked service in the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask you to take the necessary steps in determining how you wish to process this additional service(s)."
+        text3: "The following services could not be added/updated:"
+    specimen_mailer:
+      available_email: 
+        subject: "%{group} Specimens Are Available"
+        text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
+      release_email:
+        subject_batch: "Specimens are Ready for Processing"
+        subject_individual: "A Specimen is Ready for Pick-up"
+        specimen_batch_text: "%{number_of_specimens_requested} %{specimen_type} specimen(s) you requested have been collected and are ready for processing."
+        specimen_id_text: "A specimen you requested is ready for pick-up. Your specimen ID is <strong>%{specimen_id}</strong>. Please have this number ready in order to speed up the pick-up process."
+      discard_email:
+        subject: "Specimen Discard Notification"
+    user_permissions_mailer:
+      admin_granted: "You have been granted admin privileges"
+      admin_removed: "Your admin privileges have been removed"
+      data_honest_broker_granted: "You were granted data honest broker privileges"
+      data_honest_broker_removed: "Your data honest broker privileges were removed"
+      lab_honest_broker_granted: "You were made an honest broker for the following groups:"
+      lab_honest_broker_removed: "Your honest broker privileges were removed for the following groups:"
+      subject: "Living BioBank User Privileges Change"
+      permissions_changed_email:
+        text1: "You are receiving this email because the following changes have been made to your user privileges within Living BioBank: "
+        text2: "If you have any questions, please contact one of the system administrators."
+
+  #################
+  ### REQUESTS ####
+  #################
+
   requests:
     header: "Requests"
     create: "New Request"
@@ -441,7 +569,7 @@ en:
         protocol: "Search for an existing Protocol in SPARCRequest"
         protocol_found: "Imported data from Study #%{id}"
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
-        i2b2_query: "Please select your specimen source and an associated e-phenotype using your <a href='https://i2b2.musc.edu/' target='_blank'>i2b2</a> query history. <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'>Click here</a> if you need help with creating a query. Queries shown are populated from all SPARC study team members."
+        i2b2_query: "Please select your specimen source and an associated e-phenotype using your <a href='https://i2b2.musc.edu/' target='_blank'>i2b2</a> query history. <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'><br>Click here</a> if you need help with creating a query. Queries shown are populated from all SPARC study team members."
       tooltips:
         loading_i2b2_queries: "Loading queries..."
         no_i2b2_queries:
@@ -454,6 +582,7 @@ en:
       add_specimen: "Add Specimen"
       delete_specimen: "Delete Specimen"
       submit: "Submit for Inquiry"
+      update: "Submit Changes"
       save_as_draft: "Save as Draft"
     table:
       header: "Request %{id}"
@@ -493,79 +622,38 @@ en:
       placeholder: "No Title Specified"
       requester_self: "You started this request %{time_elapsed} ago"
       requester: "Request started by %{name} %{time_elapsed} ago"
+
+  ########################
+  ### SITE INFORMATION ###
+  ########################
+
   site_information:
-    name: "Living BioBank"
-    footer_name: "Living BioBank<sup>TM</sup>"
-    version: "%{site_name} Version %{version}"
     copyright: "&copy; 2020 MUSC"
-  site_version:
-  specimen_records:
-    created: "Lab Specimen released successfully."
-    form:
-      header: "Specimen Release"
-  mailers:
-    greeting: "Dear %{name},"
-    request_info: "Living BioBank Request Information"
-    request_link: "View Living BioBank Request"
-    specimens_link: "View Specimens"
-    footer:
-      text: "The Living BioBank Team"
-    cloverleaf_mailer:
-      job_error:
-        subject: "Cloverleaf Message Job Error"
-        text: "A Cloverleaf message job encountered an error."
-        error: "Error"
-      job_failure:
-        subject: "Cloverleaf Message Job Failure"
-        text: "A Cloverleaf message job has failed. The message has not been sent to Cloverleaf."
-    request_mailer:
-      primary_pi: "<strong>Primary PI:</strong> %{pi_name}"
-      services_header: "Services Requested"
-      confirmation_email:
-        subject: "New Request Confirmation"
-        text1: "We have received your Living BioBank request. Our team will review and process your request within 3 business days."
-        text2: "Our Biomedical Informatics Center collaborators will be in touch with you to schedule a consult to finalize your i2b2 cohort. A cost estimate will be determined based on the work required to complete your request and you will receive a follow-up email to outline the costs and a link to a REDCap survey/SPARCRequest to arrange payment."
-        text3: "If you have any questions, feel free to reach out to us at <a href='mailto:%{email}'>%{email}</a>."
-        text4: "We look forward to working with you."
-        data_use_agreement: "By submitting this request you agree to the Living BioBank Data Use Agreement"
-      pi_email:
-        subject: "New Request Confirmation"
-        text1: "We are contacting you on behalf of the MUSC Living BioBank team. %{requester_name} submitted a request for specimens/data under a study in which you are a PI (details below). If you think this is done in error please contact our team at <a href='mailto:%{email}'>%{email}</a> as soon as possible. If this was done under your supervision, no further action is necessary on your part at this time."
-        data_use_agreement: "Please note that all requests to the Living BioBank are bound by the following Data Use Agreement"
-      manager_email:
-        subject: "New Request Pending SPARC Submission"
-        text: "A new Living BioBank request has been submitted and is awaiting your review in SPARCRequest."
-      admin_update_email:
-        subject: "Administrative Updates to Your Request"
-        text: "An Administrator has made changes to your request. Please review your request to ensure that all information is correct."
-      completion_email:
-        subject: "Request Completed"
-        completed_by: "%{user} completed a request on %{date}."
-      locked_email:
-        subject: "New Living BioBank request with locked SPARCRequest service"
-        sparc_link: "View in SPARCRequest"
-        text1: "You are being contacted because you are a SPARCRequest service provider for <strong>%{provider}</strong>."
-        text2: "A request on Living BioBank was submitted in which there is an existing locked service in the associated SPARCRequest. We are writing to provide you with the details of this Living BioBank request and ask you to take the necessary steps in determining how you wish to process this additional service(s)."
-        text3: "The following services could not be added/updated:"
-    specimen_mailer:
-      available_email: 
-        subject: "%{group} Specimens Are Available"
-        text: "New %{group} specimens are available. These specimens may be released at your convenience. Researchers will be notified when specimens are ready for pick-up."
-      release_email:
-        subject_batch: "Specimens are Ready for Processing"
-        subject_individual: "A Specimen is Ready for Pick-up"
-        specimen_batch_text: "%{number_of_specimens_requested} %{specimen_type} specimen(s) you requested have been collected and are ready for processing."
-        specimen_id_text: "A specimen you requested is ready for pick-up. Your specimen ID is <strong>%{specimen_id}</strong>. Please have this number ready in order to speed up the pick-up process."
-      discard_email:
-        subject: "Specimen Discard Notification"
-    user_permissions_mailer:
-      admin_granted: "You have been granted admin privileges"
-      admin_removed: "Your admin privileges have been removed"
-      data_honest_broker_granted: "You were granted data honest broker privileges"
-      data_honest_broker_removed: "Your data honest broker privileges were removed"
-      lab_honest_broker_granted: "You were made an honest broker for the following groups:"
-      lab_honest_broker_removed: "Your honest broker privileges were removed for the following groups:"
-      subject: "Living BioBank User Privileges Change"
-      permissions_changed_email:
-        text1: "You are receiving this email because the following changes have been made to your user privileges within Living BioBank: "
-        text2: "If you have any questions, please contact one of the system administrators."
+    title:
+      base: "Living BioBank"
+      errors:
+        not_found: "Page not found"
+        unacceptable: "Oh no"
+        internal_error: "Server Error"
+      groups:
+        index: "Groups Control Panel"
+        new: "New Group"
+        edit: "%{tab} | %{identifier}"
+      labs:
+        index: "Specimens"
+      pages:
+        help: "Help/FAQs"
+      sparc_requests:
+        index: "Requests"
+        show: "Request %{identifier}"
+        new: "New Request"
+        edit: "Edit | Request %{identifier}"
+      users:
+        index: "Users Control Panel"
+    navigation:
+      labs: "Specimens"
+      requests: "Requests"
+      help: "Help/FAQs"
+      control_panel: "Control Panel"
+      logout: "Sign Out"
+    version: "Version %{version}"

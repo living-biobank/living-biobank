@@ -58,7 +58,7 @@
             url:      $anchor.attr('href')
           })
         } else {
-          window.location = $anchor.attr('href')
+          window.location.href = $anchor.attr('href')
         }
       }
     })

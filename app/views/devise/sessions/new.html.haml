@@ -1,11 +1,8 @@
 .d-flex.flex-column.col-xl-6.col-lg-8.col-11.mx-auto#loginContainer
   .card.my-auto
-    .card-header.bg-dark.text-white.text-center
-      .display-3.d-none.d-sm-block
-        = t('site_information.name')
-      %h1.d-block.d-sm-none
-        = t('site_information.name')
     .card-body.px-sm-5
+      .card-title.justify-content-center.display-1
+        = t('site_information.title.base')
       = render 'layouts/environment'
       %h4.font-weight-bold.text-center.mb-3
         = t(:home)[:header]

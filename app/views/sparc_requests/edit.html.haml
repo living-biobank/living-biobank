@@ -1,0 +1,6 @@
+- content_for :header do
+  = render 'sparc_requests/header'
+- content_for :subheader do
+  = render 'sparc_requests/subheader', request: @sparc_request, is_draft: @is_draft
+
+= render 'form', sparc_request: @sparc_request, is_draft: @is_draft

@@ -1,12 +1,6 @@
 $ ->
-  $(document).on('change', '#groupDetailsForm input:not([type=text])', ->
-    $('#saveGroupDetailsBtn').addClass('show')
-  ).on('keydown', '#groupDetailsForm input[type=text]', ->
-    $('#saveGroupDetailsBtn').addClass('show')
-  ).on('trix-change', '#groupDetailsForm trix-editor', ->
-    $('#saveGroupDetailsBtn').addClass('show')
-  )
-
+  $(document).on 'change', '#group_process_specimen_retrieval', ->
+    $('#discardEmailContainer').toggleClass('d-none')
 
 (exports ? this).initializeHonestBrokerTypeahead = () ->
   $("#honestBrokerSearch").typeahead('destroy')
@@ -15,7 +9,7 @@ $ ->
     datumTokenizer: Bloodhound.tokenizers.whitespace
     queryTokenizer: Bloodhound.tokenizers.whitespace
     remote:
-      url: "/directory/index?term=%TERM"
+      url: "/control_panel/users/search?term=%TERM"
       wildcard: "%TERM"
   )
 

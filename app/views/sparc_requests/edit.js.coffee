@@ -1,5 +1,6 @@
-$('#modalContainer').html("<%= j render 'sparc_requests/form', sparc_request: @sparc_request, is_draft: @is_draft %>")
-initializePrimaryPITypeahead()
-$("select[name*=query_id]").one 'rendered.bs.select', ->
-  loadI2B2Queries()
-$('#modalContainer').modal('show')
+# Only used for redirecting from a new request with duplicate RMID
+# to an existing request
+
+$('#sparcRequestForm').removeClass('dirty');
+window.history.pushState({}, null, "<%= new_request_url %>")
+window.location.href = "<%= edit_request_path(@sparc_request) %>"

@@ -26,6 +26,16 @@ class ControlPanel::UsersController < ControlPanel::BaseController
     end
   end
 
+  def search
+    respond_to :js
+
+    results = User.search(params[:term]).map{ |u| {
+      label: u.display_name, id: u.id
+    }}
+
+    render json: results.to_json
+  end
+
   private
 
   def find_users
