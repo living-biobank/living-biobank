@@ -27,20 +27,20 @@
       %h2.card-title.justify-content-center
         = t('control_panel.groups.details.email_info.header')
       .row
-        .col-6
+        .col-12.col-xl-6
           .form-group.mb-0
             %h4.card-title.mb-0
               = f.label :release_email, class: 'required', title: t('control_panel.groups.details.email_info.tooltips.release_email'), data: { toggle: 'tooltip' }
           .form-group.row
-            = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
-            .col-6
+            = f.label :notify_when_all_specimens_released, class: 'col-form-label col-12 col-sm-6'
+            .col-12.col-sm-6
               = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: t('control_panel.groups.details.email_info.release_email_time.all_samples'), off: t('control_panel.groups.details.email_info.release_email_time.each_sample'), style: 'btn-lg btn-block' }
           .form-group
             = f.rich_text_area :release_email, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:email_body)
             %small.form-text.text-muted
               = t('control_panel.groups.details.email_info.subtext.email')
 
-        .col-6
+        .col-12.col-xl-6
           .form-group.mb-0
             %h4.card-title.mb-0
               = f.label :finalize_email, title: t('control_panel.groups.details.email_info.tooltips.finalize_email'), data: { toggle: 'tooltip' }
@@ -49,12 +49,12 @@
               = f.text_field :finalize_email_subject, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:email_subject)
             .form-group.col-6
               = f.text_field :finalize_email_to, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:finalize_email_to)
-          .form-group.mb-0
+          .form-group
             = f.rich_text_area :finalize_email, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:email_body)
             %small.form-text.text-muted
               = t('control_panel.groups.details.email_info.subtext.finalize_email')
 
-        .col-6#discardEmailContainer{ class: group.process_specimen_retrieval? ? '' : 'd-none' }
+        .col-12.col-xl-6#discardEmailContainer{ class: group.process_specimen_retrieval? ? '' : 'd-none' }
           .form-group.mb-0
             %h4.card-title.mb-0
               = f.label :discard_email, class: 'required', title: t('control_panel.groups.details.email_info.tooltips.discard_email'), data: { toggle: 'tooltip' }

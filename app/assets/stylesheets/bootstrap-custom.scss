@@ -430,6 +430,14 @@ form, .form {
 
 @include media-breakpoint-down(sm) {
   .table-filters {
+    padding-left: 0;
+    padding-right: 00;
+
+    input[type=text] {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
     .filter {
       margin-left: 0.75rem;
       margin-right: 0.75rem;
@@ -441,6 +449,10 @@ form, .form {
 
     .dropdown.filter-select {
       justify-content: center;
+    }
+
+    .new-record-btn-container {
+      padding-left: 0.75rem;
     }
   }
 }
