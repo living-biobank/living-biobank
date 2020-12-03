@@ -86,7 +86,6 @@
 
       if (tagName === 'A' && href !== 'javascript:void(0)' && remote !== 'true') {
         window.location.href = href + data;
-        NProgress.start();
       } else {
         $.ajax({
           method: method || 'GET',
