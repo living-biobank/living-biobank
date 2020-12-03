@@ -219,6 +219,10 @@ form, .form {
         color: theme-color('primary');
       }
     }
+
+    &.disabled {
+      @extend .text-muted;
+    }
   }
 }
 
@@ -419,13 +423,6 @@ form, .form {
       }
     }
   }
-
-  .new-record-btn-container {
-    padding-left: $grid-gutter-width;
-    border-left: $border-width solid $border-color;
-    display: flex;
-    align-items: center;
-  }
 }
 
 @include media-breakpoint-down(sm) {
@@ -449,10 +446,6 @@ form, .form {
 
     .dropdown.filter-select {
       justify-content: center;
-    }
-
-    .new-record-btn-container {
-      padding-left: 0.75rem;
     }
   }
 }

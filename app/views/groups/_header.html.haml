@@ -1,0 +1,24 @@
+%header
+  .page-title
+    = group_breadcrumb(group)
+  .header-links
+    - if action_name == 'index'
+      = link_to new_group_path, class: 'btn btn-lg btn-success' do
+        = succeed t('groups.new') do
+          = icon('fas', 'plus mr-2')
+    - elsif tab == 'details'
+      %button.btn.btn-lg.btn-primary#saveGroupButton{ type: 'submit', form: 'groupDetailsForm' }<
+        = icon('fas', 'check mr-2')
+        = t('actions.save_changes')
+    - elsif tab == 'users'
+      = link_to new_group_lab_honest_broker_path(group), remote: true, class: 'btn btn-lg btn-success' do
+        = succeed t('groups.lab_honest_brokers.new') do
+          = icon('fas', 'plus mr-2')
+    - elsif tab == 'sources'
+      = link_to new_group_source_path(group), remote: true, class: 'btn btn-lg btn-success' do
+        = succeed t('groups.sources.new') do
+          = icon('fas', 'plus mr-2')
+    - elsif tab == 'services'
+      = link_to new_group_service_path(group), remote: true, class: 'btn btn-lg btn-success new-record-btn' do
+        = succeed t('groups.services.new_service') do
+          = icon('fas', 'plus mr-2')

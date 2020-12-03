@@ -1,0 +1,7 @@
+- content_for :header do
+  = render 'users/header'
+- content_for :filters do
+  = render 'users/filters'
+
+= render 'users/table'
+= render 'layouts/pagination', records: @users, filter_params: user_filter_params.merge({ controller: 'users', action: 'index' })

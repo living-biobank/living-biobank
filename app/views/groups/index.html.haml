@@ -1,0 +1,7 @@
+- content_for :header do
+  = render 'groups/header', group: nil, tab: nil
+- content_for :filters do
+  = render 'groups/filters'
+
+= render 'groups/table'
+= render 'layouts/pagination', records: @groups, filter_params: group_filter_params.merge({ controller: 'groups', action: 'index' })

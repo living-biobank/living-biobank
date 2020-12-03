@@ -1,5 +1,23 @@
 %header
   .page-title
-    = icon('fas', 'file-invoice')
-    %span
-      = t(:requests)[:header]
+    = request_breadcrumb(request)
+  .header-links.d-flex.align-items-center
+    - if action_name == 'index'
+      = link_to new_request_path, class: ['btn btn-lg btn-success', action_name == 'index' ? 'd-block' : 'd-none'], data: { confirm_swal: true, title: t('requests.confirms.create.title'), html: t('requests.confirms.create.html'), type: '', confirm_text: t('requests.confirms.create.confirm'), cancel_text: t('requests.confirms.create.cancel'), class: 'use-agreement text-left' } do
+        = succeed t('requests.new') do
+          = icon('fas', 'plus mr-2')
+    - elsif action_name == 'show'
+      = link_to "#{ENV.fetch('SPARC_HOST')}/dashboard/protocols/#{request.protocol_id}", target: :_blank, class: 'btn btn-lg btn-outline-primary media-body d-inline-flex align-items-center justify-content-center' do
+        = image_tag 'sparcrequest_icon.ico', width: 16, height: 16, class: 'mr-2'
+        = t('requests.table.sparc_link')
+    - elsif ['new', 'edit'].include?(action_name)
+      %button.btn.btn-lg.btn-primary#submitRequestButton{ type: 'submit', form: 'sparcRequestForm' }<
+        = icon('fas', 'check mr-2')
+        - if request.previously_submitted?
+          = t(:requests)[:form][:update]
+        - else
+          = t(:requests)[:form][:submit]
+      - unless request.persisted? && !is_draft
+        %button.btn.btn-lg.btn-warning.ml-1#saveDraftRequestButton{ type: 'button' }<
+          = icon('far', 'save mr-2')
+          = t(:requests)[:form][:save_as_draft]

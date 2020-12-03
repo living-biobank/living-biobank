@@ -1,0 +1,23 @@
+.modal-dialog{ role: 'document' }
+  = form_for [group, honest_broker], remote: true do |f|
+    = f.hidden_field :group_id
+    .modal-content
+      .modal-header
+        %h4.modal-title
+          = "New Lab Honest Broker"
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        .form-group.mb-0
+          .input-group
+            = f.hidden_field :user_id
+            = label_tag 'honestBrokerSearch', class: 'input-group-icon' do
+              %span.text-muted
+                = icon('fas', 'search')
+            = text_field_tag 'honestBrokerSearch', '', class: 'form-control', placeholder: 'Search for a user'
+      .modal-footer
+        %button.btn.btn-primary<
+          = icon('fas', 'plus mr-1')
+          = t('actions.add')
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:actions)[:close]

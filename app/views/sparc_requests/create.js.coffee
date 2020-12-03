@@ -36,7 +36,7 @@ $(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[<%
 $('#submitRequestButton, #saveDraftRequestButton').prop('disabled', false)
 
 if $('.is-invalid').length
-  $('html, body').animate({ scrollTop: $('.is-invalid').first().offset().top - $('subheader').first().height() }, 'slow')
+  $('html, body').animate({ scrollTop: $('.is-invalid').first().offset().top - $('header').height() - (parseInt($('#content').css('padding-top')) * 2) }, 'slow')
 <% else %>
 window.location.href = "<%= requests_path %>"
 <% end %>
