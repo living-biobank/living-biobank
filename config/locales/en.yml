@@ -54,12 +54,12 @@ en:
     attributes:
       group:
         discard_email: "Specimen Discard Email"
-        email_body: "Body"
+        email_body: "Email body"
         email_subject: "Subject"
         finalize_email: "Additional Finalization Email"
-        finalize_email_to: "Recipients"
+        finalize_email_to: "Recipient(s)"
         notify_when_all_specimens_released: "When should release emails be sent?"
-        process_sample_size: "Require a Minimum Sample Size per specimen?"
+        process_sample_size: "Validate minimum specimen sample sizes?"
         process_specimen_retrieval: "Will specimens be retrieved by investigators?"
         release_email: "Specimen Release Email"
       lab:
@@ -173,6 +173,8 @@ en:
       asc: "Ascending"
       desc: "Descending"
     na: "N/A"
+    negative: "No"
+    positive: "Yes"
 
   #####################
   ### CONTROL PANEL ###
@@ -224,14 +226,20 @@ en:
           pending: "Pending Variable Services"
           in_process: "In Process Additional Services"
       details:
-        group_info: "General Group Information"
-        release_email_time:
-          all_samples: "After All Samples Released"
-          each_sample: "After Each Sample Released"
-        subtext:
-          email: "Note: A greeting and signature will be added automatically."
-          finalize_email: "Note: A signature will be added automatically."
-          recipients: "Separate multiple emails with a comma"
+        group_info:
+          header: "General Group Information"
+        email_info:
+          header: "Email Information"
+          release_email_time:
+            all_samples: "After All Samples Released"
+            each_sample: "After Each Sample Released"
+          subtext:
+            email: "Note: A greeting and signature will be added automatically."
+            finalize_email: "Note: A signature will be added automatically."
+          tooltips:
+            discard_email: "Details for emails sent to requesters when specimens are discarded"
+            finalize_email: "Details for optional emails which can be sent upon finalization of requests in addition to system-generated emails"
+            release_email: "Details for emails sent to requesters when specimens are released"
       lab_honest_brokers:
         new: "New Lab Honest Broker"
         flash:

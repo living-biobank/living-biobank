@@ -1,61 +1,65 @@
-= form_for [:control_panel, group], remote: true, html: { id: 'groupDetailsForm', autocomplete: 'off' } do |f|
-  .row
-    .col-2.text-center
-      %button.btn.btn-lg.btn-primary.sticky-form-btn.fade#saveGroupDetailsBtn{ type: 'submit' }<
+- content_for :subheader do
+  %filters.table-filters#honestBrokerFilters{ data: { url: control_panel_group_lab_honest_brokers_path(group) } }
+    .flex-fill
+    .new-record-btn-container
+      %button.btn.btn-lg.btn-primary{ type: 'submit', form: 'groupDetailsForm' }<
         = icon('fas', 'check mr-2')
         = t('actions.save_changes')
-    .col-8
-      .card
-        .card-body
-          %h4.card-title<
-            = icon('fas', 'info')
-            = t('control_panel.groups.details.group_info')
-          .form-group
-            = f.text_field :name, class: 'form-control', placeholder: Group.human_attribute_name(:name)
+
+= form_for [:control_panel, group], remote: true, html: { id: 'groupDetailsForm', autocomplete: 'off' } do |f|
+  %section.card
+    .card-body.p-3.p-sm-5
+      %h2.card-title.justify-content-center
+        = t('control_panel.groups.details.group_info.header')
+      .form-row
+        .form-group.col-12.col-xl-6.mb-3.mb-xl-0
+          = f.label :name, class: 'required'
+          = f.text_field :name, class: 'form-control form-control-lg'
+        .form-group.col-12.col-sm-6.col-xl-3.mb-3.mb-sm-0
+          = f.label :process_sample_size
+          = f.check_box :process_sample_size, data: { toggle: 'toggle', on: t('constants.positive'), off: t('constants.negative'), style: 'btn-lg w-100 w-xl-75' }
+        .form-group.col-12.col-sm-6.col-xl-3.mb-3.mb-sm-0
+          = f.label :process_specimen_retrieval
+          = f.check_box :process_specimen_retrieval, data: { toggle: 'toggle', on: t('constants.positive'), off: t('constants.negative'), style: 'btn-lg w-100 w-xl-75' }
+
+  %section.card
+    .card-body.p-3.p-sm-5
+      %h2.card-title.justify-content-center
+        = t('control_panel.groups.details.email_info.header')
+      .row
+        .col-6
+          .form-group.mb-0
+            %h4.card-title.mb-0
+              = f.label :release_email, class: 'required', title: t('control_panel.groups.details.email_info.tooltips.release_email'), data: { toggle: 'tooltip' }
           .form-group.row
-            = f.label :process_sample_size, class: 'col-form-label col-6'
-            .col-4.offset-2
-              = f.check_box :process_sample_size, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
-          .form-group.row
-            = f.label :process_specimen_retrieval, class: 'col-form-label col-6'
-            .col-4.offset-2
-              = f.check_box :process_specimen_retrieval, data: { toggle: 'toggle', on: t('yes'), off: t('no'), style: 'btn-block' }
-      .card
-        .card-body
-          %h4.card-title.required<
-            = icon('far', 'envelope')
-            = Group.human_attribute_name(:release_email)
-          .form-group
-            = f.rich_text_area :release_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
-            %small.form-text.text-muted
-              = t('control_panel.groups.details.subtext.email')
-          .form-group.row.mb-0
             = f.label :notify_when_all_specimens_released, class: 'col-form-label col-6'
-            .col-4.offset-2
-              = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: t('control_panel.groups.details.release_email_time.all_samples'), off: t('control_panel.groups.details.release_email_time.each_sample'), style: 'btn-block' }
-      - if group.process_specimen_retrieval?
-        .card
-          .card-body
-            %h4.card-title.required<
-              = icon('far', 'envelope')
-              = Group.human_attribute_name(:discard_email)
-            .form-group.mb-0
-              = f.rich_text_area :discard_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
-              %small.form-text.text-muted
-                = t('control_panel.groups.details.subtext.email')
-      .card
-        .card-body
-          %h4.card-title<
-            = icon('far', 'envelope')
-            = Group.human_attribute_name(:finalize_email)
+            .col-6
+              = f.check_box :notify_when_all_specimens_released, data: { toggle: 'toggle', on: t('control_panel.groups.details.email_info.release_email_time.all_samples'), off: t('control_panel.groups.details.email_info.release_email_time.each_sample'), style: 'btn-lg btn-block' }
+          .form-group
+            = f.rich_text_area :release_email, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:email_body)
+            %small.form-text.text-muted
+              = t('control_panel.groups.details.email_info.subtext.email')
+
+        .col-6
+          .form-group.mb-0
+            %h4.card-title.mb-0
+              = f.label :finalize_email, title: t('control_panel.groups.details.email_info.tooltips.finalize_email'), data: { toggle: 'tooltip' }
           .form-row
             .form-group.col-6
-              = f.text_field :finalize_email_subject, class: 'form-control', placeholder: Group.human_attribute_name(:email_subject)
+              = f.text_field :finalize_email_subject, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:email_subject)
             .form-group.col-6
-              = f.text_field :finalize_email_to, class: 'form-control', placeholder: Group.human_attribute_name(:finalize_email_to)
-              %small.form-text.text-muted
-                = t('control_panel.groups.details.subtext.recipients')
+              = f.text_field :finalize_email_to, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:finalize_email_to)
           .form-group.mb-0
-            = f.rich_text_area :finalize_email, class: 'form-control', placeholder: Group.human_attribute_name(:email_body)
+            = f.rich_text_area :finalize_email, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:email_body)
             %small.form-text.text-muted
-              = t('control_panel.groups.details.subtext.finalize_email')
+              = t('control_panel.groups.details.email_info.subtext.finalize_email')
+
+        .col-6#discardEmailContainer{ class: group.process_specimen_retrieval? ? '' : 'd-none' }
+          .form-group.mb-0
+            %h4.card-title.mb-0
+              = f.label :discard_email, class: 'required', title: t('control_panel.groups.details.email_info.tooltips.discard_email'), data: { toggle: 'tooltip' }
+          .form-group.mb-0
+            = f.label :discard_email, class: 'required'
+            = f.rich_text_area :discard_email, class: 'form-control form-control-lg', placeholder: Group.human_attribute_name(:email_body)
+            %small.form-text.text-muted
+              = t('control_panel.groups.details.email_info.subtext.email')

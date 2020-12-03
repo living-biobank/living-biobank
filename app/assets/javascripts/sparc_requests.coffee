@@ -50,7 +50,6 @@ $ ->
   #####################
 
   if $('#sparcRequestForm').length
-    $('#sparcRequestForm').areYouSure()
     initializeProtocolTypeahead()
     initializePrimaryPITypeahead()
     loadI2B2Queries()

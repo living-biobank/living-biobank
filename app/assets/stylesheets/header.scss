@@ -61,13 +61,21 @@ subheader, filters {
   }
 }
 
-.sticky-form-btn {
-  @extend .sticky-top;
+@include media-breakpoint-down(sm) {
+  header, subheader {
+    padding: 0.75rem;
+  }
 }
 
-@include media-breakpoint-down(sm) {
-  header, subheader .page-title {
-    padding: 0.75rem;
+@include media-breakpoint-down(xs) {
+  subheader {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .nav-item {
+      width: 50%;
+      justify-content: center;
+    }
   }
 }
 
@@ -78,10 +86,6 @@ subheader, filters {
 
   subheader + filters {
     top: $subheader-height;
-  }
-
-  .sticky-form-btn {
-    top: calc(#{$subheader-height} + #{$grid-gutter-width});
   }
 }
 

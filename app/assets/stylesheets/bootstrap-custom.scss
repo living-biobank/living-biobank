@@ -524,6 +524,10 @@ form, .form {
     width: 100% !important;
   }
 
+  &.btn-lg .btn {
+    @extend .btn-lg;
+  }
+
   .toggle-on, .toggle-off {
     display: flex;
     align-items: center;
@@ -537,6 +541,17 @@ form, .form {
       pointer-events: 'none';
     }
   }
+}
+
+////////////////
+/// Tooltips ///
+////////////////
+
+span[data-toggle=tooltip]:not(.tooltip-wrapper), label[data-toggle=tooltip],
+th[data-toggle=tooltip] > span, td[data-toggle=tooltip] > span,
+th[data-toggle=tooltip] > label, td[data-toggle=tooltip] > label {
+  border-bottom: 1px dashed theme-color('info');
+  cursor: pointer;
 }
 
 /////////////////
@@ -574,9 +589,9 @@ form, .form {
 }
 
 
-/////////////////////
-/// Utilities ///////
-/////////////////////
+/////////////////
+/// Utilities ///
+/////////////////
 
 .form-group, .form-row {
   &.is-valid {
