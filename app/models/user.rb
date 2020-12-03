@@ -151,7 +151,7 @@ class User < ApplicationRecord
 
   def check_for_admin
     unless User.where(admin: true).count > 1
-      self.derrors.add(:base, :last)
+      self.errors.add(:base, :last)
       throw(:abort)
     end
   end
