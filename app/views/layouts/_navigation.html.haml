@@ -1,6 +1,6 @@
 %nav.navbar.navbar-expand-md.navbar-dark.bg-dark
   .navbar-brand.m-0
-    = t('site_information.name').html_safe
+    = t('site_information.title.base')
   %button.navbar-toggler.align-self-center.text-white{ type: 'button', data: { toggle: 'collapse', target: '#navbarLinks' }, aria: { controls: 'navbarLinks' } }
     = icon('fas', 'bars fa-2x')
   .collapse.navbar-collapse.flex-column.bg-dark#navbarLinks
@@ -15,28 +15,28 @@
           = link_to specimens_path, class: ['nav-link btn btn-dark', controller_name == 'labs' ? 'active' : ''] do
             = icon('fas', 'flask')
             %span
-              = t('navigation.labs')
+              = t('site_information.navigation.labs')
       .nav-item
         = link_to requests_path, class: ['nav-link btn btn-dark', controller_name == 'sparc_requests' ? 'active' : ''] do
           = icon('fas', 'file-invoice')
           %span
-            = t('navigation.requests')
+            = t('site_information.navigation.requests')
       - if current_user.admin?
         .nav-item
           = link_to control_panel_root_path, class: ['nav-link btn btn-dark', ['users', 'groups'].include?(controller_name) ? 'active' : ''] do
             = icon('fas', 'cogs')
             %span
-              = t('navigation.control_panel')
+              = t('site_information.navigation.control_panel')
       .nav-item
         = link_to help_path, class: ['nav-link btn btn-dark', action_name == 'help' ? 'active' : ''] do
           = icon('fas', 'question')
           %span
-            = t('navigation.help')
+            = t('site_information.navigation.help')
       .nav-item.d-block.d-md-none.d-xl-block#signOut
         = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link btn btn-dark text-danger' do
           = icon('fas', 'sign-out-alt')
           %span
-            = t('navigation.logout')
+            = t('site_information.navigation.logout')
       .nav-item.dropdown.d-none.d-md-block.d-xl-none
         = link_to 'javascript:void(0)', id: 'profileDropdown', class: 'nav-link dropdown-toggle btn btn-dark', role: 'button', data: { toggle: 'dropdown' }, aria: { haspopup: 'true', expanded: 'false' } do
           = icon('fas', 'user-circle')
@@ -47,4 +47,4 @@
           = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'dropdown-item text-danger' do
             = icon('fas', 'sign-out-alt')
             %span
-              = t('navigation.logout')
+              = t('site_information.navigation.logout')

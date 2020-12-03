@@ -8,7 +8,7 @@
     = javascript_pack_tag 'application'
     = javascript_include_tag 'application'
     %title
-      = t('site_information.name')
+      = application_title()
   %body
     = render 'layouts/navigation'
     .d-flex.flex-column.flex-fill#contentContainer

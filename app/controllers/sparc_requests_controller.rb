@@ -10,19 +10,16 @@ class SparcRequestsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html
-    end
+    respond_to :html
   end
 
   def new
+    respond_to :html, :js
     @sparc_request = current_user.sparc_requests.new(status: 'pending')
     @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.protocol.build_research_types_info
     @sparc_request.specimen_requests.build
-
-    respond_to :js
   end
 
   def create
@@ -59,13 +56,12 @@ class SparcRequestsController < ApplicationController
   end
 
   def edit
+    respond_to :html, :js
     @is_draft = @sparc_request.draft?
 
     if @sparc_request.specimen_requests.none?
       @sparc_request.specimen_requests.build
     end
-
-    respond_to :js
   end
 
   def update

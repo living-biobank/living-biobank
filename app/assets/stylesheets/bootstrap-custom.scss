@@ -132,9 +132,9 @@ div[data-toggle=collapse] {
   line-height: 1.2;
 }
 
-/////////////
-/// FORMS ///
-/////////////
+////////////
+/// Form ///
+////////////
 
 form, .form {
   .form-check {
@@ -152,7 +152,7 @@ form, .form {
   &.custom-control-lg {
     .custom-control-label {
       margin-left: 1rem !important;
-      font-size: 1rem !important;
+      font-size: 1.5rem !important;
 
       &::before, &::after {
         top: 0.25rem !important;
@@ -168,10 +168,6 @@ form, .form {
   .custom-file-input {
     cursor: pointer;
   }
-}
-
-.form-error {
-  color: theme-color('danger');
 }
 
 ///////////////////
@@ -434,6 +430,14 @@ form, .form {
 
 @include media-breakpoint-down(sm) {
   .table-filters {
+    padding-left: 0;
+    padding-right: 00;
+
+    input[type=text] {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
     .filter {
       margin-left: 0.75rem;
       margin-right: 0.75rem;
@@ -445,6 +449,10 @@ form, .form {
 
     .dropdown.filter-select {
       justify-content: center;
+    }
+
+    .new-record-btn-container {
+      padding-left: 0.75rem;
     }
   }
 }
@@ -528,6 +536,10 @@ form, .form {
     width: 100% !important;
   }
 
+  &.btn-lg .btn {
+    @extend .btn-lg;
+  }
+
   .toggle-on, .toggle-off {
     display: flex;
     align-items: center;
@@ -541,6 +553,17 @@ form, .form {
       pointer-events: 'none';
     }
   }
+}
+
+////////////////
+/// Tooltips ///
+////////////////
+
+span[data-toggle=tooltip]:not(.tooltip-wrapper), label[data-toggle=tooltip],
+th[data-toggle=tooltip] > span, td[data-toggle=tooltip] > span,
+th[data-toggle=tooltip] > label, td[data-toggle=tooltip] > label {
+  border-bottom: 1px dashed theme-color('info');
+  cursor: pointer;
 }
 
 /////////////////
@@ -578,9 +601,9 @@ form, .form {
 }
 
 
-/////////////////////
-/// Utilities ///////
-/////////////////////
+/////////////////
+/// Utilities ///
+/////////////////
 
 .form-group, .form-row {
   &.is-valid {

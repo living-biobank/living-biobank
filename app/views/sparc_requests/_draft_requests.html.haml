@@ -3,7 +3,7 @@
     %h4.alert.alert-warning.draft-request.align-items-start{ role: 'alert' }
       .d-flex.flex-column
         - if current_user.can_edit_request?(dr)
-          = link_to edit_sparc_request_path(dr), remote: true, title: t(:requests)[:tooltips][:edit_draft], class: 'edit-draft-request d-flex align-items-center', data: { toggle: 'tooltip' } do
+          = link_to edit_sparc_request_path(dr), title: t(:requests)[:tooltips][:edit_draft], class: 'edit-draft-request d-flex align-items-center', data: { toggle: 'tooltip' } do
             = icon('fas', 'edit mr-1')
             = request_title_display(dr)
         - else

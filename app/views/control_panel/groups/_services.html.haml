@@ -7,24 +7,23 @@
         = succeed t('control_panel.groups.services.new_service') do
           = icon('fas', 'plus mr-2')
 
-.col-8.offset-2#groupSection
-  .card
-    %table.table.table-bordered.table-hover.mb-0.border-0#groupServices
-      %thead
+%main.card#groupSection
+  %table.table.table-bordered.table-hover.mb-0.border-0#groupServices
+    %thead
+      %tr
+        %th.col-10
+          = t('control_panel.groups.services.table.services')
+        %th.col-2.text-center
+          = t('control_panel.groups.services.table.actions')
+    %tbody
+      - group.services.each do |service|
         %tr
-          %th.col-10
-            = t('control_panel.groups.services.table.services')
-          %th.col-2.text-center
-            = t('control_panel.groups.services.table.actions')
-      %tbody
-        - group.services.each do |service|
-          %tr
-            %td 
-              = service.sparc_service.name
-            %td.text-center
-              = link_to edit_control_panel_group_service_path(group, service), remote: true, class: 'btn btn-warning mr-1' do
-                = icon('fas', 'pencil-alt')
-              = link_to control_panel_group_service_path(group, service), remote: true, method: :delete, class: 'btn btn-danger', data: { confirm_swal: 'true' } do
-                = icon('fas', 'trash')
+          %td 
+            = service.sparc_service.name
+          %td.text-center
+            = link_to edit_control_panel_group_service_path(group, service), remote: true, class: 'btn btn-warning mr-1' do
+              = icon('fas', 'pencil-alt')
+            = link_to control_panel_group_service_path(group, service), remote: true, method: :delete, class: 'btn btn-danger', data: { confirm_swal: 'true' } do
+              = icon('fas', 'trash')
 
 

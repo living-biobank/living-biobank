@@ -54,4 +54,8 @@ class Group < ApplicationRecord
     
     order(sort_by => sort_order)
   }
+
+  def identifier
+    self.name
+  end
 end

@@ -7,15 +7,14 @@
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application'
     %title
-      = "#{t("errors.#{action_name}.header")} - #{t('site_information.name')}"
+      = application_title()
   %body
     .col-xl-6.col-lg-8.col-md-11.mx-auto.mt-5#errorContainer
-      .card
-        .card-header.bg-dark.text-white.text-center
-          .display-3
-            = t('site_information.name')
-        = render 'layouts/environment'
-        .card-body.p-5.text-center
+      .card.my-auto
+        .card-body.text-center.p-sm-5
+          .card-title.justify-content-center.display-1
+            = t('site_information.title.base')
+          = render 'layouts/environment'
           .alert.alert-danger.mb-5
             .display-3.text-danger
               = "#{t("errors.#{action_name}.header")} - #{response.status}"
