@@ -33,11 +33,10 @@ $(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[<%
 <% end %>
 <% end %>
 
+$('#submitRequestButton, #saveDraftRequestButton').prop('disabled', false)
+
+if $('.is-invalid').length
+  $('html, body').animate({ scrollTop: $('.is-invalid').first().offset().top - $('subheader').first().height() }, 'slow')
 <% else %>
-$('#requestFilters').replaceWith("<%= j render 'sparc_requests/filters' %>")
-$('#requests').replaceWith("<%= j render 'sparc_requests/requests', requests: @requests %>")
-$('#draftRequests').replaceWith("<%= j render 'sparc_requests/draft_requests', draft_requests: @draft_requests %>")
-initializeSelectpickers()
-$('#modalContainer').modal('hide')
-$('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
+window.location.href = "<%= requests_path %>"
 <% end %>

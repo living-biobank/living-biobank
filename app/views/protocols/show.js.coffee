@@ -19,7 +19,6 @@ Swal.fire(
       dataType: 'script'
       url: "<%= edit_sparc_request_path(@existing_request) %>"
 <% elsif @rights %>
-
 # Use the title/short title from SPARC
 $('#sparc_request_protocol_attributes_title').val("<%= raw j @protocol.title %>").prop('readonly', true)
 $('#sparc_request_protocol_attributes_short_title').val("<%= raw j @protocol.short_title %>").prop('readonly', true)
@@ -43,10 +42,14 @@ $('#sparc_request_protocol_attributes_potential_funding_source').selectpicker('v
 
 <% if @protocol.start_date %>
 $('#sparc_request_protocol_attributes_start_date').datepicker('update', "<%= @protocol.start_date.strftime('%m/%d/%Y') %>").prop('readonly', true)
+<% else %>
+$('#sparc_request_protocol_attributes_start_date').prop('readonly', false)
 <% end %>
 
 <% if @protocol.end_date %>
 $('#sparc_request_protocol_attributes_end_date').datepicker('update', "<%= @protocol.end_date.strftime('%m/%d/%Y') %>").prop('readonly', true)
+<% else %>
+$('#sparc_request_protocol_attributes_end_date').prop('readonly', false)
 <% end %>
 
 $('#sparc_request_protocol_attributes_end_date').datepicker('hide')

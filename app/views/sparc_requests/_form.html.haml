@@ -1,156 +1,17 @@
-.modal-dialog.modal-xl#requestFormModal{ role: 'document' }
-  .modal-content
-    = form_for sparc_request, remote: true, method: sparc_request.persisted? ? :put : :post, html: { id: 'sparcRequestForm', autocomplete: 'off' } do |f|
-      = hidden_field_tag :term,       params[:term]
-      = hidden_field_tag :status,     params[:status]
-      = hidden_field_tag :sort_by,    params[:sort_by]
-      = hidden_field_tag :sort_order, params[:sort_order]
-      = hidden_field_tag :page,       params[:page]
-      = f.hidden_field :id
-      = f.hidden_field :protocol_id
-      = f.hidden_field :user_id
-      = f.hidden_field :status
+- unless defined?(is_draft)
+  - is_draft = false
 
-      .modal-header
-        %h4.modal-title
-          = t("requests.form.#{sparc_request.persisted? ? 'edit_title' : 'new_title'}", id: sparc_request.identifier)
-        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
-          %span{ aria: { hidden: 'true' } } &times;
-      .modal-body
-        %section.pb-4.mb-4.border-bottom
-          %h4.m-0
-            = t(:requests)[:form][:headers][:protocol_information]
-          - protocol            = sparc_request.protocol
-          - protocol_valid      = protocol.valid?
-          - protocol_persisted  = protocol.persisted?
-          = f.fields_for :protocol do |ff_p|
-            = ff_p.hidden_field :id
-            = ff_p.hidden_field :type
-            = ff_p.hidden_field :selected_for_epic
+= form_for sparc_request, remote: true, method: sparc_request.persisted? ? :put : :post, html: { id: 'sparcRequestForm', autocomplete: 'off' } do |f|
+  = hidden_field_tag :term,       params[:term]
+  = hidden_field_tag :status,     params[:status]
+  = hidden_field_tag :sort_by,    params[:sort_by]
+  = hidden_field_tag :sort_order, params[:sort_order]
+  = hidden_field_tag :page,       params[:page]
+  = f.hidden_field :id
+  = f.hidden_field :protocol_id
+  = f.hidden_field :user_id
+  = f.hidden_field :status
 
-            - if SPARC::Setting.get_value('research_master_enabled')
-              .form-group.mb-4.pb-4.border-bottom
-                = ff_p.label :research_master_id, class: 'required'
-                .input-group
-                  .input-group-prepend
-                    = label_tag :research_master_id, icon('fas', 'search'), class: 'input-group-text'
-                  = ff_p.text_field :research_master_id, class: 'form-control', readonly: protocol_persisted && protocol.research_master_id
-                %small.form-text.text-muted
-                  = raw(t(:requests)[:form][:subtext][:rmid])
-                - if sparc_request.persisted? && is_draft && !protocol_valid
-                  %small.form-text.text-warning
-                    = t('requests.form.subtext.protocol_not_found')
-            - else
-              .form-group.mb-4.pb-4.border-bottom
-                = label_tag :protocol_search, t(:requests)[:form][:fields][:protocol_search]
-                .input-group
-                  .input-group-prepend
-                    = label_tag :protocol_search, icon('fas', 'search'), class: 'input-group-text'
-                  = text_field_tag :protocol_search, protocol_persisted ? sparc_request.identifier : '', class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: protocol_persisted
-                %small.form-text.text-muted
-                  = raw(t(:requests)[:form][:subtext][:protocol])
-
-            .form-row
-              .form-group.col-lg-6
-                = ff_p.label :title, class: 'required'
-                = ff_p.text_field :title, class: 'form-control', readonly: protocol_persisted && protocol_valid
-              .form-group.col-lg-6
-                = ff_p.label :short_title, class: 'required'
-                = ff_p.text_field :short_title, class: 'form-control', readonly: protocol_persisted && protocol_valid
-            .form-group
-              = ff_p.fields_for :primary_pi_role do |ff_ppi|
-                = ff_ppi.hidden_field :id
-                = label_tag :primary_pi_search, SparcRequest.human_attribute_name(:primary_pi), class: 'required'
-                .input-group
-                  .input-group-prepend
-                    = label_tag :primary_pi_search, icon('fas', 'search'), class: 'input-group-text'
-                  = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: protocol_persisted && protocol_valid
-                  = ff_ppi.hidden_field :identity_id
-            .form-row
-              .form-group.col-6.col-lg-3
-                = ff_p.label :funding_status, class: 'required'
-                = ff_p.select :funding_status, SPARC::PermissibleValue.get_inverted_hash('funding_status'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: protocol_persisted && protocol_valid ? 'btn-light disabled' : 'btn-light' }
-              .form-group.col-6.col-lg-3#fundingSource{ class: protocol.funded? || (protocol.funding_status.blank? && protocol.funding_source.blank?) ? '' : 'd-none' }
-                = ff_p.label :funding_source, class: 'required'
-                = ff_p.select :funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: protocol_persisted && protocol_valid ? 'btn-light disabled' : 'btn-light' }
-              .form-group.col-6.col-lg-3#potentialFundingSource{ class: protocol.pending_funding? ? '' : 'd-none' }
-                = ff_p.label :potential_funding_source, class: 'required'
-                = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { style: protocol_persisted && protocol_valid ? 'btn-light disabled' : 'btn-light' }
-              .form-group.col-12.col-lg-6
-                = ff_p.label :start_date, class: 'required'
-                .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
-                  = ff_p.text_field :start_date, value: format_date(protocol.start_date), class: 'form-control', placeholder: SparcRequest.human_attribute_name(:start_date), readonly: protocol_persisted && protocol_valid, data: { date_enable_on_readonly: 'false' }
-                  .input-group-append.input-group-prepend
-                    %label.input-group-text<
-                      = t(:requests)[:form][:date_separator]
-                  = ff_p.text_field :end_date, value: format_date(protocol.end_date), class: 'form-control', placeholder: SparcRequest.human_attribute_name(:end_date), readonly: protocol_persisted && protocol_valid, data: { date_enable_on_readonly: 'false' }
-            .form-group.mb-0
-              = ff_p.label :sponsor_name, class: 'required'
-              = ff_p.text_field :sponsor_name, class: 'form-control', readonly: protocol_persisted && protocol_valid
-            = ff_p.fields_for :research_types_info do |ff_rti|
-              = ff_rti.hidden_field :id
-              = ff_rti.hidden_field :human_subjects, value: true
-        %section.pb-4.mb-4.border-bottom
-          %h4
-            = t(:requests)[:form][:headers][:request_data]
-          %p.form-text.text-muted.m-0
-            = t(:requests)[:form][:request_data][:text_1]
-            %ul.text-muted.pl-3
-              %li
-                = t(:requests)[:form][:request_data][:text_2]
-              %li
-                = t(:requests)[:form][:request_data][:text_3]
-              %li
-                = t(:requests)[:form][:request_data][:text_4]
-            .text-muted
-              = t(:requests)[:form][:request_data][:text_5]
-              = link_to t(:requests)[:form][:request_data][:link_text], "https://redcap.musc.edu/surveys/?s=T7YXHADCY9", target: :_blank
-          .form-group.mb-0
-            .custom-control.custom-checkbox
-              = f.check_box :dr_consult, class: 'custom-control-input'
-              = f.label :dr_consult, class: 'custom-control-label required'
-               
-        %section
-          %h4
-            = t(:requests)[:form][:headers][:specimens]
-          .form-group
-            %p.form-text.text-muted.m-0
-              = raw(t(:requests)[:form][:subtext][:i2b2_query])
-          - groups_sources = GroupsSource.eager_load(:group).all.map{ |gs| [gs.name, gs.id, { data: { validates_sample_size: gs.group.process_sample_size?.to_s } }] }
-          = f.nested_fields_for :specimen_requests do |ff_li|
-            = ff_li.hidden_field :id
-            .form-row
-              .form-group.col-6.col-lg-3
-                = ff_li.label :groups_source_id, class: 'required'
-                = ff_li.select :groups_source_id, options_for_select(groups_sources, ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control selectpicker groups-source-select'
-              .form-group.col-6.col-lg-3
-                = ff_li.label :query_id, class: 'required'
-                = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
-              .form-group.col-6.col-lg
-                = ff_li.label :number_of_specimens_requested, class: 'required'
-                = ff_li.text_field :number_of_specimens_requested, class: 'form-control numerical', min: 1, maxlength: 7
-              .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
-                = ff_li.label :minimum_sample_size, class: 'required'
-                .input-group
-                  = ff_li.text_field :minimum_sample_size, class: 'form-control numerical decimal', maxlength: 30
-                  .input-group-append
-                    = ff_li.label :minimum_sample_size, 'mL', class: 'input-group-text'
-              .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
-                %label.w-100 &nbsp;
-                = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
-                  = icon('fas', 'trash')
-              .form-group.d-block.d-sm-none.col-6.col-sm
-                %label.w-100 &nbsp;
-                = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
-                  = icon('fas', 'trash')
-          .form-group
-            = f.add_nested_fields_link :specimen_requests, href: 'javascript:void(0)', class: 'btn btn-success' do
-              = succeed t(:requests)[:form][:add_specimen] do
-                = icon('fas', 'plus mr-2')
-      .modal-footer
-        = f.submit t(:requests)[:form][:submit], class: 'btn btn-primary'
-        - unless sparc_request.persisted? && !is_draft
-          %button.btn.btn-warning#saveDraftRequestButton{ type: 'button' }
-            = t(:requests)[:form][:save_as_draft]
-        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
-          = t(:actions)[:close]
+  = render 'sparc_requests/form/protocol_information', f: f, sparc_request: sparc_request, is_draft: is_draft
+  = render 'sparc_requests/form/data_request', f: f
+  = render 'sparc_requests/form/specimens', f: f

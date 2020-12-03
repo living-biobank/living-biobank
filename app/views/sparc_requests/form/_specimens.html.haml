@@ -1,0 +1,38 @@
+%section.card
+  .card-body.p-5
+    %h2.card-title.justify-content-center
+      = t(:requests)[:form][:headers][:specimens]
+    .form-group
+      %p.form-text.text-muted.m-0
+        = raw(t(:requests)[:form][:subtext][:i2b2_query])
+    - groups_sources = GroupsSource.eager_load(:group).all.map{ |gs| [gs.name, gs.id, { data: { validates_sample_size: gs.group.process_sample_size?.to_s } }] }
+    = f.nested_fields_for :specimen_requests do |ff_li|
+      = ff_li.hidden_field :id
+      .form-row
+        .form-group.col-6.col-lg-3
+          = ff_li.label :groups_source_id, class: 'required'
+          = ff_li.select :groups_source_id, options_for_select(groups_sources, ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control selectpicker groups-source-select'
+        .form-group.col-6.col-lg-3
+          = ff_li.label :query_id, class: 'required'
+          = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control selectpicker', data: { live_search: 'true' }
+        .form-group.col-6.col-lg
+          = ff_li.label :number_of_specimens_requested, class: 'required'
+          = ff_li.text_field :number_of_specimens_requested, class: 'form-control numerical', min: 1, maxlength: 7
+        .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
+          = ff_li.label :minimum_sample_size, class: 'required'
+          .input-group
+            = ff_li.text_field :minimum_sample_size, class: 'form-control numerical decimal', maxlength: 30
+            .input-group-append
+              = ff_li.label :minimum_sample_size, 'mL', class: 'input-group-text'
+        .form-group.d-none.d-sm-flex.flex-column.px-1.mx-1
+          %label.w-100 &nbsp;
+          = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
+            = icon('fas', 'trash')
+        .form-group.d-block.d-sm-none.col-6.col-sm
+          %label.w-100 &nbsp;
+          = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
+            = icon('fas', 'trash')
+    .form-group
+      = f.add_nested_fields_link :specimen_requests, href: 'javascript:void(0)', class: 'btn btn-success' do
+        = succeed t(:requests)[:form][:add_specimen] do
+          = icon('fas', 'plus mr-2')

@@ -132,9 +132,9 @@ div[data-toggle=collapse] {
   line-height: 1.2;
 }
 
-/////////////
-/// FORMS ///
-/////////////
+////////////
+/// Form ///
+////////////
 
 form, .form {
   .form-check {
@@ -152,7 +152,7 @@ form, .form {
   &.custom-control-lg {
     .custom-control-label {
       margin-left: 1rem !important;
-      font-size: 1rem !important;
+      font-size: 1.5rem !important;
 
       &::before, &::after {
         top: 0.25rem !important;
@@ -168,10 +168,6 @@ form, .form {
   .custom-file-input {
     cursor: pointer;
   }
-}
-
-.form-error {
-  color: theme-color('danger');
 }
 
 ///////////////////

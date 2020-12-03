@@ -1,0 +1,21 @@
+%section.card
+  .card-body.p-5
+    %h2.card-title.justify-content-center
+      = t(:requests)[:form][:headers][:request_data]
+    .h5.font-weight-normal.mb-0
+      %p
+        = t(:requests)[:form][:request_data][:text_1]
+      %ul.pl-4
+        %li
+          = t(:requests)[:form][:request_data][:text_2]
+        %li
+          = t(:requests)[:form][:request_data][:text_3]
+        %li
+          = t(:requests)[:form][:request_data][:text_4]
+      %p
+        = t(:requests)[:form][:request_data][:text_5]
+        = link_to t(:requests)[:form][:request_data][:link_text], "https://redcap.musc.edu/surveys/?s=T7YXHADCY9", target: :_blank
+    .form-group.mb-0
+      .custom-control.custom-checkbox.custom-control-lg
+        = f.check_box :dr_consult, class: 'custom-control-input'
+        = f.label :dr_consult, class: 'custom-control-label required'

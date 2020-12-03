@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   end
 
   get '/requests', to: 'sparc_requests#index', as: 'requests'
+  get '/requests/new', to: 'sparc_requests#new', as: 'new_request'
+  get '/requests/:id/edit', to: 'sparc_requests#edit', as: 'edit_request'
   get '/requests/:id/', to: 'sparc_requests#show', as: 'request'
 
   resources :protocols, only: [:index]
