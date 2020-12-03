@@ -4,28 +4,33 @@
   = render 'pages/help/subheader'
 
 .row
-  .col-3.d-flex.mb-3.mb-sm-0
+  .col-6.d-flex.mb-4
     .card.flex-fill
-      .card-body
-        %h5.font-weight-bold
+      .card-body.p-5
+        %h2.card-title.justify-content-center
           = t(:home)[:links][:help1][:text]
-        = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
-  .col-3.d-flex.mb-3.mb-sm-0
+        .h5.font-weight-normal.mb-0
+          = link_to t(:home)[:links][:help1][:link], "https://i2b2.musc.edu/", target: :_blank
+  .col-6.d-flex.mb-4
     .card.flex-fill
-      .card-body
-        %h5.font-weight-bold
+      .card-body.p-5
+        %h2.card-title.justify-content-center
           = t(:home)[:links][:help2][:text]
-        = link_to t(:home)[:links][:help2][:link], "https://www.actnetwork.us/national/act-local-landing-pages-46EU-1434P4.html", target: :_blank
-  .col-3.d-flex.mb-3.mb-sm-0
+        .h5.font-weight-normal.mb-0
+          = link_to t(:home)[:links][:help2][:link], "https://www.actnetwork.us/national/act-local-landing-pages-46EU-1434P4.html", target: :_blank
+  .col-6.d-flex
     .card.flex-fill
-      .card-body.d-flex.flex-column
-        %h5.font-weight-bold
+      .card-body.p-5.d-flex.flex-column
+        %h2.card-title.justify-content-center
           = t(:home)[:links][:help3][:text]
-        = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
-        = link_to t(:home)[:links][:help3][:link3], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
-  .col-3.d-flex
+        .h5.font-weight-normal.mb-0
+          = link_to t(:home)[:links][:help3][:link2], "https://medicine.musc.edu/-/sm/medicine/departments/centers/bmic/f/basic-i2b2-guide.ashx?la=en", target: :_blank
+        .h5.font-weight-normal.mb-0
+          = link_to t(:home)[:links][:help3][:link3], "https://medicine.musc.edu/departments/centers/bmic/data-request/faqs", target: :_blank
+  .col-6.d-flex
     .card.flex-fill
-      .card-body
-        %h5.font-weight-bold
+      .card-body.p-5
+        %h2.card-title.justify-content-center
           = t('home.links.help4.text')
-        = link_to t('home.links.help4.link'), 'LBB_Guide_v1.1.pptx'
+        .h5.font-weight-normal.mb-0
+          = link_to t('home.links.help4.link'), 'LBB_Guide_v1.1.pptx'
