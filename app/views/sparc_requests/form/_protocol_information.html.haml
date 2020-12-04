@@ -59,7 +59,7 @@
           = ff_p.select :potential_funding_source, SPARC::PermissibleValue.get_inverted_hash('funding_source'), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker', data: { style: protocol_persisted && protocol_valid ? 'btn-light disabled' : 'btn-light' }
         .form-group.col-12.col-lg-6
           = ff_p.label :start_date, class: 'required'
-          .input-group.input-daterange.date{ data: { provide: 'datepicker', date_container: '.modal', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
+          .input-group.input-daterange.date{ data: { provide: 'datepicker', date_autoclose: 'true', date_today_highlight: 'true', date_enable_on_readonly: 'false' } }
             = ff_p.text_field :start_date, value: format_date(protocol.start_date), class: 'form-control form-control-lg', placeholder: SparcRequest.human_attribute_name(:start_date), readonly: protocol_persisted && protocol_valid, data: { date_enable_on_readonly: 'false' }
             .input-group-append.input-group-prepend
               %label.input-group-text<

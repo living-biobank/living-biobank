@@ -87,10 +87,14 @@
       if (tagName === 'A' && href !== 'javascript:void(0)' && remote !== 'true') {
         window.location.href = href + data;
       } else {
+        NProgress.start();
         $.ajax({
           method: method || 'GET',
           url: ((tagName === 'A' && href !== 'javascript:void(0)') ? href : url) + data,
           dataType: 'script',
+          success: (data) => {
+            NProgress.done();
+          }
         });
       }
     }

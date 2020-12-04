@@ -16,3 +16,5 @@ if $('.is-invalid').length
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 window.location.href = "<%= edit_group_path(@group, tab: 'users') %>"
 <% end %>
+
+NProgress.done()

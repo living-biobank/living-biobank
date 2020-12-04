@@ -15,7 +15,7 @@ class SparcRequestsController < ApplicationController
 
   def new
     respond_to :html, :js
-    @sparc_request = current_user.sparc_requests.new(status: 'pending')
+    @sparc_request = current_user.sparc_requests.new
     @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
     @sparc_request.protocol.build_research_types_info
@@ -37,6 +37,7 @@ class SparcRequestsController < ApplicationController
         @errors = @sparc_request.protocol.errors
       end
     else
+      @sparc_request.status = 'pending'
       if @sparc_request.save
         send_submission_emails()
         flash.now[:success] = t(:requests)[:created]
@@ -47,7 +48,7 @@ class SparcRequestsController < ApplicationController
 
     # Add the user only to a *NEW* SPARC Study if they're not the Primary PI
     if @sparc_request.protocol.saved_change_to_attribute?(:id) && @sparc_request.protocol.primary_pi.ldap_uid != current_user.net_id
-      @sparc_request.protocol.project_roles.create(role: 'research-assistant-coordinator', project_rights: 'approve')
+      @sparc_request.protocol.project_roles.create(identity: SPARC::Directory.find_or_create(current_user.net_id), role: 'research-assistant-coordinator', project_rights: 'approve')
     end
 
     find_requests
@@ -67,7 +68,7 @@ class SparcRequestsController < ApplicationController
   def update
     if params[:save_draft]
       @sparc_request.assign_attributes(sparc_request_params)
-      @sparc_request.specimen_requests.each{ |sr| sr.source_id ||= 0 }
+      @sparc_request.specimen_requests.each{ |sr| sr.groups_source_id ||= 0 }
       
       if @sparc_request.protocol.valid? && @sparc_request.save(validate: false)
         flash.now[:success] = t(:requests)[:saved]

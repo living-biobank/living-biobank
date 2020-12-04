@@ -13,6 +13,8 @@
 ///////////////
 
 .btn {
+  white-space: nowrap;
+
   &.btn-info, &.btn-warning,
   &.btn-outline-info:hover, &.btn-outline-warning:hover {
     color: white !important;

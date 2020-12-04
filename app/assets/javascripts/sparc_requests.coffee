@@ -65,7 +65,8 @@ $ ->
     $(document).on('keyup', '#sparc_request_protocol_attributes_research_master_id:not([readonly=readonly])', ->
       clearTimeout(rmidTimer)
       if rmid = $(this).val()
-        rmidTimer = setTimeout( (->
+        rmidTimer = setTimeout ->
+          NProgress.start()
           $.ajax(
             url: "/protocol"
             type: 'GET'
@@ -79,6 +80,8 @@ $ ->
                   type: 'GET'
                   dataType: 'script'
                   url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
+                  complete: ->
+                    NProgress.done()
                   success: ->
                     $('.form-error, .form-alert').remove()
                     $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
@@ -95,12 +98,15 @@ $ ->
                 type: 'GET'
                 dataType: 'script'
                 url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
+                complete: ->
+                  NProgress.done()
                 success: ->
                   $('#sparc_request_protocol_attributes_research_master_id').focus()
                   $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
           )
-        ), 750)
+        , 750
       else
+        NProgress.start()
         $.ajax
           type: 'GET'
           dataType: 'script'
@@ -163,6 +169,7 @@ $ ->
 
     $(document).on 'click', '#submitRequestButton, #saveDraftRequestButton', ->
       $('#submitRequestButton, #saveDraftRequestButton').prop('disabled', true)
+      NProgress.start()
 
     $(document).on 'click', '#saveDraftRequestButton', ->
       $('#sparc_request_status').remove()

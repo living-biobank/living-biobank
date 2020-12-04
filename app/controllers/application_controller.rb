@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :preload_settings
+  around_action :handle_internal_server_error, if: Proc.new{ request.format.js? }
+
+  private
 
   def layout_by_resource
     if devise_controller?
@@ -38,5 +41,18 @@ class ApplicationController < ActionController::Base
 
   def ajax_redirect_to(url)
     render js: "window.location.assign('#{url}')"
+  end
+
+  def handle_internal_server_error
+    ActiveRecord::Base.transaction do
+      begin
+        yield
+      rescue => e
+        ExceptionNotifier.notify_exception(e) if Rails.env.production?
+        redirect_to controller: :errors, action: :internal_error
+      ensure
+        raise ActiveRecord::Rollback
+      end
+    end
   end
 end
