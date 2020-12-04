@@ -40,3 +40,5 @@ if $('.is-invalid').length
 <% else %>
 window.location.href = "<%= requests_path %>"
 <% end %>
+
+NProgress.done()

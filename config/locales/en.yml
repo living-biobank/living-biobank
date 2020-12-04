@@ -489,7 +489,7 @@ en:
         confirm: "Accept"
         cancel: "Decline"
       delete:
-        title: "Delete Reqeuest %{id}?"
+        title: "Delete Request %{id}?"
       finalize:
         title: "Finalize Request %{id}?"
         text: "This request will become eligible to receive specimens."
@@ -540,9 +540,9 @@ en:
           body: "<p class='font-weight-bold'>Study %{identifier}</p>You do not have permission to make requests for this Study. If you believe this is in error, please contact the Primary PI <span class='font-weight-bold'>%{pi_name}</span> at <a href='mailto:%{pi_email}'>%{pi_email}</a>."
       add_specimen: "Add Specimen"
       delete_specimen: "Delete Specimen"
-      submit: "Submit for Inquiry"
+      submit: "Submit Request"
       update: "Submit Changes"
-      save_as_draft: "Save as Draft"
+      save_as_draft: "Save Draft"
     table:
       header: "Request %{id}"
       sparc_header: "SPARC %{identifier}"
