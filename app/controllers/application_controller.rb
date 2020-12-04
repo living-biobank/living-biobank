@@ -50,7 +50,6 @@ class ApplicationController < ActionController::Base
       rescue => e
         ExceptionNotifier.notify_exception(e) if Rails.env.production?
         redirect_to controller: :errors, action: :internal_error
-      ensure
         raise ActiveRecord::Rollback
       end
     end
