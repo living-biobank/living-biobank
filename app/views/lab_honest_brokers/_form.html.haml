@@ -1,5 +1,5 @@
 .modal-dialog{ role: 'document' }
-  = form_for [group, honest_broker], remote: true do |f|
+  = form_for [group, honest_broker], remote: true, html: { autocomplete: 'off' } do |f|
     = f.hidden_field :group_id
     .modal-content
       .modal-header
@@ -16,7 +16,7 @@
                 = icon('fas', 'search')
             = text_field_tag 'honestBrokerSearch', '', class: 'form-control', placeholder: 'Search for a user'
       .modal-footer
-        %button.btn.btn-primary<
+        %button.btn.btn-primary{ type: 'submit' }<
           = icon('fas', 'plus mr-1')
           = t('actions.add')
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

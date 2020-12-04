@@ -3,56 +3,59 @@ $ ->
   ### Requests Page ###
   #####################
 
-  $(document).on('shown.bs.popover', '.specimen-line-item', (e) ->
-    lineItem = $(e.target)
+  if $('#requests').length
+    loadI2B2Queries()
 
-    if lineItem.data('one-yr') || lineItem.data('six-mo') || lineItem.data('three-mo')
-      data = [
-        [I18n.t('activerecord.attributes.line_item.one_year_accrual'), lineItem.data('one-yr')],
-        [I18n.t('activerecord.attributes.line_item.six_month_accrual'), lineItem.data('six-mo')],
-        [I18n.t('activerecord.attributes.line_item.three_month_accrual'), lineItem.data('three-mo')]
-      ]
-    else
-      data = []
-    new Chartkick['BarChart'](lineItem.data('chart-id'), data,
-      {
-        curve: false,
-        messages: {
-          empty: I18n.t('requests.table.specimens.chart.no_data')
-        },
-        library: {
-          layout: {
-            padding: {
-              right: 125
+    $(document).on('shown.bs.popover', '.specimen-line-item', (e) ->
+      lineItem = $(e.target)
+
+      if lineItem.data('one-yr') || lineItem.data('six-mo') || lineItem.data('three-mo')
+        data = [
+          [I18n.t('activerecord.attributes.line_item.one_year_accrual'), lineItem.data('one-yr')],
+          [I18n.t('activerecord.attributes.line_item.six_month_accrual'), lineItem.data('six-mo')],
+          [I18n.t('activerecord.attributes.line_item.three_month_accrual'), lineItem.data('three-mo')]
+        ]
+      else
+        data = []
+      new Chartkick['BarChart'](lineItem.data('chart-id'), data,
+        {
+          curve: false,
+          messages: {
+            empty: I18n.t('requests.table.specimens.chart.no_data')
+          },
+          library: {
+            layout: {
+              padding: {
+                right: 125
+              }
             }
-          }
-          plugins: {
-            datalabels: {
-              anchor: 'end',
-              align: 'right',
-              formatter: (value, context) ->
-                if context.dataIndex == 0
-                  rate = value / 52 # 52 weeks/yr
-                else if context.dataIndex == 1
-                  rate = value / 26 # 4.33 weeks/mo * 6mo
-                else if context.dataIndex == 2
-                  rate = value / 13 # 4.33 weeks/mo * 3mo
-                return I18n.t('requests.table.specimens.chart.value', value: value, rate: rate.toFixed(2))
+            plugins: {
+              datalabels: {
+                anchor: 'end',
+                align: 'right',
+                formatter: (value, context) ->
+                  if context.dataIndex == 0
+                    rate = value / 52 # 52 weeks/yr
+                  else if context.dataIndex == 1
+                    rate = value / 26 # 4.33 weeks/mo * 6mo
+                  else if context.dataIndex == 2
+                    rate = value / 13 # 4.33 weeks/mo * 3mo
+                  return I18n.t('requests.table.specimens.chart.value', value: value, rate: rate.toFixed(2))
+              }
             }
           }
         }
-      }
+      )
     )
-  )
 
   #####################
   ### Requests Form 3##
   #####################
 
   if $('#sparcRequestForm').length
+    loadI2B2Queries()
     initializeProtocolTypeahead()
     initializePrimaryPITypeahead()
-    loadI2B2Queries()
 
     rmidTimer = null
 
@@ -286,11 +289,24 @@ $ ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
 
 (exports ? this).loadI2B2Queries = () ->
-  $("select[name*=query_id]").parents('.dropdown').data('toggle', 'tooltip').prop('title', I18n.t('requests.form.tooltips.loading_i2b2_queries')).tooltip()
-  $.ajax
-    method: 'GET'
-    dataType: 'script'
-    url: '/i2b2_queries'
-    data:
-      user_id:      $('#sparc_request_user_id').val()
-      protocol_id:  $('#sparc_request_protocol_id').val()
+  if $('#requests').length
+    # Get all unique query ids on the page, then send AJAX requests to populate them
+    query_ids = $('.i2b2-query').map(->
+      $(this).data('query-id')
+    ).toArray().filter( (itm, i, arr) ->
+      arr.indexOf(itm) == i
+    ).forEach( (query_id) ->
+      $.ajax
+        method: 'GET'
+        dataType: 'script'
+        url: "/i2b2_queries/#{query_id}"
+    )
+  else
+    $("select[name*=query_id]").parents('.dropdown').data('toggle', 'tooltip').prop('title', I18n.t('constants.loading')).tooltip()
+    $.ajax
+      method: 'GET'
+      dataType: 'script'
+      url: '/i2b2_queries'
+      data:
+        user_id:      $('#sparc_request_user_id').val()
+        protocol_id:  $('#sparc_request_protocol_id').val()

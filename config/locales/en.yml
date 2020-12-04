@@ -167,14 +167,15 @@ en:
 
   constants:
     date_placeholder: "MM/DD/YYYY"
-    select_placeholder: "Please Select"
+    loading: "Loading..."
+    na: "N/A"
+    negative: "No"
     no_records: "No records found"
     order:
       asc: "Ascending"
       desc: "Descending"
-    na: "N/A"
-    negative: "No"
     positive: "Yes"
+    select_placeholder: "Please Select"
 
   ###########################
   ### ERRORS (CONTROLLER) ###
@@ -192,7 +193,7 @@ en:
     internal_error:
       header: "Server Error"
       text1: "Looks like something went wrong!"
-      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>. In the meantime, try refreshing your page."
+      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>.<br>In the meantime, try refreshing your page."
 
   ##############
   ### GROUPS ###
@@ -530,7 +531,6 @@ en:
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
         i2b2_query: "Please select your specimen source and an associated e-phenotype using your <a href='https://i2b2.musc.edu/' target='_blank'>i2b2</a> query history. <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'><br>Click here</a> if you need help with creating a query. Queries shown are populated from all SPARC study team members."
       tooltips:
-        loading_i2b2_queries: "Loading queries..."
         no_i2b2_queries:
           protocol: "None of this study's users have existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."
           user: "You don't have any existing i2b2 queries. Please visit the link above to create queries so that we can find the right specimens for your study."
@@ -563,7 +563,6 @@ en:
       specimens:
         chart:
           header: "%{source} Sample Accrual"
-          loading: "Loading..."
           no_data: "We're still processing data for samples matching your request.\nPlease try again later."
           value: "%{value} (%{rate}/week)"
         line_item_no_sample_size:

@@ -24,7 +24,7 @@
             .input-group
               = f.text_field :value, class: 'form-control', id: 'value'
       .modal-footer
-        %button.btn.btn-primary<
+        %button.btn.btn-primary{ type: 'submit' }<
           = icon('fas', 'plus mr-1')
           = t('actions.add')
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

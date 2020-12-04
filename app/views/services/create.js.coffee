@@ -11,3 +11,4 @@ $('#modalContainer').modal('hide')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
 $('#groupServices').load(location.href + " #groupServices")
 <% end %>
+NProgress.done()
