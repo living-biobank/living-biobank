@@ -193,7 +193,7 @@ en:
     internal_error:
       header: "Server Error"
       text1: "Looks like something went wrong!"
-      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>. In the meantime, try refreshing your page."
+      text2: "We track these errors automatically, but if the problem persists feel free to contact us at <a href='mailto:%{email}'>%{email}</a>.<br>In the meantime, try refreshing your page."
 
   ##############
   ### GROUPS ###

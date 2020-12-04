@@ -1,11 +1,11 @@
 $ ->
-  loadI2B2Queries()
-
   #####################
   ### Requests Page ###
   #####################
 
   if $('#requests').length
+    loadI2B2Queries()
+
     $(document).on('shown.bs.popover', '.specimen-line-item', (e) ->
       lineItem = $(e.target)
 
@@ -53,6 +53,7 @@ $ ->
   #####################
 
   if $('#sparcRequestForm').length
+    loadI2B2Queries()
     initializeProtocolTypeahead()
     initializePrimaryPITypeahead()
 

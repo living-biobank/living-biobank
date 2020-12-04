@@ -48,9 +48,13 @@ class ApplicationController < ActionController::Base
       begin
         yield
       rescue => e
-        ExceptionNotifier.notify_exception(e) if Rails.env.production?
+        if Rails.env.production?
+          ExceptionNotifier.notify_exception(e)
+        else
+          Rails.logger.error e.message
+          Rails.logger.error e.backtrace.join("\n")
+        end
         redirect_to controller: :errors, action: :internal_error
-      ensure
         raise ActiveRecord::Rollback
       end
     end

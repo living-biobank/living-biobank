@@ -27,6 +27,9 @@ $ ->
   # Add browser confirms when navigating away from forms with changes
   $('form').areYouSure()
 
+  $(document).on 'click', 'button[type=submit], input[type=submit]', ->
+    NProgress.start()
+
   # Remove form validation contexts when changing fields
   $(document).on 'keydown change change.datetimepicker', '.is-valid:not(.persist-validation), .is-invalid:not(.persist-validation)', ->
     $(this).removeClass('is-valid is-invalid').find('.form-error').remove()

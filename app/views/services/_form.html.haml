@@ -28,12 +28,11 @@
         /   .input-group
         /     = f.text_field :position, class: 'form-control', placeholder: 'Enter the position for this service', id: 'condition'
       .modal-footer
-        - unless edit_form
-          %button.btn.btn-primary<
+        %button.btn.btn-primary{ type: 'submit' }<
+          - if edit_form
+            = t('actions.save')
+          - else
             = icon('fas', 'plus mr-1')
             = t('actions.add')
-        - else
-          %button.btn.btn-primary<
-            = t('actions.save')
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
           = t(:actions)[:close]
