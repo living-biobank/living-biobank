@@ -1,5 +1,7 @@
-$('header').replaceWith("<%= j render 'sparc_requests/header' %>")
+$('header').replaceWith("<%= j render 'sparc_requests/header', request: nil %>")
 $('#requests').replaceWith("<%= j render 'sparc_requests/requests', requests: @requests %>")
 $('#draftRequests').replaceWith("<%= j render 'sparc_requests/draft_requests', draft_requests: @draft_requests %>")
+
+loadI2B2Queries()
 
 $(document).trigger('ajax:complete') # rails-ujs element replacement bug fix

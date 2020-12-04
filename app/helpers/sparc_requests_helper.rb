@@ -135,7 +135,7 @@ module SparcRequestsHelper
 
     chart = content_tag :div do
       content_tag(:h5, t('requests.table.specimens.chart.header', source: li.groups_source.source.value), class: 'mb-3 font-weight-bold') +
-      content_tag(:div, t('requests.table.specimens.chart.loading'), id: "chart-#{li.id}", class: 'rates-chart')
+      content_tag(:div, t('constants.loading'), id: "chart-#{li.id}", class: 'rates-chart')
     end
 
     content = icon('fas', 'flask mr-2') + 
@@ -151,9 +151,9 @@ module SparcRequestsHelper
     end
   end
 
-  def query_display(li)
-    content_tag :span, class: 'd-flex text-muted' do
-      icon('fas', 'database fa-sm mr-2') + content_tag(:small, li.i2b2_query.try(:name).try(:truncate, 50))
+  def query_display(obj)
+    content_tag :span, class: 'd-flex text-muted i2b2-query', data: { query_id: obj.is_a?(LineItem) ? obj.query_id : nil } do
+      content = icon('fas', 'database fa-sm mr-2') + content_tag(:small, (obj.is_a?(LineItem) ? t('constants.loading') : obj.try(:name).try(:truncate, 50)))
     end
   end
 

@@ -11,4 +11,10 @@ class I2b2QueriesController < ApplicationController
         I2b2::Query.where(user_id: requester.net_id)
       end.order(create_date: :desc)
   end
+
+  def show
+    respond_to :js
+
+    @query = I2b2::Query.find_by(query_master_id: params[:id])
+  end
 end

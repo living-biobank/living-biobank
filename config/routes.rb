@@ -43,7 +43,7 @@ Rails.application.routes.draw do
     resources :services
   end
 
-  resources :i2b2_queries, only: [:index]
+  resources :i2b2_queries, only: [:index, :show]
 
   namespace :sparc do
     get '/directory/index', to: 'directory#index'
