@@ -94,6 +94,8 @@ $ ->
                     $('#primary_pi_search').val(data.primary_pi.display_name).prop('readonly', true).typeahead('destroy')
                     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(data.primary_pi.id)
                     $('#sparc_request_protocol_attributes_title, #sparc_request_protocol_attributes_short_title, #primary_pi_search').parents('.form-group').append("<small class='form-text text-success'>#{I18n.t('requests.form.subtext.imported_from_rmid')}</small>")
+              else
+                NProgress.done()
             error: (xhr) ->
               message = $.parseJSON(xhr.responseText).error
               $('.form-error, .form-alert').remove()
