@@ -18,6 +18,6 @@
         - else
           = t(:requests)[:form][:submit]
       - unless request.persisted? && !is_draft
-        %button.btn.btn-lg.btn-warning.ml-1#saveDraftRequestButton{ type: 'submit' }<
+        %button.btn.btn-lg.btn-warning.ml-1#saveDraftRequestButton{ type: 'button' }<
           = icon('far', 'save mr-2')
           = t(:requests)[:form][:save_as_draft]

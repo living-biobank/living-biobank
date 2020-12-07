@@ -172,11 +172,8 @@ $ ->
         $minSampleContainer.addClass('d-none')
         $minSampleContainer.find('input').val('')
 
-    $(document).on 'click', '#submitRequestButton, #saveDraftRequestButton', ->
-      $('#submitRequestButton, #saveDraftRequestButton').prop('disabled', true)
-      NProgress.start()
-
-    $(document).on 'click', '#saveDraftRequestButton', ->
+    $(document).on 'click', '#saveDraftRequestButton', (event) ->
+      $(this).prop('disabled', true)
       $('#sparc_request_status').remove()
       $form = $('form#sparcRequestForm')
       $form.append("<input name='save_draft' type='hidden' value='true' />")

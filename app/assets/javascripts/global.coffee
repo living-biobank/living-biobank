@@ -27,7 +27,10 @@ $ ->
   # Add browser confirms when navigating away from forms with changes
   $('form').areYouSure()
 
-  $(document).on 'click', 'button[type=submit], input[type=submit]', ->
+  $(document).on 'ajax:beforeSend', 'form', ->
+    id = $(this).prop('id')
+    $(this).find('input[type=submit], button[type=submit]').prop('disabled', true)
+    $("input[type=submit][form=#{id}], button[type=submit][form=#{id}]").prop('disabled', true)
     NProgress.start()
 
   # Remove form validation contexts when changing fields
