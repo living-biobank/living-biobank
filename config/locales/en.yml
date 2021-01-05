@@ -248,6 +248,7 @@ en:
         name_placeholder: "Enter the alias for this source-group association"
         value_placeholder: "Enter the name for this source to be displayed to users"
         key_placeholder: "Enter the Epic key for this source"
+        description_placeholder: "Enter the description for this source"
       errors:
         key_exists: "This Key already exists for this group."
     services:

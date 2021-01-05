@@ -1,2 +1,2 @@
-$('#modalContainer').html("<%= j render 'sources/edit_form', source: @source, group: @group, groups_source_name: @groups_source_name%>")
+$('#modalContainer').html("<%= j render 'sources/edit_form', source: @source, group: @group, groups_source_name: @groups_source_name, groups_source_description: @groups_source_description%>")
 $('#modalContainer').modal('show')

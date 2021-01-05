@@ -15,6 +15,11 @@
               = text_field_tag :name, groups_source_name, class: 'form-control', id: 'name'
         .form-row
           .form-group.mb-2
+            = f.label t('groups.sources.form.description_placeholder')
+            .input-group
+              = text_field_tag :description, groups_source_description, class: 'form-control', id: 'description'
+        .form-row
+          .form-group.mb-2
             = f.label t('groups.sources.form.key_placeholder')
             .input-group  
               = f.text_field :key, class: 'form-control', id: 'key'

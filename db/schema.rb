@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_04_161703) do
+ActiveRecord::Schema.define(version: 2021_01_05_204743) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2020_11_04_161703) do
 
   create_table "groups_sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
+    t.string "description"
     t.bigint "group_id", null: false
     t.bigint "source_id", null: false
     t.boolean "deprecated", default: false
@@ -171,7 +172,6 @@ ActiveRecord::Schema.define(version: 2020_11_04_161703) do
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_sources_on_group_id_and_key", unique: true
   end
 
   create_table "sparc_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
