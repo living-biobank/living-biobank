@@ -25,7 +25,7 @@
             = f.label :condition, class: 'required'
             = f.select :condition, options_for_select(t('groups.services.conditions').invert, f.object.condition), { include_blank: true }, class: 'form-control selectpicker'
       .modal-footer
-        %button.btn.btn-primary{ type: 'submit' }<
+        %button.btn.btn-primary.form-submit{ type: 'submit' }<
           - if action_name == 'edit'
             = t('actions.save')
           - else

@@ -7,7 +7,7 @@
         = succeed t('groups.new') do
           = icon('fas', 'plus mr-2')
     - elsif tab == 'details'
-      %button.btn.btn-lg.btn-primary#saveGroupButton{ type: 'submit', form: 'groupDetailsForm' }<
+      %button.btn.btn-lg.btn-primary.form-submit#saveGroupButton{ type: 'submit', form: 'groupDetailsForm' }<
         = icon('fas', 'check mr-2')
         = t('actions.save_changes')
     - elsif tab == 'users'

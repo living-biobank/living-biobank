@@ -27,11 +27,11 @@
             = f.text_field :value, class: 'form-control', id: 'value'
       .modal-footer
         - unless action_name == 'edit'
-          %button.btn.btn-primary{ type: 'submit' }<
+          %button.btn.btn-primary.form-submit{ type: 'submit' }<
             = icon('fas', 'plus mr-1')
             = t('actions.add')
         - else
-          %button.btn.btn-primary<
+          %button.btn.btn-primary.form-submit<
             = t('actions.save')
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
           = t(:actions)[:close]

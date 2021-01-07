@@ -27,7 +27,10 @@ $ ->
   # Add browser confirms when navigating away from forms with changes
   $('form').areYouSure()
 
-  $(document).on 'click', 'button[type=submit], input[type=submit]', ->
+  # If we use [type=submit] here it blocks remote form submission by
+  # rails-ujs. Apply .form-submit to submit buttons to disable them
+  # on form submission
+  $(document).on 'click', '.form-submit', ->
     $(this).prop('disabled', true)
     NProgress.start()
 

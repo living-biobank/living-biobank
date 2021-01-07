@@ -16,7 +16,7 @@
                 = icon('fas', 'search')
             = text_field_tag 'honestBrokerSearch', '', class: 'form-control', placeholder: 'Search for a user'
       .modal-footer
-        %button.btn.btn-primary{ type: 'submit' }<
+        %button.btn.btn-primary.form-submit{ type: 'submit' }<
           = icon('fas', 'plus mr-1')
           = t('actions.add')
         %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }

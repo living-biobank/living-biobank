@@ -11,13 +11,13 @@
         = image_tag 'sparcrequest_icon.ico', width: 16, height: 16, class: 'mr-2'
         = t('requests.table.sparc_link')
     - elsif ['new', 'edit'].include?(action_name)
-      %button.btn.btn-lg.btn-primary#submitRequestButton{ type: 'submit', form: 'sparcRequestForm' }<
+      %button.btn.btn-lg.btn-primary.form-submit#submitRequestButton{ type: 'submit', form: 'sparcRequestForm' }<
         = icon('fas', 'check mr-2')
         - if request.previously_submitted?
           = t(:requests)[:form][:update]
         - else
           = t(:requests)[:form][:submit]
       - unless request.persisted? && !is_draft
-        %button.btn.btn-lg.btn-warning.ml-1#saveDraftRequestButton{ type: 'submit' }<
+        %button.btn.btn-lg.btn-warning.ml-1.form-submit#saveDraftRequestButton{ type: 'submit' }<
           = icon('far', 'save mr-2')
           = t(:requests)[:form][:save_as_draft]

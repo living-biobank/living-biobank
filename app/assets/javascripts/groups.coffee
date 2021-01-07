@@ -1,9 +1,5 @@
 $ ->
   if $('#groupDetailsForm').length
-    $(document).on 'click', '#saveGroupButton', ->
-      $(this).prop('disabled', true)
-      NProgress.start()
-
     $(document).on 'change', '#group_process_specimen_retrieval', ->
       $('#discardEmailContainer').toggleClass('d-none')
 
