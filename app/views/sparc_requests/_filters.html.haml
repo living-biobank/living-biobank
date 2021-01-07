@@ -1,5 +1,5 @@
 %filters.table-filters#requestFilters{ data: { url: sparc_requests_path } }
-  = text_field_tag 'searchRequests', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
+  = table_search('searchRequests')
   .tooltip-wrapper.d-flex.order-1{ title: t(:requests)[:filters][:status], data: { toggle: 'tooltip' } }
     = select_tag 'status', request_status_filter_options(params[:status]), class: 'selectpicker filter-select form-control', data: { field: 'status', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:requests)[:filters][:status] }
   .tooltip-wrapper.d-flex.order-3.order-sm-2{ title: t(:requests)[:filters][:sort_by], data: { toggle: 'tooltip' } }

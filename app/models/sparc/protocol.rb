@@ -5,7 +5,6 @@ module SPARC
     has_one :research_types_info, dependent: :destroy
 
     has_many :sparc_requests
-    has_many :specimen_records
 
     has_many :project_roles, dependent: :destroy
     has_many :service_requests, dependent: :destroy

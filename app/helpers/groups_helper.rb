@@ -27,7 +27,7 @@ module GroupsHelper
   end
 
   def edit_group_button(group)
-    link_to edit_group_path(group, group_filter_params.merge(tab: 'details')), class: 'btn btn-warning', title: t('groups.tooltips.edit'), data: { toggle: "tooltip" } do
+    link_to tab_edit_group_path(group, group_filter_params.merge(tab: 'details')), class: 'btn btn-warning', title: t('groups.tooltips.edit'), data: { toggle: "tooltip" } do
       icon('fas', 'pencil-alt')
     end
   end

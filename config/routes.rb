@@ -34,14 +34,18 @@ Rails.application.routes.draw do
     end
   end
   resources :groups, only: [:index, :new, :create, :edit, :update] do
-    resources :lab_honest_brokers, only: [:index, :new, :create] do
-      collection do
-        delete :destroy
-      end
-    end
+    resources :lab_honest_brokers, only: [:index, :new, :create, :destroy]
     resources :sources
-    resources :services
+    resources :services, only: [:index, :new, :create, :edit, :update]
   end
+
+  resources :services, only: [] do
+    collection do
+      get :search
+    end
+  end
+
+  get '/groups/:id/edit/:tab', to: 'groups#edit', as: 'tab_edit_group'
 
   resources :i2b2_queries, only: [:index, :show]
 

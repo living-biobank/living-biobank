@@ -1,14 +1,21 @@
 <% if @errors %>
-$('#sparc_id #status #condition').parents('.form-group').removeClass('is-invalid').addClass('is-valid')
+$("[id^='service_']").parents('.form-group').removeClass('is-invalid').addClass('is-valid')
 $('.form-error').remove()
+
+<% @errors.messages[:sparc_service].each do |message| %>
+$('#service_search').parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
+<% end %>
+
 <% @errors.messages.each do |attr, messages| %>
 <% messages.each do |message| %>
-$("#<%= attr %>").parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
+$("#service_<%= attr.to_s %>").parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
 <% end %>
 <% end %>
+$('button[type=submit]').prop('disabled', false)
 <% else %>
+$('#servicesTable').bootstrapTable('refresh')
 $('#modalContainer').modal('hide')
 $('#flashContainer').html("<%= j render 'layouts/flash', flash: flash %>")
-$('#groupServices').load(location.href + " #groupServices")
 <% end %>
+
 NProgress.done()
