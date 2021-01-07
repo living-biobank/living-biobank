@@ -21,7 +21,6 @@ class SourcesController < ApplicationController
     find_groups_source
 
     @source = @groups_source.source
-    @groups_source_name = @groups_source.name
   end
 
   def update
@@ -32,7 +31,7 @@ class SourcesController < ApplicationController
     @source = @groups_source.source
     if @source.update(sources_params.except(:group_id, :name))
       #update join table association on success
-      @group.groups_sources.where(source: @source).first.update(name: params[:name])
+      @group.groups_sources.where(source: @source).first.update(name: params[:name], description: params[:description])
       flash.now[:success] = t('groups.sources.flash.updated')
     else
       @errors = @source.errors
@@ -45,10 +44,10 @@ class SourcesController < ApplicationController
     #Checks for key uniqueness within the specified group
     unless @group.sources.any? {|source| source.key == sources_params[:key]}
       #If key is unique, begins process of adding new source
-      @source = Source.new(sources_params.except(:group_id, :name))
+      @source = Source.new(sources_params.except(:group_id, :name, :description))
       if @source.save
         #create join table association on success
-        @group.groups_sources.create!(source: @source, name: params[:name])
+        @group.groups_sources.create!(source: @source, name: params[:name], description: params[:description])
         flash.now[:success] = t('groups.sources.flash.created')
       else
         @errors = @source.errors
@@ -85,7 +84,8 @@ class SourcesController < ApplicationController
       :group_id,
       :name,
       :key,
-      :value
+      :value,
+      :description
     )
   end
 end
