@@ -21,8 +21,6 @@ class SourcesController < ApplicationController
     find_groups_source
 
     @source = @groups_source.source
-    @groups_source_name = @groups_source.name
-    @groups_source_description = @groups_source.description
   end
 
   def update
