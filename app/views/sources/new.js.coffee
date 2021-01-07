@@ -1,3 +1,3 @@
-$('#modalContainer').html("<%= j render 'sources/form', source: @source, group: @group, groups_source_name: nil%>")
+$('#modalContainer').html("<%= j render 'sources/form', source: @source, group: @group, groups_source: @groups_source%>")
 $('#modalContainer').modal('show')
 
