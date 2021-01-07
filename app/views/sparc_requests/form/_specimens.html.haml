@@ -9,9 +9,6 @@
     = f.nested_fields_for :specimen_requests do |ff_li|
       = ff_li.hidden_field :id
       .form-row
-        / .form-group.col-6.col-lg-3
-        /   = ff_li.label :groups_source_id, class: 'required'
-        /   = ff_li.select :groups_source_id, options_for_select(groups_sources, ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control form-control-lg selectpicker groups-source-select'
         .form-group.col-6.col-lg-3
           = ff_li.label :groups_source_id, class: 'required'
           = ff_li.select :groups_source_id, options_for_select(GroupsSource.where(deprecated: false).map{ |gs| [gs.name, gs.id, {"data-subtext"=>gs.description}]}, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control selectpicker groups-source-select'
