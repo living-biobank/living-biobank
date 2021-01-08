@@ -1,2 +1,2 @@
 %filters.table-filters#groupFilters{ data: { url: groups_path } }
-  = text_field_tag 'searchGroups', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
+  = table_search('searchGroups')

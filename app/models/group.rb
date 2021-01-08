@@ -1,15 +1,15 @@
 class Group < ApplicationRecord
-  has_and_belongs_to_many :lab_honest_brokers, join_table: :lab_honest_brokers, class_name: "User"
-
+  has_many :lab_honest_brokers
   has_many :groups_sources
   has_many :active_groups_sources, -> { active }, class_name: "GroupsSource"
   has_many :sources, through: :groups_sources
 
   has_many :services, dependent: :destroy
 
-  has_many :labs,           through: :sources
-  has_many :line_items,     through: :sources
-  has_many :sparc_requests, through: :line_items
+  has_many :labs,                     through: :sources
+  has_many :line_items,               through: :sources
+  has_many :sparc_requests,           through: :line_items
+  has_many :lab_honest_broker_users,  through: :lab_honest_brokers, source: :user
 
   has_rich_text :release_email
   has_rich_text :discard_email

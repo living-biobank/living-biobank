@@ -48,8 +48,8 @@ module SparcRequestsHelper
       content_tag(:small, t('requests.table.sparc_header', identifier: sr.protocol.identifier.truncate(40)), class: 'text-muted d-inline-flex align-items-center mt-0 mt-sm-1') +
       if opts[:popover] && sr.previously_submitted?
         content_tag(:span, class: 'mt-0 mt-sm-1') do
-          link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', content: render('sparc_requests/details_popover', request: sr) }) +
-          link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-inline-block d-xl-none ml-2', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('sparc_requests/details_popover', request: sr) })
+          link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-none d-xl-inline-block ml-2', data: { toggle: 'popover', html: 'true', placement: 'top', container: 'body', trigger: 'manual', template: '<div class="popover request-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>', content: render('sparc_requests/details_popover', request: sr) }) +
+          link_to(icon('fas', 'info-circle'), 'javascript:void(0)', class: 'd-inline-block d-xl-none ml-2', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', template: '<div class="popover request-popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>', content: render('sparc_requests/details_popover', request: sr) })
         end
       else
         ""

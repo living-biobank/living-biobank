@@ -20,11 +20,13 @@
 @import 'bootstrap-datepicker/dist/css/bootstrap-datepicker.min';
 @import 'bootstrap-select/dist/css/bootstrap-select.min';
 @import 'bootstrap-table/dist/bootstrap-table.min';
+@import 'bootstrap-table/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.min';
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 @import 'sweetalert2/dist/sweetalert2.min';
 
 @import 'variables';
+@import 'utilities';
 
 @import 'nprogress-custom';
 @import 'bootstrap-custom';

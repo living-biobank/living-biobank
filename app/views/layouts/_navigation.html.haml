@@ -38,7 +38,7 @@
           %span
             = t('site_information.navigation.help')
       .nav-item.d-block.d-md-none.d-xl-block#signOut
-        = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'nav-link btn btn-dark text-danger' do
+        = link_to destroy_user_session_path, method: :delete, id: 'logout', class: 'nav-link btn btn-dark text-danger' do
           = icon('fas', 'sign-out-alt')
           %span
             = t('site_information.navigation.logout')
@@ -49,7 +49,7 @@
           .dropdown-header
             = current_user.full_name
           .dropdown-divider
-          = link_to destroy_user_session_path, method: 'delete', id: 'logout', class: 'dropdown-item text-danger' do
+          = link_to destroy_user_session_path, method: :delete, id: 'logout', class: 'dropdown-item text-danger' do
             = icon('fas', 'sign-out-alt')
             %span
               = t('site_information.navigation.logout')

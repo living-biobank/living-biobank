@@ -228,20 +228,6 @@ form, .form {
   }
 }
 
-///////////////
-/// POPOVER ///
-///////////////
-
-.popover {
-  max-width: 50vw;
-}
-
-@include media-breakpoint-only(xs) {
-  .popover {
-    max-width: 80vw;
-  }
-}
-
 ////////////////
 /// PROGRESS ///
 ////////////////
@@ -388,10 +374,6 @@ form, .form {
   .filter {
     margin-left: calc(#{$grid-gutter-width} / 2);
     margin-right: calc(#{$grid-gutter-width} / 2);
-  }
-
-  .table-search {
-    flex: 1 0;
   }
 
   .filter-date {

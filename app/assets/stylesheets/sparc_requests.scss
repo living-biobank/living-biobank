@@ -53,6 +53,16 @@
   }
 }
 
+.popover.request-popover {
+  max-width: 50vw;
+}
+
+@include media-breakpoint-only(xs) {
+  .popover.request-popover {
+    max-width: 80vw;
+  }
+}
+
 @include media-breakpoint-down(lg) {
   .use-agreement {
     width: 80%;

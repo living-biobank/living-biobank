@@ -1,0 +1,13 @@
+$text-map: (
+  "institution":  "info",
+  "provider":     "success",
+  "program":      "warning",
+  "core":         "primary",
+  "service":      "info"
+);
+
+@each $color, $theme in $text-map {
+  .text-#{$color} {
+    @extend .text-#{$theme};
+  }
+}

@@ -76,6 +76,13 @@ en:
         three_month_accrual: "Past 3 Months"
         six_month_accrual: "Past 6 Months"
         one_year_accrual: "Past Year"
+      service:
+        condition: "Trigger Condition"
+        name: "Service Name"
+        organization: "Organization"
+        position: "Display Order"
+        sparc_service: "Affiliated SPARC Service"
+        status: "Trigger Status"
       sparc_request:
         id: "Request ID"
         created_at: "Date Requested"
@@ -102,9 +109,9 @@ en:
         start_date: "Timeline"
       sparc/project_role:
         identity: "Primary PI"
-      specimen_record:
-        release_date: "Release Date"
-        release_to: "Release To"
+      sparc/service:
+        cpt_code: "CPT Code"
+        abbreviation: "Abbreviation"
     models:
       group:
         zero: "Groups"
@@ -121,6 +128,8 @@ en:
         one: "Request"
         few: "Requests"
         other: "Requests"
+      sparc/service:
+        one: "Service"
       user:
         zero: "Users"
         one: "User"
@@ -138,6 +147,10 @@ en:
               required: "can't be blank"
             number_of_specimens_requested:
               not_a_number: "must be a number"
+        service:
+          attributes:
+            sparc_service:
+              required: "can't be blank"
         sparc_request:
           attributes:
             specimen_requests:
@@ -253,20 +266,33 @@ en:
         key_exists: "This Key already exists for this group."
     services:
       new: "Add New Service"
-      table:
-        services: "Service Name"
-        actions: "Actions"
+      conditions:
+        irb_approved: "IRB Approved"
+        irb_not_approved: "IRB Not Approved"
+      filters:
+        all_status: "Any Status"
+        status: "Filter by Trigger Status"
+        all_condition: "Any Condition"
+        no_condition: "No Condition"
+        condition: "Filter by Trigger Condition"
+        sort_by: "Sort By"
+        sort_order: "Order"
       flash:
         created: "Service created successfully!"
         destroyed: "Service removed!"
         updated: "Service updated successfully!"
       form:
+        header:
+          new: "New Service"
+          edit: "Edit Service"
         new_service: "New Service"
-        edit_service: "Edit %{service_name}"
-        warning: "NOTE:  To change the SPARC service ID, you will need to delete the unwanted service and create a new one."
-        sparc_id_placeholder: "Enter the SPARC ID for this service"
-        status_placeholder: "Choose the trigger status"
-        condition_placeholder: "Choose the condition"
+        edit_service: "Edit %{service}"
+        placeholders:
+          service_search: "Search by Name or CPT Code"
+      headers:
+        actions: "Actions"
+      tooltips:
+        edit: "Edit Service"
     tooltips:
       edit: "Edit Group"
     flash:
@@ -465,11 +491,11 @@ en:
     updated: "Your inquiry has been updated successfully."
     failed: "Your inquiry could not be updated at this time."
     statuses:
-      draft: "Draft"
-      pending: "Pending"
-      in_process: "In Process"
-      complete: "Completed"
       cancelled: "Cancelled"
+      complete: "Completed"
+      draft: "Draft"
+      in_process: "In Process"
+      pending: "Pending"
     filters:
       status: "Filter by Request Status"
       all_status: "Any Status"

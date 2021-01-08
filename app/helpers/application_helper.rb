@@ -22,5 +22,14 @@ module ApplicationHelper
   def format_date(date)
     date.strftime("%m/%d/%Y") if date
   end
+
+  def table_search(id)
+    content_tag(:div, class: 'flex-fill') do
+      content_tag(:div, class: 'input-group') do
+        label_tag(id, icon('fas', 'search text-muted'), class: 'input-group-icon') +
+        text_field_tag(id, params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search'))
+      end
+    end
+  end
 end
 
