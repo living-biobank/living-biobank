@@ -26,3 +26,7 @@ end
 every 1.hour do
   rake 'data:clear_refreshed_sparc_data'
 end
+
+every 1.hour do
+  rake 'delayed_job_monitor'
+end
