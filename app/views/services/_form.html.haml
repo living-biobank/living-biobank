@@ -1,35 +1,32 @@
 .modal-dialog{ role: 'document' }
   .modal-content
-    = form_for [group, service], remote: true do |f|
-      = hidden_field_tag :group_id
+    = form_for [group, service], remote: true, html: { autocomplete: 'off' } do |f|
+      = hidden_field_tag :group_id, value: group.id
       .modal-header
-        - unless edit_form
-          %h4.modal-title
-            = t('groups.services.form.new_service')
-        - else
-          %h4.modal-title
-            = t('groups.services.form.edit_service', service_name: service.sparc_service.name)
+        %h4.modal-title
+          = t("groups.services.form.header.#{action_name}", service: service.sparc_service.try(:name))
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
-        - if edit_form
-          %p
-            = t('groups.services.form.warning')
-        .form-group.mb-2
-          .input-group
-            = f.number_field :sparc_id, class: 'form-control', placeholder: t('groups.services.form.sparc_id_placeholder'), id: 'sparc_id', readonly: edit_form
-        .form-group.mb-2
-          .input-group
-            = f.select :status, options_for_select({'In Process' => 'in_process', 'Pending' => 'pending'}, f.object.status), include_blank: t('groups.services.form.status_placeholder'), class: 'form-control', id: 'status'
-        .form-group.mb-2  
-          .input-group
-            = f.select :condition, options_for_select({'IRB Approved' => 'irb_approved', 'Not IRB Approved' => 'irb_not_approved'}, f.object.condition), class: 'form-control', include_blank: t('groups.services.form.condition_placeholder'), id: 'condition'
-        / .form-group.mb-0  
-        /   .input-group
-        /     = f.text_field :position, class: 'form-control', placeholder: 'Enter the position for this service', id: 'condition'
+        - if action_name == 'new'
+          .form-group
+            = f.hidden_field :sparc_id
+            = label_tag :service_search, Service.human_attribute_name(:sparc_service), class: 'required'
+            .input-group
+              = label_tag :service_search, class: 'input-group-icon' do
+                %span.text-muted
+                  = icon('fas', 'search')
+              = text_field_tag :service_search, service.sparc_service.try(:name), class: 'form-control typahead', placeholder: t('groups.services.form.placeholders.service_search')
+        .form-row
+          .form-group.col-6.mb-0
+            = f.label :status, class: 'required'
+            = f.select :status, options_for_select(t('requests.statuses').slice(:pending, :in_process).invert, f.object.status), { include_blank: true }, class: 'form-control selectpicker'
+          .form-group.col-6.mb-0
+            = f.label :condition, class: 'required'
+            = f.select :condition, options_for_select(t('groups.services.conditions').invert, f.object.condition), { include_blank: true }, class: 'form-control selectpicker'
       .modal-footer
         %button.btn.btn-primary{ type: 'submit' }<
-          - if edit_form
+          - if action_name == 'edit'
             = t('actions.save')
           - else
             = icon('fas', 'plus mr-1')

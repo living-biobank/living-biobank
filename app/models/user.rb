@@ -1,11 +1,11 @@
 class User < ApplicationRecord
   include DirtyAssociations
 
-  has_and_belongs_to_many :groups, join_table: :lab_honest_brokers,
+  has_many :lab_honest_brokers,
     after_add: :dirty_create,
     after_remove: :dirty_delete
-
-  has_many :honest_broker_labs, through: :groups, source: :labs
+  has_many :groups,                 through: :lab_honest_brokers
+  has_many :honest_broker_labs,     through: :groups, source: :labs
   has_many :honest_broker_requests, through: :groups, source: :sparc_requests
 
   has_many :sources, through: :groups

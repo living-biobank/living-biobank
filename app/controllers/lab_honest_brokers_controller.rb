@@ -3,21 +3,24 @@ class LabHonestBrokersController < ApplicationController
   before_action :find_group
 
   def index
-    respond_to :js, :json
-
-    @honest_brokers = @group.lab_honest_brokers.filtered_for_index(params[:term], nil, nil, params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1)
+    respond_to do |format|
+      format.js
+      format.json {
+        @honest_brokers = @group.lab_honest_brokers.filtered_for_index(params[:term], params[:sort], params[:order]).paginate(page: params[:page].present? ? params[:page] : 1)
+      }
+    end
   end
 
   def new
     respond_to :js
 
-    @honest_broker = LabHonestBroker.new(group: @group)
+    @honest_broker = @group.lab_honest_brokers.new
   end
 
   def create
     respond_to :js
 
-    @honest_broker = LabHonestBroker.new(lab_honest_broker_params)
+    @honest_broker = @group.lab_honest_brokers.new(lab_honest_broker_params)
 
     if @honest_broker.save
       flash.now[:success] = t('groups.lab_honest_brokers.flash.created')
@@ -29,7 +32,7 @@ class LabHonestBrokersController < ApplicationController
   def destroy
     respond_to :js
 
-    @honest_broker = LabHonestBroker.find_by(group_id: params[:group_id], user_id: params[:user_id])
+    @honest_broker = @group.lab_honest_brokers.find(params[:id])
     @honest_broker.destroy
 
     flash.now[:success] = t('groups.lab_honest_brokers.flash.destroyed')

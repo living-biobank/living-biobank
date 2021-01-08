@@ -1,3 +1,10 @@
-%filters.table-filters#serviceFilters{ data: { url: group_sources_path(group) } }
-  -#= text_field_tag 'searchServices', params[:term], class: 'form-control form-control-lg table-search', placeholder: t('actions.search')
-  .flex-fill
+%filters.table-filters#serviceFilters{ data: { url: group_services_path(group) } }
+  = table_search('searchServices')
+  .tooltip-wrapper.d-flex{ title: t('groups.services.filters.status'), data: { toggle: 'tooltip' } }
+    = select_tag 'status', service_status_filter_options(params[:status]), class: 'selectpicker filter-select form-control', data: { field: 'status', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('groups.services.filters.status') }
+  .tooltip-wrapper.d-flex{ title: t('groups.services.filters.condition'), data: { toggle: 'tooltip' } }
+    = select_tag 'condition', service_condition_filter_options(params[:condition]), class: 'selectpicker filter-select form-control', data: { field: 'condition', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('groups.services.filters.condition') }
+  .tooltip-wrapper.d-flex{ title: t('groups.services.filters.sort_by'), data: { toggle: 'tooltip' } }
+    = select_tag 'sort_by', service_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select form-control', title: t('groups.services.filters.sort_by'), data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('groups.services.filters.sort_by') }
+  .tooltip-wrapper.d-flex{ title: t('groups.services.filters.sort_order'), data: { toggle: 'tooltip' } }
+    = select_tag 'sort_order', service_sort_order_options(params[:sort_order]), class: 'selectpicker filter-select form-control', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('groups.services.filters.sort_order') }

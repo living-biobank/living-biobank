@@ -169,3 +169,10 @@ $ ->
   ).filter((q) -> q).join("&")
 
   window.history.pushState({}, null, window.location.origin + window.location.pathname + query_string)
+
+(exports ? this).escapeHTML = (text) ->
+  if text
+    return text.replace(/&/g,'&amp;' ).replace(/</g,'&lt;').
+      replace(/"/g,'&quot;').replace(/'/g,'&#039;')
+  else
+    return text

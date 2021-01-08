@@ -1,24 +1,17 @@
 - content_for :filters do
   = render 'services/filters', group: group
   
-
 %main.card#groupSection
-  %table.table.table-bordered.table-hover.mb-0.border-0#groupServices
+  %table.table.table-bordered.table-hover.mb-0.border-0#servicesTable{ data: { toggle: 'table', url: group_services_path(group, term: params[:term], status: params[:status], condition: params[:condition], sort_by: params[:sort_by], sort_order: params[:sort_order], page: params[:page]), side_pagination: 'server', reorderable_rows: 'true', use_row_attr_func: 'true' } }
     %thead
       %tr
-        %th.col-10
-          = t('groups.services.table.services')
-        %th.col-2.text-center
-          = t('groups.services.table.actions')
-    %tbody
-      - group.services.each do |service|
-        %tr
-          %td 
-            = service.sparc_service.name
-          %td.text-center
-            = link_to edit_group_service_path(group, service), remote: true, class: 'btn btn-warning mr-1' do
-              = icon('fas', 'pencil-alt')
-            = link_to group_service_path(group, service), remote: true, method: :delete, class: 'btn btn-danger', data: { confirm_swal: 'true' } do
-              = icon('fas', 'trash')
-
-
+        %th.col-4{ data: { field: 'name' } }
+          = Service.human_attribute_name(:name)
+        %th.col-3{ data: { field: 'organization' } }
+          = Service.human_attribute_name(:organization)
+        %th.col-2{ data: { field: 'status' } }
+          = Service.human_attribute_name(:status)
+        %th.col-2{ data: { field: 'condition' } }
+          = Service.human_attribute_name(:condition)
+        %th.text-center.col-1{ data: { field: 'actions' } }
+          = t('groups.services.headers.actions')
