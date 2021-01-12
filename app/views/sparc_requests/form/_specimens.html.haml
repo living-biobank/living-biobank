@@ -11,7 +11,7 @@
       .form-row
         .form-group.col-6.col-lg-3
           = ff_li.label :groups_source_id, class: 'required'
-          = ff_li.select :groups_source_id, options_for_select(groups_sources, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control selectpicker groups-source-select'
+          = ff_li.select :groups_source_id, options_for_select(groups_sources, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control form-control-lg selectpicker groups-source-select'
         .form-group.col-6.col-lg-3
           = ff_li.label :query_id, class: 'required'
           = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker', data: { live_search: 'true' }

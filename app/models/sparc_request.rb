@@ -207,7 +207,7 @@ class SparcRequest < ApplicationRecord
   end
 
   def update_services
-    if (services_to_add = self.services.where(status: self.status)).any?
+    if (services_to_add = self.services.where(status: self.status).order(:position)).any?
       # Find or create a Service Request
       sr = self.protocol.service_requests.first_or_create
       # Find or create an Identity for the requester
