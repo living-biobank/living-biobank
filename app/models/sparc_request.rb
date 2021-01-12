@@ -119,7 +119,7 @@ class SparcRequest < ApplicationRecord
       if self.submitted_at.blank?
         self.send("submitted_at=", DateTime.now)
       end
-    when 'finalized'
+    when 'in_process'
       self.send("finalized_at=", DateTime.now)
     when 'complete'
       self.send("completed_at=", DateTime.now)
@@ -142,7 +142,7 @@ class SparcRequest < ApplicationRecord
   end
 
   def completed?
-    self.status == 'completed'
+    self.status == 'complete'
   end
 
   def in_process?

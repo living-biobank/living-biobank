@@ -22,8 +22,8 @@
             = f.label :status, class: 'required'
             = f.select :status, options_for_select(t('requests.statuses').slice(:pending, :in_process).invert, f.object.status), { include_blank: true }, class: 'form-control selectpicker'
           .form-group.col-6.mb-0
-            = f.label :condition, class: 'required'
-            = f.select :condition, options_for_select(t('groups.services.conditions').invert, f.object.condition), { include_blank: true }, class: 'form-control selectpicker'
+            = f.label :condition
+            = f.select :condition, options_for_select(t('groups.services.conditions').invert, f.object.condition), { include_blank: t('groups.services.blank_condition') }, class: 'form-control selectpicker'
       .modal-footer
         %button.btn.btn-primary{ type: 'submit' }<
           - if action_name == 'edit'

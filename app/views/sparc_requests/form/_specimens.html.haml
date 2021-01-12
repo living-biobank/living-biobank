@@ -5,13 +5,13 @@
     .form-group
       %p.form-text.text-muted.m-0
         = raw(t(:requests)[:form][:subtext][:i2b2_query])
-    - groups_sources = GroupsSource.eager_load(:group).all.map{ |gs| [gs.name, gs.id, { data: { validates_sample_size: gs.group.process_sample_size?.to_s } }] }
+    - groups_sources = GroupsSource.eager_load(:group).where(deprecated: false).map{ |gs| [gs.name, gs.id, { data: { subtext: gs.description, validates_sample_size: gs.group.process_sample_size?.to_s } }] }
     = f.nested_fields_for :specimen_requests do |ff_li|
       = ff_li.hidden_field :id
       .form-row
         .form-group.col-6.col-lg-3
           = ff_li.label :groups_source_id, class: 'required'
-          = ff_li.select :groups_source_id, options_for_select(GroupsSource.where(deprecated: false).map{ |gs| [gs.name, gs.id, {"data-subtext"=>gs.description}]}, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control selectpicker groups-source-select'
+          = ff_li.select :groups_source_id, options_for_select(groups_sources, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control selectpicker groups-source-select'
         .form-group.col-6.col-lg-3
           = ff_li.label :query_id, class: 'required'
           = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker', data: { live_search: 'true' }

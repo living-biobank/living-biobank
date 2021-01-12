@@ -9,7 +9,7 @@ class Service < ApplicationRecord
   acts_as_list scope: :group
 
   validates_uniqueness_of :sparc_id, scope: :group_id
-  validates_presence_of :status, :condition
+  validates_presence_of :status
 
   scope :filtered_for_index, -> (term, status, condition, sort_by, sort_order) {
     search(term).
