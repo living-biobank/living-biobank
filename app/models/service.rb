@@ -74,7 +74,7 @@ class Service < ApplicationRecord
   }
 
   def human_condition
-    self.condition ? I18n.t("groups.services.conditions.#{condition}") : I18n.t('constants.na')
+    self.condition.present? ? I18n.t("groups.services.conditions.#{condition}") : I18n.t('constants.na')
   end
 
   def human_status
