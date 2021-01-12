@@ -17,7 +17,7 @@ class LineItem < ApplicationRecord
                             :groups_source_id,                                    
                               if: :specimen_request?
   validates_numericality_of :number_of_specimens_requested, greater_than: 0, less_than: 10000000, allow_blank: true,  if: :specimen_request?
-  validates_numericality_of :minimum_sample_size, greater_than: 0, less_than: 10000000, allow_blank: true,            if: Proc.new{ |li| li.specimen_request? && li.group && li.group.process_sample_size? }
+  validates_numericality_of :minimum_sample_size, greater_than: 0, less_than: 10000000,                               if: Proc.new{ |li| li.specimen_request? && li.group && li.group.process_sample_size? }
 
   before_destroy :update_sparc_records
 
