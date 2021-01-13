@@ -21,6 +21,8 @@ class Lab < ApplicationRecord
   delegate :dob, to: :patient
   delegate :sparc_requests, to: :patient
 
+  alias_attribute :collection_date, :specimen_date
+
   scope :filtered_for_index, -> (term, released_at_start, released_at_end, status, source, sort_by, sort_order) {
     search(term).
     by_released_date(released_at_start, released_at_end).

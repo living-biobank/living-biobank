@@ -262,6 +262,9 @@ en:
         value_placeholder: "Enter the name for this source to be displayed to users"
         key_placeholder: "Enter the Epic key for this source"
         description_placeholder: "Enter the description for this source to display to users"
+        discard_age: "How many days after collection should this be discarded?"
+        discard_age_suffix: "Days"
+        discard_note: "What should the reason for discard be?"
       errors:
         key_exists: "This Key already exists for this group."
     services:
@@ -377,7 +380,7 @@ en:
       sort_order: "Order"
     table:
       header: "Specimen %{id}"
-      patient_info: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob}"
+      patient_info: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob} | <strong>Collection Date</strong> %{specimen_date}"
       requests:
         header: "Requests Matching this Specimen"
         released:

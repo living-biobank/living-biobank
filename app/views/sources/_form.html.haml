@@ -1,6 +1,6 @@
 .modal-dialog{ role: 'document' }
   .modal-content
-    = form_for [group, source], remote: true do |f|
+    = form_for [group, source], remote: true, html: { id: 'sourcesForm', autocomplete: 'off' } do |f|
       = hidden_field_tag :group_id
       .modal-header
         %h4.modal-title
@@ -25,6 +25,17 @@
           = f.label t('groups.sources.form.value_placeholder')
           .input-group
             = f.text_field :value, class: 'form-control', id: 'value'
+        .form-group 
+          = f.label t('groups.sources.form.discard_age')
+          .input-group
+            = text_field_tag :discard_age, groups_source ? groups_source.discard_age : nil, class: 'form-control numerical', id: 'age'
+            .input-group-append
+              %span.input-group-text#age
+                = t('groups.sources.form.discard_age_suffix')
+          .form-group 
+          = f.label t('groups.sources.form.discard_note')
+          .input-group
+            = text_field_tag :discard_note, groups_source ? groups_source.discard_note : nil, class: 'form-control', id: 'note'
       .modal-footer
         - unless action_name == 'edit'
           %button.btn.btn-primary{ type: 'submit' }<
