@@ -20,5 +20,7 @@ module SparcBiobank
 
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
     config.active_job.queue_adapter = :delayed_job
+
+    config.action_dispatch.default_headers.merge!({'Vary' => 'Accept', 'X-Frame-Options' => 'ALLOWALL', 'X-UA-Compatible' => 'IE=edge,chrome=1'})
   end
 end
