@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(version: 2021_01_13_200047) do
     t.string "name"
     t.string "description"
     t.integer "discard_age"
-    t.string "discard_note"
     t.bigint "group_id", null: false
     t.bigint "source_id", null: false
     t.boolean "deprecated", default: false

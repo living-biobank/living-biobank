@@ -24,13 +24,13 @@
           = f.label t('groups.sources.form.value_placeholder')
           .input-group
             = f.text_field :value, class: 'form-control', id: 'value'
-        .form-group 
-          = f.label t('groups.sources.form.discard_age')
-          .input-group
-            = text_field_tag :discard_age, groups_source ? groups_source.discard_age : nil, class: 'form-control numerical', id: 'age'
-            .input-group-append
-              %span.input-group-text#age
-                = t('groups.sources.form.discard_age_suffix')
+        / .form-group 
+        /   = f.label t('groups.sources.form.discard_age')
+        /   .input-group
+        /     = text_field_tag :discard_age, groups_source ? groups_source.discard_age : nil, class: 'form-control numerical', id: 'age'
+        /     .input-group-append
+        /       %span.input-group-text#age
+        /         = t('groups.sources.form.discard_age_suffix')
       .modal-footer
         - unless action_name == 'edit'
           %button.btn.btn-primary{ type: 'submit' }<
