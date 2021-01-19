@@ -1,6 +1,6 @@
 .modal-dialog{ role: 'document' }
   .modal-content
-    = form_for [group, source], remote: true do |f|
+    = form_for [group, source], remote: true, html: { id: 'sourcesForm', autocomplete: 'off' } do |f|
       = hidden_field_tag :group_id
       .modal-header
         %h4.modal-title
@@ -16,15 +16,21 @@
           = f.label t('groups.sources.form.description_placeholder')
           .input-group
             = text_field_tag :description, groups_source ? groups_source.description : nil, class: 'form-control', id: 'description'
-        - unless action_name == 'edit'
-          .form-group
-            = f.label t('groups.sources.form.key_placeholder')
-            .input-group  
-              = f.text_field :key, class: 'form-control', id: 'key'
+        .form-group
+          = f.label t('groups.sources.form.key_placeholder')
+          .input-group  
+            = f.text_field :key, class: 'form-control', id: 'key', readonly: (action_name == 'edit' || nil)
         .form-group 
           = f.label t('groups.sources.form.value_placeholder')
           .input-group
             = f.text_field :value, class: 'form-control', id: 'value'
+        / .form-group 
+        /   = f.label t('groups.sources.form.discard_age')
+        /   .input-group
+        /     = text_field_tag :discard_age, groups_source ? groups_source.discard_age : nil, class: 'form-control numerical', id: 'age'
+        /     .input-group-append
+        /       %span.input-group-text#age
+        /         = t('groups.sources.form.discard_age_suffix')
       .modal-footer
         - unless action_name == 'edit'
           %button.btn.btn-primary{ type: 'submit' }<

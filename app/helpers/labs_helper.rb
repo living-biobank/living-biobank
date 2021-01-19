@@ -2,7 +2,7 @@ module LabsHelper
   def lab_sort_filter_options(sort_by)
     sort_by = sort_by.blank? ? 'id' : sort_by
     options_for_select(
-      [:id, :specimen_source, :released_at, :accession_number, :status].map do |k|
+      [:id, :specimen_source, :released_at, :accession_number, :status, :collection_date].map do |k|
         [Lab.human_attribute_name(k), k]
       end.sort, sort_by
     )
@@ -52,7 +52,7 @@ module LabsHelper
 
   def lab_patient_information(lab)
     content_tag :span, class: 'text-muted' do
-      t('labs.table.patient_info', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob)).html_safe
+      t('labs.table.patient_info', id: lab.identifier, mrn: lab.mrn, lastname: lab.patient.lastname, firstname: lab.patient.firstname, dob: format_date(lab.dob), specimen_date: format_date(lab.specimen_date)).html_safe
     end
   end
 

@@ -1,6 +1,6 @@
 class Lab < ApplicationRecord
   belongs_to :patient
-  belongs_to :line_item, optional: true #This association is for releasing a speciment to a line item
+  belongs_to :line_item, optional: true #This association is for releasing a specimen to a line item
   belongs_to :releaser, foreign_key: :released_by, class_name: "User", optional: true
   belongs_to :discarder, foreign_key: :discarded_by, class_name: "User", optional: true
   belongs_to :recipient, class_name: "SPARC::Identity", optional: true
@@ -20,6 +20,8 @@ class Lab < ApplicationRecord
   delegate :mrn, to: :patient
   delegate :dob, to: :patient
   delegate :sparc_requests, to: :patient
+
+  alias_attribute :collection_date, :specimen_date
 
   scope :filtered_for_index, -> (term, released_at_start, released_at_end, status, source, sort_by, sort_order) {
     search(term).
