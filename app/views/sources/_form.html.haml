@@ -9,19 +9,19 @@
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
         .form-group
-          = f.label t('groups.sources.form.name_placeholder')
+          = f.label(:name, t('groups.sources.form.name_placeholder'))
           .input-group
             = text_field_tag :name, groups_source ? groups_source.name : nil, class: 'form-control', id: 'name'
         .form-group
-          = f.label t('groups.sources.form.description_placeholder')
+          = f.label(:description, t('groups.sources.form.description_placeholder'))
           .input-group
             = text_field_tag :description, groups_source ? groups_source.description : nil, class: 'form-control', id: 'description'
         .form-group
-          = f.label t('groups.sources.form.key_placeholder')
+          = f.label(:key, t('groups.sources.form.key_placeholder'))
           .input-group  
             = f.text_field :key, class: 'form-control', id: 'key', readonly: (action_name == 'edit' || nil)
         .form-group 
-          = f.label t('groups.sources.form.value_placeholder')
+          = f.label(:value, t('groups.sources.form.value_placeholder'))
           .input-group
             = f.text_field :value, class: 'form-control', id: 'value'
         / .form-group 
