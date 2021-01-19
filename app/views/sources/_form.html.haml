@@ -16,11 +16,10 @@
           = f.label t('groups.sources.form.description_placeholder')
           .input-group
             = text_field_tag :description, groups_source ? groups_source.description : nil, class: 'form-control', id: 'description'
-        - unless action_name == 'edit'
-          .form-group
-            = f.label t('groups.sources.form.key_placeholder')
-            .input-group  
-              = f.text_field :key, class: 'form-control', id: 'key'
+        .form-group
+          = f.label t('groups.sources.form.key_placeholder')
+          .input-group  
+            = f.text_field :key, class: 'form-control', id: 'key', readonly: (action_name == 'edit' || nil)
         .form-group 
           = f.label t('groups.sources.form.value_placeholder')
           .input-group
@@ -32,10 +31,6 @@
             .input-group-append
               %span.input-group-text#age
                 = t('groups.sources.form.discard_age_suffix')
-          .form-group 
-          = f.label t('groups.sources.form.discard_note')
-          .input-group
-            = text_field_tag :discard_note, groups_source ? groups_source.discard_note : nil, class: 'form-control', id: 'note'
       .modal-footer
         - unless action_name == 'edit'
           %button.btn.btn-primary{ type: 'submit' }<

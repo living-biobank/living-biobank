@@ -31,7 +31,7 @@ class SourcesController < ApplicationController
     @source = @groups_source.source
     if @source.update(sources_params.except(:group_id, :name))
       #update join table association on success
-      @group.groups_sources.where(source: @source).first.update(name: params[:name], description: params[:description], discard_age: params[:discard_age], discard_note: params[:discard_note])
+      @group.groups_sources.where(source: @source).first.update(name: params[:name], description: params[:description], discard_age: params[:discard_age])
       flash.now[:success] = t('groups.sources.flash.updated')
     else
       @errors = @source.errors
@@ -47,7 +47,7 @@ class SourcesController < ApplicationController
       @source = Source.new(sources_params.except(:group_id, :name, :description, :discard_age, :discard_note))
       if @source.save
         #create join table association on success
-        @group.groups_sources.create!(source: @source, name: params[:name], description: params[:description], discard_age: params[:discard_age], discard_note: params[:discard_note])
+        @group.groups_sources.create!(source: @source, name: params[:name], description: params[:description], discard_age: params[:discard_age])
         flash.now[:success] = t('groups.sources.flash.created')
       else
         @errors = @source.errors
@@ -86,8 +86,7 @@ class SourcesController < ApplicationController
       :key,
       :value,
       :description,
-      :discard_age,
-      :discard_note
+      :discard_age
     )
   end
 end
