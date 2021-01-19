@@ -44,7 +44,7 @@ class SourcesController < ApplicationController
     #Checks for key uniqueness within the specified group
     unless @group.sources.any? {|source| source.key == sources_params[:key]}
       #If key is unique, begins process of adding new source
-      @source = Source.new(sources_params.except(:group_id, :name, :description, :discard_age, :discard_note))
+      @source = Source.new(sources_params.except(:group_id, :name, :description, :discard_age))
       if @source.save
         #create join table association on success
         @group.groups_sources.create!(source: @source, name: params[:name], description: params[:description], discard_age: params[:discard_age])
