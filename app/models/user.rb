@@ -123,15 +123,17 @@ class User < ApplicationRecord
   end 
 
   def eligible_requests
+    available_protocol_ids = SparcRequest.select(:protocol_id).uniq.map(&:protocol_id) #this filters out protocols that have been deleted on the SPARC side
+
     if self.admin? || self.data_honest_broker?
-      SparcRequest.all
+      SparcRequest.where(protocol_id: available_protocol_ids)
     else
       requests_with_access = SparcRequest.where(protocol_id: SPARC::Protocol.joins(project_roles: :identity).where(
         identities: { ldap_uid: self.net_id },
         project_roles: { project_rights: %w(approve view) }
       ).ids)
      if self.lab_honest_broker?
-        requests_with_access.or(SparcRequest.where(id: self.honest_broker_requests))
+        requests_with_access.or(SparcRequest.where(id: self.honest_broker_requests, protocol_id: available_protocol_ids))
       else
         requests_with_access
       end.distinct
