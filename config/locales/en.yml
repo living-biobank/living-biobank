@@ -85,7 +85,7 @@ en:
         status: "Trigger Status"
       sparc_request:
         id: "Request ID"
-        created_at: "Date Requested"
+        submitted_at: "Date Requested"
         end_date: "End Date"
         primary_pi: "Primary PI"
         protocol_id: "SPARC Study ID"
