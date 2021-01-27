@@ -11,9 +11,9 @@ module SparcRequestsHelper
   end
 
   def request_sort_filter_options(sort_by)
-    sort_by = sort_by.blank? ? 'created_at' : sort_by
+    sort_by = sort_by.blank? ? 'submitted_at' : sort_by
     options_for_select(
-      [:id, :protocol_id, :title, :short_title, :time_remaining, :requester, :status, :created_at].map do |k|
+      [:id, :protocol_id, :title, :short_title, :time_remaining, :requester, :status, :submitted_at].map do |k|
         [SparcRequest.human_attribute_name(k), k]
       end.sort, sort_by
     )

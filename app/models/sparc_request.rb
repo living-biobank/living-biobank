@@ -92,22 +92,22 @@ class SparcRequest < ApplicationRecord
   }
 
   scope :ordered_by, -> (sort_by, sort_order) {
-    sort_by     = sort_by.blank? ? 'created_at' : sort_by
+    sort_by     = sort_by.blank? ? 'submitted_at' : sort_by
     sort_order  = sort_order.blank? ? 'desc' : sort_order
 
     case sort_by
     when 'title', 'short_title'
-      protocol_ids = SPARC::Protocol.where(id: pluck(:protocol_id)).order(SPARC::Protocol.arel_table[sort_by].send(sort_order), created_at: :desc).ids
+      protocol_ids = SPARC::Protocol.where(id: pluck(:protocol_id)).order(SPARC::Protocol.arel_table[sort_by].send(sort_order), submitted_at: :desc).ids
       order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
     when 'protocol_id'
       order(protocol_id: sort_order)
     when 'time_remaining'
-      protocol_ids = SPARC::Protocol.where(id: pluck(:protocol_id)).order(SPARC::Protocol.arel_table[:end_date].send(sort_order), created_at: :desc).ids
+      protocol_ids = SPARC::Protocol.where(id: pluck(:protocol_id)).order(SPARC::Protocol.arel_table[:end_date].send(sort_order), submitted_at: :desc).ids
       order(SparcRequest.send(:sanitize_sql_array, ['FIELD(protocol_id, ?)', protocol_ids])).where(protocol_id: protocol_ids)
     when 'requester'
-      joins(:requester).order(User.arel_table[:last_name].send(sort_order), created_at: :desc)
+      joins(:requester).order(User.arel_table[:last_name].send(sort_order), submitted_at: :desc)
     when 'status'
-      order(status: sort_order, created_at: :desc)
+      order(status: sort_order, submitted_at: :desc)
     else
       order(sort_by => sort_order)
     end
