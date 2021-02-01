@@ -23,9 +23,9 @@ class Lab < ApplicationRecord
 
   alias_attribute :collection_date, :specimen_date
 
-  scope :filtered_for_index, -> (term, released_at_start, released_at_end, status, source, sort_by, sort_order) {
+  scope :filtered_for_index, -> (term, specimen_date_start, specimen_date_end, status, source, sort_by, sort_order) {
     search(term).
-    by_released_date(released_at_start, released_at_end).
+    by_specimen_date(specimen_date_start, specimen_date_end).
     with_status(status).
     with_source(source).
     ordered_by(sort_by, sort_order).
@@ -119,18 +119,18 @@ class Lab < ApplicationRecord
     )
   }
 
-  scope :by_released_date, -> (start_date, end_date) {
+  scope :by_specimen_date, -> (start_date, end_date) {
     return if start_date.blank? && end_date.blank?
 
     start_date  = DateTime.strptime(start_date, '%m/%d/%Y').beginning_of_day rescue ''
     end_date    = DateTime.strptime(end_date, '%m/%d/%Y').end_of_day rescue ''
 
     if start_date.present? && end_date.present?
-      where(Lab.arel_table[:released_at].between(start_date..end_date))
+      where(Lab.arel_table[:specimen_date].between(start_date..end_date))
     elsif start_date.present?
-      where(Lab.arel_table[:released_at].gteq(start_date))
+      where(Lab.arel_table[:specimen_date].gteq(start_date))
     else # end_date present, start_date blank
-      where(Lab.arel_table[:released_at].lteq(end_date))
+      where(Lab.arel_table[:specimen_date].lteq(end_date))
     end
   }
 

@@ -111,12 +111,14 @@ $ ->
 
       replaceUrl(data)
 
-      $.ajax({
+      NProgress.start()
+      $.ajax
         method: 'GET'
         dataType: 'script'
         url: $container.data('url')
         data: data
-      })
+        success: ->
+          NProgress.done()
     ), 750)
   ).on('keydown', '.table-search', ->
     clearTimeout(searchTimer)
@@ -135,11 +137,14 @@ $ ->
 
     replaceUrl(data)
 
+    NProgress.start()
     $.ajax
       method: 'GET'
       dataType: 'script'
       url: $container.data('url')
       data: data
+      success: ->
+        NProgress.done()
 
 (exports ? this).setRequiredFields = () ->
   $('.required:not(.has-indicator)').addClass('has-indicator').append('<span class="required-indicator">*</span>')
