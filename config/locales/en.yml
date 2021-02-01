@@ -67,6 +67,7 @@ en:
         discard_reason: "Reason for Discard"
         id: "Specimen ID"
         released_at: "Date Released"
+        specimen_date: "Specimen Date"
         specimen_source: "Specimen Source"
       line_item:
         groups_source_id: "Specimen Source"
@@ -365,8 +366,7 @@ en:
       found: "Specimens Found"
       not_found: "No Specimens found"
     filters:
-      date_released:
-        label: "Date Released"
+      specimen_date:
         start: "Start Date"
         to: "to"
         end: "End Date"

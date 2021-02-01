@@ -1,12 +1,12 @@
 %filters.table-filters#specimenFilters{ data: { url: labs_path } }
   = table_search('searchLabs')
   .d-flex.align-items-center.filter.filter-date
-    .input-group.input-daterange.date.flex-nowrap{ title: t('labs.filters.date_released.label'), data: { provide: 'datepicker', date_autoclose: 'true', date_today_highlight: 'true', date_orientation: 'bottom', toggle: 'tooltip' } }
-      = text_field_tag 'start_date', params[:released_at_start], class: 'form-control form-control-lg', placeholder: t('labs.filters.date_released.start'), data: { field: 'released_at_start' }
+    .input-group.input-daterange.date.flex-nowrap{ title: Lab.human_attribute_name(:specimen_date), data: { provide: 'datepicker', date_autoclose: 'true', date_today_highlight: 'true', date_orientation: 'bottom', toggle: 'tooltip' } }
+      = text_field_tag 'start_date', params[:specimen_date_start], class: 'form-control form-control-lg', placeholder: t('labs.filters.specimen_date.start'), data: { field: 'specimen_date_start' }
       .input-group-append.input-group-prepend
         %label.input-group-text<
-          = t('labs.filters.date_released.to')
-      = text_field_tag 'end_date', params[:released_at_end], class: 'form-control form-control-lg', placeholder: t('labs.filters.date_released.end'), data: { field: 'released_at_end' }
+          = t('labs.filters.specimen_date.to')
+      = text_field_tag 'end_date', params[:specimen_date_end], class: 'form-control form-control-lg', placeholder: t('labs.filters.specimen_date.end'), data: { field: 'specimen_date_end' }
   .tooltip-wrapper.d-flex{ title: t('labs.filters.status'), data: { toggle: 'tooltip' } }
     = select_tag 'status', lab_status_filter_options(params[:status]), class: 'selectpicker filter-select form-control', data: { field: 'status', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('labs.filters.status') }
   .tooltip-wrapper.d-flex{ title: t('labs.filters.source'), data: { toggle: 'tooltip' } }
