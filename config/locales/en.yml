@@ -62,6 +62,9 @@ en:
         process_sample_size: "Validate minimum specimen sample sizes?"
         process_specimen_retrieval: "Will specimens be retrieved by investigators?"
         release_email: "Specimen Release Email"
+      groups_source:
+        discard_age: "Discard After"
+        name: "Product Name"
       lab:
         accession_number: "Accession Number"
         discard_reason: "Reason for Discard"
@@ -84,6 +87,9 @@ en:
         position: "Display Order"
         sparc_service: "Affiliated SPARC Service"
         status: "Trigger Status"
+      source:
+        key: "EMR Key"
+        value: "Source Name"
       sparc_request:
         id: "Request ID"
         submitted_at: "Date Requested"
@@ -113,6 +119,9 @@ en:
       sparc/service:
         cpt_code: "CPT Code"
         abbreviation: "Abbreviation"
+      user:
+        name: "Name"
+        email: "Email"
     models:
       group:
         zero: "Groups"
@@ -245,9 +254,16 @@ en:
       flash:
         created: "Lab honest broker added!"
         destroyed: "Lab honest broker removed!"
+      filters:
+        sort_by: "Sort By"
+        sort_order: "Order"
+      tooltips:
+        delete: "Remove Honest Broker"
     sources:
+      discard_age_suffix: "Days"
       new: "Create New Source"
-      table:
+      headers:
+        actions: "Actions"
         sources: "Source Name (Alias)"
         actions: "Actions"
         no_alias:  " (<em>Alias Not Set</em>)"
@@ -255,6 +271,9 @@ en:
         created: "Source created successfully!"
         destroyed:  "Source removed!"
         updated:  "Source updated successfully!"
+      filters:
+        sort_by: "Sort By"
+        sort_order: "Order"
       form:
         new: "New Source"
         edit: "Edit %{source_name}"
@@ -264,9 +283,11 @@ en:
         key_placeholder: "EMR Key (specimen variable name)"
         description_placeholder: "Enter the description for this source to display to users"
         discard_age: "How many days after collection should this be discarded?"
-        discard_age_suffix: "Days"
       errors:
         key_exists: "This Key already exists for this group."
+      tooltips:
+        edit: "Edit Source"
+        delete: "Delete Source"
     services:
       new: "Add New Service"
       blank_condition: "No Condition"
@@ -305,7 +326,7 @@ en:
     tabs:
       details: "Group Details"
       users: "Honest Brokers"
-      sources: "Sources"
+      sources: "Specimen Sources"
       services: "Services"
 
   ############

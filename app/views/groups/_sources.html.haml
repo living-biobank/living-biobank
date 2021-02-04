@@ -1,26 +1,19 @@
 - content_for :filters do
-  = render 'sources/filters', group: group
+  = render 'groups_sources/filters', group: group
 
 %main.card#groupSection
-  %table.table.table-bordered.table-hover.mb-0.border-0#groupSources
+  %table.table.table-bordered.table-hover.mb-0.border-0#groupsSourcesTable{ data: { toggle: 'table', url: group_groups_sources_path(group, sort_by: params[:sort_by], sort_order: params[:sort_order], page: params[:page]), side_pagination: 'server' } }
     %thead
       %tr
-        %th.col-10
-          = t('groups.sources.table.sources')
-
-        %th.col-2.text-center
-          = t('groups.sources.table.actions')
-    %tbody
-      - group.active_groups_sources.each do |groups_source|
-        %tr
-          %td 
-            = groups_source.source.value
-            - if groups_source.name.present?
-              = " (#{groups_source.name})"
-            -else
-              = t('groups.sources.table.no_alias').html_safe
-          %td.text-center
-            = link_to edit_group_source_path(group, groups_source), remote: true, class: 'btn btn-warning mr-1' do
-              = icon('fas', 'pencil-alt')
-            = link_to group_source_path(group, groups_source), remote: true, method: :delete, class: 'btn btn-danger', data: { confirm_swal: 'true' } do
-              = icon('fas', 'trash')
+        %th.col-3{ data: { field: 'name' } }
+          = GroupsSource.human_attribute_name(:name)
+        %th.col-3{ data: { field: 'description' } }
+          = GroupsSource.human_attribute_name(:description)
+        %th.col-2{ data: { field: 'source_value' } }
+          = Source.human_attribute_name(:key)
+        %th.col-2{ data: { field: 'source_key' } }
+          = Source.human_attribute_name(:key)
+        %th.col-1{ data: { field: 'discard_age' } }
+          = GroupsSource.human_attribute_name(:discard_age)
+        %th.text-center.col-1{ data: { field: 'actions' } }
+          = t('groups.sources.headers.actions')

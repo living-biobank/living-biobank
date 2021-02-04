@@ -1,0 +1,43 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for [group, groups_source], remote: true, html: { id: 'sourcesForm', autocomplete: 'off' } do |f|
+      .modal-header
+        %h4.modal-title
+          = t("groups.sources.form.#{action_name}", source_name: source.value)
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        .form-group
+          = f.label :name, t('groups.sources.form.name_placeholder'), class: 'required'
+          .input-group
+            = f.text_field :name, class: 'form-control'
+        .form-group
+          = f.label :description, t('groups.sources.form.description_placeholder')
+          .input-group
+            = f.text_field :description, class: 'form-control'
+        = f.fields_for :source do |ff_s|
+          = ff_s.hidden_field :id
+          .form-group
+            = ff_s.label :key, t('groups.sources.form.key_placeholder'), class: 'required'
+            .input-group  
+              = ff_s.text_field :key, class: 'form-control', readonly: action_name == 'edit'
+          .form-group 
+            = ff_s.label :value, t('groups.sources.form.value_placeholder'), class: 'required'
+            .input-group
+              = ff_s.text_field :value, class: 'form-control'
+        .form-group.mb-0
+          = f.label :discard_age, t('groups.sources.form.discard_age'), class: 'required'
+          .input-group
+            = f.text_field :discard_age, class: 'form-control numerical'
+            .input-group-append
+              %span.input-group-text
+                = t('groups.sources.discard_age_suffix')
+      .modal-footer
+        %button.btn.btn-primary{ type: 'submit' }<
+          - if action_name == 'edit'
+            = t('actions.save')
+          - else
+            = icon('fas', 'plus mr-1')
+            = t('actions.add')
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:actions)[:close]

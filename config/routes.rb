@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   end
   resources :groups, only: [:index, :new, :create, :edit, :update] do
     resources :lab_honest_brokers, only: [:index, :new, :create, :destroy]
-    resources :sources
+    resources :groups_sources
     resources :services, only: [:index, :new, :create, :edit, :update]
   end
 

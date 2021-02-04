@@ -1,5 +1,4 @@
 class Source < ApplicationRecord
-  
   has_many :groups_sources
   has_many :groups, through: :groups_sources
   has_many :labs

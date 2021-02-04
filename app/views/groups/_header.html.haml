@@ -15,7 +15,7 @@
         = succeed t('groups.lab_honest_brokers.new') do
           = icon('fas', 'plus mr-2')
     - elsif tab == 'sources'
-      = link_to new_group_source_path(group), remote: true, class: 'btn btn-lg btn-success' do
+      = link_to new_group_groups_source_path(group), remote: true, class: 'btn btn-lg btn-success' do
         = succeed t('groups.sources.new') do
           = icon('fas', 'plus mr-2')
     - elsif tab == 'services'

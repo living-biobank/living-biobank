@@ -5,9 +5,9 @@
         %th.col-3.d-table-cell.d-md-none{ data: { field: 'user', sortable: 'true' } }
           = t('users.headers.user')
         %th.col-3.d-none.d-md-table-cell.border-left-0{ data: { field: 'name', sortable: 'true' } }
-          = t('users.headers.name')
+          = User.human_attribute_name(:name)
         %th.col-3.d-none.d-md-table-cell{ data: { field: 'email', sortable: 'true' } }
-          = t('users.headers.email')
+          = User.human_attribute_name(:email)
         %th.col-3{ data: { field: 'privileges' } }
           = t('users.headers.privileges')
         %th.col-2{ data: { field: 'groups' } }

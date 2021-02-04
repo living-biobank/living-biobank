@@ -1,0 +1,6 @@
+%filters.table-filters#sourceFilters{ data: { url: group_groups_sources_path(group) } }
+  = table_search('searchGroupsSources')
+  .tooltip-wrapper.d-flex{ title: t('groups.sources.filters.sort_by'), data: { toggle: 'tooltip' } }
+    = select_tag 'sort_by', groups_source_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select form-control', title: t('groups.sources.filters.sort_by'), data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('groups.sources.filters.sort_by') }
+  .tooltip-wrapper.d-flex{ title: t('groups.sources.filters.sort_order'), data: { toggle: 'tooltip' } }
+    = select_tag 'sort_order', groups_source_sort_order_options(params[:sort_order]), class: 'selectpicker filter-select form-control', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t('groups.sources.filters.sort_order') }
