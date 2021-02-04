@@ -8,4 +8,8 @@ class GroupsSource < ApplicationRecord
 
   scope :active, -> { where(deprecated: false) }
   scope :inactive, -> { where(deprecated: true) }
+
+  def extended_name
+    "#{self.name} (#{self.source.value})"
+  end
 end

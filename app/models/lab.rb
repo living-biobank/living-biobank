@@ -19,7 +19,6 @@ class Lab < ApplicationRecord
   delegate :identifier, to: :patient
   delegate :mrn, to: :patient
   delegate :dob, to: :patient
-  delegate :sparc_requests, to: :patient
 
   alias_attribute :collection_date, :specimen_date
 

@@ -32,7 +32,7 @@
             - else
               = request_duration_display(request)
       - if (specimen_requests = request.specimen_requests.select{ |sr| sr.group.present? } ).any?
-        %h4.card-title.font-weight-bold
+        %h4.card-title.font-weight-bold.mb-0
           = SparcRequest.human_attribute_name(:specimen_requests)
         - specimen_requests.each do |li|
           .row.line-item
@@ -46,7 +46,7 @@
                 = render 'line_items/progress_bar', li: li
     - if request.previously_submitted?
       .card-body.border-top
-        %h4.card-title.font-weight-bold<
+        %h4.card-title.font-weight-bold.mb-0<
           = SparcRequest.human_attribute_name(:additional_services)
         - request.additional_services.each do |li|
           .row.line-item

@@ -3,7 +3,7 @@ $ ->
   ### Requests Page ###
   #####################
 
-  if $('.request').length
+  if $('.i2b2-query').length
     loadI2B2Queries()
 
     $(document).on('shown.bs.popover', '.specimen-line-item', (e) ->
@@ -254,7 +254,7 @@ $ ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
 
 (exports ? this).loadI2B2Queries = () ->
-  if $('.request').length
+  if $('.i2b2-query').length
     # Get all unique query ids on the page, then send AJAX requests to populate them
     query_ids = $('.i2b2-query').map(->
       $(this).data('query-id')

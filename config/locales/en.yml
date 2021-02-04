@@ -381,7 +381,7 @@ en:
       header: "Specimen %{id}"
       patient_info: "<strong>Patient ID</strong> %{id} | <strong>MRN</strong> %{mrn} | <strong>Name</strong> %{lastname}, %{firstname} | <strong>DOB</strong> %{dob} | <strong>Specimen Date</strong> %{specimen_date}"
       requests:
-        header: "Requests Matching this Specimen"
+        header: "Eligible Requests"
         released:
           header:
             retrieval: "Specimen Released and Awaiting Pick-up"
