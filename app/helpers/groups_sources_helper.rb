@@ -29,7 +29,7 @@ module GroupsSourcesHelper
   end
 
   def edit_groups_source_button(groups_source)
-    link_to icon('fas', 'pencil-alt'), edit_group_groups_source_path(groups_source.group, groups_source), remote: true, class: 'btn btn-warning mr-1', title: t('groups.sources.tooltips.edit'), data: { toggle: 'tooltip' }
+    link_to icon('fas', 'pencil-alt'), edit_group_groups_source_path(groups_source.group, groups_source), remote: true, class: 'btn btn-warning', title: t('groups.sources.tooltips.edit'), data: { toggle: 'tooltip' }
   end
 
   # Removed for now pending discussions

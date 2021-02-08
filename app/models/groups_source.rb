@@ -48,10 +48,6 @@ class GroupsSource < ApplicationRecord
     end
   }
 
-  def extended_name
-    "#{self.name} (#{self.source.value})"
-  end
-
   def formatted_discard_age
     "#{self.discard_age} #{I18n.t('groups.sources.discard_age_suffix')}"
   end

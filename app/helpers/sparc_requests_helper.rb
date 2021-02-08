@@ -134,15 +134,15 @@ module SparcRequestsHelper
     text = li.number_of_specimens_requested == 1 ? 'singular' : 'plural'
 
     chart = content_tag :div do
-      content_tag(:h5, t('requests.table.specimens.chart.header', source: li.groups_source.extended_name), class: 'mb-3 font-weight-bold') +
+      content_tag(:h5, t('requests.table.specimens.chart.header', source: li.groups_source.source.value), class: 'mb-3 font-weight-bold') +
       content_tag(:div, t('constants.loading'), id: "chart-#{li.id}", class: 'rates-chart')
     end
 
     content = icon('fas', 'flask mr-2') + 
       if li.group.process_sample_size?
-        t("requests.table.specimens.line_item_with_sample_size.#{text}", source: li.groups_source.extended_name, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size)
+        t("requests.table.specimens.line_item_with_sample_size.#{text}", source: li.groups_source.source.value, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size)
       else
-        t("requests.table.specimens.line_item_no_sample_size.#{text}", source: li.groups_source.extended_name, amount_requested: li.number_of_specimens_requested)
+        t("requests.table.specimens.line_item_no_sample_size.#{text}", source: li.groups_source.source.value, amount_requested: li.number_of_specimens_requested)
       end
 
     content_tag :span do
