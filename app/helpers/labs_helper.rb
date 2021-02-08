@@ -73,9 +73,13 @@ module LabsHelper
   end
 
   def lab_discarder_information(lab)
-    name =
-      link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.discarder) }) +
-      link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.discarder) })
+    name = 
+      if lab.discarded_by.present?
+        link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.discarder) }) +
+        link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.discarder) })
+      else
+        t('labs.discarded_by.system')
+      end
 
     content_tag :span, class: 'text-danger' do
       icon('fas', 'user mr-1') + t("labs.table.#{lab.discarder == current_user ? 'discarder_self' : 'discarder'}", name: name, date: format_date(lab.discarded_at)).html_safe
@@ -103,6 +107,12 @@ module LabsHelper
       end
 
     content_tag(:span, lab.human_status, class: ['badge p-2 ml-sm-2 lab-status', klass])
+  end
+
+  def lab_line_item_eligibility_display(lab, line_item)
+    days_remaining = line_item.groups_source.discard_age - (lab.specimen_date - Date.today).to_i
+
+    content_tag :span, t('labs.table.days_remaining', days: days_remaining), class: days_remaining == 1 ? 'text-danger' : 'text-muted'
   end
 
   def lab_actions(lab)

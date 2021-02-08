@@ -172,9 +172,15 @@ class Lab < ApplicationRecord
     end
   }
 
+  scope :available, -> { where(status: 'available') }
+
   def status=(status)
     self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
     super(status)
+  end
+
+  def eligible_line_items
+    self.line_items.joins(:groups_source).where(GroupsSource.arel_table[:discard_age].gteq(self.specimen_date - Date.today))
   end
 
   def human_status

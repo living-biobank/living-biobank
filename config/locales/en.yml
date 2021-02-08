@@ -282,7 +282,8 @@ en:
         value_placeholder: "Specimen Source Name (Displayed on the Requests page)"
         key_placeholder: "EMR Key (specimen variable name)"
         description_placeholder: "Enter the description for this source to display to users"
-        discard_age: "How many days after collection should this be discarded?"
+        discard_age: "Age (days) after which specimen is discarded"
+        discard_age_subtext: "Used to determine when the specimen is automatically discarded by the system"
       errors:
         key_exists: "This Key already exists for this group."
       tooltips:
@@ -416,6 +417,7 @@ en:
       discarder_self: "You discarded this specimen on %{date}"
       discarder: "Discarded by %{name} on %{date}"
       discard_reason_blank: "Not Specified"
+      days_remaining: "Eligible for %{days} days"
     tooltips:
       release: "Release Specimens"
     requests:
@@ -430,6 +432,8 @@ en:
       retrieve_specimen: "Specimen Retrieved"
       reset_specimen: "Reset Specimen"
       discard_specimen:  "Discard Specimen"
+    discarded_by:
+      system: 'System'
 
   ################
   ### MAILERS ####

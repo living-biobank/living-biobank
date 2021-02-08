@@ -39,7 +39,7 @@
               - if lab.line_items.any?
                 %h4.card-title.font-weight-bold.mb-2<
                   = t('labs.table.requests.header')
-                - lab.line_items.eager_load(:labs, :group).preload(sparc_request: [:protocol, :primary_pi, :requester]).reject(&:complete?).group_by(&:sparc_request).each do |request, line_items|
+                - lab.eligible_line_items.eager_load(:labs, :group, groups_source: :source).preload(sparc_request: [:protocol, :primary_pi, :requester]).reject(&:complete?).group_by(&:sparc_request).each do |request, line_items|
                   .row.border-top
                     .col-12
                       .d-flex.flex-column
@@ -63,33 +63,35 @@
                                 = line_item_text(line_item)
                               = query_display(line_item)
                           .col-sm-8.col-12
-                            - unless request.cancelled?
-                              = render 'line_items/progress_bar', li: line_item
+                            = render 'line_items/progress_bar', li: line_item
+                            = lab_line_item_eligibility_display(lab, line_item)
             - else
               - if lab.line_item.present?
-                %h4.card-title.font-weight-bold<
+                %h4.card-title.font-weight-bold.mb-2<
                   - if lab.group.process_specimen_retrieval?
                     = t('labs.table.requests.released.header.retrieval')
                   - else
                     = t('labs.table.requests.released.header.no_retrieval')
-                .row.line-item.specimen-line-item
-                  .col-sm-4.col-12.d-flex
-                    .d-flex.flex-column.mr-2
-                      %h5.font-weight-bold.mb-0
-                        = request_title_display(lab.sparc_request)
-                      %h5.text-muted.mb-0
-                        %small
-                          = requester_display(lab.sparc_request)
-                  .col-sm-8.col-12.pl-sm-0
-                    .d-flex.flex-column.flex-fill
-                      .d-flex.justify-content-between.order-last.order-sm-first
-                        .w-50
-                          - if lab.group.process_sample_size?
-                            = lab_sample_size_display(lab.line_item)
-                        .w-50.d-flex.justify-content-end
-                          %p.mb-0
+                .row.border-top
+                  .col-12
+                    .d-flex.flex-column
+                      %h5.font-weight-bold.mb-0.mt-2
+                        = request_title_display(lab.sparc_request, popover: true)
+                      .d-flex.flex-wrap.justify-content-between
+                        %h5.mb-0
+                          %small.text-muted<
+                            = requester_display(lab.sparc_request)
+                        %h5.mb-0
+                          %small<
                             = request_duration_display(lab.sparc_request)
-                      = render 'line_items/progress_bar', li: lab.line_item
+                    .row.line-item.specimen-line-item
+                      .col-sm-4.col-12.d-flex
+                        %h5.d-flex.flex-column.mb-0<
+                          .mb-1
+                            = line_item_text(lab.line_item)
+                          = query_display(lab.line_item)
+                      .col-sm-8.col-12
+                        = render 'line_items/progress_bar', li: lab.line_item
               - if lab.discarded?
                 %h4.card-title.font-weight-bold{ class: lab.line_item_id ? 'mt-3' : '' }
                   = Lab.human_attribute_name(:discard_reason)

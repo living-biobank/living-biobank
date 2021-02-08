@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_04_191256) do
+ActiveRecord::Schema.define(version: 2021_02_08_211757) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 2021_02_04_191256) do
 
   create_table "labs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "patient_id"
-    t.datetime "specimen_date"
+    t.date "specimen_date"
     t.bigint "source_id"
     t.bigint "order_id"
     t.bigint "visit_id"

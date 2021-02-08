@@ -30,8 +30,9 @@
           .input-group
             = f.text_field :discard_age, class: 'form-control numerical'
             .input-group-append
-              %span.input-group-text
-                = t('groups.sources.discard_age_suffix')
+              = f.label :discard_age, t('groups.sources.discard_age_suffix'), class: 'input-group-text'
+          %small.form-text.text-muted
+            = t('groups.sources.form.discard_age_subtext')
       .modal-footer
         %button.btn.btn-primary{ type: 'submit' }<
           - if action_name == 'edit'
