@@ -26,9 +26,10 @@ class GroupsSourcesController < ApplicationController
 
     # Invert the logic here using ! || ! soo we can run both sets
     # of validations. See the GroupsSource model about #unique_source?
-    if !@groups_source.save || !@groups_source.unique_source?
+    if !@groups_source.valid? || !@groups_source.unique_source?
       @errors = @groups_source.errors
     else
+      @groups_source.save
       flash.now[:success] = t('groups.sources.flash.created')
     end
   end
