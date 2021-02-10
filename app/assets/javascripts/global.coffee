@@ -195,11 +195,17 @@ decimalKeys = [
   110, 190 # period keys
 ]
 
+$(document).on 'paste', '.numerical', ->
+  return false
+
+$(document).on 'drop', '.numerical', ->
+  return false
+
 $(document).on 'keydown', '.numerical:not(.decimal)', ->
   val = $(this).val()
   key = event.keyCode || event.charCode
 
-  if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key))
+  if !(nonCharacterKeys.includes(key) || (numericalKeys.includes(key) && !event.shiftKey))
     event.preventDefault()
 
 $(document).on 'keydown', '.numerical.decimal', ->
@@ -208,13 +214,13 @@ $(document).on 'keydown', '.numerical.decimal', ->
   decimalIndex  = val.indexOf('.')
 
   # Prevent non-numerical characters/utility key presses
-  if !(nonCharacterKeys.includes(key) || numericalKeys.includes(key) || decimalKeys.includes(key))
+  if !(nonCharacterKeys.includes(key) || ((numericalKeys.includes(key) || decimalKeys.includes(key)) && !event.shiftKey))
     event.preventDefault()
   # Prevent duplicate decimal characters
-  else if decimalKeys.includes(key) && decimalIndex >= 0
+  else if event.shiftKey || (decimalKeys.includes(key) && decimalIndex >= 0)
     event.preventDefault()
   # Limit the input to two decimal places
-  else if numericalKeys.includes(key) && decimalIndex >= 0 && decimalIndex < val.length - 2 && this.selectionStart > decimalIndex
+  else if event.shiftKey || (numericalKeys.includes(key) && decimalIndex >= 0 && decimalIndex < val.length - 2 && this.selectionStart > decimalIndex)
     event.preventDefault()
 
     

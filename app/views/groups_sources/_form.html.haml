@@ -28,7 +28,7 @@
         .form-group.mb-0
           = f.label :discard_age, t('groups.sources.form.discard_age'), class: 'required'
           .input-group
-            = f.text_field :discard_age, class: 'form-control numerical'
+            = f.text_field :discard_age, class: 'form-control numerical', maxlength: 4
             .input-group-append
               = f.label :discard_age, t('groups.sources.discard_age_suffix'), class: 'input-group-text'
           %small.form-text.text-muted

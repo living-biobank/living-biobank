@@ -4,7 +4,9 @@ class GroupsSource < ApplicationRecord
 
   has_many :line_items
 
-  validates_presence_of :name, :discard_age
+  validates_presence_of :name
+
+  validates :discard_age, presence: true, numericality: { only_integer: true, greater_than: 0, less_than: 10000 }
 
   # See https://stackoverflow.com/questions/16719463/adding-errors-to-model-in-rails-is-not-working
   # The error added by this validation is removed when the source is
