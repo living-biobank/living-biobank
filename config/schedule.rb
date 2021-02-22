@@ -21,6 +21,7 @@
 
 every :weekday, at: '7am' do
   rake 'email_tasks:daily_specimen_check'
+  rake 'automatic_specimen_discard'
 end
 
 every 1.hour do

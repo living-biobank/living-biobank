@@ -1,5 +1,5 @@
 desc "Automatically discard specimens (labs) that are considered \"expired\" based on groups_source discard_ages"
-task daily_specimen_check: :environment do
+task automatic_specimen_discard: :environment do
   Lab.available.each do |lab|
     if lab.eligible_line_items.none?
       lab.update_attributes(
