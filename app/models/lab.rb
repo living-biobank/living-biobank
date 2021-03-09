@@ -180,7 +180,7 @@ class Lab < ApplicationRecord
   end
 
   def eligible_line_items
-    self.line_items.joins(:groups_source).where(GroupsSource.arel_table[:discard_age].gteq(self.specimen_date - Date.today))
+    self.line_items.joins(:groups_source).where(GroupsSource.arel_table[:discard_age].gteq((Date.today - self.specimen_date.to_date).to_i))
   end
 
   def human_status
