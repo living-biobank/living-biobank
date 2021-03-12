@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_211757) do
+ActiveRecord::Schema.define(version: 2021_03_11_212749) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 2021_02_08_211757) do
     t.string "name"
     t.string "description"
     t.integer "discard_age"
+    t.string "discard_note"
     t.bigint "group_id", null: false
     t.bigint "source_id", null: false
     t.boolean "deprecated", default: false
@@ -130,6 +131,10 @@ ActiveRecord::Schema.define(version: 2021_02_08_211757) do
     t.float "one_year_accrual"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
+    t.datetime "deleted_at"
+    t.boolean "specimen", default: false
+    t.index ["deleted_at"], name: "index_line_items_on_deleted_at"
     t.index ["groups_source_id"], name: "index_line_items_on_groups_source_id"
   end
 
@@ -173,7 +178,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_211757) do
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_sources_on_group_id_and_key", unique: true
   end
 
   create_table "sparc_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

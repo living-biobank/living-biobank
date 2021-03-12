@@ -1,5 +1,7 @@
 class LineItem < ApplicationRecord
+  acts_as_paranoid
   belongs_to :sparc_request, optional: true
+  acts_as_list scope: [:sparc_request_id, specimen: true]
   belongs_to :service, class_name: "SPARC::Service", optional: true
   belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional: true
   belongs_to :groups_source, optional: true
@@ -20,6 +22,8 @@ class LineItem < ApplicationRecord
   validates_numericality_of :minimum_sample_size, greater_than: 0, less_than: 10000000,                               if: Proc.new{ |li| li.specimen_request? && li.group && li.group.process_sample_size? }
 
   before_destroy :update_sparc_records
+  before_create :specimen_check
+  after_create :rewind_non_specimen
 
   scope :specimen_requests, -> () {
     where.not(groups_source_id: nil)
@@ -31,6 +35,20 @@ class LineItem < ApplicationRecord
 
   def specimen_request?
     self.groups_source_id.present? || self.service_id.nil?
+  end
+
+  def specimen_check
+    # Exists only until specimens and non-specimens are split out
+    if self.groups_source_id.present?
+      self.specimen = true
+    end
+  end
+
+  def rewind_non_specimen
+    # Exists only until specimens and non-specimens are split out
+    if self.specimen == false
+      self.update_attribute(:position, nil)
+    end
   end
 
   def complete?
@@ -60,6 +78,14 @@ class LineItem < ApplicationRecord
 
   def percent_progress
     100 * (self.progress.to_f / self.progress_end)
+  end
+
+  def position_display
+    "%03d" % self.position
+  end
+
+  def specimen_identifier
+    "#{self.sparc_request.identifier}-#{self.position_display}"
   end
 
   private

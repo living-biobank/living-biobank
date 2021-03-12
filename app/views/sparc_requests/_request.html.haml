@@ -34,7 +34,7 @@
       - if (specimen_requests = request.specimen_requests.select{ |sr| sr.group.present? } ).any?
         %h4.card-title.font-weight-bold.mb-0
           = SparcRequest.human_attribute_name(:specimen_requests)
-        - specimen_requests.each do |li|
+        - specimen_requests.sort_by(&:position).each do |li|
           .row.line-item
             .col-sm-4.col-12
               %h5.d-flex.flex-column.mb-0<

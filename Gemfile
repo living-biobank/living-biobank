@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'actiontext', github: 'kobaltz/actiontext', branch: 'archive', require: 'action_text'
 gem 'acts_as_list'
+gem 'acts_as_paranoid'
 gem 'babel-transpiler'
 gem 'bootsnap'
 gem 'capistrano', '~> 3.12'
