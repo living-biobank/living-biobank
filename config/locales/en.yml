@@ -621,11 +621,11 @@ en:
           no_data: "We're still processing data for samples matching your request.\nPlease try again later."
           value: "%{value} (%{rate}/week)"
         line_item_no_sample_size:
-          singular: "%{source} - %{amount_requested} sample"
-          plural: "%{source} - %{amount_requested} samples"
+          singular: "Specimen Request %{specimen_identifier} | %{source} - %{amount_requested} sample"
+          plural: "Specimen Request %{specimen_identifier} | %{source} - %{amount_requested} samples"
         line_item_with_sample_size:
-          singular: "%{source} - %{amount_requested} sample ≥ %{min_sample_size} mL"
-          plural: "%{source} - %{amount_requested} samples ≥ %{min_sample_size} mL"
+          singular: "Specimen Request %{specimen_identifier} | %{source} - %{amount_requested} sample ≥ %{min_sample_size} mL"
+          plural: "Specimen Request %{specimen_identifier} | %{source} - %{amount_requested} samples ≥ %{min_sample_size} mL"
         progress: "Specimens Collected: %{received} / %{total}"
       additional_services:
         progress: "Progress: %{current} / %{end}"

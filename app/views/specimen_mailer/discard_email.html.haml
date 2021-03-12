@@ -3,4 +3,4 @@
   %strong
     = t('mailers.specimen_id', id: @specimen.identifier)
 = render 'layouts/mailer/request_link', request: @request
-= render 'layouts/mailer/request_information', request: @request
+= render 'layouts/mailer/request_information', request: @request, specimen: @specimen

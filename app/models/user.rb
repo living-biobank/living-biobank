@@ -75,7 +75,7 @@ class User < ApplicationRecord
 
   scope :ordered_by, -> (sort_by, sort_order) {
     sort_by     = sort_by.blank? ? 'name' : sort_by
-    sort_order  = sort_order.blank? ? 'desc' : sort_order
+    sort_order  = sort_order.blank? ? 'asc' : sort_order
 
     case sort_by
     when 'user', 'name'

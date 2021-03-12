@@ -140,9 +140,9 @@ module SparcRequestsHelper
 
     content = icon('fas', 'flask mr-2') + 
       if li.group.process_sample_size?
-        t("requests.table.specimens.line_item_with_sample_size.#{text}", source: li.groups_source.source.value, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size)
+        t("requests.table.specimens.line_item_with_sample_size.#{text}", source: li.groups_source.source.value, amount_requested: li.number_of_specimens_requested, min_sample_size: li.minimum_sample_size, specimen_identifier: li.specimen_identifier)
       else
-        t("requests.table.specimens.line_item_no_sample_size.#{text}", source: li.groups_source.source.value, amount_requested: li.number_of_specimens_requested)
+        t("requests.table.specimens.line_item_no_sample_size.#{text}", source: li.groups_source.source.value, amount_requested: li.number_of_specimens_requested, specimen_identifier: li.specimen_identifier)
       end
 
     content_tag :span do
