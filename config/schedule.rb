@@ -23,7 +23,7 @@ every :weekday, at: '7am' do
   rake 'email_tasks:daily_specimen_check'
 end
 
-every :weekday, at: '1am' do
+every :weekday, at: '6am' do
   rake 'automatic_specimen_discard'
 end
 
