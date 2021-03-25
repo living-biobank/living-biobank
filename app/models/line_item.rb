@@ -22,7 +22,7 @@ class LineItem < ApplicationRecord
 
   before_destroy :update_sparc_records
   before_create :specimen_check
-  before_create :set_position
+  after_create :set_position
 
   scope :specimen_requests, -> () {
     where.not(groups_source_id: nil)
@@ -46,7 +46,7 @@ class LineItem < ApplicationRecord
   def set_position
     if self.specimen?
       next_position = self.sparc_request.line_items.where(specimen: true).maximum(:position).to_i + 1
-      self.position = next_position
+      self.update_attribute(:position, next_position)
     end
   end
 
