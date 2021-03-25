@@ -1,7 +1,6 @@
 class LineItem < ApplicationRecord
   acts_as_paranoid
   belongs_to :sparc_request, optional: true
-  acts_as_list scope: [:sparc_request_id, specimen: true]
   belongs_to :service, class_name: "SPARC::Service", optional: true
   belongs_to :sparc_line_item, class_name: "SPARC::LineItem", foreign_key: :sparc_id, optional: true
   belongs_to :groups_source, optional: true
@@ -23,7 +22,7 @@ class LineItem < ApplicationRecord
 
   before_destroy :update_sparc_records
   before_create :specimen_check
-  after_create :rewind_non_specimen
+  after_create :set_position
 
   scope :specimen_requests, -> () {
     where.not(groups_source_id: nil)
@@ -44,10 +43,10 @@ class LineItem < ApplicationRecord
     end
   end
 
-  def rewind_non_specimen
-    # Exists only until specimens and non-specimens are split out
-    if self.specimen == false
-      self.update_attribute(:position, nil)
+  def set_position
+    if self.specimen?
+      next_position = self.sparc_request.line_items.where(specimen: true).maximum(:position).to_i + 1
+      self.update_attribute(:position, next_position)
     end
   end
 
