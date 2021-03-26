@@ -45,7 +45,7 @@ class LineItem < ApplicationRecord
 
   def set_position
     if self.specimen?
-      next_position = self.sparc_request.line_items.where(specimen: true).maximum(:position).to_i + 1
+      next_position = self.sparc_request.line_items.with_deleted.where(specimen: true).maximum(:position).to_i + 1
       self.update_attribute(:position, next_position)
     end
   end
