@@ -11,6 +11,11 @@
         = request.identifier
     %tr
       %th{ style: 'text-align:right;padding: 0.5rem;' }
+        = "Sub-Request ID"
+      %td{ style: 'padding: 0.5rem;' }
+        = specimen.line_item.specimen_identifier
+    %tr
+      %th{ style: 'text-align:right;padding: 0.5rem;' }
         = SparcRequest.human_attribute_name(:protocol_id)
       %td{ style: 'padding: 0.5rem;' }
         = request.protocol_id
@@ -19,11 +24,6 @@
         = SPARC::Protocol.human_attribute_name(:short_title)
       %td{ style: 'padding: 0.5rem;' }
         = request.protocol.short_title
-    %tr
-      %th{ style: 'text-align:right;padding: 0.5rem;' }
-        = "Sub-Request ID"
-      %td{ style: 'padding: 0.5rem;' }
-        = specimen.line_item.specimen_identifier
     %tr
       %th{ style: 'text-align:right;padding: 0.5rem;' }
         = SparcRequest.human_attribute_name(:specimen_requests)
