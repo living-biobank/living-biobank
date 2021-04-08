@@ -55,7 +55,13 @@ class Lab < ApplicationRecord
       joins(:releaser, sparc_request: :requester).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or(
       joins(:releaser, sparc_request: :requester).where(User.arel_full_name.matches("%#{term}%"))
+    ).or(
+      joins(:releaser, sparc_request: :requester).where(SparcRequest.arel_table[:id].matches("#{term.to_i}%"))
     )
+
+
+
+    # released_labs_by_sparc_id = joins(:releaser, sparc_request: :requester).where(SparcRequest.arel_table[:id].matches("%#{term}%"))
 
     # Now try to brute force find available labs matching the query by loading associations and using Ruby code
     # Note: We can't eager_load the :line_items associations because it's instance-dependent, so we have to use
@@ -88,6 +94,8 @@ class Lab < ApplicationRecord
       joins(:requester).where(User.arel_table[:last_name].matches("%#{term}%"))
     ).or(
       joins(:requester).where(User.arel_full_name.matches("%#{term}%"))
+    ).or(
+      joins(:requester).where(SparcRequest.arel_table[:id].matches("#{term.to_i}%"))
     ).ids
 
     queried_available_labs = where(
@@ -209,11 +217,11 @@ class Lab < ApplicationRecord
 
   def send_emails
     if self.released? && (!self.groups_source.group.notify_when_all_specimens_released? || self.line_item.complete?)
-      SpecimenMailer.with(specimen: self, request: self.sparc_request).release_email.deliver_later
+      SpecimenMailer.with(specimen: self, request: self.sparc_request).release_email.deliver_now
     end
 
     if self.discarded? && self.sparc_request && !self.groups_source.group.notify_when_all_specimens_released?
-      SpecimenMailer.with(specimen: self, request: self.sparc_request).discard_email.deliver_later
+      SpecimenMailer.with(specimen: self, request: self.sparc_request).discard_email.deliver_now
     end
   end
 end

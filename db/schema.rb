@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
-    t.datetime "deleted_at"
     t.boolean "specimen", default: false
+    t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_line_items_on_deleted_at"
     t.index ["groups_source_id"], name: "index_line_items_on_groups_source_id"
   end
