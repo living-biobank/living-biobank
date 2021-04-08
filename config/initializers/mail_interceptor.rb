@@ -7,8 +7,7 @@ class MailInterceptor
     mail.subject.prepend(prefix)
 
     unless Rails.env.production?
-      # mail.to = ENV.fetch('LBB_EMAIL')
-      mail.to = 'etai@musc.edu, iboto1@gmail.com, excelsior2276@yahoo.com'
+      mail.to = ENV.fetch('LBB_EMAIL')
       mail.cc = nil
     end
   end
