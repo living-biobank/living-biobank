@@ -1,5 +1,4 @@
-.main-text
-  %p
-    = t('mailers.specimen_mailer.available_email.text', group: @group.name)
-  %p
-    = link_to t('mailers.specimens_link'), specimens_url, target: :_blank
+%p
+  = t('mailers.specimen_mailer.available_email.text', group: @group.name)
+%p
+  = link_to t('mailers.specimens_link'), specimens_url, target: :_blank
