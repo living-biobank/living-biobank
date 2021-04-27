@@ -63,7 +63,10 @@ class Lab < ApplicationRecord
     labs_from_scope   = includes(populations: { line_item: :source }).select{ |lab| lab.line_item_id.nil? }
     eligible_requests = SparcRequest.where(
       id: labs_from_scope.map do |lab|
-        pops = lab.populations.select{ |pop| pop.line_item.source.id == lab.source_id }
+        pops = lab.populations.select do |pop|
+          next if pop.line_item.nil?
+          pop.line_item.source.id == lab.source_id
+        end
         pops.map(&:line_item).map(&:sparc_request_id)
       end.flatten.uniq
     )
@@ -92,7 +95,10 @@ class Lab < ApplicationRecord
 
     queried_available_labs = where(
       id: labs_from_scope.select do |lab|
-        pops = lab.populations.select{ |pop| pop.line_item.source.id == lab.source_id }
+        pops = lab.populations.select do |pop|
+          next if pop.line_item.nil?
+          pop.line_item.source.id == lab.source_id
+        end
         (pops.map(&:line_item).map(&:sparc_request_id) & queried_eligible_request_ids).any?
       end
     )
