@@ -73,7 +73,7 @@ module LabsHelper
   end
 
   def lab_discarder_information(lab)
-    name = 
+    name =
       if lab.discarded_by.present?
         link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-none d-xl-inline-block', data: { toggle: 'popover', html: 'true', placement: 'left', container: 'body', trigger: 'manual', content: render('users/user_popover', user: lab.discarder) }) +
         link_to(lab.discarder.full_name, 'javascript:void(0)', class: 'd-inline-block d-xl-none', data: { toggle: 'popover', html: 'true', placement: 'bottom', container: 'body', trigger: 'click', content: render('users/user_popover', user: lab.discarder) })
@@ -118,7 +118,7 @@ module LabsHelper
   def lab_actions(lab)
     actions = []
 
-    actions.push(retrieve_lab_button(lab)) if lab.released? && lab.group.process_specimen_retrieval?
+    actions.push(retrieve_lab_button(lab)) if lab.released? && lab.line_item.present? && lab.group.process_specimen_retrieval?
     actions.push(reset_lab_button(lab))   unless lab.available?
     actions.push(discard_lab_button(lab))  unless lab.retrieved? || lab.discarded?
 
