@@ -5,22 +5,18 @@
     - protocol            = sparc_request.protocol
     - protocol_valid      = protocol.valid?
     - protocol_persisted  = protocol.persisted?
+
+    = hidden_field_tag 'internal_user', current_user.internal?, disabled: true
+
     = f.fields_for :protocol do |ff_p|
       = ff_p.hidden_field :id
       = ff_p.hidden_field :type
       = ff_p.hidden_field :selected_for_epic
+      
 
       .form-row
         .form-group.col-6.mb-4
-          - if SPARC::Setting.get_value('research_master_enabled')
-            = ff_p.label :research_master_id, class: 'required'
-            = ff_p.text_field :research_master_id, class: 'form-control form-control-lg numerical', readonly: protocol_persisted && protocol.research_master_id
-            %small.form-text.text-muted
-              = raw(t(:requests)[:form][:subtext][:rmid])
-            - if sparc_request.persisted? && is_draft && !protocol_valid
-              %small.form-text.text-warning
-                = t('requests.form.subtext.protocol_not_found')
-          - else
+          - if current_user.external? or SPARC::Setting.get_value('research_master_enabled') == false
             = label_tag :protocol_search, t(:requests)[:form][:fields][:protocol_search]
             .input-group
               = label_tag :protocol_search, class: 'input-group-icon' do
@@ -29,7 +25,26 @@
               = text_field_tag :protocol_search, protocol_persisted ? sparc_request.identifier : '', class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: protocol_persisted
             %small.form-text.text-muted
               = raw(t(:requests)[:form][:subtext][:protocol])
-
+              %br
+              = t(:requests)[:form][:subtext][:protocol2]
+          - elsif SPARC::Setting.get_value('research_master_enabled')
+            = ff_p.label :research_master_id, class: 'required'
+            = ff_p.text_field :research_master_id, class: 'form-control form-control-lg numerical', readonly: protocol_persisted && protocol.research_master_id
+            %small.form-text.text-muted
+              = raw(t(:requests)[:form][:subtext][:rmid])
+            - if sparc_request.persisted? && is_draft && !protocol_valid
+              %small.form-text.text-warning
+                = t('requests.form.subtext.protocol_not_found')
+          -# - else
+          -#   = label_tag :protocol_search, t(:requests)[:form][:fields][:protocol_search]
+          -#   .input-group
+          -#     = label_tag :protocol_search, class: 'input-group-icon' do
+          -#       %span.text-muted
+          -#         = icon('fas', 'search')
+          -#     = text_field_tag :protocol_search, protocol_persisted ? sparc_request.identifier : '', class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: protocol_persisted
+          -#   %small.form-text.text-muted
+          -#     = raw(t(:requests)[:form][:subtext][:protocol])
+      -# - binding.pry
       .form-row
         .form-group.col-lg-6
           = ff_p.label :title, class: 'required'
@@ -38,15 +53,40 @@
           = ff_p.label :short_title, class: 'required'
           = ff_p.text_field :short_title, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
       .form-group
-        = ff_p.fields_for :primary_pi_role do |ff_ppi|
-          = ff_ppi.hidden_field :id
-          = label_tag :primary_pi_search, SparcRequest.human_attribute_name(:primary_pi), class: 'required'
-          .input-group
-            = label_tag :primary_pi_search, class: 'input-group-icon' do
-              %span.text-muted
-                = icon('fas', 'search')
-            = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: protocol_persisted && protocol_valid
-            = ff_ppi.hidden_field :identity_id
+        - unless current_user.internal?  
+          .div{"aria-label" => "PI Select Group", role: "group"}
+            = label_tag :title, t(:requests)[:form][:fields][:pi_select][:title]
+
+            %input#pi_radio1{autocomplete: "off", name: "pi_radio", value: "yes", type: "radio"}
+            %label{for: "pi_radio1"}
+              = t(:requests)[:form][:fields][:pi_select][:affirm]
+            
+            %input#pi_radio2{autocomplete: "off", name: "pi_radio", value: "no", type: "radio"}
+            %label{for: "pi_radio2"}
+              = t(:requests)[:form][:fields][:pi_select][:deny]
+        = ff_p.fields_for :primary_pi_role do |ff_ppir|
+          = ff_ppir.hidden_field :id
+          #pi_automatic{ class: [current_user.external? ? 'd-none' : nil]}
+            = label_tag :primary_pi_search, SparcRequest.human_attribute_name(:primary_pi), class: "#{'required' if current_user.internal?}"
+            .input-group
+              = label_tag :primary_pi_search, class: 'input-group-icon' do
+                %span.text-muted
+                  = icon('fas', 'search')
+              = text_field_tag :primary_pi_search, f.object.primary_pi.try(:display_name), class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:primary_pi], readonly: protocol_persisted && protocol_valid
+              = ff_ppir.hidden_field :identity_id
+          - if current_user.external? && !protocol_persisted
+            .form-row#pi_manual.d-none
+              = ff_ppir.fields_for :identity do |ff_i|
+
+                .form-group.col-4
+                  = ff_i.label :first_name, t(:requests)[:form][:fields][:pi_identity][:first_name]
+                  = ff_i.text_field :first_name, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
+                .form-group.col-4
+                  = ff_i.label :last_name, t(:requests)[:form][:fields][:pi_identity][:last_name]
+                  = ff_i.text_field :last_name, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
+                .form-group.col-4
+                  = ff_i.label :email, t(:requests)[:form][:fields][:pi_identity][:email]
+                  = ff_i.text_field :email, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
       .form-row
         .form-group.col-6.col-lg-3
           = ff_p.label :funding_status, class: 'required'

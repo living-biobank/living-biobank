@@ -59,7 +59,7 @@ $ ->
 
     rmidTimer = null
 
-    if !$('#sparc_request_id').val()
+    if !$('#sparc_request_id').val() && $('#internal_user').val() == 'true'
       $("[id^='sparc_request_protocol_']:not(#sparc_request_protocol_attributes_research_master_id), [id=primary_pi_search]").prop('readonly', true)
       $('#sparc_request_protocol_attributes_funding_status').prop('disabled', true).selectpicker('refresh')
       $('#sparc_request_protocol_attributes_funding_source').prop('disabled', true).selectpicker('refresh')
@@ -251,7 +251,14 @@ $ ->
     templates:
       empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
   }).on 'typeahead:select', (event, suggestion) ->
+    console.log(suggestion.label)
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
+    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_first_name').val(suggestion.first_name)
+    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_first_name').attr('readonly', true)
+    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_last_name').val(suggestion.last_name)
+    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_last_name').attr('readonly', true)
+    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_email').val(suggestion.email)
+    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_email').attr('readonly', true)
 
 (exports ? this).loadI2B2Queries = () ->
   if $('.i2b2-query').length
@@ -275,3 +282,15 @@ $ ->
       data:
         user_id:      $('#sparc_request_user_id').val()
         protocol_id:  $('#sparc_request_protocol_id').val()
+
+  $(document).on 'mouseup', '#pi_radio1', ->
+    $('#pi_automatic').removeClass('d-none')
+    if (!$('#pi_manual').hasClass('d-none'))
+      $('#pi_manual').addClass('d-none')
+    
+
+  $(document).on 'mouseup', '#pi_radio2', -> 
+    $('#pi_manual').removeClass('d-none')
+    if (!$('#pi_automatic').hasClass('d-none'))
+      $('#pi_automatic').addClass('d-none')
+    

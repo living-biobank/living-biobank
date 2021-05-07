@@ -29,6 +29,9 @@ class SparcRequest < ApplicationRecord
   accepts_nested_attributes_for :specimen_requests, allow_destroy: true
   accepts_nested_attributes_for :protocol
 
+  before_save :create_external_user, if: Proc.new{ |sr| sr.requester.external?}
+  before_save :create_external_protocol, if: Proc.new{ |sr| sr.requester.external?}
+
   after_save :add_authorized_users,       if: Proc.new{ |sr| sr.pending? && !self.updated? }
   after_save :update_services
   after_save :send_finalization_emails,   if: :in_process?
@@ -251,6 +254,51 @@ class SparcRequest < ApplicationRecord
   end
 
   private
+
+  def create_external_user
+    #Find or create external identity for SPARC
+    identity = SPARC::Identity.where(last_name: requester.last_name, first_name: requester.first_name, email:  requester.email)
+
+    unless identity.present?
+      SPARC::Identity.create(last_name: requester.last_name, first_name: requester.first_name, email:  requester.email)
+    end
+  end
+
+  def create_external_protocol
+    #Check if the protocol record has an id attached to it as a proxy for record existence in SPARC, else begin creation process
+    unless protocol.id.present?
+      
+      #Check to see if the Primary PI is already in SPARC else, create new identity
+      primary_pi_identity = SPARC::Identity.where(
+        last_name: protocol.primary_pi_role.identity.last_name, 
+        first_name: protocol.primary_pi_role.identity.first_name, 
+        email:  protocol.primary_pi_role.identity.email
+      ) 
+
+      primary_pi_identity ||=
+        SPARC::Identity.create(
+          last_name: protocol.primary_pi_role.identity.last_name, 
+          first_name: protocol.primary_pi_role.identity.first_name, 
+          email:  protocol.primary_pi_role.identity.email
+        )
+
+      #Now, create the protocol
+      new_protocol = SPARC::Protocol.create(
+        type: "Project", 
+        title: protocol.title, 
+        short_title: protocol.short_title, 
+        sponsor_name: protocol.sponsor_name, 
+        funding_status: protocol.funding_status, 
+        funding_source: protocol.funding_source, 
+        potential_funding_source: protocol.potential_funding_source, 
+        start_date: protocol.start_date, 
+        end_date: protocol.end_date 
+      )
+
+      #Create the primary pi protocol role for the new protocol
+      new_protocol.project_roles.create({identity: primary_pi_identity, role: "primary-pi", project_rights: "approve"})
+    end
+  end
 
   def create_sparc_line_item(line_item, sr, requester)
     service = line_item.service
