@@ -251,7 +251,6 @@ $ ->
     templates:
       empty: "<div class=\"tt-no-results\">#{I18n.t('constants')['no_records']}</div>"
   }).on 'typeahead:select', (event, suggestion) ->
-    console.log(suggestion.label)
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(suggestion.id)
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_first_name').val(suggestion.first_name)
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_first_name').attr('readonly', true)
