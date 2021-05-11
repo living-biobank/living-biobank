@@ -641,7 +641,7 @@ en:
   ########################
 
   site_information:
-    copyright: "&copy; 2020 MUSC"
+    copyright: "MUSC"
     title:
       base: "Living BioBank"
       errors:
