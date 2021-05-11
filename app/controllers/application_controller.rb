@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
   before_action :preload_settings
+  before_action :set_current_user
   around_action :handle_internal_server_error, if: Proc.new{ request.format.js? }
 
   private
@@ -41,6 +42,10 @@ class ApplicationController < ActionController::Base
 
   def ajax_redirect_to(url)
     render js: "window.location.assign('#{url}')"
+  end
+
+  def set_current_user
+    User.current = current_user
   end
 
   def handle_internal_server_error

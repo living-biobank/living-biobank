@@ -44,7 +44,11 @@ module SPARC
     }
 
     def self.rmid_enabled?
-      SPARC::Setting.get_value('research_master_enabled') || false
+      unless User.current.external?
+        SPARC::Setting.get_value('research_master_enabled') || false
+      else
+        false
+      end
     end
 
     def self.get_rmid(rmid)

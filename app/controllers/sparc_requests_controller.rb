@@ -16,8 +16,9 @@ class SparcRequestsController < ApplicationController
   def new
     respond_to :html, :js
     @sparc_request = current_user.sparc_requests.new
-    @sparc_request.build_protocol(type: 'Study', selected_for_epic: false)
+    @sparc_request.build_protocol(type: current_user.internal? ? 'Study' : 'Project', selected_for_epic: false)
     @sparc_request.protocol.build_primary_pi_role
+    @sparc_request.protocol.primary_pi_role.build_identity
     @sparc_request.protocol.build_research_types_info
     @sparc_request.specimen_requests.build
   end
@@ -47,8 +48,16 @@ class SparcRequestsController < ApplicationController
     end
 
     # Add the user only to a *NEW* SPARC Study if they're not the Primary PI
-    if @sparc_request.protocol.saved_change_to_attribute?(:id) && @sparc_request.protocol.primary_pi.ldap_uid != current_user.net_id
-      @sparc_request.protocol.project_roles.create(identity: SPARC::Directory.find_or_create(current_user.net_id), role: 'research-assistant-coordinator', project_rights: 'approve')
+    
+    # For Internal Users
+    if current_user.internal?
+      if @sparc_request.protocol.saved_change_to_attribute?(:id) && @sparc_request.protocol.primary_pi.ldap_uid != current_user.net_id
+        @sparc_request.protocol.project_roles.create(identity: SPARC::Directory.find_or_create(current_user.net_id), role: 'research-assistant-coordinator', project_rights: 'approve')
+      end
+    else
+      if @sparc_request.protocol.saved_change_to_attribute?(:id) && @sparc_request.protocol.primary_pi.attributes.slice('first_name', 'last_name', 'email') != current_user.attributes.slice('first_name', 'last_name', 'email')
+        @sparc_request.protocol.project_roles.create(identity: SPARC::Identity.where(last_name: current_user.last_name, first_name: current_user.first_name, email:  current_user.email).first_or_create, role: 'research-assistant-coordinator', project_rights: 'approve')
+      end
     end
 
     find_requests
@@ -157,7 +166,7 @@ class SparcRequestsController < ApplicationController
       end
     end
 
-    params.require(:sparc_request).permit(
+    params.require(:sparc_request).except(:user_id).permit(
       :id,
       :protocol_id,
       :status,
@@ -183,7 +192,12 @@ class SparcRequestsController < ApplicationController
         :sponsor_name,
         primary_pi_role_attributes: [
           :id,
-          :identity_id
+          :identity_id,
+          identity_attributes: [
+            :last_name,
+            :first_name,
+            :email
+          ]
         ],
         research_types_info_attributes: [
           :id,

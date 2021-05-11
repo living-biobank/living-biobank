@@ -122,6 +122,23 @@ class User < ApplicationRecord
     self.groups.any?
   end 
 
+  def internal?
+    self.email.split('@').last == 'musc.edu'
+  end
+
+  def external?
+    self.email.split('@').last != 'musc.edu'
+  end
+
+  #NOTE: The following two lines are being added because there's a specific validation in Protocol that needs to be conditional on whether the current user is internal or external
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
+
   def eligible_requests
     available_protocol_ids = SPARC::Protocol.where(id: SparcRequest.select(:protocol_id).map(&:protocol_id)).ids 
 
@@ -130,7 +147,7 @@ class User < ApplicationRecord
       requests = SparcRequest.where(protocol_id: available_protocol_ids)
     else
       requests = SparcRequest.where(protocol_id: SPARC::Protocol.joins(project_roles: :identity).where(
-        identities: { ldap_uid: self.net_id },
+        identities: (self.net_id.present? ? { ldap_uid: self.net_id } : {last_name: self.last_name, first_name: self.first_name, email: self.email}),
         project_roles: { project_rights: %w(approve view) }
       ).ids)
 
@@ -145,9 +162,9 @@ class User < ApplicationRecord
   def can_edit_request?(request)
     self.admin? || self.data_honest_broker? ||
       if request.protocol.project_roles.loaded?
-        request.protocol.project_roles.detect{ |pr| %w(approve).include?(pr.project_rights) && pr.identity.ldap_uid == self.net_id }
+        request.protocol.project_roles.detect{ |pr| %w(approve).include?(pr.project_rights) && (self.net_id.present? ? pr.identity.ldap_uid == self.net_id : pr.identity.attributes.slice('first_name', 'last_name', 'email') == self.attributes.slice('first_name', 'last_name', 'email')) }
       else
-        request.protocol.project_roles.joins(:identity).where(project_rights: %w(request approve), identities: { ldap_uid: self.net_id })
+        request.protocol.project_roles.joins(:identity).where(project_rights: %w(request approve), identities: (self.net_id.present? ? { ldap_uid: self.net_id } : {last_name: self.last_name, first_name: self.first_name, email: self.email}))
       end
   end
 
