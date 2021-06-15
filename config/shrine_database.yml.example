@@ -1,0 +1,10 @@
+development:
+  adapter: sqlserver
+  encoding: utf8
+  timeout: 10000
+  host: localhost 
+  port: 1433
+  username: username
+  password: password
+  database: shrine_development
+
