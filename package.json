@@ -14,7 +14,7 @@
     "chartkick": "^3.1.1",
     "coffeescript": "^2.3.1",
     "corejs-typeahead": "^1.2.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jquery.are-you-sure": "^1.9.0",
     "nprogress": "^0.2.0",
     "popper.js": "^1.16.1",
