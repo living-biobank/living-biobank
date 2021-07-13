@@ -2,4 +2,6 @@
   %p.text-muted.text-center.mb-1.mt-3<
     = "#{t('site_information.title.base')}&trade; #{t('site_information.version', version: ENV.fetch('APP_VERSION'))}".html_safe
   %p.text-muted.text-center.mb-0
+    \&copy;
+    = Time.now.strftime('%Y')
     = t('site_information.copyright').html_safe

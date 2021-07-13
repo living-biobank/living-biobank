@@ -8,6 +8,7 @@ set :use_sudo, false
 set :linked_files, fetch(:linked_files, []).push('config/database.yml',
                                                  'config/master.key',
                                                  'config/i2b2_database.yml',
+                                                 'config/shrine_database.yml',
                                                  'config/sparc_request_database.yml',
                                                  'config/ldap.yml',
                                                  '.ruby-version',
