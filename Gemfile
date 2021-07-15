@@ -44,6 +44,7 @@ gem 'webpacker', '~> 4.x'
 gem 'whenever'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
+gem 'mimemagic'
 
 # adding oracle for i2b2 access
 gem 'activerecord-oracle_enhanced-adapter', '~> 5.2.0'
