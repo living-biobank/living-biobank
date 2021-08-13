@@ -583,15 +583,14 @@ en:
           last_name: "PI Last Name"
           email: "PI Email"
       placeholders:
-        protocol_search: "Search for your Protocol by SRID, title, or short title"
+        protocol_search: "If known, search for your Protocol by SRID, title, or short title"
         primary_pi: "e.g. Smith"
       subtext:
         rmid: "Please provide your Study's <strong>Research Master ID</strong> or visit <a href='https://rmid.musc.edu' target='blank'>rmid.musc.edu</a> to create one."
         rmid_not_found: "Research Master ID not found"
         rmid_server_down: "The Research Master ID server is unavailable at this time. Please try again later."
         imported_from_rmid: "Imported from Research Master ID"
-        protocol: "Search for an existing Protocol in SPARCRequest"
-        protocol2: "Optional. If you are an external requester but collaborating with MUSC faculty/staff AND know the SPARC information for the local project, please input here. Otherwise leave blank."
+        protocol: "<strong>Optional</strong>. If you are an external requester but collaborating with MUSC faculty/staff AND know the SPARC information for the local project, please input here. Otherwise leave blank."
         protocol_found: "Imported data from Study #%{id}"
         protocol_not_found: "Could not find a corresponding Study in SPARCRequest. Please fill in the information below to create a new Study"
         i2b2_query: "Please select your specimen source and an associated e-phenotype using your <a href='https://i2b2.musc.edu/' target='_blank'>i2b2</a> query history. <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'><br>Click here</a> if you need help with creating a query. Queries shown are populated from all SPARC study team members."

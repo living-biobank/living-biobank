@@ -292,4 +292,38 @@ $ ->
     $('#pi_manual').removeClass('d-none')
     if (!$('#pi_automatic').hasClass('d-none'))
       $('#pi_automatic').addClass('d-none')
+
+# (exports ? this).loadActShrineQueries = () ->
+#   if $('.i2b2-query').length
+#     # Get all unique query ids on the page, then send AJAX requests to populate them
+#     query_ids = $('.i2b2-query').map(->
+#       $(this).data('query-id')
+#     ).toArray().filter( (itm, i, arr) ->
+#       arr.indexOf(itm) == i
+#     ).forEach( (query_id) ->
+#       $.ajax
+#         method: 'GET'
+#         dataType: 'script'
+#         url: "/i2b2_queries/#{query_id}"
+#     )
+#   else
+#     $("select[name*=query_id]").parents('.dropdown').data('toggle', 'tooltip').prop('title', I18n.t('constants.loading')).tooltip()
+#     $.ajax
+#       method: 'GET'
+#       dataType: 'script'
+#       url: '/i2b2_queries'
+#       data:
+#         user_id:      $('#sparc_request_user_id').val()
+#         protocol_id:  $('#sparc_request_protocol_id').val()
+
+#   $(document).on 'mouseup', '#pi_radio1', ->
+#     $('#pi_automatic').removeClass('d-none')
+#     if (!$('#pi_manual').hasClass('d-none'))
+#       $('#pi_manual').addClass('d-none')
+    
+
+#   $(document).on 'mouseup', '#pi_radio2', -> 
+#     $('#pi_manual').removeClass('d-none')
+#     if (!$('#pi_automatic').hasClass('d-none'))
+#       $('#pi_automatic').addClass('d-none')
     

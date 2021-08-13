@@ -17,16 +17,14 @@
       .form-row
         .form-group.col-6.mb-4
           - if current_user.external? or SPARC::Setting.get_value('research_master_enabled') == false
-            = label_tag :protocol_search, t(:requests)[:form][:fields][:protocol_search]
+            = label_tag :protocol_search, t(:requests)[:form][:fields][:protocol_search], class: 'mb-0'
+            %small.form-text.text-muted
+              = t(:requests)[:form][:subtext][:protocol].html_safe
             .input-group
               = label_tag :protocol_search, class: 'input-group-icon' do
                 %span.text-muted
                   = icon('fas', 'search')
               = text_field_tag :protocol_search, protocol_persisted ? sparc_request.identifier : '', class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: protocol_persisted
-            %small.form-text.text-muted
-              = raw(t(:requests)[:form][:subtext][:protocol])
-              %br
-              = t(:requests)[:form][:subtext][:protocol2]
           - elsif SPARC::Setting.get_value('research_master_enabled')
             = ff_p.label :research_master_id, class: 'required'
             = ff_p.text_field :research_master_id, class: 'form-control form-control-lg numerical', readonly: protocol_persisted && protocol.research_master_id

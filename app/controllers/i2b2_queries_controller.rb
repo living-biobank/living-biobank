@@ -9,7 +9,10 @@ class I2b2QueriesController < ApplicationController
       else
         requester = User.find(params[:user_id])
         I2b2::Query.where(user_id: requester.net_id)
+        # I2b2::Query.where(user_id: "bah29@musc.edu")
       end.order(create_date: :desc)
+
+    @shrine_queries = []
   end
 
   def show

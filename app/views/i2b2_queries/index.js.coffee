@@ -16,6 +16,16 @@ updateQueries = () ->
 updateQueries()
 $("select[name*=query_id]").selectpicker('refresh')
 
+<% if @queries.any? %>
+$(".musc-dropdown").removeAttr('hidden')
+<% end %>
+
+<% if @shrine_queries.any? %>
+$(".shrine-dropdown").removeAttr('hidden')
+<% end %>
+
+$(".loading-spinner").attr('hidden', true)
+
 $(document).off('fields_added.nested_form_fields').on('fields_added.nested_form_fields', ->
   $(document).trigger('ajax:complete') # rails-ujs element replacement bug fix
   updateQueries()
