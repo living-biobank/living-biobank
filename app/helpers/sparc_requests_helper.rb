@@ -151,9 +151,38 @@ module SparcRequestsHelper
     end
   end
 
-  def query_display(obj)
-    content_tag :span, class: 'd-flex text-muted i2b2-query', data: { query_id: obj.is_a?(LineItem) ? obj.query_id : nil } do
-      content = icon('fas', 'database fa-sm mr-2') + content_tag(:small, (obj.is_a?(LineItem) ? t('constants.loading') : obj.try(:name).try(:truncate, 50)))
+  def query_display(obj, type = '')
+    # NOTE:  This method technically handles two different actions and despite being concerned with only display item.  Further, it needs to do slightly different things depending on whether the method is called on initial page load or when updating the elements to display the query name.
+
+    #This variable is a first a check for whether the page is on its initial load phase.  If so, it then assigns an additional class depending on whether the query is an MUSC i2b2 query or an ACT Shrine query.  This information is necessary for later processing.
+    klass =
+      if obj.class == LineItem
+        if obj.musc_query_id.present?
+          'musc-query'
+        elsif obj.act_query_id.present?
+          'act-query'
+        end
+      else
+        ''
+      end
+
+    #This variable is accessed after page load, when query names are being loaded.  It first checks to see if we're on that leg of processing.  If so, it then gets the name of the query differently, depending on which source it's being drawn from.
+    query_name =
+      if obj.class == I2b2::Query || obj.class == Shrine::Query
+        if type == 'musc'
+          obj.try(:name).try(:truncate, 50)
+        elsif type == 'shrine'
+          obj.try(:query_name).try(:truncate, 50)
+        else
+          nil
+        end
+      else
+        ''
+      end
+
+
+    content_tag :span, class: ['d-flex text-muted', klass], data: { query_id: obj.is_a?(LineItem) ? (obj.musc_query_id || obj.act_query_id) : nil } do
+      content = icon('fas', 'database fa-sm mr-2') + content_tag(:small, (obj.is_a?(LineItem) ? t('constants.loading') : query_name))
     end
   end
 

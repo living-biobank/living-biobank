@@ -3,7 +3,27 @@ $ ->
   ### Requests Page ###
   #####################
 
-  if $('.i2b2-query').length
+  $(document).on('changed.bs.select', '.musc-query-select', (e) ->  
+    if $(this).val() != ''
+      $(this).parents('.form-group').siblings('.shrine-dropdown').find('select').val('').prop('disabled', true)
+    else
+      $(this).parents('.form-group').siblings('.shrine-dropdown').find('select').prop('disabled', false)
+
+    $('.selectpicker').selectpicker('refresh')
+    e.stopPropagation()
+  )
+
+  $(document).on('changed.bs.select', '.act-query-select', (e) ->  
+    if $(this).val() != ''
+      $(this).parents('.form-group').siblings('.musc-dropdown').find('select').prop('disabled', true)
+    else
+      $(this).parents('.form-group').siblings('.musc-dropdown').find('select').prop('disabled', false)
+
+    $('.selectpicker').selectpicker('refresh')
+    e.stopPropagation()
+  )
+
+  if $('.musc-query').length || $('.act-query').length
     loadI2B2Queries()
 
     $(document).on('shown.bs.popover', '.specimen-line-item', (e) ->
@@ -260,9 +280,10 @@ $ ->
     $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_email').attr('readonly', true)
 
 (exports ? this).loadI2B2Queries = () ->
-  if $('.i2b2-query').length
-    # Get all unique query ids on the page, then send AJAX requests to populate them
-    query_ids = $('.i2b2-query').map(->
+  if $('.musc-query').length || $('.act-query').length
+    
+    # Get all unique MUSC query ids on the page, then send AJAX requests to populate them
+    query_ids = $('.musc-query').map(->
       $(this).data('query-id')
     ).toArray().filter( (itm, i, arr) ->
       arr.indexOf(itm) == i
@@ -271,6 +292,22 @@ $ ->
         method: 'GET'
         dataType: 'script'
         url: "/i2b2_queries/#{query_id}"
+        data:
+          query_type: 'musc'
+    )
+
+    # Get all unique ACT Shrine query ids on the page, then send AJAX requests to populate them
+    query_ids = $('.act-query').map(->
+      $(this).data('query-id')
+    ).toArray().filter( (itm, i, arr) ->
+      arr.indexOf(itm) == i
+    ).forEach( (query_id) ->
+      $.ajax
+        method: 'GET'
+        dataType: 'script'
+        url: "/i2b2_queries/#{query_id}"
+        data:
+          query_type: 'shrine'
     )
   else
     $("select[name*=query_id]").parents('.dropdown').data('toggle', 'tooltip').prop('title', I18n.t('constants.loading')).tooltip()
@@ -293,37 +330,3 @@ $ ->
     if (!$('#pi_automatic').hasClass('d-none'))
       $('#pi_automatic').addClass('d-none')
 
-# (exports ? this).loadActShrineQueries = () ->
-#   if $('.i2b2-query').length
-#     # Get all unique query ids on the page, then send AJAX requests to populate them
-#     query_ids = $('.i2b2-query').map(->
-#       $(this).data('query-id')
-#     ).toArray().filter( (itm, i, arr) ->
-#       arr.indexOf(itm) == i
-#     ).forEach( (query_id) ->
-#       $.ajax
-#         method: 'GET'
-#         dataType: 'script'
-#         url: "/i2b2_queries/#{query_id}"
-#     )
-#   else
-#     $("select[name*=query_id]").parents('.dropdown').data('toggle', 'tooltip').prop('title', I18n.t('constants.loading')).tooltip()
-#     $.ajax
-#       method: 'GET'
-#       dataType: 'script'
-#       url: '/i2b2_queries'
-#       data:
-#         user_id:      $('#sparc_request_user_id').val()
-#         protocol_id:  $('#sparc_request_protocol_id').val()
-
-#   $(document).on 'mouseup', '#pi_radio1', ->
-#     $('#pi_automatic').removeClass('d-none')
-#     if (!$('#pi_manual').hasClass('d-none'))
-#       $('#pi_manual').addClass('d-none')
-    
-
-#   $(document).on 'mouseup', '#pi_radio2', -> 
-#     $('#pi_manual').removeClass('d-none')
-#     if (!$('#pi_automatic').hasClass('d-none'))
-#       $('#pi_automatic').addClass('d-none')
-    

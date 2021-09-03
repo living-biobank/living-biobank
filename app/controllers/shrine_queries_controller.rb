@@ -8,7 +8,8 @@ class ShrineQueriesController < ApplicationController
         Shrine::Query.where(user_id: protocol.study_users.pluck(:ldap_uid) + (current_user.data_honest_broker? || current_user.admin? ? [current_user.net_id] : []))
       else
         requester = User.find(params[:user_id])
-        Shrine::Query.where(user_id: requester.net_id)
+        # Shrine::Query.where(user_id: requester.net_id)
+        Shrine::Query.where(user_id: "bah29")
       end.order(create_date: :desc)
   end
 
