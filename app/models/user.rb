@@ -123,11 +123,11 @@ class User < ApplicationRecord
   end 
 
   def internal?
-    self.email.split('@').last == 'musc.edu'
+    self.net_id.split('@').last == 'musc.edu'
   end
 
   def external?
-    self.email.split('@').last != 'musc.edu'
+    self.net_id.split('@').last != 'musc.edu'
   end
 
   #NOTE: The following two lines are being added because there's a specific validation in Protocol that needs to be conditional on whether the current user is internal or external
@@ -147,7 +147,7 @@ class User < ApplicationRecord
       requests = SparcRequest.where(protocol_id: available_protocol_ids)
     else
       requests = SparcRequest.where(protocol_id: SPARC::Protocol.joins(project_roles: :identity).where(
-        identities: (self.net_id.present? ? { ldap_uid: self.net_id } : {last_name: self.last_name, first_name: self.first_name, email: self.email}),
+        identities: (self.net_id.split('@').last == 'musc.edu' ? { ldap_uid: self.net_id } : {last_name: self.last_name, first_name: self.first_name, email: self.email}),
         project_roles: { project_rights: %w(approve view) }
       ).ids)
 

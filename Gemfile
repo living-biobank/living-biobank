@@ -44,14 +44,16 @@ gem 'webpacker', '~> 4.x'
 gem 'whenever'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4'
+gem 'mimemagic'
 
 # adding oracle for i2b2 access
 gem 'activerecord-oracle_enhanced-adapter', '~> 5.2.0'
 gem 'ruby-oci8'
 
 # adding sqlserver for ACT Shrine access
-gem 'activerecord-sqlserver-adapter'
 gem 'tiny_tds'
+gem 'activerecord-sqlserver-adapter'
+
 
 gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'

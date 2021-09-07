@@ -208,6 +208,7 @@ class SparcRequestsController < ApplicationController
         :id,
         :groups_source_id,
         :query_id,
+        :act_query_id,
         :number_of_specimens_requested,
         :minimum_sample_size,
         :_destroy
