@@ -9,12 +9,10 @@ class I2b2QueriesController < ApplicationController
       else
         requester = User.find(params[:user_id])
         I2b2::Query.where(user_id: requester.net_id)
-        # I2b2::Query.where(user_id: "bah29@musc.edu")
       end.order(create_date: :desc)
 
     @shrine_queries = 
-      # Shrine::Query.where(username: requeser.net_id.split('@').first)
-      Shrine::Query.where(username: 'bah29')
+      Shrine::Query.where(username: requeser.net_id.split('@').first)
   end
 
   def show
