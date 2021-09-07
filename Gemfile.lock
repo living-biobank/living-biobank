@@ -395,6 +395,7 @@ DEPENDENCIES
   jbuilder (~> 2.10)
   letter_opener
   listen (>= 3.0.5, < 3.2)
+  mimemagic
   mysql2
   nested_form_fields
   net-ldap (~> 0.16.0)

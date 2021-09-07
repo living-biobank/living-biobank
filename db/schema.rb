@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_11_212749) do
+ActiveRecord::Schema.define(version: 2021_07_15_190033) do
 
-  create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", limit: 16777215
     t.string "record_type", null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
-  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
-  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.boolean "process_specimen_retrieval"
     t.boolean "process_sample_size"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["name"], name: "index_groups_on_name", unique: true
   end
 
-  create_table "groups_sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "groups_sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.integer "discard_age"
@@ -82,14 +82,14 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["source_id", "group_id"], name: "index_groups_sources_on_source_id_and_group_id"
   end
 
-  create_table "lab_honest_brokers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "lab_honest_brokers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "group_id"
     t.index ["group_id"], name: "index_lab_honest_brokers_on_group_id"
     t.index ["user_id"], name: "index_lab_honest_brokers_on_user_id"
   end
 
-  create_table "labs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "labs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "patient_id"
     t.date "specimen_date"
     t.bigint "source_id"
@@ -116,12 +116,13 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["source_id"], name: "index_labs_on_source_id"
   end
 
-  create_table "line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "line_items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "sparc_request_id"
     t.bigint "service_id"
     t.bigint "sparc_id"
     t.bigint "groups_source_id"
-    t.bigint "query_id"
+    t.bigint "musc_query_id"
+    t.bigint "act_query_id"
     t.integer "query_count"
     t.decimal "minimum_sample_size", precision: 8, scale: 2
     t.integer "number_of_specimens_requested"
@@ -132,13 +133,13 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
-    t.datetime "deleted_at"
     t.boolean "specimen", default: false
+    t.datetime "deleted_at"
     t.index ["deleted_at"], name: "index_line_items_on_deleted_at"
     t.index ["groups_source_id"], name: "index_line_items_on_groups_source_id"
   end
 
-  create_table "patients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "patients", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "mrn"
     t.string "lastname"
     t.string "firstname"
@@ -151,7 +152,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.date "dob"
   end
 
-  create_table "populations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "populations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "patient_id"
     t.datetime "identified_date"
     t.datetime "created_at", null: false
@@ -161,7 +162,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["patient_id"], name: "index_populations_on_patient_id"
   end
 
-  create_table "services", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "services", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "group_id"
     t.integer "position"
     t.bigint "sparc_id"
@@ -173,14 +174,14 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["group_id"], name: "index_services_on_group_id"
   end
 
-  create_table "sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sources", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "key"
     t.string "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "sparc_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "sparc_requests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.string "status", default: "New"
     t.boolean "dr_consult", default: false
@@ -201,7 +202,7 @@ ActiveRecord::Schema.define(version: 2021_03_11_212749) do
     t.index ["updated_by"], name: "index_sparc_requests_on_updated_by"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email", default: "", null: false
