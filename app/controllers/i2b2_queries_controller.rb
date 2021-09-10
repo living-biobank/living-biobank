@@ -13,7 +13,8 @@ class I2b2QueriesController < ApplicationController
       end.order(create_date: :desc)
 
     @shrine_queries = 
-      Shrine::Query.where(username: @requester.net_id.split('@').first)
+      # Shrine::Query.where(username: @requester.net_id.split('@').first)
+      Shrine::Query.where(username: 'bah29')
   end
 
   def show

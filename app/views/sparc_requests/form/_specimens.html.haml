@@ -8,8 +8,8 @@
     - groups_sources = GroupsSource.eager_load(:group).where(deprecated: false).map{ |gs| [gs.name, gs.id, { data: { subtext: gs.description, validates_sample_size: gs.group.process_sample_size?.to_s } }] }
     = f.nested_fields_for :specimen_requests do |ff_li|
       = ff_li.hidden_field :id
-      .form-row
-        .form-group.col-6.col-lg-3
+      .form-row.pt-2.mb-1
+        .form-group.col-6.col-lg-2
           = ff_li.label :groups_source_id, class: 'required'
           = ff_li.select :groups_source_id, options_for_select(groups_sources, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control form-control-lg selectpicker groups-source-select'
         .loading-spinner.form-group.col-6.col-lg-3.text-center
@@ -17,16 +17,16 @@
           .spinner-border{role: 'status'}
             %span.sr-only
               = "Loading..."
-        .musc-dropdown.form-group.col-6.col-lg-3{hidden: true}
+        .musc-dropdown.form-group.col-6.col-lg-2{hidden: true}
           = ff_li.label :query_id, class: 'required'
           = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker musc-query-select', data: { live_search: 'true' }
-        .shrine-dropdown.form-group.col-6.col-lg-3{hidden: true}
+        .shrine-dropdown.form-group.col-6.col-lg-2{hidden: true}
           = ff_li.label :act_query_id, "ACT Query", class: 'required'
           = ff_li.select :act_query_id, (ff_li.object.act_query_id ? [[ff_li.object.shrine_query.query_name, ff_li.object.act_query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker act-query-select', data: { live_search: 'true' }
-        .form-group.col-6.col-lg-3
+        .form-group.col-6.col-lg-2
           = ff_li.label :number_of_specimens_requested, class: 'required'
           = ff_li.text_field :number_of_specimens_requested, class: 'form-control form-control-lg numerical', min: 1, maxlength: 7
-        .form-group.col.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
+        .form-group.col-6.col-lg-2.min-sample-size-container{ class: ff_li.object.group.try(&:process_sample_size?) ? '' : 'd-none' }
           = ff_li.label :minimum_sample_size, class: 'required'
           .input-group
             = ff_li.text_field :minimum_sample_size, class: 'form-control form-control-lg numerical decimal', maxlength: 30
@@ -40,7 +40,7 @@
           %label.w-100 &nbsp;
           = ff_li.remove_nested_fields_link href: 'javascript:void(0)', class: 'btn btn-lg btn-sq btn-danger', title: t(:requests)[:form][:delete_specimen], data: { toggle: 'tooltip' } do
             = icon('fas', 'trash')
-    .form-group.mb-0
+    .form-group.mb-0.mt-1
       = f.add_nested_fields_link :specimen_requests, href: 'javascript:void(0)', class: 'btn btn-lg btn-success' do
         = succeed t(:requests)[:form][:add_specimen] do
           = icon('fas', 'plus mr-2')
