@@ -1,8 +1,8 @@
 class I2b2QueriesController < ApplicationController
+  before_action :find_requester, only: [:index]
+
   def index
     respond_to :js
-
-    find_requester
 
     @musc_queries = 
       if params[:protocol_id].present?
@@ -13,8 +13,7 @@ class I2b2QueriesController < ApplicationController
       end.order(create_date: :desc)
 
     @shrine_queries = 
-      # Shrine::Query.where(username: @requester.net_id.split('@').first)
-      Shrine::Query.where(username: 'bah29')
+      Shrine::Query.where(username: @requester.net_id.split('@').first)
   end
 
   def show
