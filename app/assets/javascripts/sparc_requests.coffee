@@ -318,6 +318,15 @@ $ ->
       data:
         user_id:      $('#sparc_request_user_id').val()
         protocol_id:  $('#sparc_request_protocol_id').val()
+      complete: ->
+        $('.musc-query-select').each ->
+          if $(this).val() != ''
+            $(this).parents('.form-group').siblings('.shrine-dropdown').find('select').val('').prop('disabled', true)
+        $('.act-query-select').each ->
+          if $(this).val() != ''
+            $(this).parents('.form-group').siblings('.musc-dropdown').find('select').val('').prop('disabled', true)
+        $('.selectpicker').selectpicker('refresh')
+        
 
   $(document).on 'mouseup', '#pi_radio1', ->
     $('#pi_automatic').removeClass('d-none')

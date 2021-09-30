@@ -18,10 +18,10 @@
             %span.sr-only
               = "Loading..."
         .musc-dropdown.form-group.col-6.col-lg-2{hidden: true}
-          = ff_li.label :query_id, class: 'required'
+          = ff_li.label :query_id, t(:requests)[:form][:fields][:queries][:musc], class: 'required'
           = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker musc-query-select', data: { live_search: 'true' }
         .shrine-dropdown.form-group.col-6.col-lg-2{hidden: true}
-          = ff_li.label :act_query_id, "ACT Query", class: 'required'
+          = ff_li.label :act_query_id, t(:requests)[:form][:fields][:queries][:shrine], class: 'required'
           = ff_li.select :act_query_id, (ff_li.object.act_query_id ? [[ff_li.object.shrine_query.query_name, ff_li.object.act_query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker act-query-select', data: { live_search: 'true' }
         .form-group.col-6.col-lg-2
           = ff_li.label :number_of_specimens_requested, class: 'required'

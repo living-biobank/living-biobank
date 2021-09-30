@@ -31,6 +31,10 @@ class LineItem < ApplicationRecord
   before_create :specimen_check
   after_create :set_position
 
+  #These before update actions enforce the mutual exclusivity of act/shrine queries and musc queries
+  before_update :musc_query_exclusive, if: Proc.new{|li| li.musc_query_id_changed?}
+  before_update :act_query_exclusive, if: Proc.new{|li| li.act_query_id_changed?}
+
   scope :specimen_requests, -> () {
     where.not(groups_source_id: nil)
   }
@@ -95,6 +99,18 @@ class LineItem < ApplicationRecord
   end
 
   private
+
+  def musc_query_exclusive
+    if self.musc_query_id.present?
+      self.act_query_id = nil
+    end
+  end
+
+  def act_query_exclusive
+    if self.act_query_id.present?
+      self.musc_query_id = nil
+    end
+  end
 
   def musc_query_presence
     if act_query_id.blank?

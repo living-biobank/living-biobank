@@ -20,8 +20,18 @@ $("#sparc_request_protocol_attributes_<%= attr.to_s %>").parents('.form-group').
 <% end %>
 
 # Primary PI Errors
-<% @sparc_request.protocol.primary_pi_role.errors.messages[:identity].each do |message| %>
-$('#primary_pi_search').parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
+<% if @sparc_request.protocol.primary_pi_role.errors.messages.any? %>
+$('#pi-options').removeClass('is-valid').addClass('is-invalid')
+if !($('#pi_automatic').hasClass('d-none'))
+  $('#primary_pi_search').parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= I18n.t('activerecord.errors.models.sparc/project_role.attributes.identity.required').capitalize %></small>")
+<% end %>
+
+#Primary PI Identity Attributes Errors
+<% @sparc_request.protocol.primary_pi_role.identity.errors.messages.each do |attr, messages| %>
+<% messages.each do |message| %>
+if !($('#pi_manual').hasClass('d-none'))
+  $("#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_<%= attr.to_s %>").closest('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
+<% end %>
 <% end %>
 
 # Line Item Errors

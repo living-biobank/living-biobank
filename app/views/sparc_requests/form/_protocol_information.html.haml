@@ -41,8 +41,8 @@
           = ff_p.label :short_title, class: 'required'
           = ff_p.text_field :short_title, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
       .form-group
-        - unless current_user.internal?  
-          .div{"aria-label" => "PI Select Group", role: "group"}
+        - unless current_user.internal? || (protocol_persisted && protocol_valid) 
+          .form-group.div{"aria-label" => "PI Select Group", role: "group", id: 'pi-options'}
             = label_tag :title, t(:requests)[:form][:fields][:pi_select][:title]
 
             %input#pi_radio1{autocomplete: "off", name: "pi_radio", value: "yes", type: "radio"}
@@ -54,7 +54,7 @@
               = t(:requests)[:form][:fields][:pi_select][:deny]
         = ff_p.fields_for :primary_pi_role do |ff_ppir|
           = ff_ppir.hidden_field :id
-          #pi_automatic{ class: [current_user.external? ? 'd-none' : nil]}
+          #pi_automatic{ class: [current_user.external? && (!protocol_persisted && !protocol_valid) ? 'd-none' : nil]}
             = label_tag :primary_pi_search, SparcRequest.human_attribute_name(:primary_pi), class: "#{'required' if current_user.internal?}"
             .input-group
               = label_tag :primary_pi_search, class: 'input-group-icon' do
@@ -67,13 +67,13 @@
               = ff_ppir.fields_for :identity do |ff_i|
 
                 .form-group.col-4
-                  = ff_i.label :first_name, t(:requests)[:form][:fields][:pi_identity][:first_name]
+                  = ff_i.label :first_name, t(:requests)[:form][:fields][:pi_identity][:first_name], class: 'required'
                   = ff_i.text_field :first_name, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
                 .form-group.col-4
-                  = ff_i.label :last_name, t(:requests)[:form][:fields][:pi_identity][:last_name]
+                  = ff_i.label :last_name, t(:requests)[:form][:fields][:pi_identity][:last_name], class: 'required'
                   = ff_i.text_field :last_name, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
                 .form-group.col-4
-                  = ff_i.label :email, t(:requests)[:form][:fields][:pi_identity][:email]
+                  = ff_i.label :email, t(:requests)[:form][:fields][:pi_identity][:email], class: 'required'
                   = ff_i.text_field :email, class: 'form-control form-control-lg', readonly: protocol_persisted && protocol_valid
       .form-row
         .form-group.col-6.col-lg-3
