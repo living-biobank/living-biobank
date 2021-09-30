@@ -6,6 +6,9 @@ module SPARC
     has_many :service_providers, dependent: :destroy
     has_many :labs
 
+    validates_presence_of :last_name, :first_name, :email
+    validates_format_of :email, with: DataTypeValidator::EMAIL_REGEXP, allow_blank: true, if: :email_changed?
+
     devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable
 
     def suggestion_value

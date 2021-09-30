@@ -21,6 +21,7 @@ class SparcRequest < ApplicationRecord
 
   validates_associated :protocol
   validates_associated :specimen_requests
+  validates_associated :primary_pi
 
   validates :specimen_requests, length: { minimum: 1 }
 
@@ -213,13 +214,18 @@ class SparcRequest < ApplicationRecord
     if (services_to_add = self.services.where(status: self.status).order(:position)).any?
       # Find or create a Service Request
       sr = self.protocol.service_requests.first_or_create
-      # Find or create an Identity for the requester
-      requester = SPARC::Directory.find_or_create(self.requester.net_id)
+      # Find or create an Identity for the requester if an internal user.  Otherwise, find the requester identity that was created prior to saving the request
+      sparc_user = 
+        if requester.internal?
+          SPARC::Directory.find_or_create(self.requester.net_id)
+        else
+          SPARC::Identity.where(last_name: requester.last_name, first_name: requester.first_name, email:  requester.email).first
+        end
 
       services_to_add.each do |serv|
         if (serv.condition.blank? || self.instance_eval(serv.condition)) && !self.additional_services.exists?(service: serv.sparc_service)
           line_item = self.additional_services.create(service: serv.sparc_service)
-          create_sparc_line_item(line_item, sr, requester)
+          create_sparc_line_item(line_item, sr, sparc_user)
         end
       end
 
@@ -300,7 +306,7 @@ class SparcRequest < ApplicationRecord
     end
   end
 
-  def create_sparc_line_item(line_item, sr, requester)
+  def create_sparc_line_item(line_item, sr, sparc_user)
     service = line_item.service
 
     # Find or create a Sub Service Request for the SPARC Line Item
@@ -310,7 +316,7 @@ class SparcRequest < ApplicationRecord
       ssr = sr.sub_service_requests.create(
         protocol:           self.protocol,
         organization:       service.process_ssrs_organization,
-        service_requester:  requester
+        service_requester:  sparc_user
       )
     elsif !ssr.locked?
       ssr.update_attribute(:status, 'draft')

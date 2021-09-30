@@ -582,6 +582,9 @@ en:
           first_name: "PI First Name"
           last_name: "PI Last Name"
           email: "PI Email"
+        queries:
+          shrine: "ACT I2b2 Query"
+          musc: "MUSC I2b2 Query"
       placeholders:
         protocol_search: "If known, search for your Protocol by SRID, title, or short title"
         primary_pi: "e.g. Smith"
