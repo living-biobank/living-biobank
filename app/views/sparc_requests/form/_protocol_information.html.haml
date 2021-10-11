@@ -24,7 +24,7 @@
               = label_tag :protocol_search, class: 'input-group-icon' do
                 %span.text-muted
                   = icon('fas', 'search')
-              = text_field_tag :protocol_search, protocol_persisted ? sparc_request.identifier : '', class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: protocol_persisted
+              = text_field_tag :protocol_search, protocol_persisted ? protocol.identifier : '', class: 'form-control form-control-lg typeahead', placeholder: t(:requests)[:form][:placeholders][:protocol_search], readonly: protocol_persisted
           - elsif SPARC::Setting.get_value('research_master_enabled')
             = ff_p.label :research_master_id, class: 'required'
             = ff_p.text_field :research_master_id, class: 'form-control form-control-lg numerical', readonly: protocol_persisted && protocol.research_master_id
