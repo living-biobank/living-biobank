@@ -19,6 +19,17 @@ Swal.fire(
       dataType: 'script'
       url: "<%= edit_sparc_request_path(@existing_request) %>"
 <% elsif @rights %>
+
+# hide/reset option to input PI first name, last name, and e-mail
+$('#pi-options').hide()
+$('#pi_radio1').prop('checked', false).trigger('mouseup')
+$('#pi_radio2').prop('checked', false)
+
+$('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_first_name').remove()
+$('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_last_name').remove()
+$('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_attributes_email').remove()
+# end hide/reset option to input PI first name, last name, and e-mail
+
 # Use the title/short title from SPARC
 $('#sparc_request_protocol_attributes_title').val("<%= raw j @protocol.title %>").prop('readonly', true)
 $('#sparc_request_protocol_attributes_short_title').val("<%= raw j @protocol.short_title %>").prop('readonly', true)
