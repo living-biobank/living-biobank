@@ -15,3 +15,6 @@
     = select_tag 'sort_by', lab_sort_filter_options(params[:sort_by]), class: 'selectpicker filter-select form-control', title: t(:labs)[:filters][:sort_by], data: { field: 'sort_by', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:labs)[:filters][:sort_by] }
   .tooltip-wrapper.d-flex{ title: t(:labs)[:filters][:sort_order], data: { toggle: 'tooltip' } }
     = select_tag 'sort_order', lab_sort_order_options(params[:sort_order]), class: 'selectpicker filter-select form-control', data: { field: 'sort_order', style: 'btn-lg btn-link filter', dropdown_align_right: 'true', header: t(:labs)[:filters][:sort_order] }
+  - if current_user.lab_honest_broker? || current_user.admin?
+    .tooltip-wrapper.d-flex.align-items-center{ title: "Get CSV report of labs based on current filters", data: { toggle: 'tooltip' } }
+      = link_to 'CSV Report', specimen_report_reports_path(format: :csv), class: 'btn btn-primary form-control filter-select', id: 'specimen_report'

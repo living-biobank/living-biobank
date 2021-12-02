@@ -339,3 +339,10 @@ $ ->
     if (!$('#pi_automatic').hasClass('d-none'))
       $('#pi_automatic').addClass('d-none')
 
+  $(window).on('popstate', ->
+    query = window.location.search
+    $('#sparc_request_report').attr('href', '/reports/sparc_request_report.csv' + query)
+  )
+
+
+

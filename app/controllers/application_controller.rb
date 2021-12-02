@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  require 'csv'
   protect_from_forgery prepend: true
 
   layout :layout_by_resource

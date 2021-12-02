@@ -3,3 +3,12 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
+
+  ######################
+  ### Specimens Page ###
+  ######################
+
+  $(window).on('popstate', ->
+    query = window.location.search
+    $('#specimen_report').attr('href', '/reports/specimen_report.csv' + query)
+  )
