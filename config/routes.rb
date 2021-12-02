@@ -45,6 +45,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :reports do
+    collection do
+      get :specimen_report
+      get :sparc_request_report
+    end
+  end
+
   get '/groups/:id/edit/:tab', to: 'groups#edit', as: 'tab_edit_group'
 
   resources :i2b2_queries, only: [:index, :show]
