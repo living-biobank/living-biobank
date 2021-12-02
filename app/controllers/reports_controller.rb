@@ -1,7 +1,5 @@
 class ReportsController < ApplicationController
 	def specimen_report
-		# puts "*********************THE FOLLOWING ARE THE REPORT PARAMS: #{report_params[:source]}*************************"
-
 		@labs =
       if current_user.admin?
         Lab.all
