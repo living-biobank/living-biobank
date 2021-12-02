@@ -117,6 +117,51 @@ class SparcRequest < ApplicationRecord
     end
   }
 
+  def self.to_csv
+    request_attributes = ['id', 'status']
+
+    protocol_id_attribute = ['sparc_number']
+    protocol_attributes = ['research_master_id', 'short_title', 'start_date', 'end_date']
+
+    primary_pi_attribute = ['Primary PI']
+    requester_attribute = ['Requester']
+
+    ###Here, we have an arbitrary number of potential line items for any given request.  So this section deals with figuring out how many columns we'll need.
+    count_array = []
+    all.each do |sr|
+      count_array << sr.specimen_requests.count
+    end
+    
+    max_line_item_count = count_array.max
+
+    line_item_attributes = []
+    
+    unless max_line_item_count == nil
+      if max_line_item_count > 1
+        for a in 1..max_line_item_count do
+          line_item_attributes << ["Line Item ID #{a}", "Line Item Group #{a}", "Line Item Specimen #{a}", "Line Item Requested Amount #{a}"]
+        end
+      elsif max_line_item_count == 1
+        line_item_attributes << ["Line Item ID 1", "Line Item Group 1", "Line Item Specimen 1", "Line Item Requested Amount 1"]
+      end
+    end
+
+    complete_attributes = request_attributes + protocol_id_attribute + protocol_attributes + primary_pi_attribute + requester_attribute + line_item_attributes.flatten
+
+    ####And now we put it all together###
+    CSV.generate(headers: true) do |csv|
+      csv << complete_attributes
+
+      all.each do |sr|
+        csv << request_attributes.map{ |attr| sr.send(attr) } + [sr.protocol.id] + protocol_attributes.map{|attr| sr.protocol.send(attr)} + [sr.primary_pi.full_name] + [sr.requester.full_name] + sr.specimen_requests.map{|li| 
+          [li.specimen_identifier ? li.specimen_identifier : nil, 
+          li.groups_source.group.name ? li.groups_source.group.name : nil, 
+          li.groups_source.source.value ? li.groups_source.source.value : nil, 
+          li.number_of_specimens_requested ? li.number_of_specimens_requested : nil]}.flatten
+      end
+    end
+  end
+
   def status=(status)
     case status
     when 'pending'

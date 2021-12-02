@@ -174,6 +174,7 @@ $ ->
   ).filter((q) -> q).join("&")
 
   window.history.pushState({}, null, window.location.origin + window.location.pathname + query_string)
+  window.dispatchEvent(new Event('popstate'))
 
 (exports ? this).escapeHTML = (text) ->
   if text

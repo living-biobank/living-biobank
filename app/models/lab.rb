@@ -184,6 +184,50 @@ class Lab < ApplicationRecord
 
   scope :available, -> { where(status: 'available') }
 
+  def self.to_csv
+    ####This section gets the lab attributes#####
+    lab_attributes = ['id', 'accession_number', 'specimen_date', 'status', 'patient_id']
+    lab_values = []
+
+    ###Here, we have an arbitrary number of potential line items for any given lab.  So this section deals with figuring out how many columns we'll need.
+    count_array = []
+    all.each do |lab|
+      count_array << lab.line_items.count
+    end
+    
+    max_request_count = count_array.max
+
+    request_attributes = []
+    
+    unless max_request_count == nil
+      if max_request_count > 1
+        for a in 1..max_request_count do
+          request_attributes << "Request #{a}"
+        end
+      elsif max_request_count == 1
+        request_attributes << "Request 1"
+      end
+    end
+
+    ####This section deals with the attributes for the patient this lab belongs to###
+    patient_attributes = ['mrn', 'firstname', 'lastname', 'dob']
+
+    ####A tiny section rending the source type in a human readable format#####
+    source_attribute = ['specimen_type']
+    
+    ####Put it together to get a complete list of attributes######
+    complete_attributes = lab_attributes + source_attribute + patient_attributes + request_attributes
+
+    ####And now we put it all together###
+    CSV.generate(headers: true) do |csv|
+      csv << complete_attributes
+
+      all.each do |lab|
+        csv << lab_attributes.map{ |attr| lab.send(attr) } + [lab.source.value] + patient_attributes.map{|attr| lab.patient.send(attr)} + lab.line_items.map{|li| li.id}
+      end
+    end
+  end
+
   def status=(status)
     self.send("#{status}_at=", DateTime.now) if self.respond_to?("#{status}_at=".to_sym)
     super(status)
