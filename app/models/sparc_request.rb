@@ -118,7 +118,7 @@ class SparcRequest < ApplicationRecord
   }
 
   def self.to_csv
-    request_attributes = ['id', 'status']
+    request_attributes = ['id', 'status', 'created_at']
 
     protocol_id_attribute = ['sparc_number']
     protocol_attributes = ['research_master_id', 'short_title', 'start_date', 'end_date']
