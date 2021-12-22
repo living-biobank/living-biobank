@@ -186,7 +186,7 @@ class Lab < ApplicationRecord
 
   def self.to_csv
     ####This section gets the lab attributes#####
-    lab_attributes = ['id', 'accession_number', 'specimen_date', 'status', 'patient_id']
+    lab_attributes = ['id', 'accession_number', 'specimen_date', 'status', 'patient_id', 'created_at']
     lab_values = []
 
     ###Here, we have an arbitrary number of potential line items for any given lab.  So this section deals with figuring out how many columns we'll need.
