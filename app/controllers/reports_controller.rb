@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
 
 		respond_to do |format|
 			format.html
-			format.csv { send_data @labs.to_csv, filename: "labs-#{Date.today}.csv", disposition: "attachment"}
+			format.csv { send_data @labs.to_csv, filename: "labs-#{Time.now.to_formatted_s(:number)}.csv", disposition: "attachment"}
 		end
 	end
 
@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
 
 		respond_to do |format|
 			format.html
-			format.csv { send_data @requests.to_csv, filename: "requests-#{Date.today}.csv", disposition: "attachment"}
+			format.csv { send_data @requests.to_csv, filename: "requests-#{Time.now.to_formatted_s(:number)}.csv", disposition: "attachment"}
 		end
 	end
 
