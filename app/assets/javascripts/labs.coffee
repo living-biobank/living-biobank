@@ -8,7 +8,21 @@ $ ->
   ### Specimens Page ###
   ######################
 
-  $(window).on('popstate', ->
+  # $(window).on('popstate', ->
+  #   query = window.location.search
+  #   $('#specimen_report').attr('href', '/reports/specimen_report.csv' + query)
+  # )
+
+  $(document).on('click', '#specimen_report', (event) -> 
+
     query = window.location.search
-    $('#specimen_report').attr('href', '/reports/specimen_report.csv' + query)
+
+    version = ''
+    if query.length > 0
+      version = '&version='
+    else
+      version = '?version='
+
+    $('#specimen_report').attr('href', '/reports/specimen_report.csv' + query + version + Date.now())
+    return true
   )
