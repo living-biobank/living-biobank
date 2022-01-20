@@ -38,6 +38,7 @@ gem 'request_store'
 gem 'sassc-rails'
 gem 'simple_hl7'
 gem 'sprockets', '~> 4.0'
+gem 'sprockets-rails'
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'uglifier', '>= 1.3.0'
 gem 'webpacker', '~> 4.x'

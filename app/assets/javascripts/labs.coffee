@@ -8,7 +8,18 @@ $ ->
   ### Specimens Page ###
   ######################
 
-  $(window).on('popstate', ->
+  #NOTE:  The following code is a workaround for an issue with Google Chrome that causes it to give the csv reports the same file name, regardless of timestamp, if the download report button is clicked multiple times without changing the query string.
+  $(document).on('click', '#specimen_report', (event) -> 
+
     query = window.location.search
-    $('#specimen_report').attr('href', '/reports/specimen_report.csv' + query)
+    version = ''
+
+    if query.length > 0
+      version = '&version='
+    else
+      version = '?version='
+
+    $('#specimen_report').attr('href', '/reports/specimen_report.csv' + query + version + Date.now())
+    
+    return true
   )

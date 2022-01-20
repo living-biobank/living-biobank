@@ -1,4 +1,4 @@
-lock "3.12.1"
+lock "3.16.0"
 
 set :application, "biobank"
 set :repo_url, "git@sparc_biobank:living-biobank/living-biobank.git"
