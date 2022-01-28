@@ -32,8 +32,19 @@ module GroupsSourcesHelper
     link_to icon('fas', 'pencil-alt'), edit_group_groups_source_path(groups_source.group, groups_source), remote: true, class: 'btn btn-warning', title: t('groups.sources.tooltips.edit'), data: { toggle: 'tooltip' }
   end
 
-  # Removed for now pending discussions
-  # def delete_groups_source_button(groups_source)
-  #   link_to icon('fas', 'trash'), group_groups_source_path(group, groups_source), remote: true, method: :delete, class: 'btn btn-danger', title: t('groups.sources.tooltips.delete'), data: { toggle: 'tooltip', confirm_swal: 'true' }
-  # end
+  def enable_groups_source_toggle(groups_source)
+    check_box_tag 'enabled', 'enabled', !groups_source.deprecated, class: 'source_deprecation_toggle', 
+      data: {
+        group: groups_source.group.id, 
+        groups_source: groups_source.id, 
+        # onchange: toggleDeprecationState(groups_source.group.id, groups_source.id)
+        # remote: true,
+        # url: toggle_deprecation_group_groups_source_path(groups_source.group, groups_source),
+        # method: :patch,
+        toggle: 'toggle', 
+        on: t('constants.positive'), 
+        off: t('constants.negative'), 
+        style: 'btn w-100 w-xl-75'
+      }
+  end
 end

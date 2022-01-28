@@ -251,6 +251,7 @@ en:
           release_email: "Details for emails sent to requesters when specimens are released"
     lab_honest_brokers:
       new: "New Lab Honest Broker"
+      new_note: "Note: Only users which have previously accessed the system will be available for selection. If you can not find the user you would like to add, please confirm they have previously logged into the Living BioBank."
       flash:
         created: "Lab honest broker added!"
         destroyed: "Lab honest broker removed!"
@@ -306,6 +307,7 @@ en:
       flash:
         created: "Service created successfully!"
         destroyed: "Service removed!"
+        destroyed_error: "Service not deleted successfully.  Please try again later."
         updated: "Service updated successfully!"
       form:
         header:
@@ -319,6 +321,7 @@ en:
         actions: "Actions"
       tooltips:
         edit: "Edit Service"
+        delete: "Delete Service"
     tooltips:
       edit: "Edit Group"
     flash:

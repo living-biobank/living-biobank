@@ -12,6 +12,15 @@ $ ->
         service:
           position: oldPosRow.position
 
+  $(document).on 'change', '.source_deprecation_toggle', () ->
+
+    group = $(this).data('group')
+    groups_source = $(this).data('groupsSource')
+
+    $.ajax
+      type: 'PATCH'
+      dataType: 'script'
+      url: "/groups/#{group}/groups_sources/#{groups_source}/toggle_deprecation"
 
 (exports ? this).initializeHonestBrokerTypeahead = () ->
   $("#honestBrokerSearch").typeahead('destroy')

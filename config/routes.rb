@@ -35,8 +35,12 @@ Rails.application.routes.draw do
   end
   resources :groups, only: [:index, :new, :create, :edit, :update] do
     resources :lab_honest_brokers, only: [:index, :new, :create, :destroy]
-    resources :groups_sources
-    resources :services, only: [:index, :new, :create, :edit, :update]
+    resources :groups_sources do
+      member do 
+        patch :toggle_deprecation
+      end
+    end
+    resources :services, only: [:index, :new, :create, :edit, :update, :destroy]
   end
 
   resources :services, only: [] do
