@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_15_190033) do
+ActiveRecord::Schema.define(version: 2022_01_28_011952) do
 
   create_table "action_text_rich_texts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name", null: false
@@ -170,6 +170,8 @@ ActiveRecord::Schema.define(version: 2021_07_15_190033) do
     t.string "condition"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_services_on_deleted_at"
     t.index ["group_id", "sparc_id"], name: "index_services_on_group_id_and_sparc_id", unique: true
     t.index ["group_id"], name: "index_services_on_group_id"
   end

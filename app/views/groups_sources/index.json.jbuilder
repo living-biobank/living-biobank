@@ -1,5 +1,6 @@
 json.rows (@groups_sources) do |groups_source|
   json.actions      groups_source_actions(groups_source)
+  json.enabled      enable_groups_source_toggle(groups_source)
   json.description  groups_source.description
   json.discard_age  groups_source.formatted_discard_age
   json.name         groups_source.name

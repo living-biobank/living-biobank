@@ -64,12 +64,17 @@ module ServicesHelper
   def service_actions(service)
     content_tag :div, class: 'd-inline-flex' do
       raw([
-        edit_service_button(service)
+        edit_service_button(service), 
+        delete_service_button(service)
       ].join(''))
     end
   end
 
+  def delete_service_button(service)
+    link_to icon('fas', 'trash-alt'), group_service_path(service, group_id: service.group_id), method: :delete, remote: true, class: 'btn btn-danger mx-1', title: t('groups.services.tooltips.delete'), data: { toggle: 'tooltip' }
+  end
+
   def edit_service_button(service)
-    link_to icon('fas', 'edit'), edit_group_service_path(service, group_id: service.group_id), remote: true, class: 'btn btn-warning', title: t('groups.services.tooltips.edit'), data: { toggle: 'tooltip' }
+    link_to icon('fas', 'edit'), edit_group_service_path(service, group_id: service.group_id), remote: true, class: 'btn btn-warning mx-1', title: t('groups.services.tooltips.edit'), data: { toggle: 'tooltip' }
   end
 end

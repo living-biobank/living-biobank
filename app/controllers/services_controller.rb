@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
   before_action :verify_admin
-  before_action :find_group, only: [:index, :new, :create, :edit, :update, :destroy]
-  before_action :find_service, only: [:edit, :update]
+  before_action :find_group, only: [:index, :new, :create, :edit, :update]
+  before_action :find_service, only: [:edit, :update, :destroy]
 
   def index
     respond_to do |format|
@@ -41,6 +41,16 @@ class ServicesController < ApplicationController
       flash.now[:success] = t('groups.services.flash.updated')
     else
       @errors = @service.errors
+    end
+  end
+
+  def destroy
+    respond_to :js 
+
+    if @service.destroy
+      flash.now[:success] = t('groups.services.flash.destroyed')
+    else
+      flash.now[:success] = t('groups.services.flash.destroyed_error')
     end
   end
 
