@@ -1,13 +1,13 @@
 class GroupsSourcesController < ApplicationController
   before_action :verify_admin
   before_action :find_group
-  before_action :find_groups_source, only: [:edit, :update, :destroy]
+  before_action :find_groups_source, only: [:edit, :update, :toggle_deprecation]
 
   def index
     respond_to do |format|
       format.js
       format.json {
-        @groups_sources = @group.groups_sources.active.filtered_for_index(params[:term], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:source)
+        @groups_sources = @group.groups_sources.filtered_for_index(params[:term], params[:sort_by], params[:sort_order]).paginate(page: params[:page].present? ? params[:page] : 1).eager_load(:source)
       }
     end
   end
@@ -50,14 +50,8 @@ class GroupsSourcesController < ApplicationController
     end
   end
 
-  def destroy
-    respond_to :js
-
-    @groups_source = GroupsSource.find(params[:id])
-
-    if @groups_source.update(deprecated: true)
-      flash.now[:success] = t('groups.sources.flash.destroyed')
-    end
+  def toggle_deprecation
+    @groups_source.change_deprecation_status
   end
 
   private

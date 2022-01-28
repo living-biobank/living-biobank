@@ -50,6 +50,21 @@ class GroupsSource < ApplicationRecord
     end
   }
 
+  def change_deprecation_status
+    #If groups_source is about to be deprecated, delete all line items for sparc requests in a draft status that use that groups_source.  
+    if self.deprecated == false
+      line_items = LineItem.includes(:sparc_request).where(groups_source_id: self.id)
+
+      if line_items.any? {|li| li.sparc_request.draft?}
+        line_items.each do |line_item|
+          line_item.destroy if line_item.sparc_request.draft?
+        end
+      end
+    end
+
+    self.update(deprecated: !self.deprecated)
+  end
+
   def formatted_discard_age
     "#{self.discard_age} #{I18n.t('groups.sources.discard_age_suffix')}"
   end
