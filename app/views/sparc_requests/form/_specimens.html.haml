@@ -5,7 +5,7 @@
     .form-group
       %p.form-text.text-muted.m-0
         = raw(t(:requests)[:form][:subtext][:i2b2_query])
-    - groups_sources = GroupsSource.eager_load(:group).where(deprecated: false).map{ |gs| [gs.name, gs.id, { data: { subtext: gs.description, validates_sample_size: gs.group.process_sample_size?.to_s } }] }
+    - groups_sources = GroupsSource.public_send(sparc_request.active? ? :all : :active).eager_load(:group).map{ |gs| [gs.name + (gs.deprecated? ? ' (deprecated)' : ''), gs.id, { data: { subtext: gs.description, validates_sample_size: gs.group.process_sample_size?.to_s } }] }
     = f.nested_fields_for :specimen_requests do |ff_li|
       = ff_li.hidden_field :id
       .form-row.pt-2.mb-1
