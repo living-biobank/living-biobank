@@ -292,6 +292,8 @@ en:
         delete: "Delete Source"
     services:
       new: "Add New Service"
+      delete_confirm:
+        title: "Are you sure you would like to delete this service?"
       blank_condition: "No Condition"
       conditions:
         irb_approved: "IRB Approved"
