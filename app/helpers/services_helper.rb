@@ -71,7 +71,7 @@ module ServicesHelper
   end
 
   def delete_service_button(service)
-    link_to icon('fas', 'trash-alt'), group_service_path(service, group_id: service.group_id), method: :delete, remote: true, class: 'btn btn-danger mx-1', title: t('groups.services.tooltips.delete'), data: { toggle: 'tooltip' }
+    link_to icon('fas', 'trash-alt'), group_service_path(service, group_id: service.group_id), method: :delete, remote: true, class: 'btn btn-danger mx-1', title: t('groups.services.tooltips.delete'), data: { toggle: 'tooltip', confirm_swal: true, title: t('groups.services.delete_confirm.title'), text: '', confirm_text: "Yes", cancel_text: "No" }
   end
 
   def edit_service_button(service)
