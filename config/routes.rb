@@ -58,7 +58,12 @@ Rails.application.routes.draw do
 
   get '/groups/:id/edit/:tab', to: 'groups#edit', as: 'tab_edit_group'
 
-  resources :i2b2_queries, only: [:index, :show]
+  resources :i2b2_queries, only: [:index, :show] do
+    collection do
+      get :select
+      post :save_selection
+    end
+  end
 
   namespace :sparc do
     get '/directory/index', to: 'directory#index'

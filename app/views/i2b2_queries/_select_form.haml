@@ -1,0 +1,31 @@
+.modal-dialog{ role: 'document' }
+  .modal-content
+    = form_for :i2b2_query, url: save_selection_i2b2_queries_path, remote: true, html: { id: 'sourcesForm', autocomplete: 'off' } do |f|
+      .modal-header
+        %h4.modal-title
+          = "Query Select"
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        - current_query_id = nil
+        = hidden_field_tag :specimen_option, specimen_option
+        = hidden_field_tag :musc_query
+        .row
+          .col-6.border-right
+            = "Currently selected query and search boxes"
+          .col-6.border-left
+            .h3.text-center
+              = "Select A Query"
+            / .list-group
+            /   - musc_queries.each do |query|
+            /     %button.list-group-item.list-group-item-action.musc-query-option{musc_query_id: query.id}
+            /       = query.name
+            = f.collection_radio_buttons(:query, current_query_id, musc_queries, :id, :name) do |b|
+              %input.btn-check{name: 'options', type: 'radio', id: "option_#{query.id}", value: query.id}
+              %label{for: "option_#{query.id}"}
+                = query.name
+      .modal-footer
+        %button.btn.btn-primary#i2b2_select_submit{ type: 'submit' }<
+          = t('actions.save')
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:actions)[:close]

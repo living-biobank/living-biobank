@@ -6,9 +6,11 @@
       %p.form-text.text-muted.m-0
         = raw(t(:requests)[:form][:subtext][:i2b2_query])
     - groups_sources = GroupsSource.public_send(sparc_request.active? ? :all : :active).eager_load(:group).map{ |gs| [gs.name + (gs.deprecated? ? ' (deprecated)' : ''), gs.id, { data: { subtext: gs.description, validates_sample_size: gs.group.process_sample_size?.to_s } }] }
+    - specimen_index = 0
     = f.nested_fields_for :specimen_requests do |ff_li|
+      - specimen_index = specimen_index += 1
       = ff_li.hidden_field :id
-      .form-row.pt-2.mb-1
+      .form-row.pt-2.mb-1{id: "specimen_options_#{specimen_index}"}
         .form-group.col-6.col-lg-2
           = ff_li.label :groups_source_id, class: 'required'
           = ff_li.select :groups_source_id, options_for_select(groups_sources, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control form-control-lg selectpicker groups-source-select'
@@ -17,6 +19,11 @@
           .spinner-border{role: 'status'}
             %span.sr-only
               = "Loading..."
+        .query-select-button.form-group.col-6.col-lg-2
+          = label_tag 'query_select_label', "Query Select", class: 'required'
+          = link_to "Select a query...", select_i2b2_queries_path(user_id: sparc_request.user_id, protocol_id: sparc_request.protocol_id, specimen_option: specimen_index), class: 'btn btn-success form-control form-control-lg', remote: true
+          = ff_li.hidden_field :query_id 
+          = ff_li.hidden_field :act_query_id
         .musc-dropdown.form-group.col-6.col-lg-2{hidden: true}
           = ff_li.label :query_id, t(:requests)[:form][:fields][:queries][:musc], class: 'required'
           = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker musc-query-select', data: { live_search: 'true' }
