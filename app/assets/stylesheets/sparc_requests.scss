@@ -33,12 +33,17 @@
   }
 }
 
-
 #requestFormModal {
   .nested_sparc_request_specimen_requests {
     @extend .border-bottom;
     @extend .mb-3;
   }
+}
+
+.modal-dialog {
+  width: 900px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .use-agreement {
