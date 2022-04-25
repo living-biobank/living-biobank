@@ -9,13 +9,11 @@ class I2b2QueriesController < ApplicationController
         protocol = SPARC::Protocol.find(params[:protocol_id])
         I2b2::Query.where(user_id: protocol.study_users.pluck(:ldap_uid) + (current_user.data_honest_broker? || current_user.admin? ? [current_user.net_id] : []))
       else
-        I2b2::Query.where(user_id: "iee@musc.edu")
-        # I2b2::Query.where(user_id: @requester.net_id)
+        I2b2::Query.where(user_id: @requester.net_id)
       end.order(create_date: :desc)
 
     @shrine_queries = 
-      Shrine::Query.where(username: "bah29")
-      # Shrine::Query.where(username: @requester.net_id.split('@').first)
+      Shrine::Query.where(username: @requester.net_id.split('@').first)
   end
 
   def show
@@ -40,13 +38,11 @@ class I2b2QueriesController < ApplicationController
         protocol = SPARC::Protocol.find(params[:protocol_id])
         I2b2::Query.where(user_id: protocol.study_users.pluck(:ldap_uid) + (current_user.data_honest_broker? || current_user.admin? ? [current_user.net_id] : []))
       else
-        I2b2::Query.where(user_id: "iee@musc.edu")
-        # I2b2::Query.where(user_id: @requester.net_id)
+        I2b2::Query.where(user_id: @requester.net_id)
       end.order(create_date: :desc)
 
     @shrine_queries = 
-      Shrine::Query.where(username: "bah29")
-      # Shrine::Query.where(username: @requester.net_id.split('@').first)
+      Shrine::Query.where(username: @requester.net_id.split('@').first)
   end
 
   def save_selection
