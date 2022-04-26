@@ -39,6 +39,9 @@ if !($('#pi_manual').hasClass('d-none'))
 <% line_item.errors.messages.each do |attr, messages| %>
 <% messages.each do |message| %>
 $(".nested_sparc_request_specimen_requests:visible:nth(<%= index %>) [name*='[<%= attr.to_s %>]']").parents('.form-group').removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
+<% if attr == :query %>
+$("#query-select-button-<%= index %>").removeClass('is-valid').addClass('is-invalid').append("<small class='form-text form-error'><%= message.capitalize %></small>")
+<% end %>
 <% end %>
 <% end %>
 <% end %>

@@ -354,5 +354,36 @@ $ ->
     return true
   )
 
+  $(document).on 'click', '.musc-button', ->
+    $(".shrine-button").removeClass("active")
+    $("input[name='shrine_query']").prop("checked", "")
+
+  $(document).on 'click', '.shrine-button', ->
+    $(".musc-button").removeClass("active")
+    $("input[name='musc_query']").prop("checked", "") 
+
+  $(document).on 'click', '.combined_query_select', ->
+    NProgress.start()
+
+    specimen_option = parseInt($(this).parents('.specimen_info').attr('id').split('_')[2])
+    specimen_id = specimen_option - 1
+    musc_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_id + "_query_id").val()
+    shrine_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_id + "_act_query_id").val()
+    user_id = $('#sparc_request_user_id').val()
+    protocol_id = $('#sparc_request_prtocol_id').val()
+
+    $.ajax
+      method: 'GET'
+      dataType: 'script'
+      url: '/i2b2_queries/select'
+      data:
+        user_id:      user_id
+        protocol_id:  protocol_id
+        specimen_option: specimen_option
+        musc_query_id: musc_query_id
+        shrine_query_id: shrine_query_id
+
+
+
 
 
