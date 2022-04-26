@@ -1,0 +1,56 @@
+.modal-dialog.query-modal{ role: 'document' }
+  .modal-content
+    = form_with url: save_selection_i2b2_queries_path, html: { id: 'sourcesForm', autocomplete: 'off' } do |f|
+      .modal-header
+        %h4.modal-title
+          = "Query Select"
+        %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
+          %span{ aria: { hidden: 'true' } } &times;
+      .modal-body
+        .row
+          .col-6.border-right
+            = "(UNDER CONSTRUCTION - Currently selected query and search/filter options will go here)"
+          .col-6.border-left
+            %ul.nav.nav-tabs.mb-2{id: "i2b2-tabs", role: "tablist"}
+              - if musc_queries.present?
+                %li.nav-item
+                  %a.nav-link{class: (musc_query_id.present? ? 'active' : ''), id: "musc-tab", href: "#musc", role: "tab", aria: {controls: "musc", selected: "#{musc_query_id.present?}"}, data: {toggle: "tab"}}
+                    = "MUSC i2b2"
+              - if shrine_queries.present?
+                %li.nav-item
+                  %a.nav-link{class: (shrine_query_id.present? ? 'active' : ''), id: "shrine-tab", href: "#shrine", role: "tab", aria: {controls: "shrine", selected: "#{shrine_query_id.present?}"}, data: {toggle: "tab"}}
+                    = "Shrine i2b2"
+            = hidden_field_tag :specimen_option, specimen_option
+            
+            .tab-content{id: "tab-content"}
+              - if musc_queries.present?
+                .tab-pane.fade{class: ((musc_query_id.present? || musc_query_id.blank? && shrine_query_id.blank? && musc_queries.present? )? 'show active' : ''), id: "musc", role: "tabpanel", aria: {labelledby: "musc-tab"}}
+                  .h3.text-center
+                    = "Select A Query"
+                  .btn-group-vertical.btn-group-toggle.text-center{data: {toggle: "buttons"}}
+                    - musc_queries.each do |query|
+                      %label{class: "btn btn-outline-primary my-1 text-truncate musc-button #{'active' if musc_query_id.to_i == query.id}"}
+                        = radio_button_tag 'musc_query', query.id, id: "musc_query_#{query.id}"
+                        %span.query_button_text
+                          = query.name
+              - if shrine_queries.present?
+                .tab-pane.fade{class: ((shrine_query_id.present? || musc_query_id.blank? && shrine_query_id.blank? && musc_queries.blank? && shrine_queries.present?) ? 'show active' : ''), id: "shrine", role: "tabpanel", aria: {labelledby: "shrine-tab"}}
+                  .h3.text-center
+                    = "Select A Query"
+                  .btn-group-vertical.btn-group-toggle.float-none.align-items-center{data: {toggle: "buttons"}}
+                    - shrine_queries.each do |query|
+                      %label{class: "btn btn-outline-primary my-1 text-truncate shrine-button #{'active' if shrine_query_id.to_i == query.id}"}
+                        = radio_button_tag 'shrine_query', query.id, id: "shrine_query_#{query.id}"
+                        %span.query_button_text
+                          = query.query_name
+
+              - if musc_queries.blank? && shrine_queries.blank?
+                .h4
+                  = "There are no queries available for this protocol or user."  
+                .h4
+                  = "Please visit <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'>this link</a> to create queries so that we can find the right specimens for your study.".html_safe
+      .modal-footer
+        %button.btn.btn-primary#i2b2_select_submit{ type: 'submit' }<
+          = t('actions.save')
+        %button.btn.btn-secondary{ type: 'button', data: { dismiss: 'modal' } }
+          = t(:actions)[:close]
