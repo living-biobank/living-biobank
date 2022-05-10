@@ -31,7 +31,7 @@
                     - musc_queries.each do |query|
                       %label{class: "btn btn-outline-primary my-1 text-truncate musc-button #{'active' if musc_query_id.to_i == query.id}"}
                         = radio_button_tag 'musc_query', query.id, id: "musc_query_#{query.id}"
-                        %span.query_button_text
+                        %span.query_button_text.d-inline-block.text-truncate{style: 'max-width: 400px;'}
                           = query.name
               - if shrine_queries.present?
                 .tab-pane.fade{class: ((shrine_query_id.present? || musc_query_id.blank? && shrine_query_id.blank? && musc_queries.blank? && shrine_queries.present?) ? 'show active' : ''), id: "shrine", role: "tabpanel", aria: {labelledby: "shrine-tab"}}
@@ -41,7 +41,7 @@
                     - shrine_queries.each do |query|
                       %label{class: "btn btn-outline-primary my-1 text-truncate shrine-button #{'active' if shrine_query_id.to_i == query.id}"}
                         = radio_button_tag 'shrine_query', query.id, id: "shrine_query_#{query.id}"
-                        %span.query_button_text
+                        %span.query_button_text.d-inline-block.text-truncate{style: 'max-width: 400px;'}
                           = query.query_name
 
               - if musc_queries.blank? && shrine_queries.blank?
