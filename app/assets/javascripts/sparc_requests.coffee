@@ -205,14 +205,18 @@ $ ->
         return true
     }
 
-    $(document).on 'fields_added.nested_form_fields', (event, param) ->
+    $('.specimen_card').on "fields_added.nested_form_fields", (event, param) ->
       if $('.nested_sparc_request_specimen_requests:visible').length > 0
         $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', false)
+        # Updating select ids for last dynamically added field to match current index; added index method connected to nested_form_fields gem
+        $('.combined_query_select').last().parent('.query-select-button').attr('id', 'query-select-button-' + param.added_index)
+        $('.combined_query_select').last().parents('.specimen_info').attr('id', 'specimen_options_' + param.added_index)
       setRequiredFields()
       initializeSelectpickers()
       initializeTooltips()
 
-    $(document).on 'fields_removed.nested_form_fields', (event, param) ->
+    $('.specimen_card').on 'fields_removed.nested_form_fields', (event, param) ->
+      console.log 'Just deleted a field'
       if $('.nested_sparc_request_specimen_requests:visible').length == 0
         $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', true)
       $('.tooltip').tooltip('hide')
@@ -366,9 +370,8 @@ $ ->
     NProgress.start()
 
     specimen_option = parseInt($(this).parents('.specimen_info').attr('id').split('_')[2])
-    specimen_id = specimen_option - 1
-    musc_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_id + "_query_id").val()
-    shrine_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_id + "_act_query_id").val()
+    musc_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_option + "_query_id").val()
+    shrine_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_option + "_act_query_id").val()
     user_id = $('#sparc_request_user_id').val()
     protocol_id = $('#sparc_request_prtocol_id').val()
 
