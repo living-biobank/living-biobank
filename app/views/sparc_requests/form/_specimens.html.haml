@@ -7,8 +7,8 @@
         = raw(t(:requests)[:form][:subtext][:i2b2_query])
     - groups_sources = GroupsSource.public_send(sparc_request.active? ? :all : :active).eager_load(:group).map{ |gs| [gs.name + (gs.deprecated? ? ' (deprecated)' : ''), gs.id, { data: { subtext: gs.description, validates_sample_size: gs.group.process_sample_size?.to_s } }] }
     = f.nested_fields_for :specimen_requests do |ff_li|
-      - #DEV NOTE:  The code below for the specimen index is currently the only way to get index of the specific nested field because 'nested child index' is considered a private method by form builder
-      - specimen_index = '__nested_field_for_replace_with_index__'.to_i
+      - #DEV NOTE:  The code below for the specimen index is currently the only reliable way to get index of the specific nested field because 'nested child index' is considered a private method by the nested_form_fields gem
+      - specimen_index = ff_li.object_name.gsub('[', ',[').split(',')[2].gsub('[', '').gsub(']', '').to_i
       = ff_li.hidden_field :id
       .specimen_info.form-row.pt-2.mb-1{id: "specimen_options_#{specimen_index}"}
         .form-group.col-6.col-lg-2
