@@ -99,49 +99,35 @@ $ ->
             success: (data, event, xhr) ->
               if xhr.status == 202
                 data = $.parseJSON(data)
-                $.ajax
-                  type: 'GET'
-                  dataType: 'script'
-                  url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
-                  complete: ->
-                    NProgress.done()
-                  success: ->
-                    $('.form-error, .form-alert').remove()
-                    $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
-                    $('#sparc_request_protocol_attributes_research_master_id').focus()
-                    $('#sparc_request_protocol_attributes_title').val(data.title).prop('readonly', true)
-                    $('#sparc_request_protocol_attributes_short_title').val(data.short_title).prop('readonly', true)
-                    $('#primary_pi_search').val(data.primary_pi.display_name).prop('readonly', true).typeahead('destroy')
-                    $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(data.primary_pi.id)
-                    $('#sparc_request_protocol_attributes_title, #sparc_request_protocol_attributes_short_title, #primary_pi_search').parents('.form-group').append("<small class='form-text text-success'>#{I18n.t('requests.form.subtext.imported_from_rmid')}</small>")
+                $('.form-error, .form-alert').remove()
+                $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-valid').append("<small class='form-text text-warning form-alert'>#{I18n.t('requests.form.subtext.protocol_not_found')}</small>")
+                $('#sparc_request_protocol_attributes_research_master_id').focus()
+                $('#sparc_request_protocol_attributes_title').val(data.title)
+                $('#sparc_request_protocol_attributes_short_title').val(data.short_title)
+                $('#primary_pi_search').val(data.primary_pi.display_name).prop('readonly', true).typeahead('destroy')
+                $('#sparc_request_protocol_attributes_primary_pi_role_attributes_identity_id').val(data.primary_pi.id)
+                $('#sparc_request_protocol_attributes_title, #sparc_request_protocol_attributes_short_title, #primary_pi_search').parents('.form-group').append("<small class='form-text text-success'>#{I18n.t('requests.form.subtext.imported_from_rmid')}</small>")
+                $('#sparc_request_protocol_attributes_potential_funding_status').attr('disabled', false).selectpicker('refresh')
+                $('#sparc_request_protocol_attributes_potential_funding_source').attr('disabled', false).selectpicker('refresh')
+                $('#sparc_request_protocol_attributes_funding_status').attr('disabled', false).selectpicker('refresh')
+                $('#sparc_request_protocol_attributes_funding_source').attr('disabled', false).selectpicker('refresh')
+                $('#sparc_request_protocol_attributes_start_date').prop('readonly', false)
+                $('#sparc_request_protocol_attributes_end_date').prop('readonly', false)
+                $('#sparc_request_protocol_attributes_sponsor_name').prop('readonly', false)
+                NProgress.done()
               else
                 NProgress.done()
             error: (xhr) ->
               message = $.parseJSON(xhr.responseText).error
               $('.form-error, .form-alert').remove()
-              $.ajax
-                type: 'GET'
-                dataType: 'script'
-                url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
-                complete: ->
-                  NProgress.done()
-                success: ->
-                  $('#sparc_request_protocol_attributes_research_master_id').focus()
-                  $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
+              $('#sparc_request_protocol_attributes_research_master_id').focus()
+              $('#sparc_request_protocol_attributes_research_master_id').val(rmid).parents('.form-group').addClass('is-invalid').append("<small class='form-text form-error'>#{message}</small>")
+              NProgress.done()
+                  
           )
         , 750
       else
-        NProgress.start()
-        $.ajax
-          type: 'GET'
-          dataType: 'script'
-          url: if $('#sparc_request_id').val() then "/sparc_requests/#{$('#sparc_request_id').val()}/edit" else '/sparc_requests/new'
-          success: ->
-            $('#sparc_request_protocol_attributes_research_master_id').focus()
-            $("[id^='sparc_request_protocol_']:not(#sparc_request_protocol_attributes_research_master_id), [id=primary_pi_search]").prop('readonly', true)
-            $('#sparc_request_protocol_attributes_funding_status').prop('disabled', true).selectpicker('refresh')
-            $('#sparc_request_protocol_attributes_funding_source').prop('disabled', true).selectpicker('refresh')
-            $('#sparc_request_protocol_attributes_potential_funding_source').prop('disabled', true).selectpicker('refresh')
+        $('#sparc_request_protocol_attributes_research_master_id').focus()
     ).on('keydown', '#sparc_request_protocol_attributes_research_master_id', ->
       clearTimeout(rmidTimer)
     )
@@ -216,7 +202,6 @@ $ ->
       initializeTooltips()
 
     $('.specimen_card').on 'fields_removed.nested_form_fields', (event, param) ->
-      console.log 'Just deleted a field'
       if $('.nested_sparc_request_specimen_requests:visible').length == 0
         $('#sparcRequestForm input[type=submit], #saveDraftRequestButton').prop('disabled', true)
       $('.tooltip').tooltip('hide')
@@ -373,7 +358,7 @@ $ ->
     musc_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_option + "_query_id").val()
     shrine_query_id = $(this).siblings("#sparc_request_specimen_requests_attributes_" + specimen_option + "_act_query_id").val()
     user_id = $('#sparc_request_user_id').val()
-    protocol_id = $('#sparc_request_prtocol_id').val()
+    protocol_id = $('#sparc_request_protocol_id').val()
 
     $.ajax
       method: 'GET'

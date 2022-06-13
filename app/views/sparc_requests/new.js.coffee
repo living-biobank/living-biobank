@@ -4,3 +4,7 @@ initializePrimaryPITypeahead()
 $("select[name*=query_id]").one 'rendered.bs.select', ->
   loadI2B2Queries()
 NProgress.done()
+
+$(document).trigger('ajax:complete')
+
+
