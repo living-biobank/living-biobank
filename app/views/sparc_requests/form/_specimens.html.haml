@@ -14,11 +14,6 @@
         .form-group.col-6.col-lg-2
           = ff_li.label :groups_source_id, class: 'required'
           = ff_li.select :groups_source_id, options_for_select(groups_sources, selected: ff_li.object.groups_source_id), { include_blank: t(:constants)[:select_placeholder]}, class: 'form-control form-control-lg selectpicker groups-source-select'
-        / .loading-spinner.form-group.col-6.col-lg-3.text-center
-        /   %label.w-100 &nbsp;
-        /   .spinner-border{role: 'status'}
-        /     %span.sr-only
-        /       = "Loading..."
         .query-select-button.form-group.col-6.col-lg-2{id: "query-select-button-#{specimen_index}"}
           = label_tag 'query_select_label', "Query Select", class: 'required'
           - if ff_li.object.i2b2_query.present?
@@ -30,13 +25,6 @@
           = link_to query_name, 'javascript:void(0)', class: 'btn btn-outline-secondary form-control form-control-lg combined_query_select text-truncate'
           = ff_li.hidden_field :query_id 
           = ff_li.hidden_field :act_query_id
-        / NOTE:  COMMENTING OUT DROPDOWNS WHILE UPDATES ARE BEING MADE TO THIS SYSTEM
-        / .musc-dropdown.form-group.col-6.col-lg-2{hidden: true}
-        /   = ff_li.label :query_id, t(:requests)[:form][:fields][:queries][:musc], class: 'required'
-        /   = ff_li.select :query_id, (ff_li.object.query_id ? [[ff_li.object.i2b2_query.name, ff_li.object.query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker musc-query-select', data: { live_search: 'true' }
-        / .shrine-dropdown.form-group.col-6.col-lg-2{hidden: true}
-        /   = ff_li.label :act_query_id, t(:requests)[:form][:fields][:queries][:shrine], class: 'required'
-        /   = ff_li.select :act_query_id, (ff_li.object.act_query_id ? [[ff_li.object.shrine_query.query_name, ff_li.object.act_query_id, selected: true]] : []), { include_blank: t(:constants)[:select_placeholder] }, class: 'form-control form-control-lg selectpicker act-query-select', data: { live_search: 'true' }
         .form-group.col-6.col-lg-2
           = ff_li.label :number_of_specimens_requested, class: 'required'
           = ff_li.text_field :number_of_specimens_requested, class: 'form-control form-control-lg numerical', min: 1, maxlength: 7
