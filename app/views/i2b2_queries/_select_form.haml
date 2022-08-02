@@ -7,48 +7,43 @@
         %button.close{ type: 'button', data: { dismiss: 'modal' }, aria: { label: t(:actions)[:close] } }
           %span{ aria: { hidden: 'true' } } &times;
       .modal-body
+        = hidden_field_tag :user_id, requester.id
+        - if protocol
+          = hidden_field_tag :protocol_id, protocol.id
         .row
           .col-6.border-right
-            = "(UNDER CONSTRUCTION - Currently selected query and search/filter options will go here)"
+            .input-group.mb-3
+              %input{type: 'text', class: 'query_search form-control form-control-lg', placeholder: 'Enter your search query here...'}
+              .input-group-append
+                %button.query_search_button.btn.btn-outline-primary{type: 'button'}
+                  = "Search"
+            .ml-3
+              .h4
+                = 'Sort'
+              .h5
+                = 'Date (Query Created)'
+              .ml-3
+                .custom-control.custom-radio
+                  %input{type: 'radio', id: 'date_asc', name: 'sortRadio', class: 'custom-control-input sort_radio_button', checked: true}
+                  %label{class: 'custom-control-label', for: 'date_asc'}
+                    = 'Ascending'
+                .custom-control.custom-radio
+                  %input{type: 'radio', id: 'date_desc', name: 'sortRadio', class: 'custom-control-input sort_radio_button'}
+                  %label{class: 'custom-control-label', for: 'date_desc'}
+                    = 'Descending'
+              .h5
+                = 'Name (Alphabetical)'
+              .ml-3
+                .custom-control.custom-radio
+                  %input{type: 'radio', id: 'name_asc', name: 'sortRadio', class: 'custom-control-input sort_radio_button'}
+                  %label{class: 'custom-control-label', for: 'name_asc'}
+                    = 'Ascending'
+                .custom-control.custom-radio
+                  %input{type: 'radio', id: 'name_desc', name: 'sortRadio', class: 'custom-control-input sort_radio_button'}
+                  %label{class: 'custom-control-label', for: 'name_desc'}
+                    = 'Descending'
           .col-6.border-left
-            %ul.nav.nav-tabs.mb-2{id: "i2b2-tabs", role: "tablist"}
-              - if musc_queries.present?
-                %li.nav-item
-                  %a.nav-link{class: (musc_query_id.present? ? 'active' : ''), id: "musc-tab", href: "#musc", role: "tab", aria: {controls: "musc", selected: "#{musc_query_id.present?}"}, data: {toggle: "tab"}}
-                    = "MUSC i2b2"
-              - if shrine_queries.present?
-                %li.nav-item
-                  %a.nav-link{class: (shrine_query_id.present? ? 'active' : ''), id: "shrine-tab", href: "#shrine", role: "tab", aria: {controls: "shrine", selected: "#{shrine_query_id.present?}"}, data: {toggle: "tab"}}
-                    = "Shrine i2b2"
-            = hidden_field_tag :specimen_option, specimen_option
-            
-            .tab-content{id: "tab-content"}
-              - if musc_queries.present?
-                .tab-pane.fade{class: ((musc_query_id.present? || musc_query_id.blank? && shrine_query_id.blank? && musc_queries.present? )? 'show active' : ''), id: "musc", role: "tabpanel", aria: {labelledby: "musc-tab"}}
-                  .h3.text-center
-                    = "Select A Query"
-                  .btn-group-vertical.btn-group-toggle.text-center{data: {toggle: "buttons"}}
-                    - musc_queries.each do |query|
-                      %label{class: "btn btn-outline-primary my-1 text-truncate musc-button #{'active' if musc_query_id.to_i == query.id}"}
-                        = radio_button_tag 'musc_query', query.id, id: "musc_query_#{query.id}"
-                        %span.query_button_text.d-inline-block.text-truncate{style: 'max-width: 400px;'}
-                          = query.name
-              - if shrine_queries.present?
-                .tab-pane.fade{class: ((shrine_query_id.present? || musc_query_id.blank? && shrine_query_id.blank? && musc_queries.blank? && shrine_queries.present?) ? 'show active' : ''), id: "shrine", role: "tabpanel", aria: {labelledby: "shrine-tab"}}
-                  .h3.text-center
-                    = "Select A Query"
-                  .btn-group-vertical.btn-group-toggle.float-none.align-items-center{data: {toggle: "buttons"}}
-                    - shrine_queries.each do |query|
-                      %label{class: "btn btn-outline-primary my-1 text-truncate shrine-button #{'active' if shrine_query_id.to_i == query.id}"}
-                        = radio_button_tag 'shrine_query', query.id, id: "shrine_query_#{query.id}"
-                        %span.query_button_text.d-inline-block.text-truncate{style: 'max-width: 400px;'}
-                          = query.query_name
-
-              - if musc_queries.blank? && shrine_queries.blank?
-                .h4
-                  = "There are no queries available for this protocol or user."  
-                .h4
-                  = "Please visit <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'>this link</a> to create queries so that we can find the right specimens for your study.".html_safe
+            = render 'query_select', musc_queries: musc_queries, shrine_queries: shrine_queries, musc_query_id: musc_query_id, shrine_query_id: shrine_query_id, specimen_option: specimen_option, active_tab: ''
       .modal-footer
         %button.btn.btn-primary#i2b2_select_submit{ type: 'submit' }<
           = t('actions.save')

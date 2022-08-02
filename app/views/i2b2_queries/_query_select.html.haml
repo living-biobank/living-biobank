@@ -1,0 +1,41 @@
+#query_select_pane
+  %ul.nav.nav-tabs.mb-2{id: "i2b2-tabs", role: "tablist"}
+    - if musc_queries.present?
+      %li.nav-item
+        %a.nav-link{class: musc_tab_status(active_tab, musc_query_id), id: "musc-tab", href: "#musc", role: "tab", aria: {controls: "musc", selected: "#{musc_query_id.present? || active_tab == 'musc-tab' ? 'true' : 'false'}"}, data: {toggle: "tab"}}
+          = "MUSC i2b2"
+    - if shrine_queries.present?
+      %li.nav-item
+        %a.nav-link{class: shrine_tab_status(active_tab, shrine_query_id), id: "shrine-tab", href: "#shrine", role: "tab", aria: {controls: "shrine", selected: "#{shrine_query_id.present? || active_tab == 'shrine-tab' ? 'true' : 'false'}"}, data: {toggle: "tab"}}
+          = "Shrine i2b2"
+  = hidden_field_tag :specimen_option, specimen_option
+  = hidden_field_tag :musc_query_id, musc_query_id.present? ? musc_query_id : nil
+  = hidden_field_tag :shrine_query_id, shrine_query_id.present? ? shrine_query_id : nil
+
+  .tab-content{id: "tab-content"}
+    - if musc_queries.present?
+      .tab-pane.fade{class: musc_tab_pane_status(active_tab, musc_query_id, shrine_query_id, musc_queries), id: "musc", role: "tabpanel", aria: {labelledby: "musc-tab"}}
+        .h3.text-center
+          = "Select A Query"
+        .btn-group-vertical.btn-group-toggle.text-center{data: {toggle: "buttons"}}
+          - musc_queries.each do |query|
+            %label{class: "btn btn-outline-primary my-1 text-truncate musc-button #{'active' if musc_query_id.to_i == query.id}"}
+              = radio_button_tag 'musc_query', query.id, id: "musc_query_#{query.id}"
+              %span.query_button_text.d-inline-block.text-truncate{style: 'max-width: 400px;'}
+                = query.name
+    - if shrine_queries.present?
+      .tab-pane.fade{class: shrine_tab_pane_status(active_tab, musc_query_id, shrine_query_id, musc_queries, shrine_queries), id: "shrine", role: "tabpanel", aria: {labelledby: "shrine-tab"}}
+        .h3.text-center
+          = "Select A Query"
+        .btn-group-vertical.btn-group-toggle.float-none.align-items-center{data: {toggle: "buttons"}}
+          - shrine_queries.each do |query|
+            %label{class: "btn btn-outline-primary my-1 text-truncate shrine-button #{'active' if shrine_query_id.to_i == query.id}"}
+              = radio_button_tag 'shrine_query', query.id, id: "shrine_query_#{query.id}"
+              %span.query_button_text.d-inline-block.text-truncate{style: 'max-width: 400px;'}
+                = query.query_name
+
+    - if musc_queries.blank? && shrine_queries.blank?
+      .h4
+        = "There are no queries available for this protocol or user."  
+      .h4
+        = "Please visit <a href='https://medicine.musc.edu/departments/centers/bmic/data-request' target='_blank'>this link</a> to create queries so that we can find the right specimens for your study.".html_safe
