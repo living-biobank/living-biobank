@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   resources :i2b2_queries, only: [:index, :show] do
     collection do
       get :select
+      get :filter
       post :save_selection
     end
   end
