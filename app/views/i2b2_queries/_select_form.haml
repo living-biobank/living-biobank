@@ -1,6 +1,6 @@
 .modal-dialog.query-modal{ role: 'document' }
   .modal-content
-    = form_with url: save_selection_i2b2_queries_path, html: { id: 'sourcesForm', autocomplete: 'off' } do |f|
+    = form_with url: save_selection_i2b2_queries_path, html: { id: 'sourcesForm', autocomplete: 'off', onsubmit: 'return false' } do |f|
       .modal-header
         %h4.modal-title
           = "Query Select"
@@ -15,6 +15,8 @@
             .input-group.mb-3
               %input{type: 'text', class: 'query_search form-control form-control-lg', placeholder: 'Enter your search query here...'}
               .input-group-append
+                %button.clear_search_button.btn.btn-outline-secondary{type: 'button'}
+                  = "Clear"
                 %button.query_search_button.btn.btn-outline-primary{type: 'button'}
                   = "Search"
             .ml-3
