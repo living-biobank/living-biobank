@@ -42,10 +42,7 @@ class I2b2QueriesController < ApplicationController
       end.order(create_date: :desc)
 
     @shrine_queries = 
-      Shrine::Query.where(username: 'bah29')
-      # Shrine::Query.where(username: @requester.net_id.split('@').first)
-      
-
+      Shrine::Query.where(username: @requester.net_id.split('@').first)
   end
 
   def save_selection
@@ -76,9 +73,7 @@ class I2b2QueriesController < ApplicationController
       end.filtered_for_index(params[:term], params[:sort_by], params[:sort_order])
 
     @shrine_queries = 
-      Shrine::Query.where(username: 'bah29').filtered_for_index(params[:term], params[:sort_by], params[:sort_order])
-      # Shrine::Query.where(username: @requester.net_id.split('@').first).filtered_for_index(params[:term], params[:sort_by], params[:sort_order])
-      
+      Shrine::Query.where(username: @requester.net_id.split('@').first).filtered_for_index(params[:term], params[:sort_by], params[:sort_order])
 
     @active_tab = 
       if params[:active_tab].present?

@@ -1,6 +1,6 @@
 .modal-dialog.query-modal{ role: 'document' }
   .modal-content
-    = form_with url: save_selection_i2b2_queries_path, html: { id: 'sourcesForm', autocomplete: 'off', onsubmit: 'return false' } do |f|
+    = form_with url: save_selection_i2b2_queries_path, html: { id: 'sourcesForm', autocomplete: 'off' } do |f|
       .modal-header
         %h4.modal-title
           = "Query Select"
