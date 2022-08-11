@@ -12,7 +12,7 @@ module Shrine
     scope :search, -> (term) {
       return if term.blank?
 
-      where('query_name LIKE ?', "%#{term}%")
+      where('lower(query_name) LIKE ?', "%#{term.downcase}%")
     }
 
     scope :ordered_by, -> (sort_by, sort_order) {

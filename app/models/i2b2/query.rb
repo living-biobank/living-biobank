@@ -11,7 +11,11 @@ module I2b2
     scope :search, -> (term) {
       return if term.blank?
 
-      where('name LIKE ?', "%#{term}%")
+      where('lower(name) LIKE ?', "%#{term.downcase}%")
+    }
+
+    scope :team_member, -> (netid_array) {
+      where(user_id: netid_array)
     }
 
     scope :ordered_by, -> (sort_by, sort_order) {
